@@ -1,4 +1,5 @@
 import express, { Application, Request, Response, NextFunction } from 'express';
+import userRouter from './routes/UserRouter';
 
 class App {
   public app: Application;
@@ -23,6 +24,7 @@ class App {
   }
 
   private routes(): void {
+    this.app.use('/login', userRouter);
   }
 
   public start(PORT: string | number): void {
