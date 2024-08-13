@@ -1,9 +1,6 @@
 name: vida_leve
 description: "Gordos no limite"
-# The following line prevents the package from being accidentally published to
-# pub.dev using `flutter pub publish`. This is preferred for private packages.
-publish_to: 'none' # Remove this line if you wish to publish to pub.dev
-
+publish_to: 'none'
 
 version: 1.0.0+1
 
@@ -14,22 +11,15 @@ dependencies:
   flutter:
     sdk: flutter
   http: ^0.13.5                              
-
   cupertino_icons: ^1.0.6
-  firebase_core: ^2.13.1
-  firebase_auth: ^4.20.0
 
 dev_dependencies:
   flutter_test:
     sdk: flutter
-
-
   flutter_lints: ^3.0.0
 
 flutter:
-
   uses-material-design: true
 
-  # To add assets to your application, add an assets section, like this:
   assets:
     - assets/
