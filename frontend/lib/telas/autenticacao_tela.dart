@@ -65,7 +65,17 @@ class _AutenticacaoState extends State<Autenticacao> {
                         controller: _emailController,
                         decoration: getAutenticacaoDecoracao("Email"),
                         validator: (String? value) {
-                          if (value == null) {},
+                          if (value == null) {
+                            return "O e-mail não pode ser vazio.";
+                          }
+                          if (value.length < 5) {
+                            return "E-mail muito pequeno";
+                          }
+                          if (!value.contains("@")) {
+                            return "E-mail não é valido.";
+                          }
+                          return null;
+                        },
                       ),
                       const SizedBox(
                         height: 22,
@@ -73,7 +83,18 @@ class _AutenticacaoState extends State<Autenticacao> {
                       TextFormField(
                         controller: _senhaController,
                         decoration: getAutenticacaoDecoracao("Senha"),
-                        validator: (String? value) {},
+                        validator: (String? value) {
+                          if (value == null) {
+                            return "A senha não pode ser vazia.";
+                          }
+                          if (value.length <= 8) {
+                            return "Senha deve ser igual ou maior que 8.";
+                          }
+                          if (value.length >= 10) {
+                            return "Senha deve ser igual ou menor que 10.";
+                          }
+                          return null;
+                        },
                         obscureText: true,
                       ),
                       const SizedBox(
@@ -86,7 +107,18 @@ class _AutenticacaoState extends State<Autenticacao> {
                             TextFormField(
                               decoration:
                                   getAutenticacaoDecoracao("Confirmar Senha"),
-                              validator: (String? value) {},
+                              validator: (String? value) {
+                                if (value == null) {
+                                  return "A senha não pode ser vazia.";
+                                }
+                                if (value.length <= 7) {
+                                  return "Senha deve ser igual ou maior que 7.";
+                                }
+                                if (value.length >= 10) {
+                                  return "Senha deve ser igual ou menor que 10.";
+                                }
+                                return null;
+                              },
                               obscureText: true,
                             ),
                             const SizedBox(
@@ -95,7 +127,18 @@ class _AutenticacaoState extends State<Autenticacao> {
                             TextFormField(
                               controller: _nomeController,
                               decoration: getAutenticacaoDecoracao("Nome"),
-                              validator: (String? value) {},
+                              validator: (String? value) {
+                                if (value == null) {
+                                  return "O nome não pode ser vazio.";
+                                }
+                                if (value.length < 4) {
+                                  return "Nome muito pequeno";
+                                }
+                                if (value.length > 20) {
+                                  return "Nome muito grande.";
+                                }
+                                return null;
+                              },
                             ),
                           ],
                         ),
