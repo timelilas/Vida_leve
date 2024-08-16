@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:vida_leve/services/api_service.dart';
+import 'package:vida_leve/servicos/api_service.dart';
 
 class Autenticacao extends StatefulWidget {
   @override
