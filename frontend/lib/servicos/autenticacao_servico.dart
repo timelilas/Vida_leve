@@ -1,6 +1,4 @@
-import 'package:firebase_auth/firebase_auth.dart';
-
-final FirebaseAuth _firebaseAuth = FirebaseAuth.instance;
+//final FirebaseAuth _firebaseAuth = FirebaseAuth.instance;
 
 class AutenticacaoServico {
   cadastrarUsuario({
@@ -8,9 +6,9 @@ class AutenticacaoServico {
     required String senha,
     required String email,
   }) {
-    _firebaseAuth.createUserWithEmailAndPassword(
-      email: email,
-      password: senha,
-    );
+    // _firebaseAuth.createUserWithEmailAndPassword(
+    //   email: email,
+    //   password: senha,
+    // );
   }
 }
