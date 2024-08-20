@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:vida_leve/telas/autenticacao_tela.dart';
-i
 
 void main() {
   runApp(const MyApp());
