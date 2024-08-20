@@ -31,8 +31,8 @@ class _AutenticacaoState extends State<Autenticacao> {
                     begin: Alignment.topCenter,
                     end: Alignment.bottomCenter,
                     colors: [
-                  CoresApp.azulBaixoGradiente,
-                  CoresApp.azulEscuro
+                  Color(0xFFEFF0F6),
+                  Color(0xFFEFF0F6),
                 ])),
           ),
           Padding(
@@ -46,16 +46,25 @@ class _AutenticacaoState extends State<Autenticacao> {
                     crossAxisAlignment: CrossAxisAlignment.stretch,
                     children: [
                       Image.asset(
-                        "assets/mamon.png",
-                        height: 128,
+                        "assets/logo.png",
+                        height: 200,
                       ),
                       const Text(
-                        "Porra! Blaid",
+                        "Boas vindas!",
                         textAlign: TextAlign.center,
                         style: TextStyle(
-                          fontSize: 48,
+                          fontSize: 40,
                           fontWeight: FontWeight.bold,
-                          color: Colors.white,
+                          color: Color(0xFF4E4B66),
+                        ),
+                      ),
+                      const Text(
+                        "Cadastre-se para continuar",
+                        textAlign: TextAlign.center,
+                        style: TextStyle(
+                          fontSize: 30,
+                          fontWeight: FontWeight.bold,
+                          color: Color(0xFF4E4B66),
                         ),
                       ),
                       const SizedBox(

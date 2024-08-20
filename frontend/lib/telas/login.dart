@@ -12,109 +12,15 @@ class Login extends StatefulWidget {
 
 class _MyWidgetState extends State<Login> {
   final LoginPage loginPage = LoginPage(
-      id: "666",
-      name: "Inferno santo",
-      comoFazer: "muitos pecado te levam para o inferno");
+      id: "465465",
+      name: "Salada não é comida",
+      comoFazer: "Salada não é comida");
 
   final List<MensagemEnviada> ListaMensagemEnviada = [
     MensagemEnviada(
-        id: "123456",
-        tipomensagem: "Sata esteve aqui",
-        dataenvio: "2022/10/1966"),
+        id: "123456", tipomensagem: "Prato feito", dataenvio: "2022/10/1966"),
     MensagemEnviada(
-        id: "123456",
-        tipomensagem: "Deus nunca esteve aqui",
-        dataenvio: "2022/10/1900"),
-    MensagemEnviada(
-        id: "123456", tipomensagem: "Jesus não vem", dataenvio: "2022/10/2000"),
-    MensagemEnviada(
-        id: "123456",
-        tipomensagem: "ta osso essa vida",
-        dataenvio: "2022/10/1966"),
-    MensagemEnviada(
-        id: "123456",
-        tipomensagem: "Sata esteve aqui",
-        dataenvio: "2022/10/1966"),
-    MensagemEnviada(
-        id: "123456",
-        tipomensagem: "Deus nunca esteve aqui",
-        dataenvio: "2022/10/1900"),
-    MensagemEnviada(
-        id: "123456", tipomensagem: "Jesus não vem", dataenvio: "2022/10/2000"),
-    MensagemEnviada(
-        id: "123456",
-        tipomensagem: "ta osso essa vida",
-        dataenvio: "2022/10/1966"),
-    MensagemEnviada(
-        id: "123456",
-        tipomensagem: "Sata esteve aqui",
-        dataenvio: "2022/10/1966"),
-    MensagemEnviada(
-        id: "123456",
-        tipomensagem: "Deus nunca esteve aqui",
-        dataenvio: "2022/10/1900"),
-    MensagemEnviada(
-        id: "123456", tipomensagem: "Jesus não vem", dataenvio: "2022/10/2000"),
-    MensagemEnviada(
-        id: "123456",
-        tipomensagem: "ta osso essa vida",
-        dataenvio: "2022/10/1966"),
-    MensagemEnviada(
-        id: "123456",
-        tipomensagem: "Sata esteve aqui",
-        dataenvio: "2022/10/1966"),
-    MensagemEnviada(
-        id: "123456",
-        tipomensagem: "Deus nunca esteve aqui",
-        dataenvio: "2022/10/1900"),
-    MensagemEnviada(
-        id: "123456", tipomensagem: "Jesus não vem", dataenvio: "2022/10/2000"),
-    MensagemEnviada(
-        id: "123456",
-        tipomensagem: "ta osso essa vida",
-        dataenvio: "2022/10/1966"),
-    MensagemEnviada(
-        id: "123456",
-        tipomensagem: "Sata esteve aqui",
-        dataenvio: "2022/10/1966"),
-    MensagemEnviada(
-        id: "123456",
-        tipomensagem: "Deus nunca esteve aqui",
-        dataenvio: "2022/10/1900"),
-    MensagemEnviada(
-        id: "123456", tipomensagem: "Jesus não vem", dataenvio: "2022/10/2000"),
-    MensagemEnviada(
-        id: "123456",
-        tipomensagem: "ta osso essa vida",
-        dataenvio: "2022/10/1966"),
-    MensagemEnviada(
-        id: "123456",
-        tipomensagem: "Sata esteve aqui",
-        dataenvio: "2022/10/1966"),
-    MensagemEnviada(
-        id: "123456",
-        tipomensagem: "Deus nunca esteve aqui",
-        dataenvio: "2022/10/1900"),
-    MensagemEnviada(
-        id: "123456", tipomensagem: "Jesus não vem", dataenvio: "2022/10/2000"),
-    MensagemEnviada(
-        id: "123456",
-        tipomensagem: "ta osso essa vida",
-        dataenvio: "2022/10/1966"),
-    MensagemEnviada(
-        id: "123456",
-        tipomensagem: "Sata esteve aqui",
-        dataenvio: "2022/10/1966"),
-    MensagemEnviada(
-        id: "123456",
-        tipomensagem: "Deus nunca esteve aqui",
-        dataenvio: "2022/10/1900"),
-    MensagemEnviada(
-        id: "123456", tipomensagem: "Jesus não vem", dataenvio: "2022/10/2000"),
-    MensagemEnviada(
-        id: "123456",
-        tipomensagem: "ta osso essa vida",
-        dataenvio: "2022/10/1966"),
+        id: "123456", tipomensagem: "Coxinha crua", dataenvio: "2022/10/1966"),
   ];
 
   @override
@@ -163,7 +69,7 @@ class _MyWidgetState extends State<Login> {
                 children: [
                   ElevatedButton(
                     onPressed: () {},
-                    child: Text("Enviar foto sexo"),
+                    child: Text("Enviar foto perfil"),
                     style: ElevatedButton.styleFrom(
                       shape: const RoundedRectangleBorder(
                           borderRadius: BorderRadius.zero),
@@ -195,11 +101,11 @@ class _MyWidgetState extends State<Login> {
             ),
             const SizedBox(height: 8),
             Text(
-              "${loginPage.comoFazer}Aqui jas",
+              "${loginPage.comoFazer}Aqui!",
               style: const TextStyle(fontWeight: FontWeight.bold, fontSize: 18),
             ),
             Text(
-              "${loginPage.comoFazer}Ajanh Mudito firmeza",
+              "${loginPage.comoFazer}Só comida ruim",
               style: const TextStyle(fontWeight: FontWeight.bold, fontSize: 10),
             ),
             const Padding(
