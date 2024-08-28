@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:vida_leve/_comum/fonts.dart';
 import 'package:vida_leve/componentes/decoracao_campo_autenticacao.dart';
+import 'package:vida_leve/model/validar_senha.dart';
 import 'package:vida_leve/servicos/autenticacao_servico.dart';
 
 class Autenticacao extends StatefulWidget {
@@ -19,6 +19,8 @@ class _AutenticacaoState extends State<Autenticacao> {
   TextEditingController _nomeController = TextEditingController();
   AutenticacaoServico _autenticacaoServico = AutenticacaoServico();
 
+  final _formKey = GlobalKey<FormState>();
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -31,14 +33,14 @@ class _AutenticacaoState extends State<Autenticacao> {
                     begin: Alignment.topCenter,
                     end: Alignment.bottomCenter,
                     colors: [
-                  CoresApp.azulBaixoGradiente,
-                  CoresApp.azulEscuro
+                  Color(0xFFEFF0F6),
+                  Color(0xFFEFF0F6),
                 ])),
           ),
           Padding(
             padding: const EdgeInsets.all(16.0),
             child: Form(
-              key: _formkey,
+              key: _formKey,
               child: Center(
                 child: SingleChildScrollView(
                   child: Column(
@@ -46,16 +48,25 @@ class _AutenticacaoState extends State<Autenticacao> {
                     crossAxisAlignment: CrossAxisAlignment.stretch,
                     children: [
                       Image.asset(
-                        "assets/mamon.png",
-                        height: 128,
+                        "assets/logoperfil.png",
+                        height: 200,
                       ),
                       const Text(
-                        "Porra! Blaid",
+                        "Boas vindas!",
                         textAlign: TextAlign.center,
                         style: TextStyle(
-                          fontSize: 48,
+                          fontSize: 40,
                           fontWeight: FontWeight.bold,
-                          color: Colors.white,
+                          color: Color(0xFF4E4B66),
+                        ),
+                      ),
+                      const Text(
+                        "Cadastre-se para continuar",
+                        textAlign: TextAlign.center,
+                        style: TextStyle(
+                          fontSize: 30,
+                          fontWeight: FontWeight.bold,
+                          color: Color(0xFF4E4B66),
                         ),
                       ),
                       const SizedBox(
@@ -83,15 +94,17 @@ class _AutenticacaoState extends State<Autenticacao> {
                       TextFormField(
                         controller: _senhaController,
                         decoration: getAutenticacaoDecoracao("Senha"),
-                        validator: (String? value) {
-                          if (value == null) {
-                            return "A senha não pode ser vazio.";
-                          }
-                          if (value.length <= 8) {
-                            return "Senha deve ser igual ou maior que 8.";
-                          }
-                          if (value.length >= 10) {
-                            return "Senha deve ser igual ou menor que 10.";
+                        validator: (value) {
+                          if (value == null || value.isEmpty) {
+                            return 'Por favor, insira uma senha.';
+                          } else if (!PasswordValidator.isValid(value)) {
+                            return 'A senha deve conter:\n'
+                                '- Pelo menos 8 caracteres de extensão\n'
+                                '- Pelo menos 3 dos seguintes:\n'
+                                '  Letras minúsculas (a-z)\n'
+                                '  Letras maiúsculas (A-Z)\n'
+                                '  Números (0-9)\n'
+                                '  Caracteres especiais (!@#\$%&*)';
                           }
                           return null;
                         },
@@ -135,7 +148,7 @@ class _AutenticacaoState extends State<Autenticacao> {
                                   return "Nome muito pequeno";
                                 }
                                 if (value.length < 20) {
-                                  return "Nome muiot grande.";
+                                  return "Nome muito grande.";
                                 }
                                 return null;
                               },
@@ -150,6 +163,10 @@ class _AutenticacaoState extends State<Autenticacao> {
                         onPressed: () {
                           botaoPrincipalClicado();
                         },
+                        style: ElevatedButton.styleFrom(
+                          backgroundColor:
+                              Color(0xFFFFAE31), // Cor de fundo do botão
+                        ),
                         child: Text((queroEntrar) ? "ENTRAR" : "Cadastrar"),
                       ),
                       const Divider(),
@@ -173,25 +190,21 @@ class _AutenticacaoState extends State<Autenticacao> {
     );
   }
 
-  botaoPrincipalClicado() {
-    String nome = _senhaController.text;
+  void botaoPrincipalClicado() async {
+    String nome = _nomeController.text;
     String email = _emailController.text;
     String senha = _senhaController.text;
 
-    if (_formkey.currentState!.validate()) {
+    if (_formKey.currentState!.validate()) {
       if (queroEntrar) {
-        print("Permitido ${_emailController.text}" +
-            "${_nomeController.text}" +
-            "${_senhaController.text}");
+        // Chama a API para autenticar o usuário
+        await _autenticacaoServico.autenticarUsuario(email: email, senha: senha);
       } else {
-        print("Não Permitido cadastro");
-        print(
-            "${_emailController.text},${_senhaController.text},${_nomeController.text},");
-        _autenticacaoServico.cadastrarUsuario(
-            nome: nome, senha: senha, email: email);
+        // Chama a API para cadastrar o usuário
+        await _autenticacaoServico.cadastrarUsuario(nome: nome, senha: senha, email: email);
       }
     } else {
-      print("Não Permitido Formulario");
+      print("Formulário inválido");
     }
   }
 }

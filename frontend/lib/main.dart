@@ -1,13 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:vida_leve/telas/autenticacao_tela.dart';
-import 'package:firebase_core/firebase_core.dart';
-import 'firebase_options.dart';
+// import 'package:vida_leve/telas/login.dart';
+// import 'package:vida_leve/telas/main_origem.dart';
+// import 'package:vida_leve/telas/perfil.dart';
 
-void main() async {
-  WidgetsFlutterBinding.ensureInitialized();
-  await Firebase.initializeApp(
-    options: DefaultFirebaseOptions.currentPlatform,
-  );
+void main() {
   runApp(const MyApp());
 }
 
