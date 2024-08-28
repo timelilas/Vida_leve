@@ -1,236 +1,150 @@
 import 'package:flutter/material.dart';
-import 'package:vida_leve/_comum/fonts.dart';
-import 'package:vida_leve/model/login_page.dart';
-import 'package:vida_leve/model/msg_enviada.dart';
 
-class Login extends StatefulWidget {
-  Login({super.key});
-
-  @override
-  State<Login> createState() => _MyWidgetState();
+void main() {
+  runApp(VidaLeveApp());
 }
 
-class _MyWidgetState extends State<Login> {
-  final LoginPage loginPage = LoginPage(
-      id: "666",
-      name: "Inferno santo",
-      comoFazer: "muitos pecado te levam para o inferno");
+class VidaLeveApp extends StatelessWidget {
+  @override
+  Widget build(BuildContext context) {
+    return MaterialApp(
+      home: VidaLeveHomePage(),
+    );
+  }
+}
 
-  final List<MensagemEnviada> ListaMensagemEnviada = [
-    MensagemEnviada(
-        id: "123456",
-        tipomensagem: "Sata esteve aqui",
-        dataenvio: "2022/10/1966"),
-    MensagemEnviada(
-        id: "123456",
-        tipomensagem: "Deus nunca esteve aqui",
-        dataenvio: "2022/10/1900"),
-    MensagemEnviada(
-        id: "123456", tipomensagem: "Jesus não vem", dataenvio: "2022/10/2000"),
-    MensagemEnviada(
-        id: "123456",
-        tipomensagem: "ta osso essa vida",
-        dataenvio: "2022/10/1966"),
-    MensagemEnviada(
-        id: "123456",
-        tipomensagem: "Sata esteve aqui",
-        dataenvio: "2022/10/1966"),
-    MensagemEnviada(
-        id: "123456",
-        tipomensagem: "Deus nunca esteve aqui",
-        dataenvio: "2022/10/1900"),
-    MensagemEnviada(
-        id: "123456", tipomensagem: "Jesus não vem", dataenvio: "2022/10/2000"),
-    MensagemEnviada(
-        id: "123456",
-        tipomensagem: "ta osso essa vida",
-        dataenvio: "2022/10/1966"),
-    MensagemEnviada(
-        id: "123456",
-        tipomensagem: "Sata esteve aqui",
-        dataenvio: "2022/10/1966"),
-    MensagemEnviada(
-        id: "123456",
-        tipomensagem: "Deus nunca esteve aqui",
-        dataenvio: "2022/10/1900"),
-    MensagemEnviada(
-        id: "123456", tipomensagem: "Jesus não vem", dataenvio: "2022/10/2000"),
-    MensagemEnviada(
-        id: "123456",
-        tipomensagem: "ta osso essa vida",
-        dataenvio: "2022/10/1966"),
-    MensagemEnviada(
-        id: "123456",
-        tipomensagem: "Sata esteve aqui",
-        dataenvio: "2022/10/1966"),
-    MensagemEnviada(
-        id: "123456",
-        tipomensagem: "Deus nunca esteve aqui",
-        dataenvio: "2022/10/1900"),
-    MensagemEnviada(
-        id: "123456", tipomensagem: "Jesus não vem", dataenvio: "2022/10/2000"),
-    MensagemEnviada(
-        id: "123456",
-        tipomensagem: "ta osso essa vida",
-        dataenvio: "2022/10/1966"),
-    MensagemEnviada(
-        id: "123456",
-        tipomensagem: "Sata esteve aqui",
-        dataenvio: "2022/10/1966"),
-    MensagemEnviada(
-        id: "123456",
-        tipomensagem: "Deus nunca esteve aqui",
-        dataenvio: "2022/10/1900"),
-    MensagemEnviada(
-        id: "123456", tipomensagem: "Jesus não vem", dataenvio: "2022/10/2000"),
-    MensagemEnviada(
-        id: "123456",
-        tipomensagem: "ta osso essa vida",
-        dataenvio: "2022/10/1966"),
-    MensagemEnviada(
-        id: "123456",
-        tipomensagem: "Sata esteve aqui",
-        dataenvio: "2022/10/1966"),
-    MensagemEnviada(
-        id: "123456",
-        tipomensagem: "Deus nunca esteve aqui",
-        dataenvio: "2022/10/1900"),
-    MensagemEnviada(
-        id: "123456", tipomensagem: "Jesus não vem", dataenvio: "2022/10/2000"),
-    MensagemEnviada(
-        id: "123456",
-        tipomensagem: "ta osso essa vida",
-        dataenvio: "2022/10/1966"),
-    MensagemEnviada(
-        id: "123456",
-        tipomensagem: "Sata esteve aqui",
-        dataenvio: "2022/10/1966"),
-    MensagemEnviada(
-        id: "123456",
-        tipomensagem: "Deus nunca esteve aqui",
-        dataenvio: "2022/10/1900"),
-    MensagemEnviada(
-        id: "123456", tipomensagem: "Jesus não vem", dataenvio: "2022/10/2000"),
-    MensagemEnviada(
-        id: "123456",
-        tipomensagem: "ta osso essa vida",
-        dataenvio: "2022/10/1966"),
-  ];
-
+class VidaLeveHomePage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: const Color.fromARGB(255, 99, 134, 143),
       appBar: AppBar(
-        title: Column(
-          children: [
-            Text(
-              "${loginPage.id}",
-              style: const TextStyle(fontWeight: FontWeight.bold, fontSize: 35),
-            ),
-            Text("${loginPage.name}",
-                style:
-                    const TextStyle(fontWeight: FontWeight.bold, fontSize: 12)),
-          ],
-        ),
+        title: Text('Vida Leve'),
         centerTitle: true,
-        backgroundColor: CoresApp.azulEscuro,
-        elevation: 0,
-        toolbarHeight: 80,
-        shape: const RoundedRectangleBorder(
-          borderRadius: BorderRadius.vertical(
-            bottom: Radius.circular(35),
-          ),
-        ),
       ),
-      floatingActionButton: FloatingActionButton(
-        onPressed: () {
-          print("Foi clicado!!!");
-        },
-        child: const Icon(Icons.add),
-      ),
-      body: Container(
-        margin: const EdgeInsets.all(10),
+      body: Padding(
         padding: const EdgeInsets.all(16.0),
-        decoration: BoxDecoration(
-            color: Colors.white, borderRadius: BorderRadius.circular(16)),
-        child: ListView(
+        child: Column(
+          crossAxisAlignment: CrossAxisAlignment.stretch,
           children: [
-            SizedBox(
-              height: 250,
-              child: Row(
-                mainAxisAlignment: MainAxisAlignment.spaceAround,
-                children: [
-                  ElevatedButton(
-                    onPressed: () {},
-                    child: Text("Enviar foto sexo"),
-                    style: ElevatedButton.styleFrom(
-                      shape: const RoundedRectangleBorder(
-                          borderRadius: BorderRadius.zero),
+            // Card principal que contém os dois sub-cards
+            Card(
+              elevation: 4,
+              child: Padding(
+                padding: const EdgeInsets.all(16.0),
+                child: Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                  children: [
+                    // Primeiro sub-card contendo dois textos
+                    Expanded(
+                      child: Card(
+                        elevation: 2,
+                        color: Colors.blue[100],
+                        child: Padding(
+                          padding: const EdgeInsets.all(16.0),
+                          child: Column(
+                            mainAxisSize: MainAxisSize.min,
+                            children: [
+                              Text(
+                                '0',
+                                style: TextStyle(
+                                  fontSize: 24,
+                                  fontWeight: FontWeight.bold,
+                                ),
+                              ),
+                              SizedBox(height: 8), // Espaço entre os textos
+                              Text(
+                                'Consumidas',
+                                style: TextStyle(
+                                  fontSize: 18,
+                                ),
+                              ),
+                            ],
+                          ),
+                        ),
+                      ),
                     ),
-                  ),
-                  ElevatedButton(
-                    onPressed: () {},
-                    child: Text("Tirar foto"),
-                    style: ElevatedButton.styleFrom(
-                      shape: const RoundedRectangleBorder(
-                          borderRadius: BorderRadius.zero),
+                    SizedBox(width: 16), // Espaço entre os sub-cards
+                    // Segundo sub-card com barra de progresso circular parcial e texto
+                    Expanded(
+                      child: Card(
+                        elevation: 2,
+                        color: Colors.green[100],
+                        child: Padding(
+                          padding: const EdgeInsets.all(16.0),
+                          child: Column(
+                            mainAxisSize: MainAxisSize.min,
+                            children: [
+                              Text(
+                                '1470',
+                                style: TextStyle(
+                                  fontSize: 24,
+                                  fontWeight: FontWeight.bold,
+                                ),
+                              ),
+                              SizedBox(
+                                  height: 8), // Espaço entre o texto e a barra
+                              CustomPaint(
+                                size: Size(100, 100),
+                                painter: CircularProgressPainter(
+                                    0.7), // 70% do círculo
+                              ),
+                              SizedBox(
+                                  height: 8), // Espaço entre a barra e o texto
+                              Text(
+                                'Restantes',
+                                style: TextStyle(
+                                  fontSize: 18,
+                                ),
+                              ),
+                            ],
+                          ),
+                        ),
+                      ),
                     ),
-                  )
-                ],
+                  ],
+                ),
               ),
             ),
-            const SizedBox(height: 8),
-            const Text(
-              "Como fazer ?",
-              style: TextStyle(fontWeight: FontWeight.bold, fontSize: 18),
-            ),
-            Text(
-              loginPage.comoFazer,
-              style: const TextStyle(fontWeight: FontWeight.bold, fontSize: 10),
-            ),
-            const Padding(
-              padding: EdgeInsets.all(8.0),
-              child: Divider(color: Colors.black),
-            ),
-            const SizedBox(height: 8),
-            Text(
-              "${loginPage.comoFazer}Aqui jas",
-              style: const TextStyle(fontWeight: FontWeight.bold, fontSize: 18),
-            ),
-            Text(
-              "${loginPage.comoFazer}Ajanh Mudito firmeza",
-              style: const TextStyle(fontWeight: FontWeight.bold, fontSize: 10),
-            ),
-            const Padding(
-              padding: EdgeInsets.all(8.0),
-              child: Divider(color: Colors.black),
-            ),
-            Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: List.generate(ListaMensagemEnviada.length, (index) {
-                MensagemEnviada msm = ListaMensagemEnviada[index];
-                return ListTile(
-                  dense: true,
-                  contentPadding: EdgeInsets.zero,
-                  title: Text(msm.tipomensagem),
-                  subtitle: Text(msm.dataenvio),
-                  leading: const Icon(Icons.double_arrow_rounded),
-                  trailing: IconButton(
-                    icon: const Icon(
-                      Icons.delete,
-                      color: Colors.red,
-                    ),
-                    onPressed: () {
-                      print("Teste");
-                    },
-                  ),
-                );
-              }),
-            )
           ],
         ),
       ),
     );
+  }
+}
+
+// CustomPainter para criar uma barra de progresso circular parcial
+class CircularProgressPainter extends CustomPainter {
+  final double progress;
+
+  CircularProgressPainter(this.progress);
+
+  @override
+  void paint(Canvas canvas, Size size) {
+    Paint circle = Paint()
+      ..strokeWidth = 8
+      ..color = Colors.grey[300]!
+      ..style = PaintingStyle.stroke;
+
+    Paint progressArc = Paint()
+      ..strokeWidth = 8
+      ..color = Colors.green
+      ..style = PaintingStyle.stroke
+      ..strokeCap = StrokeCap.round;
+
+    Offset center = Offset(size.width / 2, size.height / 2);
+    double radius = size.width / 2 - 8;
+
+    // Desenha o círculo de fundo
+    canvas.drawCircle(center, radius, circle);
+
+    // Desenha o arco de progresso
+    double angle = 2 * 3.14 * progress;
+    canvas.drawArc(Rect.fromCircle(center: center, radius: radius), -3.14 / 2,
+        angle, false, progressArc);
+  }
+
+  @override
+  bool shouldRepaint(covariant CustomPainter oldDelegate) {
+    return true;
   }
 }
