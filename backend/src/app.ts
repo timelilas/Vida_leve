@@ -24,7 +24,7 @@ class App {
   }
 
   private routes(): void {
-    this.app.use('/login', userRouter);
+    this.app.use('/user', userRouter);
   }
 
   public start(PORT: string | number): void {
