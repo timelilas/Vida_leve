@@ -18,7 +18,11 @@ export default class UserService {
     try {
       const user = await User.findOne({ where: { email } });
 
-      const isValidPassword = await bcrypt.compare(password, user!.password);
+      if (!user || !user.password) {
+        return { type: 401, message: { error: 'Usuário ou senha incorretos' } };
+      }
+
+      const isValidPassword = await bcrypt.compare(password, user.password);
 
       if (!isValidPassword) {
         return { type: 401, message: { error: 'Senha incorreta' } };
@@ -26,6 +30,29 @@ export default class UserService {
 
       const token = generateToken({ id: user!.id, email: user!.email, password: user!.password });
       return { type: 200, message: { message: token } };
+    } catch (error) {
+      console.error('Error logging in:', error);
+      throw new Error('Error logging in');
+    }
+  }
+
+  public put = async (id: number, userName: string, telephone: string, birthDate: Date, sex: string) => {
+    try {
+      const idUser = await User.findByPk(id)
+
+      if (!idUser) {
+        return { type: 404, message: { error: 'Usuario não logado' } };
+      }
+
+      await User.update({ 
+        userName: userName ?? idUser.userName,
+         telephone: telephone ?? idUser.telephone,
+      birthDate: birthDate ?? idUser.birthDate,
+      sex: sex ?? idUser.sex,
+      },
+      { where: { id } }
+    )
+      return { type: 200, message: { message: 'Dados completado com sucesso' } }
     } catch (error) {
       console.error('Error logging in:', error);
       throw new Error('Error logging in');

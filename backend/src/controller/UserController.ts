@@ -27,4 +27,17 @@ export default class UserController {
       return res.status(500).json({ error: 'Error logging in' });
     }
   }
+
+  async put (req: Request, res: Response): Promise<Response> {
+    const { userName, telephone, birthDate, sex} = req.body;
+    const { id } = req.params;
+
+    try {
+      const { type, message } = await this._userService.put(Number(id), userName, telephone, birthDate, sex);
+      return res.status(type).json(message)
+    } catch (error) {
+      console.error('Error in UserController:', error);
+      return res.status(500).json({ error: 'Error creating user' });
+    }
+  }
 }

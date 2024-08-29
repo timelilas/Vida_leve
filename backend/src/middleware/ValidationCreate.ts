@@ -49,4 +49,14 @@ const validateLogin = async (req: Request, res: Response, next: NextFunction) =>
     next();
 }
 
-export default { validateUser, validateLogin };
+const validateProfile = async (req: Request, res: Response, next: NextFunction) => {
+    const { telephone, birthDate, sex} = req.body;
+
+    if (!telephone || !birthDate || !sex ) {
+        return res.status(400).json({ message: 'Os compos de telefone, aniversario e sexo são obrigatorios!' })
+    }
+
+    next();
+}
+
+export default { validateUser, validateLogin, validateProfile };

@@ -1,14 +1,17 @@
 import { Model, DataTypes } from 'sequelize';
 import sequelize from '.';
 
-class Users extends Model {
+class User extends Model {
   public id!: number;
-  public userName!: string;
-  public email!: string;
-  public password!: string;
+  public userName?: string;  
+  public email?: string;     
+  public password?: string;  
+  public telephone?: string; 
+  public birthDate?: Date;   
+  public sex?: string;       
 }
 
-Users.init(
+User.init(
   {
     id: {
       type: DataTypes.INTEGER,
@@ -17,24 +20,36 @@ Users.init(
     },
     userName: {
       type: DataTypes.STRING,
-      allowNull: false,
+      allowNull: true,
     },
     email: {
       type: DataTypes.STRING,
-      allowNull: false,
+      allowNull: true,
     },
     password: {
       type: DataTypes.STRING,
-      allowNull: false,
+      allowNull: true,
     },
+    telephone: {
+      type: DataTypes.STRING,
+      allowNull: true,
+    },
+    birthDate: {
+      type: DataTypes.DATE,
+      allowNull: true,
+    },
+    sex: {
+      type: DataTypes.STRING,
+      allowNull: true,
+    }
   },
   {
     sequelize,
-    modelName: 'Users',
+    modelName: 'User',
     tableName: 'Users',
     timestamps: false,
     freezeTableName: true,
   }
 );
 
-export default Users;
+export default User;

@@ -21,6 +21,18 @@ module.exports = {
         allowNull: false,
         type: Sequelize.STRING
       },
+      telephone: {
+        allowNull: true,
+        type: Sequelize.STRING
+      },
+      birthDate: {
+        allowNull: true,
+        type: Sequelize.DATE
+      },
+      sex: {
+        allowNull: true,
+        type: Sequelize.STRING
+      }
     });
   },
   down: async (queryInterface, Sequelize) => {
