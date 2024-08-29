@@ -17,7 +17,7 @@ Agora e so aproveitar <a>http://localhost:8080</a>
 ## API:
 <a>http://localhost:3000</a>
 
-#### POST `/login` :
+#### POST `/user/login` :
     Entrada:
     {
         "email": "root@root.comm",
@@ -30,7 +30,7 @@ Agora e so aproveitar <a>http://localhost:8080</a>
     }
 
 
-#### POST `/login/create` :
+#### POST `/user/create` :
     Entrada:
     {
         "userName": "Test",
@@ -41,4 +41,19 @@ Agora e so aproveitar <a>http://localhost:8080</a>
     Saida:
     {
         "message": 2
+    }
+
+
+#### PUT `/user/profile/:id` :
+    Entrada:
+    {
+        "userName": "Test Jr",
+        "telephone": "11 987654321",
+        "birthDate": "1990-01-01",
+        "sex": "Homem"
+    }
+
+    Saida: 
+    {
+        "message": "Dados completado com sucesso"
     }
