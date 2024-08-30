@@ -8,7 +8,7 @@ class AutenticacaoServico {
     required String senha,
     required String email,
   }) async {
-    final endpoint = '/login/create';
+    final endpoint = '/user/create';
     final body = {
       'userName': nome,
       'email': email,
@@ -27,10 +27,10 @@ class AutenticacaoServico {
     required String email,
     required String senha,
   }) async {
-    final endpoint = '/login';
+    final endpoint = '/user/login';
     final body = {
       'email': email,
-      'password': senha,
+      'senha': senha,
     };
 
     final response = await _apiService.postData(endpoint, body);
