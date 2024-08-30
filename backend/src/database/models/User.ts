@@ -5,10 +5,10 @@ class User extends Model {
   public id!: number;
   public userName?: string;  
   public email?: string;     
-  public password?: string;  
-  public telephone?: string; 
-  public birthDate?: Date;   
-  public sex?: string;       
+  public senha?: string;  
+  public telefone?: string; 
+  public aniversario?: Date;   
+  public sexo?: string;       
 }
 
 User.init(
@@ -26,19 +26,19 @@ User.init(
       type: DataTypes.STRING,
       allowNull: true,
     },
-    password: {
+    senha: {
       type: DataTypes.STRING,
       allowNull: true,
     },
-    telephone: {
+    telefone: {
       type: DataTypes.STRING,
       allowNull: true,
     },
-    birthDate: {
+    aniversario: {
       type: DataTypes.DATE,
       allowNull: true,
     },
-    sex: {
+    sexo: {
       type: DataTypes.STRING,
       allowNull: true,
     }

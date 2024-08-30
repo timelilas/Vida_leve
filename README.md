@@ -21,7 +21,7 @@ Agora e so aproveitar <a>http://localhost:8080</a>
     Entrada:
     {
         "email": "root@root.comm",
-        "password": "Test123!."
+        "senha": "Test123!."
     }
 
     Saida:
@@ -35,7 +35,7 @@ Agora e so aproveitar <a>http://localhost:8080</a>
     {
         "userName": "Test",
         "email": "root@root.comm",
-        "password": "Test123!."
+        "senha": "Test123!."
     }
 
     Saida:
@@ -48,9 +48,9 @@ Agora e so aproveitar <a>http://localhost:8080</a>
     Entrada:
     {
         "userName": "Test Jr",
-        "telephone": "11 987654321",
-        "birthDate": "1990-01-01",
-        "sex": "Homem"
+        "telefone": "11 987654321",
+        "aniversario": "1990-01-01",
+        "sexo": "Homem"
     }
 
     Saida: 

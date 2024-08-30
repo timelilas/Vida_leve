@@ -17,19 +17,19 @@ module.exports = {
         allowNull: false,
         type: Sequelize.STRING
       },
-      password: {
+      senha: {
         allowNull: false,
         type: Sequelize.STRING
       },
-      telephone: {
+      telefone: {
         allowNull: true,
         type: Sequelize.STRING
       },
-      birthDate: {
+      aniversario: {
         allowNull: true,
         type: Sequelize.DATE
       },
-      sex: {
+      sexo: {
         allowNull: true,
         type: Sequelize.STRING
       }
