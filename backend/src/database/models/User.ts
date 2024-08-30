@@ -1,5 +1,6 @@
 import { Model, DataTypes } from 'sequelize';
 import sequelize from '.';
+import Progress from './Progress';
 
 class User extends Model {
   public id!: number;
@@ -51,5 +52,10 @@ User.init(
     freezeTableName: true,
   }
 );
+
+User.hasMany(Progress, {
+  foreignKey: 'userId',
+  as: 'progresses',
+});
 
 export default User;
