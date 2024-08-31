@@ -18,19 +18,19 @@ Progress.init(
             autoIncrement: true,
             primaryKey: true,
         },
-        height: {
+        altura: {
             type: DataTypes.FLOAT,
             allowNull: false,
         },
-        weight: {
+        peso: {
             type: DataTypes.FLOAT,
             allowNull: false,
         },
-        goal: {
+        meta: {
             type: DataTypes.STRING,
             allowNull: true,
         },
-        activity: {
+        atividade: {
             type: DataTypes.STRING,
             allowNull: true,
         },
