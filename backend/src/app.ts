@@ -1,5 +1,6 @@
 import express, { Application, Request, Response, NextFunction } from 'express';
 import userRouter from './routes/UserRouter';
+import progressRouter from './routes/ProgressRouter';
 
 class App {
   public app: Application;
@@ -25,6 +26,7 @@ class App {
 
   private routes(): void {
     this.app.use('/user', userRouter);
+    this.app.use('/progress', progressRouter)
   }
 
   public start(PORT: string | number): void {

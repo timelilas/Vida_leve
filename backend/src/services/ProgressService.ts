@@ -11,10 +11,10 @@ export default class ProgressService {
             }
 
             await Progress.create({ altura, peso, meta, atividade, userId });
-            return { type: 201, message: { message: 'Dados '} }
+            return { type: 201, message: { message: 'Dados completos!'} }
         } catch (error) {
             console.error('Error logging in:', error);
             throw new Error('Error logging in');
         }
     }
-}
+};
