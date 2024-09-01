@@ -52,13 +52,7 @@ Progress.init(
     }
 );
 
-User.hasMany(Progress, {
-    foreignKey: 'userId',
-    as: 'progresses',
-});
-Progress.belongsTo(User, {
-    foreignKey: 'userId',
-    as: 'user',
-});
+User.hasMany(Progress, { foreignKey: 'userId', as: 'progresses' });
+Progress.belongsTo(User, { foreignKey: 'userId', as: 'user' });
 
 export default Progress;

@@ -4,12 +4,12 @@ import Progress from './Progress';
 
 class User extends Model {
   public id!: number;
-  public userName?: string;  
-  public email?: string;     
-  public senha?: string;  
-  public telefone?: string; 
-  public aniversario?: Date;   
-  public sexo?: string;       
+  public userName?: string;
+  public email?: string;
+  public senha?: string;
+  public telefone?: string;
+  public aniversario?: Date;
+  public sexo?: string;
 }
 
 User.init(
@@ -52,10 +52,5 @@ User.init(
     freezeTableName: true,
   }
 );
-
-User.hasMany(Progress, {
-  foreignKey: 'userId',
-  as: 'progresses',
-});
 
 export default User;
