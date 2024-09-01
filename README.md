@@ -57,3 +57,17 @@ Agora e so aproveitar <a>http://localhost:8080</a>
     {
         "message": "Dados completado com sucesso"
     }
+
+#### POST  `/prgress/:id`
+    Entrada:
+    {
+        "altura": 1.25,
+        "peso": 80.4,
+        "meta": 30,
+        "atividade": "leve"
+    }
+
+    Saida:
+    {
+        "message": "Dados completos!"
+    }
