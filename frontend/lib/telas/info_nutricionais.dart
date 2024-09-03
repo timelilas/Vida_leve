@@ -14,10 +14,10 @@ class _AutenticacaoState extends State<InfoNutricionais> {
   bool queroEntrar = true;
   final _formkey = GlobalKey<FormState>();
 
-  TextEditingController _apelidolController = TextEditingController();
-  TextEditingController _telefoneController = TextEditingController();
-  TextEditingController _dt_nascimentoController = TextEditingController();
-  TextEditingController _generoController = TextEditingController();
+  TextEditingController _alturaController = TextEditingController();
+  TextEditingController _peso_atualController = TextEditingController();
+  TextEditingController _peso_desejadoController = TextEditingController();
+  TextEditingController _atividade_opController = TextEditingController();
   bool _showAlternateText =
       false; // Estado para controlar a exibição do texto alternativo
   bool _showAlternateText01 =
@@ -87,7 +87,7 @@ class _AutenticacaoState extends State<InfoNutricionais> {
                         ),
                       ),
                       TextFormField(
-                        controller: _apelidolController,
+                        controller: _alturaController,
                         decoration: getAutenticacaoDecoracao(""),
                       ),
                       const SizedBox(
@@ -103,7 +103,7 @@ class _AutenticacaoState extends State<InfoNutricionais> {
                         ),
                       ),
                       TextFormField(
-                        controller: _apelidolController,
+                        controller: _peso_atualController,
                         decoration: getAutenticacaoDecoracao(""),
                       ),
                       const SizedBox(
@@ -119,7 +119,7 @@ class _AutenticacaoState extends State<InfoNutricionais> {
                         ),
                       ),
                       TextFormField(
-                        controller: _telefoneController,
+                        controller: _peso_desejadoController,
                         decoration: getAutenticacaoDecoracao(""),
                       ),
                       const SizedBox(

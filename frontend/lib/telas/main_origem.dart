@@ -62,7 +62,7 @@ class _MainOrigem extends State<MainOrigem> {
                           backgroundColor:
                               Color(0xFFFFAE31), // Cor de fundo do botão
                         ),
-                        child: Text(
+                        child: const Text(
                           "Começar agora",
                           style: TextStyle(
                             fontSize: 16,
@@ -87,7 +87,7 @@ class _MainOrigem extends State<MainOrigem> {
                           backgroundColor: Color.fromARGB(
                               255, 231, 229, 227), // Cor de fundo do botão
                         ),
-                        child: Text(
+                        child: const Text(
                           "Já tenho uma conta",
                           style: TextStyle(
                             fontSize: 16,

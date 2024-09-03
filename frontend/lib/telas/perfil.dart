@@ -22,7 +22,7 @@ class PerfilTela extends StatelessWidget {
                 ),
                 SizedBox(height: 20), // Espaço entre o logo e o primeiro card
                 // Card com nome e ícone de edição
-                Card(
+                const Card(
                   elevation: 4,
                   color: const Color.fromARGB(255, 255, 255, 255),
                   child: Padding(
@@ -42,13 +42,13 @@ class PerfilTela extends StatelessWidget {
                   ),
                 ),
                 SizedBox(height: 30),
-                Text(
+                const Text(
                   "Resume",
                   style: TextStyle(
                     color: Color.fromARGB(255, 70, 132, 77),
                   ),
                 ),
-                Card(
+                const Card(
                   elevation: 4,
                   color: const Color.fromARGB(255, 255, 255, 255),
                   child: Padding(
@@ -128,13 +128,13 @@ class PerfilTela extends StatelessWidget {
                   ),
                 ),
                 SizedBox(height: 30),
-                Text(
+                const Text(
                   "Alimentação",
                   style: TextStyle(
                     color: Color.fromARGB(255, 70, 132, 77),
                   ),
                 ),
-                Card(
+                const Card(
                   elevation: 4,
                   color: const Color.fromARGB(255, 255, 255, 255),
                   child: Padding(
