@@ -148,3 +148,4 @@ class CircularProgressPainter extends CustomPainter {
     return true;
   }
 }
+

@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:vida_leve/telas/autenticacao_tela.dart';
-import 'package:vida_leve/telas/login.dart';
-import 'package:vida_leve/telas/main_origem.dart';
-import 'package:vida_leve/telas/perfil.dart';
+// import 'package:vida_leve/telas/login.dart';
+// import 'package:vida_leve/telas/main_origem.dart';
+// import 'package:vida_leve/telas/perfil.dart';
 
 void main() {
   runApp(const MyApp());

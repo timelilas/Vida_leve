@@ -1,48 +1,73 @@
-# Pipoca_Agil
+# Pipoca Agil
 App mobile com o objetivo de uma vida mais saudável
 
+## Script para desenvolvimento
 
-## Backend Node.js com TypeScript e MySQL
-Este é um projeto de backend desenvolvido em Node.js utilizando TypeScript, Sequelize como ORM para interação com MySQL, e Docker para o ambiente de desenvolvimento.
+Estamos utilizando o DOCKER para implantar e executar o projeto em contêineres, tenha em mente que você precisa telo em sua maquina para a visualização. Isso elimina problemas comuns de “funciona na minha máquina” ao mover aplicações entre diferentes ambientes (desenvolvimento, teste, produção).
 
-Utilizamos o docker para elimina inconsistências que podem surgir entre diferentes ambientes de desenvolvimento, como variações de sistema operacional e configurações de software.
+Siga os seguintes passo para a visualização do projeto:
 
-### Scripts Disponíveis
-No diretório do projeto, você pode executar:
+* Primeiro vamos faz o clone do projeto, em seu terminal utilize o seguinte comando `git clone git@github.com:timelilas/Vida_leve.git`.
+* Entre na pasta do projeto `cd Vida_leve`.
+* Execute o comando `docker compose up -d --build` para subir os container no Docker.
+* Quando o docker estiver de montado entre na pasta `cd backend` e execute `npm run prestart`, para a contrução das tabelas no banco de dados.
 
-* `npm run dev` : Inicia o servidor em modo de desenvolvimento utilizando ts-node-dev.
-* `npm run start` : Inicia o servidor em produção a partir dos arquivos compilados.
-* `npm run db:reset` : Reinicia o banco de dados executando drop, create, migrate e seed.
-* `npm run build` : Compila o código TypeScript para JavaScript.
-* `npm run prestart` : Compila o código TypeScript, realiza o reset do banco de dados e inicia o servidor.
+Agora e so aproveitar <a>http://localhost:8080</a> 
 
-### Dependências 
+## API:
+<a>http://localhost:3000</a>
 
-*   Express (^4.19.2): Framework web para Node.js.
-*   Sequelize (^6.37.3): ORM (Object-Relational Mapping) para banco de dados SQL.
-*   Sequelize CLI (^6.6.2): CLI para Sequelize, usado para gerenciar migrações e seeders.
-*   TypeScript (^5.5.3): Linguagem que adiciona tipagem estática opcional ao JavaScript.
-*   dotenv (^16.4.5): Carrega variáveis de ambiente de um arquivo .env para process.env.
+#### POST `/user/login` :
+    Entrada:
+    {
+        "email": "root@root.comm",
+        "senha": "Test123!."
+    }
 
-### Estrutura do projeto
+    Saida:
+    {
+        "message": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6MiwiZW1haWwiOiJyb290QHJvb3QuY29tbSIsInBhc3N3b3JkIjoiJDJhJDEwJHI0SWl5amJFRnczelQuUzBKUm1sRk9vVmdaQThiTUR0OUY5UnpPazV0VEVMS1dYLnFJLkZlIiwiaWF0IjoxNzI0ODYxMTY2LCJleHAiOjIxOTgyMjUxNjZ9.hrfhfGwkyRtcdwXQRSdEBINd3ICvtD9Gnq1xXTnngR8"
+    }
 
-        /src
-        │
-        ├── /database
-        │   ├── /config
-        │   │   └── dbConfig.ts
-        │   │   └── dbConfig.js       
-        │   ├── /migrations
-        │   ├── /models
-        │   └── /seeders
-        │
-        ├── /controllers
-        ├── /middlewares
-        ├── /routes
-        ├── /services
-        ├── /utils
-        │
-        ├── .Dockerfile
-        ├── .Sequelizerc
-        ├── app.ts
-        └── server.ts
+
+#### POST `/user/create` :
+    Entrada:
+    {
+        "userName": "Test",
+        "email": "root@root.comm",
+        "senha": "Test123!."
+    }
+
+    Saida:
+    {
+        "message": 2
+    }
+
+
+#### PUT `/user/profile/:id` :
+    Entrada:
+    {
+        "userName": "Test Jr",
+        "telefone": "11 987654321",
+        "aniversario": "1990-01-01",
+        "sexo": "Homem"
+    }
+
+    Saida: 
+    {
+        "message": "Dados completado com sucesso"
+    }
+
+#### POST  `/prgress/:id`
+    Entrada:
+    {
+        "altura": 1.25,
+        "peso": 80.4,
+        "meta": 30,
+        "atividade": "leve"
+    }
+
+    Saida:
+    {
+        "message": "Dados completos!"
+    }

@@ -12,14 +12,25 @@ class Autenticacao extends StatefulWidget {
 
 class _AutenticacaoState extends State<Autenticacao> {
   bool queroEntrar = true;
-  final _formkey = GlobalKey<FormState>();
+  final _formKey = GlobalKey<FormState>();
 
   TextEditingController _emailController = TextEditingController();
   TextEditingController _senhaController = TextEditingController();
+  TextEditingController _confirmarSenhaController = TextEditingController();
   TextEditingController _nomeController = TextEditingController();
   AutenticacaoServico _autenticacaoServico = AutenticacaoServico();
 
   final _formKey = GlobalKey<FormState>();
+
+  @override
+  void dispose() {
+    _emailController.dispose();
+    _senhaController.dispose();
+    _confirmarSenhaController.dispose();
+    _nomeController.dispose();
+    ScaffoldMessenger.of(context).clearSnackBars(); // Limpar mensagens
+    super.dispose();
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -48,7 +59,7 @@ class _AutenticacaoState extends State<Autenticacao> {
                     crossAxisAlignment: CrossAxisAlignment.stretch,
                     children: [
                       Image.asset(
-                        "assets/logo.png",
+                        "assets/logoperfil.png",
                         height: 200,
                       ),
                       const Text(
@@ -83,7 +94,7 @@ class _AutenticacaoState extends State<Autenticacao> {
                             return "E-mail muito pequeno";
                           }
                           if (!value.contains("@")) {
-                            return "E-mail não é valido.";
+                            return "E-mail não é válido.";
                           }
                           return null;
                         },
@@ -94,17 +105,11 @@ class _AutenticacaoState extends State<Autenticacao> {
                       TextFormField(
                         controller: _senhaController,
                         decoration: getAutenticacaoDecoracao("Senha"),
-                        validator: (value) {
-                          if (value == null || value.isEmpty) {
-                            return 'Por favor, insira uma senha.';
-                          } else if (!PasswordValidator.isValid(value)) {
-                            return 'A senha deve conter:\n'
-                                '- Pelo menos 8 caracteres de extensão\n'
-                                '- Pelo menos 3 dos seguintes:\n'
-                                '  Letras minúsculas (a-z)\n'
-                                '  Letras maiúsculas (A-Z)\n'
-                                '  Números (0-9)\n'
-                                '  Caracteres especiais (!@#\$%&*)';
+
+                        validator: (String? value) {
+                          String? validationMessage = PasswordValidator.validate(value ?? '');
+                          if (validationMessage != null) {
+                            return validationMessage;
                           }
                           return null;
                         },
@@ -118,17 +123,14 @@ class _AutenticacaoState extends State<Autenticacao> {
                         child: Column(
                           children: [
                             TextFormField(
-                              decoration:
-                                  getAutenticacaoDecoracao("Confirmar Senha"),
+                              controller: _confirmarSenhaController,
+                              decoration: getAutenticacaoDecoracao("Confirmar Senha"),
                               validator: (String? value) {
-                                if (value == null) {
-                                  return "A senha não pode ser vazio.";
+                                if (value == null || value.isEmpty) {
+                                  return "Por favor, confirme sua senha.";
                                 }
-                                if (value.length <= 8) {
-                                  return "Senha deve ser igual ou maior que 8.";
-                                }
-                                if (value.length >= 10) {
-                                  return "Senha deve ser igual ou menor que 10.";
+                                if (value != _senhaController.text) {
+                                  return "As senhas não coincidem.";
                                 }
                                 return null;
                               },
@@ -144,10 +146,10 @@ class _AutenticacaoState extends State<Autenticacao> {
                                 if (value == null) {
                                   return "O nome não pode ser vazio.";
                                 }
-                                if (value.length < 4) {
+                                if (value.length < 2) {
                                   return "Nome muito pequeno";
                                 }
-                                if (value.length < 20) {
+                                if (value.length > 20) {
                                   return "Nome muito grande.";
                                 }
                                 return null;
@@ -164,21 +166,27 @@ class _AutenticacaoState extends State<Autenticacao> {
                           botaoPrincipalClicado();
                         },
                         style: ElevatedButton.styleFrom(
-                          backgroundColor:
-                              Color(0xFFFFAE31), // Cor de fundo do botão
+                          backgroundColor: Color(0xFFFFAE31), // Cor de fundo do botão
                         ),
                         child: Text((queroEntrar) ? "ENTRAR" : "Cadastrar"),
                       ),
                       const Divider(),
                       TextButton(
-                          onPressed: () {
-                            setState(() {
-                              queroEntrar = !queroEntrar;
-                            });
-                          },
-                          child: Text((queroEntrar)
-                              ? "Cadastre-se aqui!"
-                              : "Já tem uma conta?")),
+                        onPressed: () {
+                          setState(() {
+                            queroEntrar = !queroEntrar;
+                            // Limpar campos ao trocar entre entrar e cadastrar
+                            _emailController.clear();
+                            _senhaController.clear();
+                            _confirmarSenhaController.clear();
+                            _nomeController.clear();
+                            _formKey.currentState?.reset();
+                          });
+                        },
+                        child: Text((queroEntrar)
+                            ? "Cadastre-se aqui!"
+                            : "Já tem uma conta? Entre"),
+                      ),
                     ],
                   ),
                 ),
@@ -190,25 +198,21 @@ class _AutenticacaoState extends State<Autenticacao> {
     );
   }
 
-  botaoPrincipalClicado() {
-    String nome = _senhaController.text;
+  void botaoPrincipalClicado() async {
+    String nome = _nomeController.text;
     String email = _emailController.text;
     String senha = _senhaController.text;
 
-    if (_formkey.currentState!.validate()) {
+    if (_formKey.currentState!.validate()) {
       if (queroEntrar) {
-        print("Permitido ${_emailController.text}" +
-            "${_nomeController.text}" +
-            "${_senhaController.text}");
+        // Chama a API para autenticar o usuário
+        await _autenticacaoServico.autenticarUsuario(email: email, senha: senha);
       } else {
-        print("Não Permitido cadastro");
-        print(
-            "${_emailController.text},${_senhaController.text},${_nomeController.text},");
-        _autenticacaoServico.cadastrarUsuario(
-            nome: nome, senha: senha, email: email);
+        // Chama a API para cadastrar o usuário
+        await _autenticacaoServico.cadastrarUsuario(nome: nome, senha: senha, email: email);
       }
     } else {
-      print("Não Permitido Formulario");
+      print("Formulário inválido");
     }
   }
 }
