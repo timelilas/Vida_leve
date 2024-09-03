@@ -20,8 +20,6 @@ class _AutenticacaoState extends State<Autenticacao> {
   TextEditingController _nomeController = TextEditingController();
   AutenticacaoServico _autenticacaoServico = AutenticacaoServico();
 
-  final _formKey = GlobalKey<FormState>();
-
   @override
   void dispose() {
     _emailController.dispose();
@@ -105,7 +103,6 @@ class _AutenticacaoState extends State<Autenticacao> {
                       TextFormField(
                         controller: _senhaController,
                         decoration: getAutenticacaoDecoracao("Senha"),
-
                         validator: (String? value) {
                           String? validationMessage = PasswordValidator.validate(value ?? '');
                           if (validationMessage != null) {
