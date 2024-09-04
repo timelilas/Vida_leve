@@ -1,14 +1,18 @@
 import { Model, DataTypes } from 'sequelize';
 import sequelize from '.';
+import Progress from './Progress';
 
-class Users extends Model {
+class User extends Model {
   public id!: number;
-  public userName!: string;
-  public email!: string;
-  public password!: string;
+  public userName?: string;
+  public email?: string;
+  public senha?: string;
+  public telefone?: string;
+  public aniversario?: Date;
+  public sexo?: string;
 }
 
-Users.init(
+User.init(
   {
     id: {
       type: DataTypes.INTEGER,
@@ -17,24 +21,36 @@ Users.init(
     },
     userName: {
       type: DataTypes.STRING,
-      allowNull: false,
+      allowNull: true,
     },
     email: {
       type: DataTypes.STRING,
-      allowNull: false,
+      allowNull: true,
     },
-    password: {
+    senha: {
       type: DataTypes.STRING,
-      allowNull: false,
+      allowNull: true,
     },
+    telefone: {
+      type: DataTypes.STRING,
+      allowNull: true,
+    },
+    aniversario: {
+      type: DataTypes.DATE,
+      allowNull: true,
+    },
+    sexo: {
+      type: DataTypes.STRING,
+      allowNull: true,
+    }
   },
   {
     sequelize,
-    modelName: 'Users',
+    modelName: 'User',
     tableName: 'Users',
     timestamps: false,
     freezeTableName: true,
   }
 );
 
-export default Users;
+export default User;
