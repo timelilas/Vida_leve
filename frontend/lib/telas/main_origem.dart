@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:vida_leve/telas/autenticacao_tela.dart';
 
 class MainOrigem extends StatefulWidget {
   const MainOrigem({super.key});
@@ -50,12 +51,18 @@ class _MainOrigem extends State<MainOrigem> {
                         height: 182,
                       ),
                       ElevatedButton(
-                        onPressed: () {},
+                        onPressed: () {
+                          Navigator.push(
+                            context,
+                            MaterialPageRoute(
+                                builder: (context) => Autenticacao()),
+                          );
+                        },
                         style: ElevatedButton.styleFrom(
                           backgroundColor:
                               Color(0xFFFFAE31), // Cor de fundo do botão
                         ),
-                        child: Text(
+                        child: const Text(
                           "Começar agora",
                           style: TextStyle(
                             fontSize: 16,
@@ -69,12 +76,18 @@ class _MainOrigem extends State<MainOrigem> {
                         height: 22,
                       ),
                       ElevatedButton(
-                        onPressed: () {},
+                        onPressed: () {
+                          Navigator.push(
+                            context,
+                            MaterialPageRoute(
+                                builder: (context) => Autenticacao()),
+                          );
+                        },
                         style: ElevatedButton.styleFrom(
                           backgroundColor: Color.fromARGB(
                               255, 231, 229, 227), // Cor de fundo do botão
                         ),
-                        child: Text(
+                        child: const Text(
                           "Já tenho uma conta",
                           style: TextStyle(
                             fontSize: 16,

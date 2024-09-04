@@ -104,7 +104,8 @@ class _AutenticacaoState extends State<Autenticacao> {
                         controller: _senhaController,
                         decoration: getAutenticacaoDecoracao("Senha"),
                         validator: (String? value) {
-                          String? validationMessage = PasswordValidator.validate(value ?? '');
+                          String? validationMessage =
+                              PasswordValidator.validate(value ?? '');
                           if (validationMessage != null) {
                             return validationMessage;
                           }
@@ -121,7 +122,8 @@ class _AutenticacaoState extends State<Autenticacao> {
                           children: [
                             TextFormField(
                               controller: _confirmarSenhaController,
-                              decoration: getAutenticacaoDecoracao("Confirmar Senha"),
+                              decoration:
+                                  getAutenticacaoDecoracao("Confirmar Senha"),
                               validator: (String? value) {
                                 if (value == null || value.isEmpty) {
                                   return "Por favor, confirme sua senha.";
@@ -163,7 +165,8 @@ class _AutenticacaoState extends State<Autenticacao> {
                           botaoPrincipalClicado();
                         },
                         style: ElevatedButton.styleFrom(
-                          backgroundColor: Color(0xFFFFAE31), // Cor de fundo do botão
+                          backgroundColor:
+                              Color(0xFFFFAE31), // Cor de fundo do botão
                         ),
                         child: Text((queroEntrar) ? "ENTRAR" : "Cadastrar"),
                       ),
@@ -203,10 +206,12 @@ class _AutenticacaoState extends State<Autenticacao> {
     if (_formKey.currentState!.validate()) {
       if (queroEntrar) {
         // Chama a API para autenticar o usuário
-        await _autenticacaoServico.autenticarUsuario(email: email, senha: senha);
+        await _autenticacaoServico.autenticarUsuario(
+            email: email, senha: senha);
       } else {
         // Chama a API para cadastrar o usuário
-        await _autenticacaoServico.cadastrarUsuario(nome: nome, senha: senha, email: email);
+        await _autenticacaoServico.cadastrarUsuario(
+            nome: nome, senha: senha, email: email);
       }
     } else {
       print("Formulário inválido");
