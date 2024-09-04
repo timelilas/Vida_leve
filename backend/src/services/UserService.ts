@@ -29,7 +29,8 @@ export default class UserService {
       }
 
       const token = generateToken({ id: user!.id, email: user!.email, senha: user!.senha });
-      return { type: 200, message: { message: token } };
+      return { type: 200, message: {  id: user.dataValues.id, message: token } };
+
     } catch (error) {
       console.error('Error logging in:', error);
       throw new Error('Error logging in');
@@ -46,9 +47,9 @@ export default class UserService {
 
       await User.update({ 
         userName: userName ?? idUser.userName,
-         telefone: telefone ?? idUser.telefone,
-      aniversario: aniversario ?? idUser.aniversario,
-      sexo: sexo ?? idUser.sexo,
+        telefone: telefone ?? idUser.telefone,
+        aniversario: aniversario ?? idUser.aniversario,
+        sexo: sexo ?? idUser.sexo,
       },
       { where: { id } }
     )
