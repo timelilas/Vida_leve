@@ -17,10 +17,22 @@ module.exports = {
         allowNull: false,
         type: Sequelize.STRING
       },
-      password: {
+      senha: {
         allowNull: false,
         type: Sequelize.STRING
       },
+      telefone: {
+        allowNull: true,
+        type: Sequelize.STRING
+      },
+      aniversario: {
+        allowNull: true,
+        type: Sequelize.DATE
+      },
+      sexo: {
+        allowNull: true,
+        type: Sequelize.STRING
+      }
     });
   },
   down: async (queryInterface, Sequelize) => {

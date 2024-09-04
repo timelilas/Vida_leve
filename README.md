@@ -17,11 +17,11 @@ Agora e so aproveitar <a>http://localhost:8080</a>
 ## API:
 <a>http://localhost:3000</a>
 
-#### POST `/login` :
+#### POST `/user/login` :
     Entrada:
     {
         "email": "root@root.comm",
-        "password": "Test123!."
+        "senha": "Test123!."
     }
 
     Saida:
@@ -30,15 +30,44 @@ Agora e so aproveitar <a>http://localhost:8080</a>
     }
 
 
-#### POST `/login/create` :
+#### POST `/user/create` :
     Entrada:
     {
         "userName": "Test",
         "email": "root@root.comm",
-        "password": "Test123!."
+        "senha": "Test123!."
     }
 
     Saida:
     {
         "message": 2
+    }
+
+
+#### PUT `/user/profile/:id` :
+    Entrada:
+    {
+        "userName": "Test Jr",
+        "telefone": "11 987654321",
+        "aniversario": "1990-01-01",
+        "sexo": "Homem"
+    }
+
+    Saida: 
+    {
+        "message": "Dados completado com sucesso"
+    }
+
+#### POST  `/prgress/:id`
+    Entrada:
+    {
+        "altura": 1.25,
+        "peso": 80.4,
+        "meta": 30,
+        "atividade": "leve"
+    }
+
+    Saida:
+    {
+        "message": "Dados completos!"
     }

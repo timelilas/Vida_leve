@@ -6,13 +6,8 @@ module.exports = {
       {
         userName: 'root',
         email: 'root@root.com',
-        password: 'root123!',
+        senha: 'root123!',
       },
-      // {
-      //   userName: 'jane_smith',
-      //   email: 'jane.smith@example.com',
-      //   password: 'hashed_password_here',
-      // },
     ], {});
   },
 
