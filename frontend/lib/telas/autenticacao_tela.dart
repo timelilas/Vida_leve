@@ -165,8 +165,7 @@ class _AutenticacaoState extends State<Autenticacao> {
                           botaoPrincipalClicado();
                         },
                         style: ElevatedButton.styleFrom(
-                          backgroundColor:
-                              Color(0xFFFFAE31), // Cor de fundo do botão
+                          backgroundColor: Color(0xFFFFAE31),
                         ),
                         child: Text((queroEntrar) ? "ENTRAR" : "Cadastrar"),
                       ),
@@ -175,7 +174,6 @@ class _AutenticacaoState extends State<Autenticacao> {
                         onPressed: () {
                           setState(() {
                             queroEntrar = !queroEntrar;
-                            // Limpar campos ao trocar entre entrar e cadastrar
                             _emailController.clear();
                             _senhaController.clear();
                             _confirmarSenhaController.clear();

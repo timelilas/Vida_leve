@@ -6,7 +6,7 @@ InputDecoration getAutenticacaoDecoracao(String label) {
     fillColor: Colors.white,
     filled: true,
     contentPadding: const EdgeInsets.fromLTRB(16, 8, 8, 8),
-    border: OutlineInputBorder(borderRadius: BorderRadius.circular(9.0)),
+    border: OutlineInputBorder(borderRadius: BorderRadius.circular(4.0)),
     enabledBorder: OutlineInputBorder(
       borderRadius: BorderRadius.circular(9.0),
       borderSide:

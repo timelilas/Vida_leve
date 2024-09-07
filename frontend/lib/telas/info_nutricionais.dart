@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:vida_leve/componentes/decoracao_campo_autenticacao.dart';
-import 'package:vida_leve/model/validar_senha.dart';
 import 'package:vida_leve/telas/queremos_conhecer.dart';
+import 'package:flutter/services.dart';
 
 class InfoNutricionais extends StatefulWidget {
   const InfoNutricionais({super.key});
@@ -11,26 +10,24 @@ class InfoNutricionais extends StatefulWidget {
 }
 
 class _AutenticacaoState extends State<InfoNutricionais> {
-  bool queroEntrar = true;
-  final _formkey = GlobalKey<FormState>();
-
   TextEditingController _alturaController = TextEditingController();
   TextEditingController _peso_atualController = TextEditingController();
   TextEditingController _peso_desejadoController = TextEditingController();
   TextEditingController _atividade_opController = TextEditingController();
-  bool _showAlternateText =
-      false; // Estado para controlar a exibição do texto alternativo
-  bool _showAlternateText01 =
-      false; // Estado para controlar a exibição do texto alternativo
 
-  void _toggleText() {
+  List<bool> _isSubtextVisible = [false, false, false, false];
+
+  void _toggleSubtext(int index) {
     setState(() {
-      if (_showAlternateText == false) {
-        _showAlternateText = !_showAlternateText; //
-      } else {
-        _showAlternateText01 = !_showAlternateText01;
-      }
+      _isSubtextVisible[index] = !_isSubtextVisible[index];
     });
+  }
+
+  void botaoPrincipalClicado() {
+    String altura = _alturaController.text;
+    String peso = _peso_atualController.text;
+    String desejado = _peso_desejadoController.text;
+    String atividado_op = _atividade_opController.text;
   }
 
   final _formKey = GlobalKey<FormState>();
@@ -88,7 +85,18 @@ class _AutenticacaoState extends State<InfoNutricionais> {
                       ),
                       TextFormField(
                         controller: _alturaController,
-                        decoration: getAutenticacaoDecoracao(""),
+                        decoration: InputDecoration(
+                          labelText: 'ex: 1.80',
+                          fillColor: Colors.white,
+                          filled: true,
+                          border: OutlineInputBorder(),
+                        ),
+                        keyboardType:
+                            TextInputType.numberWithOptions(decimal: true),
+                        inputFormatters: [
+                          FilteringTextInputFormatter.allow(RegExp(r'[0-9.]')),
+                          formatarTextoAltura(),
+                        ],
                       ),
                       const SizedBox(
                         height: 32,
@@ -104,7 +112,18 @@ class _AutenticacaoState extends State<InfoNutricionais> {
                       ),
                       TextFormField(
                         controller: _peso_atualController,
-                        decoration: getAutenticacaoDecoracao(""),
+                        decoration: InputDecoration(
+                          labelText: 'ex: 100.0',
+                          fillColor: Colors.white,
+                          filled: true,
+                          border: OutlineInputBorder(),
+                        ),
+                        keyboardType:
+                            TextInputType.numberWithOptions(decimal: true),
+                        inputFormatters: [
+                          FilteringTextInputFormatter.allow(RegExp(r'[0-9.]')),
+                          formatarTextoPeso(),
+                        ],
                       ),
                       const SizedBox(
                         height: 32,
@@ -120,7 +139,18 @@ class _AutenticacaoState extends State<InfoNutricionais> {
                       ),
                       TextFormField(
                         controller: _peso_desejadoController,
-                        decoration: getAutenticacaoDecoracao(""),
+                        decoration: InputDecoration(
+                          labelText: 'ex: 100.0',
+                          fillColor: Colors.white,
+                          filled: true,
+                          border: OutlineInputBorder(),
+                        ),
+                        keyboardType:
+                            TextInputType.numberWithOptions(decimal: true),
+                        inputFormatters: [
+                          FilteringTextInputFormatter.allow(RegExp(r'[0-9.]')),
+                          formatarTextoPeso(),
+                        ],
                       ),
                       const SizedBox(
                         height: 32,
@@ -131,68 +161,120 @@ class _AutenticacaoState extends State<InfoNutricionais> {
                         style: TextStyle(
                           fontSize: 15,
                           fontWeight: FontWeight.bold,
-                          color: Color(0xFF4E4B66),
+                          color: Color.fromARGB(255, 45, 45, 47),
                         ),
                       ),
                       const SizedBox(
                         height: 12,
                       ),
-
-                      ElevatedButton(
-                        onPressed: _toggleText,
-                        child: Text('Pouca atividade'),
-                        style: ElevatedButton.styleFrom(
-                          backgroundColor:
-                              Color(0xFFFFAE31), // Cor de fundo do botão
-                        ),
+                      Column(
+                        mainAxisAlignment: MainAxisAlignment.center,
+                        children: [
+                          SizedBox(
+                            width: double.infinity,
+                            child: ElevatedButton(
+                              onPressed: () => _toggleSubtext(0),
+                              style: ElevatedButton.styleFrom(
+                                backgroundColor: _isSubtextVisible[0]
+                                    ? Colors.orange
+                                    : const Color.fromARGB(255, 209, 211, 212),
+                                shape: RoundedRectangleBorder(),
+                              ),
+                              child: Column(
+                                mainAxisSize: MainAxisSize.min,
+                                children: [
+                                  Text('Pouca atividade'),
+                                  if (_isSubtextVisible[0])
+                                    Text(
+                                      'Pouco tempo em pé. p. ex. home office/escritório',
+                                      style: TextStyle(
+                                          fontSize: 12, color: Colors.white70),
+                                    ),
+                                ],
+                              ),
+                            ),
+                          ),
+                          SizedBox(height: 10),
+                          SizedBox(
+                            width: double.infinity,
+                            child: ElevatedButton(
+                              onPressed: () => _toggleSubtext(1),
+                              style: ElevatedButton.styleFrom(
+                                backgroundColor: _isSubtextVisible[1]
+                                    ? Colors.orange
+                                    : Color.fromARGB(255, 209, 211, 212),
+                                shape: RoundedRectangleBorder(),
+                              ),
+                              child: Column(
+                                mainAxisSize: MainAxisSize.min,
+                                children: [
+                                  Text('Atividade leve'),
+                                  if (_isSubtextVisible[1])
+                                    Text(
+                                      'Pouco tempo em pé. p. ex. home office/escritório',
+                                      style: TextStyle(
+                                          fontSize: 12, color: Colors.white70),
+                                    ),
+                                ],
+                              ),
+                            ),
+                          ),
+                          SizedBox(height: 10),
+                          SizedBox(
+                            width: double.infinity,
+                            child: ElevatedButton(
+                              onPressed: () => _toggleSubtext(2),
+                              style: ElevatedButton.styleFrom(
+                                backgroundColor: _isSubtextVisible[2]
+                                    ? Colors.orange
+                                    : Color.fromARGB(255, 209, 211, 212),
+                                shape: RoundedRectangleBorder(),
+                              ),
+                              child: Column(
+                                mainAxisSize: MainAxisSize.min,
+                                children: [
+                                  Text('Atividade moderada'),
+                                  if (_isSubtextVisible[2])
+                                    Text(
+                                      'Pouco tempo em pé. p. ex. home office/escritório',
+                                      style: TextStyle(
+                                          fontSize: 12, color: Colors.white70),
+                                    ),
+                                ],
+                              ),
+                            ),
+                          ),
+                          SizedBox(height: 10),
+                          SizedBox(
+                            width: double.infinity,
+                            child: ElevatedButton(
+                              onPressed: () => _toggleSubtext(3),
+                              style: ElevatedButton.styleFrom(
+                                backgroundColor: _isSubtextVisible[3]
+                                    ? Colors.orange
+                                    : Color.fromARGB(255, 209, 211, 212),
+                                shape: RoundedRectangleBorder(),
+                              ),
+                              child: Column(
+                                mainAxisSize: MainAxisSize.min,
+                                children: [
+                                  Text('Atividade intensa'),
+                                  if (_isSubtextVisible[3])
+                                    Text(
+                                      'Pouco tempo em pé. p. ex. home office/escritório',
+                                      style: TextStyle(
+                                          fontSize: 12, color: Colors.white70),
+                                    ),
+                                ],
+                              ),
+                            ),
+                          ),
+                        ],
                       ),
-                      const SizedBox(
-                          height: 10), // Espaçamento entre o botão e o texto
-                      if (_showAlternateText == true &&
-                          _showAlternateText01 ==
-                              false) // Condicional para mostrar o texto alternativo
-                        const Text(
-                          'Pouco tempo em pé. p. ex. home office/escritório',
-                          style: TextStyle(
-                              fontSize: 12,
-                              color: const Color.fromARGB(255, 70, 71, 71)),
-                        ),
-
-                      const SizedBox(
-                        height: 12,
-                      ),
-                      ElevatedButton(
-                        onPressed: _toggleText,
-                        child: Text('Pouca leve'),
-                        style: ElevatedButton.styleFrom(
-                          backgroundColor:
-                              Color(0xFFFFAE31), // Cor de fundo do botão
-                        ),
-                      ),
-                      const SizedBox(
-                          height: 10), // Espaçamento entre o botão e o texto
-                      if (_showAlternateText01 == true &&
-                          _showAlternateText ==
-                              false) // Condicional para mostrar o texto alternativo
-                        const Text(
-                          'Pouco tempo em pé. p. ex. home office/escritório',
-                          style: TextStyle(
-                              fontSize: 12,
-                              color: const Color.fromARGB(255, 70, 71, 71)),
-                        ),
-                      ElevatedButton(
-                        onPressed: () {},
-                        style: ElevatedButton.styleFrom(
-                          backgroundColor:
-                              Color(0xFFFFAE31), // Cor de fundo do botão
-                        ),
-                        child: Text("Atividade intensa"),
-                      ),
-                      const SizedBox(
-                        height: 35,
-                      ),
+                      SizedBox(height: 20),
                       ElevatedButton(
                         onPressed: () {
+                          botaoPrincipalClicado();
                           Navigator.push(
                             context,
                             MaterialPageRoute(
@@ -200,8 +282,8 @@ class _AutenticacaoState extends State<InfoNutricionais> {
                           );
                         },
                         style: ElevatedButton.styleFrom(
-                          backgroundColor:
-                              Color(0xFFFFAE31), // Cor de fundo do botão
+                          shape: RoundedRectangleBorder(),
+                          backgroundColor: Color(0xFFFFAE31),
                         ),
                         child: Text("Salvar alterações"),
                       ),
@@ -214,5 +296,35 @@ class _AutenticacaoState extends State<InfoNutricionais> {
         ],
       ),
     );
+  }
+}
+
+class formatarTextoAltura extends TextInputFormatter {
+  @override
+  TextEditingValue formatEditUpdate(
+    TextEditingValue oldValue,
+    TextEditingValue newValue,
+  ) {
+    final RegExp regExp = RegExp(r'^\d{0,2}(\.\d{0,2})?$');
+
+    if (regExp.hasMatch(newValue.text)) {
+      return newValue;
+    }
+    return oldValue;
+  }
+}
+
+class formatarTextoPeso extends TextInputFormatter {
+  @override
+  TextEditingValue formatEditUpdate(
+    TextEditingValue oldValue,
+    TextEditingValue newValue,
+  ) {
+    final RegExp regExp = RegExp(r'^\d{0,3}(\.\d?)?$');
+
+    if (regExp.hasMatch(newValue.text)) {
+      return newValue;
+    }
+    return oldValue;
   }
 }
