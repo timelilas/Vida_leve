@@ -18,24 +18,22 @@ class _AutenticacaoState extends State<QueremosConhecer> {
   TextEditingController _telefoneController = TextEditingController();
   TextEditingController _dt_nascimentoController = TextEditingController();
   TextEditingController _generoController = TextEditingController();
+  String? selectedGender = '';
   DateTime? _selectedDate;
 
   final _formKey = GlobalKey<FormState>();
 
-  // Validação para garantir que o campo não tenha letras
   String? validarTelefone(String? value) {
     if (value == null || value.isEmpty) {
       return 'O telefone é obrigatório';
     }
 
-// Remover espaços e caracteres não numéricos
     final phoneDigits = value.replaceAll(RegExp(r'\D'), '');
 
     if (phoneDigits.length != 11) {
       return 'O telefone deve ter 11 dígitos';
     }
 
-    // Verifica se contém alguma letra
     final regexLetras = RegExp(r'[A-Za-z]');
     if (regexLetras.hasMatch(value)) {
       return 'O telefone não pode conter letras';
@@ -44,7 +42,6 @@ class _AutenticacaoState extends State<QueremosConhecer> {
     return null;
   }
 
-  // Navegar para a tela de Mais Informações com o telefone
   void _salvarTelefone() {
     if (_formKey.currentState!.validate()) {
       String telefone = _telefoneController.text;
@@ -214,13 +211,9 @@ class _AutenticacaoState extends State<QueremosConhecer> {
                                 width: 2),
                           ),
                         ),
-                        readOnly:
-                            true, // Evita que o usuário digite manualmente
+                        readOnly: true,
                         onTap: () async {
-                          // Esconde o teclado ao tocar no TextField
                           FocusScope.of(context).requestFocus(FocusNode());
-
-                          // Exibe o seletor de data
                           DateTime? pickedDate = await showDatePicker(
                             context: context,
                             initialDate: DateTime.now(),
@@ -229,10 +222,8 @@ class _AutenticacaoState extends State<QueremosConhecer> {
                           );
 
                           if (pickedDate != null) {
-                            // Faz algo com a data selecionada
                             String formattedDate =
                                 DateFormat('dd/MM/yyyy').format(pickedDate);
-                            // Atualiza o campo de texto com a data formatada
                             setState(() {
                               _dt_nascimentoController.text = formattedDate;
                             });
@@ -253,21 +244,70 @@ class _AutenticacaoState extends State<QueremosConhecer> {
                       ),
                       Row(
                         mainAxisAlignment: MainAxisAlignment.start,
-                        children: <Widget>[
-                          ElevatedButton(
-                            onPressed: () {
-                              // Ação ao pressionar o botão "Masculino"
-                              print("Masculino selecionado");
+                        children: [
+                          // Botão "Feminino"
+                          GestureDetector(
+                            onTap: () {
+                              setState(() {
+                                selectedGender = 'F';
+                              });
                             },
-                            child: Text('Masculino'),
+                            child: Container(
+                              width: 82, // Largura fixa de 82px
+                              height: 48, // Altura fixa de 48px
+                              padding: const EdgeInsets.only(
+                                  top: 8), // Padding superior de 8px
+                              decoration: BoxDecoration(
+                                borderRadius: BorderRadius.circular(
+                                    12), // Border radius de 12px
+                                border: Border.all(width: 1), // Border de 1px
+                                color: selectedGender == 'F'
+                                    ? Colors
+                                        .orange // Se selecionado, cor laranja
+                                    : Colors.grey, // Se não, cor cinza
+                              ),
+                              child: Center(
+                                child: Text(
+                                  'Feminino',
+                                  style: TextStyle(
+                                    color: Colors.white, // Cor do texto branca
+                                  ),
+                                ),
+                              ),
+                            ),
                           ),
-                          SizedBox(width: 20), // Espaçamento entre os botões
-                          ElevatedButton(
-                            onPressed: () {
-                              // Ação ao pressionar o botão "Feminino"
-                              print("Feminino selecionado");
+                          SizedBox(width: 16), // Espaço entre os botões
+
+                          // Botão "Masculino"
+                          GestureDetector(
+                            onTap: () {
+                              setState(() {
+                                selectedGender = 'M';
+                              });
                             },
-                            child: Text('Feminino'),
+                            child: Container(
+                              width: 82, // Largura fixa de 82px
+                              height: 48, // Altura fixa de 48px
+                              padding: const EdgeInsets.only(
+                                  top: 8), // Padding superior de 8px
+                              decoration: BoxDecoration(
+                                borderRadius: BorderRadius.circular(
+                                    12), // Border radius de 12px
+                                border: Border.all(width: 1), // Border de 1px
+                                color: selectedGender == 'M'
+                                    ? Colors
+                                        .orange // Se selecionado, cor laranja
+                                    : Colors.grey, // Se não, cor cinza
+                              ),
+                              child: Center(
+                                child: Text(
+                                  'Masculino',
+                                  style: TextStyle(
+                                    color: Colors.white, // Cor do texto branca
+                                  ),
+                                ),
+                              ),
+                            ),
                           ),
                         ],
                       ),
@@ -285,7 +325,11 @@ class _AutenticacaoState extends State<QueremosConhecer> {
                             );
                           }
                         },
-                        child: Text('Salvar Data'),
+                        style: ElevatedButton.styleFrom(
+                          shape: RoundedRectangleBorder(),
+                          backgroundColor: Color(0xFFFFAE31),
+                        ),
+                        child: Text("Salvar alterações"),
                       ),
                     ],
                   ),

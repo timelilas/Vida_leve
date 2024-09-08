@@ -12,6 +12,8 @@ class Autenticacao extends StatefulWidget {
 
 class _AutenticacaoState extends State<Autenticacao> {
   bool queroEntrar = true;
+  bool _obscureText = true; // Variável que define se o texto estará oculto
+  bool _obscureTextConf = true;
   final _formKey = GlobalKey<FormState>();
 
   TextEditingController _emailController = TextEditingController();
@@ -19,6 +21,19 @@ class _AutenticacaoState extends State<Autenticacao> {
   TextEditingController _confirmarSenhaController = TextEditingController();
   TextEditingController _nomeController = TextEditingController();
   AutenticacaoServico _autenticacaoServico = AutenticacaoServico();
+
+  // Função para alternar a visibilidade da senha
+  void _togglePasswordVisibility() {
+    setState(() {
+      _obscureText = !_obscureText;
+    });
+  }
+
+  void _togglePasswordVisibilityConfir() {
+    setState(() {
+      _obscureTextConf = !_obscureTextConf;
+    });
+  }
 
   @override
   void dispose() {
@@ -102,7 +117,28 @@ class _AutenticacaoState extends State<Autenticacao> {
                       ),
                       TextFormField(
                         controller: _senhaController,
-                        decoration: getAutenticacaoDecoracao("Senha"),
+                        obscureText: _obscureText,
+                        decoration: InputDecoration(
+                          labelText: 'Senha',
+                          fillColor: Colors.white,
+                          filled: true,
+                          contentPadding:
+                              const EdgeInsets.fromLTRB(16, 8, 8, 8),
+                          border: OutlineInputBorder(
+                              borderRadius: BorderRadius.circular(4.0)),
+                          enabledBorder: OutlineInputBorder(
+                            borderRadius: BorderRadius.circular(9.0),
+                          ),
+                          suffixIcon: IconButton(
+                            icon: Icon(
+                              _obscureText
+                                  ? Icons.visibility_off
+                                  : Icons.visibility, // Ícone do olho
+                            ),
+                            onPressed:
+                                _togglePasswordVisibility, // Função para alternar a visibilidade
+                          ),
+                        ),
                         validator: (String? value) {
                           String? validationMessage =
                               PasswordValidator.validate(value ?? '');
@@ -111,7 +147,6 @@ class _AutenticacaoState extends State<Autenticacao> {
                           }
                           return null;
                         },
-                        obscureText: true,
                       ),
                       const SizedBox(
                         height: 20,
@@ -122,8 +157,28 @@ class _AutenticacaoState extends State<Autenticacao> {
                           children: [
                             TextFormField(
                               controller: _confirmarSenhaController,
-                              decoration:
-                                  getAutenticacaoDecoracao("Confirmar Senha"),
+                              obscureText: _obscureTextConf,
+                              decoration: InputDecoration(
+                                labelText: 'Confirmar Senha',
+                                fillColor: Colors.white,
+                                filled: true,
+                                contentPadding:
+                                    const EdgeInsets.fromLTRB(16, 8, 8, 8),
+                                border: OutlineInputBorder(
+                                    borderRadius: BorderRadius.circular(4.0)),
+                                enabledBorder: OutlineInputBorder(
+                                  borderRadius: BorderRadius.circular(9.0),
+                                ),
+                                suffixIcon: IconButton(
+                                  icon: Icon(
+                                    _obscureTextConf
+                                        ? Icons.visibility_off
+                                        : Icons.visibility, // Ícone do olho
+                                  ),
+                                  onPressed:
+                                      _togglePasswordVisibilityConfir, // Função para alternar a visibilidade
+                                ),
+                              ),
                               validator: (String? value) {
                                 if (value == null || value.isEmpty) {
                                   return "Por favor, confirme sua senha.";
@@ -133,7 +188,6 @@ class _AutenticacaoState extends State<Autenticacao> {
                                 }
                                 return null;
                               },
-                              obscureText: true,
                             ),
                             const SizedBox(
                               height: 20,
