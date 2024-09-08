@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:vida_leve/servicos/nutricionais_service.dart';
 import 'package:vida_leve/telas/queremos_conhecer.dart';
 import 'package:flutter/services.dart';
 
@@ -14,6 +15,8 @@ class _AutenticacaoState extends State<InfoNutricionais> {
   TextEditingController _peso_atualController = TextEditingController();
   TextEditingController _peso_desejadoController = TextEditingController();
   TextEditingController _atividade_opController = TextEditingController();
+
+  NutricionaisService _nutricionaisService = NutricionaisService();
 
   List<bool> _isSubtextVisible = [false, false, false, false];
 
@@ -296,6 +299,29 @@ class _AutenticacaoState extends State<InfoNutricionais> {
         ],
       ),
     );
+  }
+
+  @override
+  void dispose() {
+    _alturaController.dispose();
+    _peso_atualController.dispose();
+    _peso_desejadoController.dispose();
+    _alturaController.dispose();
+    super.dispose();
+  }
+
+  void enviarDadosNutricionaisParaAPI() async {
+    String altura = _alturaController.text;
+    String peso = _peso_atualController.text;
+    String meta = _peso_desejadoController.text;
+    String atividade = _atividade_opController.text;
+
+    if (_formKey.currentState!.validate()) {
+      await _nutricionaisService.cadastrarInfonutricionais(
+          altura: altura, peso: peso, meta: meta, atividade: atividade);
+    } else {
+      print("Formulário inválido");
+    }
   }
 }
 

@@ -3,6 +3,7 @@ import 'package:flutter/services.dart';
 import 'package:flutter_multi_formatter/formatters/masked_input_formatter.dart';
 import 'package:intl/intl.dart';
 import 'package:vida_leve/componentes/decoracao_campo_autenticacao.dart';
+import 'package:vida_leve/servicos/queremos_servico.dart';
 import 'package:vida_leve/telas/info_nutricionais.dart';
 
 class QueremosConhecer extends StatefulWidget {
@@ -20,6 +21,8 @@ class _AutenticacaoState extends State<QueremosConhecer> {
   TextEditingController _generoController = TextEditingController();
   String? selectedGender = '';
   DateTime? _selectedDate;
+
+  QueremosServico _queremosServico = QueremosServico();
 
   final _formKey = GlobalKey<FormState>();
 
@@ -345,6 +348,26 @@ class _AutenticacaoState extends State<QueremosConhecer> {
   @override
   void dispose() {
     _dt_nascimentoController.dispose();
+    _apelidolController.dispose();
+    _telefoneController.dispose();
+    _generoController.dispose();
     super.dispose();
+  }
+
+  void enviarDadosValidadosParaAPI() async {
+    String apelido = _apelidolController.text;
+    String telefone = _telefoneController.text;
+    String dt_nascimento = _dt_nascimentoController.text;
+    String genero = _generoController.text;
+
+    if (_formKey.currentState!.validate()) {
+      await _queremosServico.cadastrarInfoQueremosConhecer(
+          apelido: apelido,
+          telefone: telefone,
+          dt_nascimento: dt_nascimento,
+          genero: genero);
+    } else {
+      print("Formulário inválido");
+    }
   }
 }
