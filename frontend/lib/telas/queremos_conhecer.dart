@@ -103,11 +103,11 @@ class _AutenticacaoState extends State<QueremosConhecer> {
                     children: [
                       Image.asset(
                         "assets/logoperfil.png",
-                        height: 200,
+                        height: 100,
                       ),
                       const Text(
                         "Queremos ter conhecer melhor",
-                        textAlign: TextAlign.center,
+                        textAlign: TextAlign.start,
                         style: TextStyle(
                           fontSize: 25,
                           fontWeight: FontWeight.bold,
@@ -116,7 +116,7 @@ class _AutenticacaoState extends State<QueremosConhecer> {
                       ),
                       const Text(
                         "Complete seu cadastro para tornarmos sua experiência mais personalizada",
-                        textAlign: TextAlign.center,
+                        textAlign: TextAlign.start,
                         style: TextStyle(
                           fontSize: 15,
                           fontWeight: FontWeight.bold,
@@ -124,7 +124,7 @@ class _AutenticacaoState extends State<QueremosConhecer> {
                         ),
                       ),
                       const SizedBox(
-                        height: 32,
+                        height: 15,
                       ),
                       const Text(
                         "Como você gostaria de ser chamado (a)?",
@@ -150,7 +150,7 @@ class _AutenticacaoState extends State<QueremosConhecer> {
                         },
                       ),
                       const SizedBox(
-                        height: 32,
+                        height: 1,
                       ),
                       const Text(
                         "Telefone",
@@ -185,7 +185,7 @@ class _AutenticacaoState extends State<QueremosConhecer> {
                         validator: validarTelefone,
                       ),
                       const SizedBox(
-                        height: 32,
+                        height: 20,
                       ),
                       const Text(
                         "Data de nascimento",
@@ -235,7 +235,7 @@ class _AutenticacaoState extends State<QueremosConhecer> {
                         },
                       ),
                       const SizedBox(
-                        height: 32,
+                        height: 12,
                       ),
                       const Text(
                         "Gênero de nascimento",
@@ -268,13 +268,15 @@ class _AutenticacaoState extends State<QueremosConhecer> {
                                 color: selectedGender == 'F'
                                     ? Colors
                                         .orange // Se selecionado, cor laranja
-                                    : Colors.grey, // Se não, cor cinza
+                                    : const Color.fromARGB(255, 255, 254,
+                                        254), // Se não, cor cinza
                               ),
                               child: Center(
                                 child: Text(
                                   'Feminino',
                                   style: TextStyle(
-                                    color: Colors.white, // Cor do texto branca
+                                    color: const Color.fromARGB(
+                                        255, 10, 10, 10), // Cor do texto branca
                                   ),
                                 ),
                               ),
@@ -286,7 +288,7 @@ class _AutenticacaoState extends State<QueremosConhecer> {
                           GestureDetector(
                             onTap: () {
                               setState(() {
-                                selectedGender = 'Mulher';
+                                selectedGender = 'M';
                               });
                             },
                             child: Container(
@@ -301,13 +303,15 @@ class _AutenticacaoState extends State<QueremosConhecer> {
                                 color: selectedGender == 'M'
                                     ? Colors
                                         .orange // Se selecionado, cor laranja
-                                    : Colors.grey, // Se não, cor cinza
+                                    : const Color.fromARGB(255, 252, 251,
+                                        251), // Se não, cor cinza
                               ),
                               child: Center(
                                 child: Text(
                                   'Homem',
                                   style: TextStyle(
-                                    color: Colors.white, // Cor do texto branca
+                                    color: const Color.fromARGB(
+                                        255, 5, 5, 5), // Cor do texto branca
                                   ),
                                 ),
                               ),
@@ -316,24 +320,38 @@ class _AutenticacaoState extends State<QueremosConhecer> {
                         ],
                       ),
                       const SizedBox(
-                        height: 32,
+                        height: 100,
                       ),
                       ElevatedButton(
                         onPressed: () {
                           if (_selectedDate != null) {
-                            // Exibe a data selecionada em um Snackbar
                             ScaffoldMessenger.of(context).showSnackBar(
                               SnackBar(
                                   content: Text(
-                                      'Data Selecionada: ${_dt_nascimentoController.text}')),
+                                      'link tela login: ${_dt_nascimentoController.text}')),
                             );
                           }
                         },
                         style: ElevatedButton.styleFrom(
-                          shape: RoundedRectangleBorder(),
-                          backgroundColor: Color(0xFFFFAE31),
+                          backgroundColor:
+                              Colors.orange, // Cor de fundo laranja
+                          shape: RoundedRectangleBorder(
+                            borderRadius: BorderRadius.circular(
+                                6.0), // Bordas arredondadas
+                            side: BorderSide(
+                                color: const Color.fromARGB(255, 87, 87, 87),
+                                width: 2.0), // Borda preta com largura de 2
+                          ),
+                          padding: EdgeInsets.symmetric(
+                              horizontal: 20, vertical: 15), // Tamanho do botão
                         ),
-                        child: Text("Salvar alterações"),
+                        child: Text("Salvar alterações",
+                            style: TextStyle(
+                              fontSize: 14, // Tamanho do texto
+                              color: const Color.fromARGB(
+                                  255, 10, 10, 10), // Cor do texto
+                              fontWeight: FontWeight.bold, // Negrito opcional
+                            )),
                       ),
                     ],
                   ),

@@ -63,7 +63,7 @@ class _AutenticacaoState extends State<InfoNutricionais> {
                     children: [
                       Image.asset(
                         "assets/logoperfil.png",
-                        height: 200,
+                        height: 50,
                       ),
                       const Text(
                         "Qual a sua meta?",
@@ -73,9 +73,6 @@ class _AutenticacaoState extends State<InfoNutricionais> {
                           fontWeight: FontWeight.bold,
                           color: Color(0xFF4E4B66),
                         ),
-                      ),
-                      const SizedBox(
-                        height: 15,
                       ),
                       const Text(
                         "Qual a sua altura?",
@@ -101,9 +98,6 @@ class _AutenticacaoState extends State<InfoNutricionais> {
                           formatarTextoAltura(),
                         ],
                       ),
-                      const SizedBox(
-                        height: 32,
-                      ),
                       const Text(
                         "Qual é seu peso atual?",
                         textAlign: TextAlign.left,
@@ -128,9 +122,6 @@ class _AutenticacaoState extends State<InfoNutricionais> {
                           formatarTextoPeso(),
                         ],
                       ),
-                      const SizedBox(
-                        height: 32,
-                      ),
                       const Text(
                         "Qual é o peso que você deseja alcançar? ",
                         textAlign: TextAlign.left,
@@ -144,7 +135,7 @@ class _AutenticacaoState extends State<InfoNutricionais> {
                         controller: _peso_desejadoController,
                         decoration: InputDecoration(
                           labelText: 'ex: 100.0',
-                          fillColor: Colors.white,
+                          fillColor: const Color.fromARGB(255, 255, 255, 255),
                           filled: true,
                           border: OutlineInputBorder(),
                         ),
@@ -168,7 +159,7 @@ class _AutenticacaoState extends State<InfoNutricionais> {
                         ),
                       ),
                       const SizedBox(
-                        height: 12,
+                        height: 10,
                       ),
                       Column(
                         mainAxisAlignment: MainAxisAlignment.center,
@@ -180,18 +171,39 @@ class _AutenticacaoState extends State<InfoNutricionais> {
                               style: ElevatedButton.styleFrom(
                                 backgroundColor: _isSubtextVisible[0]
                                     ? Colors.orange
-                                    : const Color.fromARGB(255, 209, 211, 212),
-                                shape: RoundedRectangleBorder(),
+                                    : const Color.fromARGB(255, 254, 255, 255),
+                                shape: RoundedRectangleBorder(
+                                  borderRadius: BorderRadius.circular(
+                                      6.0), // Bordas arredondadas
+                                  side: BorderSide(
+                                      color:
+                                          const Color.fromARGB(255, 70, 68, 68),
+                                      width:
+                                          1.0), // Borda preta com largura de 2
+                                ),
+                                padding: EdgeInsets.symmetric(
+                                    horizontal: 10, vertical: 5),
                               ),
                               child: Column(
                                 mainAxisSize: MainAxisSize.min,
                                 children: [
-                                  Text('Pouca atividade'),
+                                  Text(
+                                    'Pouca atividade',
+                                    style: TextStyle(
+                                      fontSize: 14, // Tamanho do texto
+                                      color: const Color.fromARGB(
+                                          255, 10, 10, 10), // Cor do texto
+                                      fontWeight:
+                                          FontWeight.bold, // Negrito opcional
+                                    ),
+                                  ),
                                   if (_isSubtextVisible[0])
                                     Text(
                                       'Pouco tempo em pé. p. ex. home office/escritório',
                                       style: TextStyle(
-                                          fontSize: 12, color: Colors.white70),
+                                          fontSize: 15,
+                                          color: const Color.fromARGB(
+                                              179, 10, 10, 10)),
                                     ),
                                 ],
                               ),
@@ -205,18 +217,37 @@ class _AutenticacaoState extends State<InfoNutricionais> {
                               style: ElevatedButton.styleFrom(
                                 backgroundColor: _isSubtextVisible[1]
                                     ? Colors.orange
-                                    : Color.fromARGB(255, 209, 211, 212),
-                                shape: RoundedRectangleBorder(),
+                                    : Color.fromARGB(255, 255, 255, 255),
+                                shape: RoundedRectangleBorder(
+                                  borderRadius: BorderRadius.circular(
+                                      6.0), // Bordas arredondadas
+                                  side: BorderSide(
+                                      color:
+                                          const Color.fromARGB(255, 70, 68, 68),
+                                      width:
+                                          1.0), // Borda preta com largura de 2
+                                ),
+                                padding: EdgeInsets.symmetric(
+                                    horizontal: 10, vertical: 5),
                               ),
                               child: Column(
                                 mainAxisSize: MainAxisSize.min,
                                 children: [
-                                  Text('Atividade leve'),
+                                  Text('Atividade leve',
+                                      style: TextStyle(
+                                        fontSize: 14, // Tamanho do texto
+                                        color: const Color.fromARGB(
+                                            255, 10, 10, 10), // Cor do texto
+                                        fontWeight:
+                                            FontWeight.bold, // Negrito opcional
+                                      )),
                                   if (_isSubtextVisible[1])
                                     Text(
                                       'Pouco tempo em pé. p. ex. home office/escritório',
                                       style: TextStyle(
-                                          fontSize: 12, color: Colors.white70),
+                                          fontSize: 12,
+                                          color: const Color.fromARGB(
+                                              179, 7, 7, 7)),
                                     ),
                                 ],
                               ),
@@ -230,18 +261,37 @@ class _AutenticacaoState extends State<InfoNutricionais> {
                               style: ElevatedButton.styleFrom(
                                 backgroundColor: _isSubtextVisible[2]
                                     ? Colors.orange
-                                    : Color.fromARGB(255, 209, 211, 212),
-                                shape: RoundedRectangleBorder(),
+                                    : Color.fromARGB(255, 255, 255, 255),
+                                shape: RoundedRectangleBorder(
+                                  borderRadius: BorderRadius.circular(
+                                      6.0), // Bordas arredondadas
+                                  side: BorderSide(
+                                      color:
+                                          const Color.fromARGB(255, 70, 68, 68),
+                                      width:
+                                          1.0), // Borda preta com largura de 2
+                                ),
+                                padding: EdgeInsets.symmetric(
+                                    horizontal: 10, vertical: 5),
                               ),
                               child: Column(
                                 mainAxisSize: MainAxisSize.min,
                                 children: [
-                                  Text('Atividade moderada'),
+                                  Text('Atividade moderada',
+                                      style: TextStyle(
+                                        fontSize: 14, // Tamanho do texto
+                                        color: const Color.fromARGB(
+                                            255, 10, 10, 10), // Cor do texto
+                                        fontWeight:
+                                            FontWeight.bold, // Negrito opcional
+                                      )),
                                   if (_isSubtextVisible[2])
                                     Text(
                                       'Pouco tempo em pé. p. ex. home office/escritório',
                                       style: TextStyle(
-                                          fontSize: 12, color: Colors.white70),
+                                          fontSize: 12,
+                                          color: const Color.fromARGB(
+                                              179, 5, 5, 5)),
                                     ),
                                 ],
                               ),
@@ -255,18 +305,37 @@ class _AutenticacaoState extends State<InfoNutricionais> {
                               style: ElevatedButton.styleFrom(
                                 backgroundColor: _isSubtextVisible[3]
                                     ? Colors.orange
-                                    : Color.fromARGB(255, 209, 211, 212),
-                                shape: RoundedRectangleBorder(),
+                                    : Color.fromARGB(255, 255, 255, 255),
+                                shape: RoundedRectangleBorder(
+                                  borderRadius: BorderRadius.circular(
+                                      6.0), // Bordas arredondadas
+                                  side: BorderSide(
+                                      color:
+                                          const Color.fromARGB(255, 70, 68, 68),
+                                      width:
+                                          1.0), // Borda preta com largura de 2
+                                ),
+                                padding: EdgeInsets.symmetric(
+                                    horizontal: 10, vertical: 5),
                               ),
                               child: Column(
                                 mainAxisSize: MainAxisSize.min,
                                 children: [
-                                  Text('Atividade intensa'),
+                                  Text('Atividade intensa',
+                                      style: TextStyle(
+                                        fontSize: 14, // Tamanho do texto
+                                        color: const Color.fromARGB(
+                                            255, 10, 10, 10), // Cor do texto
+                                        fontWeight:
+                                            FontWeight.bold, // Negrito opcional
+                                      )),
                                   if (_isSubtextVisible[3])
                                     Text(
                                       'Pouco tempo em pé. p. ex. home office/escritório',
                                       style: TextStyle(
-                                          fontSize: 12, color: Colors.white70),
+                                          fontSize: 12,
+                                          color: const Color.fromARGB(
+                                              179, 10, 10, 10)),
                                     ),
                                 ],
                               ),
@@ -279,7 +348,26 @@ class _AutenticacaoState extends State<InfoNutricionais> {
                         onPressed: () {
                           enviarDadosNutricionaisParaAPI();
                         },
-                        child: Text("Salvar alterações"),
+                        style: ElevatedButton.styleFrom(
+                          backgroundColor:
+                              Colors.orange, // Cor de fundo laranja
+                          shape: RoundedRectangleBorder(
+                            borderRadius: BorderRadius.circular(
+                                6.0), // Bordas arredondadas
+                            side: BorderSide(
+                                color: const Color.fromARGB(255, 87, 87, 87),
+                                width: 2.0), // Borda preta com largura de 2
+                          ),
+                          padding: EdgeInsets.symmetric(
+                              horizontal: 20, vertical: 15), // Tamanho do botão
+                        ),
+                        child: Text("Salvar alterações",
+                            style: TextStyle(
+                              fontSize: 16, // Tamanho do texto
+                              color: const Color.fromARGB(
+                                  255, 10, 10, 10), // Cor do texto
+                              fontWeight: FontWeight.bold, // Negrito opcional
+                            )),
                       ),
                     ],
                   ),

@@ -8,22 +8,22 @@ InputDecoration getAutenticacaoDecoracao(String label) {
     contentPadding: const EdgeInsets.fromLTRB(16, 8, 8, 8),
     border: OutlineInputBorder(borderRadius: BorderRadius.circular(4.0)),
     enabledBorder: OutlineInputBorder(
-      borderRadius: BorderRadius.circular(9.0),
+      borderRadius: BorderRadius.circular(4.0),
       borderSide:
           const BorderSide(color: Color.fromARGB(255, 114, 118, 153), width: 2),
     ),
     focusedBorder: OutlineInputBorder(
-      borderRadius: BorderRadius.circular(64),
+      borderRadius: BorderRadius.circular(4),
       borderSide:
           const BorderSide(color: Color.fromARGB(255, 158, 186, 238), width: 4),
     ),
     errorBorder: OutlineInputBorder(
-      borderRadius: BorderRadius.circular(64),
+      borderRadius: BorderRadius.circular(4),
       borderSide:
           const BorderSide(color: Color.fromARGB(255, 192, 80, 65), width: 2),
     ),
     focusedErrorBorder: OutlineInputBorder(
-      borderRadius: BorderRadius.circular(64),
+      borderRadius: BorderRadius.circular(4),
       borderSide:
           const BorderSide(color: Color.fromARGB(255, 107, 4, 4), width: 4),
     ),
