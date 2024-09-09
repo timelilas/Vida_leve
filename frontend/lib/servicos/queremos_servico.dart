@@ -4,14 +4,14 @@ class QueremosServico {
   final ApiService _apiService = ApiService(baseUrl: 'http://localhost:3000');
 
   Future<void> cadastrarInfoQueremosConhecer({
-    required String apelido,
+    required String userName,
     required String telefone,
     required String aniversario,
     required String sexo,
   }) async {
-    final endpoint = '/prgress/:id';
+    final endpoint = '/user/profile/:id';
     final body = {
-      'apelido': apelido,
+      'apelido': userName,
       'telefone': telefone,
       'aniversario': aniversario,
       'sexo': sexo,

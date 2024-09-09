@@ -137,6 +137,7 @@ class _AutenticacaoState extends State<QueremosConhecer> {
                       ),
                       TextFormField(
                         controller: _apelidolController,
+                        maxLength: 40,
                         decoration: getAutenticacaoDecoracao(""),
                         validator: (String? value) {
                           if (value == null) {
@@ -285,7 +286,7 @@ class _AutenticacaoState extends State<QueremosConhecer> {
                           GestureDetector(
                             onTap: () {
                               setState(() {
-                                selectedGender = 'M';
+                                selectedGender = 'Mulher';
                               });
                             },
                             child: Container(
@@ -304,7 +305,7 @@ class _AutenticacaoState extends State<QueremosConhecer> {
                               ),
                               child: Center(
                                 child: Text(
-                                  'Masculino',
+                                  'Homem',
                                   style: TextStyle(
                                     color: Colors.white, // Cor do texto branca
                                   ),
@@ -355,19 +356,19 @@ class _AutenticacaoState extends State<QueremosConhecer> {
   }
 
   void enviarDadosValidadosParaAPI() async {
-    String apelido = _apelidolController.text;
+    String userName = _apelidolController.text;
     String telefone = _telefoneController.text;
-    String dt_nascimento = _dt_nascimentoController.text;
-    String genero = _generoController.text;
+    String aniversario = _dt_nascimentoController.text;
+    String sexo = _generoController.text;
 
-    if (_formKey.currentState!.validate()) {
-      await _queremosServico.cadastrarInfoQueremosConhecer(
-          apelido: apelido,
-          telefone: telefone,
-          dt_nascimento: dt_nascimento,
-          genero: genero);
-    } else {
-      print("Formulário inválido");
-    }
+    await _queremosServico.cadastrarInfoQueremosConhecer(
+        userName: userName,
+        telefone: telefone,
+        aniversario: aniversario,
+        sexo: sexo);
+    Navigator.push(
+      context,
+      MaterialPageRoute(builder: (context) => InfoNutricionais()),
+    );
   }
 }

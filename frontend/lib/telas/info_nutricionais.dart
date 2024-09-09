@@ -277,17 +277,8 @@ class _AutenticacaoState extends State<InfoNutricionais> {
                       SizedBox(height: 20),
                       ElevatedButton(
                         onPressed: () {
-                          botaoPrincipalClicado();
-                          Navigator.push(
-                            context,
-                            MaterialPageRoute(
-                                builder: (context) => QueremosConhecer()),
-                          );
+                          enviarDadosNutricionaisParaAPI();
                         },
-                        style: ElevatedButton.styleFrom(
-                          shape: RoundedRectangleBorder(),
-                          backgroundColor: Color(0xFFFFAE31),
-                        ),
                         child: Text("Salvar alterações"),
                       ),
                     ],
@@ -319,6 +310,10 @@ class _AutenticacaoState extends State<InfoNutricionais> {
     if (_formKey.currentState!.validate()) {
       await _nutricionaisService.cadastrarInfonutricionais(
           altura: altura, peso: peso, meta: meta, atividade: atividade);
+      Navigator.push(
+        context,
+        MaterialPageRoute(builder: (context) => QueremosConhecer()),
+      );
     } else {
       print("Formulário inválido");
     }

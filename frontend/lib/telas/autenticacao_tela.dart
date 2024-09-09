@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:vida_leve/componentes/decoracao_campo_autenticacao.dart';
 import 'package:vida_leve/model/validar_senha.dart';
 import 'package:vida_leve/servicos/autenticacao_servico.dart';
+import 'package:vida_leve/telas/queremos_conhecer.dart';
 
 class Autenticacao extends StatefulWidget {
   const Autenticacao({super.key});
@@ -99,6 +100,7 @@ class _AutenticacaoState extends State<Autenticacao> {
                       TextFormField(
                         controller: _emailController,
                         decoration: getAutenticacaoDecoracao("Email"),
+                        maxLength: 30,
                         validator: (String? value) {
                           if (value == null) {
                             return "O e-mail não pode ser vazio.";
@@ -118,6 +120,7 @@ class _AutenticacaoState extends State<Autenticacao> {
                       TextFormField(
                         controller: _senhaController,
                         obscureText: _obscureText,
+                        maxLength: 10,
                         decoration: InputDecoration(
                           labelText: 'Senha',
                           fillColor: Colors.white,
@@ -158,6 +161,7 @@ class _AutenticacaoState extends State<Autenticacao> {
                             TextFormField(
                               controller: _confirmarSenhaController,
                               obscureText: _obscureTextConf,
+                              maxLength: 10,
                               decoration: InputDecoration(
                                 labelText: 'Confirmar Senha',
                                 fillColor: Colors.white,
@@ -195,6 +199,7 @@ class _AutenticacaoState extends State<Autenticacao> {
                             TextFormField(
                               controller: _nomeController,
                               decoration: getAutenticacaoDecoracao("Nome"),
+                              maxLength: 40,
                               validator: (String? value) {
                                 if (value == null) {
                                   return "O nome não pode ser vazio.";
@@ -260,10 +265,18 @@ class _AutenticacaoState extends State<Autenticacao> {
         // Chama a API para autenticar o usuário
         await _autenticacaoServico.autenticarUsuario(
             email: email, senha: senha);
+        Navigator.push(
+          context,
+          MaterialPageRoute(builder: (context) => QueremosConhecer()),
+        );
       } else {
         // Chama a API para cadastrar o usuário
         await _autenticacaoServico.cadastrarUsuario(
             nome: nome, senha: senha, email: email);
+        Navigator.push(
+          context,
+          MaterialPageRoute(builder: (context) => QueremosConhecer()),
+        );
       }
     } else {
       print("Formulário inválido");
