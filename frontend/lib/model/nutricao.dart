@@ -22,10 +22,10 @@ class Nutricao {
   Map<String, dynamic> toMap() {
     return {
       "id": id,
-      "name": altura,
-      "comoFazer": peso_atual,
-      "urlImagem": peso_desejado,
-      "urlImagem": atividade_op,
+      "altura": altura,
+      "peso_atual": peso_atual,
+      "peso_desejado": peso_desejado,
+      "atividade_op": atividade_op,
     };
   }
 }

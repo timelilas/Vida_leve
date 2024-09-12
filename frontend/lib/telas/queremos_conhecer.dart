@@ -1,6 +1,9 @@
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
+import 'package:flutter_multi_formatter/formatters/masked_input_formatter.dart';
+import 'package:intl/intl.dart';
 import 'package:vida_leve/componentes/decoracao_campo_autenticacao.dart';
-import 'package:vida_leve/model/validar_senha.dart';
+import 'package:vida_leve/servicos/queremos_servico.dart';
 import 'package:vida_leve/telas/info_nutricionais.dart';
 
 class QueremosConhecer extends StatefulWidget {
@@ -12,14 +15,65 @@ class QueremosConhecer extends StatefulWidget {
 
 class _AutenticacaoState extends State<QueremosConhecer> {
   bool queroEntrar = true;
-  final _formkey = GlobalKey<FormState>();
-
   TextEditingController _apelidolController = TextEditingController();
   TextEditingController _telefoneController = TextEditingController();
   TextEditingController _dt_nascimentoController = TextEditingController();
   TextEditingController _generoController = TextEditingController();
+  String? selectedGender = '';
+  DateTime? _selectedDate;
+
+  QueremosServico _queremosServico = QueremosServico();
 
   final _formKey = GlobalKey<FormState>();
+
+  String? validarTelefone(String? value) {
+    if (value == null || value.isEmpty) {
+      return 'O telefone é obrigatório';
+    }
+
+    final phoneDigits = value.replaceAll(RegExp(r'\D'), '');
+
+    if (phoneDigits.length != 11) {
+      return 'O telefone deve ter 11 dígitos';
+    }
+
+    final regexLetras = RegExp(r'[A-Za-z]');
+    if (regexLetras.hasMatch(value)) {
+      return 'O telefone não pode conter letras';
+    }
+
+    return null;
+  }
+
+  void _salvarTelefone() {
+    if (_formKey.currentState!.validate()) {
+      String telefone = _telefoneController.text;
+      Navigator.push(
+        context,
+        MaterialPageRoute(
+          builder: (context) => InfoNutricionais(),
+        ),
+      );
+    }
+  }
+
+  // Função para exibir o seletor de data
+  Future<void> _selectDate(BuildContext context) async {
+    final DateTime? pickedDate = await showDatePicker(
+      context: context,
+      initialDate: _selectedDate ?? DateTime.now(),
+      firstDate: DateTime(2000),
+      lastDate: DateTime(2101),
+    );
+    if (pickedDate != null && pickedDate != _selectedDate) {
+      setState(() {
+        _selectedDate = pickedDate;
+        // Formata a data para exibição no campo de texto
+        _dt_nascimentoController.text =
+            DateFormat('dd/MM/yyyy').format(pickedDate);
+      });
+    }
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -49,11 +103,11 @@ class _AutenticacaoState extends State<QueremosConhecer> {
                     children: [
                       Image.asset(
                         "assets/logoperfil.png",
-                        height: 200,
+                        height: 100,
                       ),
                       const Text(
                         "Queremos ter conhecer melhor",
-                        textAlign: TextAlign.center,
+                        textAlign: TextAlign.start,
                         style: TextStyle(
                           fontSize: 25,
                           fontWeight: FontWeight.bold,
@@ -62,7 +116,7 @@ class _AutenticacaoState extends State<QueremosConhecer> {
                       ),
                       const Text(
                         "Complete seu cadastro para tornarmos sua experiência mais personalizada",
-                        textAlign: TextAlign.center,
+                        textAlign: TextAlign.start,
                         style: TextStyle(
                           fontSize: 15,
                           fontWeight: FontWeight.bold,
@@ -70,7 +124,7 @@ class _AutenticacaoState extends State<QueremosConhecer> {
                         ),
                       ),
                       const SizedBox(
-                        height: 32,
+                        height: 15,
                       ),
                       const Text(
                         "Como você gostaria de ser chamado (a)?",
@@ -83,10 +137,20 @@ class _AutenticacaoState extends State<QueremosConhecer> {
                       ),
                       TextFormField(
                         controller: _apelidolController,
+                        maxLength: 40,
                         decoration: getAutenticacaoDecoracao(""),
+                        validator: (String? value) {
+                          if (value == null) {
+                            return "O nome não pode ser vazio.";
+                          }
+                          if (value.length < 1 || value.length > 10) {
+                            return "Nome deve conter ate 10";
+                          }
+                          return null;
+                        },
                       ),
                       const SizedBox(
-                        height: 32,
+                        height: 1,
                       ),
                       const Text(
                         "Telefone",
@@ -99,10 +163,29 @@ class _AutenticacaoState extends State<QueremosConhecer> {
                       ),
                       TextFormField(
                         controller: _telefoneController,
-                        decoration: getAutenticacaoDecoracao(""),
+                        decoration: InputDecoration(
+                          hintText: '(XX) XXXXX-XXXX',
+                          fillColor: Colors.white,
+                          filled: true,
+                          contentPadding:
+                              const EdgeInsets.fromLTRB(16, 8, 8, 8),
+                          border: OutlineInputBorder(
+                              borderRadius: BorderRadius.circular(4.0)),
+                          enabledBorder: OutlineInputBorder(
+                            borderRadius: BorderRadius.circular(9.0),
+                            borderSide: const BorderSide(
+                                color: Color.fromARGB(255, 114, 118, 153),
+                                width: 2),
+                          ),
+                        ),
+                        keyboardType: TextInputType.phone,
+                        inputFormatters: [
+                          MaskedInputFormatter('(##) #####-####'),
+                        ],
+                        validator: validarTelefone,
                       ),
                       const SizedBox(
-                        height: 32,
+                        height: 20,
                       ),
                       const Text(
                         "Data de nascimento",
@@ -116,16 +199,25 @@ class _AutenticacaoState extends State<QueremosConhecer> {
                       TextFormField(
                         controller: _dt_nascimentoController,
                         decoration: InputDecoration(
-                          labelText: 'Selecione a data',
-                          prefixIcon:
-                              Icon(Icons.calendar_today), // Ícone de calendário
-                          border: OutlineInputBorder(),
+                          labelText: 'Selecione a Data',
+                          hintText: 'Clique para selecionar uma data',
+                          suffixIcon: Icon(Icons.calendar_today),
+                          fillColor: Colors.white,
+                          filled: true,
+                          contentPadding:
+                              const EdgeInsets.fromLTRB(16, 8, 8, 8),
+                          border: OutlineInputBorder(
+                              borderRadius: BorderRadius.circular(4.0)),
+                          enabledBorder: OutlineInputBorder(
+                            borderRadius: BorderRadius.circular(9.0),
+                            borderSide: const BorderSide(
+                                color: Color.fromARGB(255, 114, 118, 153),
+                                width: 2),
+                          ),
                         ),
+                        readOnly: true,
                         onTap: () async {
-                          // Esconde o teclado ao tocar no TextField
                           FocusScope.of(context).requestFocus(FocusNode());
-
-                          // Exibe o seletor de data
                           DateTime? pickedDate = await showDatePicker(
                             context: context,
                             initialDate: DateTime.now(),
@@ -134,14 +226,16 @@ class _AutenticacaoState extends State<QueremosConhecer> {
                           );
 
                           if (pickedDate != null) {
-                            // Faz algo com a data selecionada
-                            _dt_nascimentoController =
-                                pickedDate.toString() as TextEditingController;
+                            String formattedDate =
+                                DateFormat('dd/MM/yyyy').format(pickedDate);
+                            setState(() {
+                              _dt_nascimentoController.text = formattedDate;
+                            });
                           }
                         },
                       ),
                       const SizedBox(
-                        height: 32,
+                        height: 12,
                       ),
                       const Text(
                         "Gênero de nascimento",
@@ -154,40 +248,110 @@ class _AutenticacaoState extends State<QueremosConhecer> {
                       ),
                       Row(
                         mainAxisAlignment: MainAxisAlignment.start,
-                        children: <Widget>[
-                          ElevatedButton(
-                            onPressed: () {
-                              // Ação ao pressionar o botão "Masculino"
-                              print("Masculino selecionado");
+                        children: [
+                          // Botão "Feminino"
+                          GestureDetector(
+                            onTap: () {
+                              setState(() {
+                                selectedGender = 'F';
+                              });
                             },
-                            child: Text('Masculino'),
+                            child: Container(
+                              width: 82, // Largura fixa de 82px
+                              height: 48, // Altura fixa de 48px
+                              padding: const EdgeInsets.only(
+                                  top: 8), // Padding superior de 8px
+                              decoration: BoxDecoration(
+                                borderRadius: BorderRadius.circular(
+                                    12), // Border radius de 12px
+                                border: Border.all(width: 1), // Border de 1px
+                                color: selectedGender == 'F'
+                                    ? Colors
+                                        .orange // Se selecionado, cor laranja
+                                    : const Color.fromARGB(255, 255, 254,
+                                        254), // Se não, cor cinza
+                              ),
+                              child: Center(
+                                child: Text(
+                                  'Feminino',
+                                  style: TextStyle(
+                                    color: const Color.fromARGB(
+                                        255, 10, 10, 10), // Cor do texto branca
+                                  ),
+                                ),
+                              ),
+                            ),
                           ),
-                          SizedBox(width: 20), // Espaçamento entre os botões
-                          ElevatedButton(
-                            onPressed: () {
-                              // Ação ao pressionar o botão "Feminino"
-                              print("Feminino selecionado");
+                          SizedBox(width: 16), // Espaço entre os botões
+
+                          // Botão "Masculino"
+                          GestureDetector(
+                            onTap: () {
+                              setState(() {
+                                selectedGender = 'M';
+                              });
                             },
-                            child: Text('Feminino'),
+                            child: Container(
+                              width: 82, // Largura fixa de 82px
+                              height: 48, // Altura fixa de 48px
+                              padding: const EdgeInsets.only(
+                                  top: 8), // Padding superior de 8px
+                              decoration: BoxDecoration(
+                                borderRadius: BorderRadius.circular(
+                                    12), // Border radius de 12px
+                                border: Border.all(width: 1), // Border de 1px
+                                color: selectedGender == 'M'
+                                    ? Colors
+                                        .orange // Se selecionado, cor laranja
+                                    : const Color.fromARGB(255, 252, 251,
+                                        251), // Se não, cor cinza
+                              ),
+                              child: Center(
+                                child: Text(
+                                  'Homem',
+                                  style: TextStyle(
+                                    color: const Color.fromARGB(
+                                        255, 5, 5, 5), // Cor do texto branca
+                                  ),
+                                ),
+                              ),
+                            ),
                           ),
                         ],
                       ),
                       const SizedBox(
-                        height: 32,
+                        height: 100,
                       ),
                       ElevatedButton(
                         onPressed: () {
-                          Navigator.push(
-                            context,
-                            MaterialPageRoute(
-                                builder: (context) => InfoNutricionais()),
-                          );
+                          if (_selectedDate != null) {
+                            ScaffoldMessenger.of(context).showSnackBar(
+                              SnackBar(
+                                  content: Text(
+                                      'link tela login: ${_dt_nascimentoController.text}')),
+                            );
+                          }
                         },
                         style: ElevatedButton.styleFrom(
                           backgroundColor:
-                              Color(0xFFFFAE31), // Cor de fundo do botão
+                              Colors.orange, // Cor de fundo laranja
+                          shape: RoundedRectangleBorder(
+                            borderRadius: BorderRadius.circular(
+                                6.0), // Bordas arredondadas
+                            side: BorderSide(
+                                color: const Color.fromARGB(255, 87, 87, 87),
+                                width: 2.0), // Borda preta com largura de 2
+                          ),
+                          padding: EdgeInsets.symmetric(
+                              horizontal: 20, vertical: 15), // Tamanho do botão
                         ),
-                        child: Text("Salvar alterações"),
+                        child: Text("Salvar alterações",
+                            style: TextStyle(
+                              fontSize: 14, // Tamanho do texto
+                              color: const Color.fromARGB(
+                                  255, 10, 10, 10), // Cor do texto
+                              fontWeight: FontWeight.bold, // Negrito opcional
+                            )),
                       ),
                     ],
                   ),
@@ -197,6 +361,33 @@ class _AutenticacaoState extends State<QueremosConhecer> {
           ),
         ],
       ),
+    );
+  }
+
+  @override
+  void dispose() {
+    _dt_nascimentoController.dispose();
+    _apelidolController.dispose();
+    _telefoneController.dispose();
+    _generoController.dispose();
+    super.dispose();
+  }
+
+  void enviarDadosValidadosParaAPI() async {
+    String userName = _apelidolController.text;
+    String telefone = _telefoneController.text;
+    String aniversario = _dt_nascimentoController.text;
+    String sexo = _generoController.text;
+
+    await _queremosServico.cadastrarInfoQueremosConhecer(
+        id: 1,
+        userName: userName,
+        telefone: telefone,
+        aniversario: aniversario,
+        sexo: sexo);
+    Navigator.push(
+      context,
+      MaterialPageRoute(builder: (context) => InfoNutricionais()),
     );
   }
 }
