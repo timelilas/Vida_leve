@@ -15,6 +15,7 @@ class _AutenticacaoState extends State<InfoNutricionais> {
   TextEditingController _peso_atualController = TextEditingController();
   TextEditingController _peso_desejadoController = TextEditingController();
   TextEditingController _atividade_opController = TextEditingController();
+  int ID = 0;
 
   NutricionaisService _nutricionaisService = NutricionaisService();
 
