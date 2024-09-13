@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:vida_leve/componentes/decoracao_campo_autenticacao.dart';
 import 'package:vida_leve/model/validar_senha.dart';
 import 'package:vida_leve/servicos/autenticacao_servico.dart';
+import 'package:vida_leve/telas/queremos_conhecer.dart';
 
 class Autenticacao extends StatefulWidget {
   const Autenticacao({super.key});
@@ -12,6 +13,8 @@ class Autenticacao extends StatefulWidget {
 
 class _AutenticacaoState extends State<Autenticacao> {
   bool queroEntrar = true;
+  bool _obscureText = true; // Variável que define se o texto estará oculto
+  bool _obscureTextConf = true;
   final _formKey = GlobalKey<FormState>();
 
   TextEditingController _emailController = TextEditingController();
@@ -19,6 +22,19 @@ class _AutenticacaoState extends State<Autenticacao> {
   TextEditingController _confirmarSenhaController = TextEditingController();
   TextEditingController _nomeController = TextEditingController();
   AutenticacaoServico _autenticacaoServico = AutenticacaoServico();
+
+  // Função para alternar a visibilidade da senha
+  void _togglePasswordVisibility() {
+    setState(() {
+      _obscureText = !_obscureText;
+    });
+  }
+
+  void _togglePasswordVisibilityConfir() {
+    setState(() {
+      _obscureTextConf = !_obscureTextConf;
+    });
+  }
 
   @override
   void dispose() {
@@ -57,14 +73,14 @@ class _AutenticacaoState extends State<Autenticacao> {
                     crossAxisAlignment: CrossAxisAlignment.stretch,
                     children: [
                       Image.asset(
-                        "assets/logoperfil.png",
-                        height: 200,
+                        "assets/logo.png",
+                        height: 150,
                       ),
                       const Text(
                         "Boas vindas!",
                         textAlign: TextAlign.center,
                         style: TextStyle(
-                          fontSize: 40,
+                          fontSize: 30,
                           fontWeight: FontWeight.bold,
                           color: Color(0xFF4E4B66),
                         ),
@@ -73,17 +89,16 @@ class _AutenticacaoState extends State<Autenticacao> {
                         "Cadastre-se para continuar",
                         textAlign: TextAlign.center,
                         style: TextStyle(
-                          fontSize: 30,
+                          fontSize: 20,
                           fontWeight: FontWeight.bold,
                           color: Color(0xFF4E4B66),
                         ),
                       ),
-                      const SizedBox(
-                        height: 32,
-                      ),
                       TextFormField(
                         controller: _emailController,
-                        decoration: getAutenticacaoDecoracao("Email"),
+                        decoration:
+                            getAutenticacaoDecoracao("Endereço de e-mail"),
+                        maxLength: 30,
                         validator: (String? value) {
                           if (value == null) {
                             return "O e-mail não pode ser vazio.";
@@ -97,12 +112,31 @@ class _AutenticacaoState extends State<Autenticacao> {
                           return null;
                         },
                       ),
-                      const SizedBox(
-                        height: 22,
-                      ),
                       TextFormField(
                         controller: _senhaController,
-                        decoration: getAutenticacaoDecoracao("Senha"),
+                        obscureText: _obscureText,
+                        maxLength: 10,
+                        decoration: InputDecoration(
+                          labelText: 'Senha',
+                          fillColor: Colors.white,
+                          filled: true,
+                          contentPadding:
+                              const EdgeInsets.fromLTRB(16, 8, 8, 8),
+                          border: OutlineInputBorder(
+                              borderRadius: BorderRadius.circular(4.0)),
+                          enabledBorder: OutlineInputBorder(
+                            borderRadius: BorderRadius.circular(9.0),
+                          ),
+                          suffixIcon: IconButton(
+                            icon: Icon(
+                              _obscureText
+                                  ? Icons.visibility_off
+                                  : Icons.visibility, // Ícone do olho
+                            ),
+                            onPressed:
+                                _togglePasswordVisibility, // Função para alternar a visibilidade
+                          ),
+                        ),
                         validator: (String? value) {
                           String? validationMessage =
                               PasswordValidator.validate(value ?? '');
@@ -111,10 +145,6 @@ class _AutenticacaoState extends State<Autenticacao> {
                           }
                           return null;
                         },
-                        obscureText: true,
-                      ),
-                      const SizedBox(
-                        height: 20,
                       ),
                       Visibility(
                         visible: !queroEntrar,
@@ -122,8 +152,29 @@ class _AutenticacaoState extends State<Autenticacao> {
                           children: [
                             TextFormField(
                               controller: _confirmarSenhaController,
-                              decoration:
-                                  getAutenticacaoDecoracao("Confirmar Senha"),
+                              obscureText: _obscureTextConf,
+                              maxLength: 10,
+                              decoration: InputDecoration(
+                                labelText: 'Confirmar Senha',
+                                fillColor: Colors.white,
+                                filled: true,
+                                contentPadding:
+                                    const EdgeInsets.fromLTRB(16, 8, 8, 8),
+                                border: OutlineInputBorder(
+                                    borderRadius: BorderRadius.circular(4.0)),
+                                enabledBorder: OutlineInputBorder(
+                                  borderRadius: BorderRadius.circular(9.0),
+                                ),
+                                suffixIcon: IconButton(
+                                  icon: Icon(
+                                    _obscureTextConf
+                                        ? Icons.visibility_off
+                                        : Icons.visibility, // Ícone do olho
+                                  ),
+                                  onPressed:
+                                      _togglePasswordVisibilityConfir, // Função para alternar a visibilidade
+                                ),
+                              ),
                               validator: (String? value) {
                                 if (value == null || value.isEmpty) {
                                   return "Por favor, confirme sua senha.";
@@ -133,14 +184,11 @@ class _AutenticacaoState extends State<Autenticacao> {
                                 }
                                 return null;
                               },
-                              obscureText: true,
-                            ),
-                            const SizedBox(
-                              height: 20,
                             ),
                             TextFormField(
                               controller: _nomeController,
                               decoration: getAutenticacaoDecoracao("Nome"),
+                              maxLength: 40,
                               validator: (String? value) {
                                 if (value == null) {
                                   return "O nome não pode ser vazio.";
@@ -158,7 +206,7 @@ class _AutenticacaoState extends State<Autenticacao> {
                         ),
                       ),
                       const SizedBox(
-                        height: 30,
+                        height: 20,
                       ),
                       ElevatedButton(
                         onPressed: () {
@@ -166,16 +214,32 @@ class _AutenticacaoState extends State<Autenticacao> {
                         },
                         style: ElevatedButton.styleFrom(
                           backgroundColor:
-                              Color(0xFFFFAE31), // Cor de fundo do botão
+                              Colors.orange, // Cor de fundo laranja
+                          shape: RoundedRectangleBorder(
+                            borderRadius: BorderRadius.circular(
+                                18.0), // Bordas arredondadas
+                            side: BorderSide(
+                                color: const Color.fromARGB(255, 87, 87, 87),
+                                width: 2.0), // Borda preta com largura de 2
+                          ),
+                          padding: EdgeInsets.symmetric(
+                              horizontal: 20, vertical: 15), // Tamanho do botão
                         ),
-                        child: Text((queroEntrar) ? "ENTRAR" : "Cadastrar"),
+                        child: Text((queroEntrar) ? "ENTRAR" : "Cadastrar",
+                            style: TextStyle(
+                              fontSize: 14, // Tamanho do texto
+                              color: const Color.fromARGB(
+                                  255, 10, 10, 10), // Cor do texto
+                              fontWeight: FontWeight.bold, // Negrito opcional
+                            )),
                       ),
-                      const Divider(),
+                      const SizedBox(
+                        height: 15,
+                      ),
                       TextButton(
                         onPressed: () {
                           setState(() {
                             queroEntrar = !queroEntrar;
-                            // Limpar campos ao trocar entre entrar e cadastrar
                             _emailController.clear();
                             _senhaController.clear();
                             _confirmarSenhaController.clear();
@@ -183,9 +247,29 @@ class _AutenticacaoState extends State<Autenticacao> {
                             _formKey.currentState?.reset();
                           });
                         },
-                        child: Text((queroEntrar)
-                            ? "Cadastre-se aqui!"
-                            : "Já tem uma conta? Entre"),
+                        style: ElevatedButton.styleFrom(
+                          backgroundColor: const Color.fromARGB(
+                              255, 207, 207, 207), // Cor de fundo laranja
+                          shape: RoundedRectangleBorder(
+                            borderRadius: BorderRadius.circular(
+                                18.0), // Bordas arredondadas
+                            side: BorderSide(
+                                color: const Color.fromARGB(255, 87, 87, 87),
+                                width: 2.0), // Borda preta com largura de 2
+                          ),
+                          padding: EdgeInsets.symmetric(
+                              horizontal: 20, vertical: 15), // Tamanho do botão
+                        ),
+                        child: Text(
+                            (queroEntrar)
+                                ? "Cadastre-se aqui!"
+                                : "Já tem uma conta? Entre",
+                            style: TextStyle(
+                              fontSize: 14, // Tamanho do texto
+                              color: const Color.fromARGB(
+                                  255, 10, 10, 10), // Cor do texto
+                              fontWeight: FontWeight.bold, // Negrito opcional
+                            )),
                       ),
                     ],
                   ),
@@ -208,10 +292,18 @@ class _AutenticacaoState extends State<Autenticacao> {
         // Chama a API para autenticar o usuário
         await _autenticacaoServico.autenticarUsuario(
             email: email, senha: senha);
+        Navigator.push(
+          context,
+          MaterialPageRoute(builder: (context) => QueremosConhecer()),
+        );
       } else {
         // Chama a API para cadastrar o usuário
         await _autenticacaoServico.cadastrarUsuario(
             nome: nome, senha: senha, email: email);
+        Navigator.push(
+          context,
+          MaterialPageRoute(builder: (context) => QueremosConhecer()),
+        );
       }
     } else {
       print("Formulário inválido");
