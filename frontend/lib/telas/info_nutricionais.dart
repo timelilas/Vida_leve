@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:vida_leve/servicos/nutricionais_service.dart';
+import 'package:vida_leve/telas/meta.dart';
 import 'package:vida_leve/telas/queremos_conhecer.dart';
 import 'package:flutter/services.dart';
 
@@ -25,13 +26,6 @@ class _AutenticacaoState extends State<InfoNutricionais> {
     setState(() {
       _isSubtextVisible[index] = !_isSubtextVisible[index];
     });
-  }
-
-  void botaoPrincipalClicado() {
-    String altura = _alturaController.text;
-    String peso = _peso_atualController.text;
-    String desejado = _peso_desejadoController.text;
-    String atividado_op = _atividade_opController.text;
   }
 
   final _formKey = GlobalKey<FormState>();
@@ -398,10 +392,10 @@ class _AutenticacaoState extends State<InfoNutricionais> {
 
     if (_formKey.currentState!.validate()) {
       await _nutricionaisService.cadastrarInfonutricionais(
-          altura: altura, peso: peso, meta: meta, atividade: atividade);
+          id: 1, altura: altura, peso: peso, meta: meta, atividade: atividade);
       Navigator.push(
         context,
-        MaterialPageRoute(builder: (context) => QueremosConhecer()),
+        MaterialPageRoute(builder: (context) => Meta()),
       );
     } else {
       print("Formulário inválido");

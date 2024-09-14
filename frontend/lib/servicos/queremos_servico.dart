@@ -1,7 +1,7 @@
 import 'package:vida_leve/servicos/api_service.dart';
 
 class QueremosServico {
-  final ApiService _apiService = ApiService(baseUrl: 'http://localhost:3000');
+  final ApiService _apiService = ApiService(baseUrl: 'http://192.168.5.8');
 
   Future<void> cadastrarInfoQueremosConhecer({
     required int id,
@@ -20,9 +20,10 @@ class QueremosServico {
 
     final response = await _apiService.postData(endpoint, body);
     if (response != null) {
-      print('Informacoes cadastradas com sucesso: $response');
+      print(
+          'Informacoes queremos te conhecer cadastradas com sucesso: $response');
     } else {
-      print('Erro ao cadastrar informacoes');
+      print('Erro ao cadastrar queremos te conhecer');
     }
   }
 }

@@ -1,13 +1,13 @@
 import 'package:flutter/material.dart';
 
-class PerfilUser extends StatefulWidget {
-  const PerfilUser({super.key});
+class Meta extends StatefulWidget {
+  const Meta({super.key});
 
   @override
-  State<PerfilUser> createState() => _MainOrigem();
+  State<Meta> createState() => _Meta();
 }
 
-class _MainOrigem extends State<PerfilUser> {
+class _Meta extends State<Meta> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -38,7 +38,7 @@ class _MainOrigem extends State<PerfilUser> {
                         height: 200,
                       ),
                       const Text(
-                        "Informações do perfil ficaram disponiveis aqui em breve",
+                        "Informações sobre METAS ficaram disponiveis aqui em breve",
                         textAlign: TextAlign.center,
                         style: TextStyle(
                           fontSize: 20,

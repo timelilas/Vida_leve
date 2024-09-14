@@ -4,7 +4,7 @@ import 'dart:convert';
 class ApiService {
   final String baseUrl;
 
-  ApiService({this.baseUrl = 'http://localhost:3000'});
+  ApiService({this.baseUrl = 'http://192.168.5.8'});
 
   Future<dynamic> getData(String endpoint) async {
     final url = Uri.parse('$baseUrl$endpoint');
@@ -63,4 +63,3 @@ class ApiService {
     }
   }
 }
-

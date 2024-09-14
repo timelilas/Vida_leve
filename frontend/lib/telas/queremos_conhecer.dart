@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:flutter/services.dart';
 import 'package:flutter_multi_formatter/formatters/masked_input_formatter.dart';
 import 'package:intl/intl.dart';
 import 'package:vida_leve/componentes/decoracao_campo_autenticacao.dart';
@@ -45,35 +44,7 @@ class _AutenticacaoState extends State<QueremosConhecer> {
     return null;
   }
 
-  void _salvarTelefone() {
-    if (_formKey.currentState!.validate()) {
-      String telefone = _telefoneController.text;
-      Navigator.push(
-        context,
-        MaterialPageRoute(
-          builder: (context) => InfoNutricionais(),
-        ),
-      );
-    }
-  }
-
   // Função para exibir o seletor de data
-  Future<void> _selectDate(BuildContext context) async {
-    final DateTime? pickedDate = await showDatePicker(
-      context: context,
-      initialDate: _selectedDate ?? DateTime.now(),
-      firstDate: DateTime(2000),
-      lastDate: DateTime(2101),
-    );
-    if (pickedDate != null && pickedDate != _selectedDate) {
-      setState(() {
-        _selectedDate = pickedDate;
-        // Formata a data para exibição no campo de texto
-        _dt_nascimentoController.text =
-            DateFormat('dd/MM/yyyy').format(pickedDate);
-      });
-    }
-  }
 
   @override
   Widget build(BuildContext context) {
@@ -331,6 +302,7 @@ class _AutenticacaoState extends State<QueremosConhecer> {
                                       'link tela login: ${_dt_nascimentoController.text}')),
                             );
                           }
+                          enviarDadosValidadosParaAPI();
                         },
                         style: ElevatedButton.styleFrom(
                           backgroundColor:

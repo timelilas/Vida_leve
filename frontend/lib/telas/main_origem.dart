@@ -55,7 +55,9 @@ class _MainOrigem extends State<MainOrigem> {
                           Navigator.push(
                             context,
                             MaterialPageRoute(
-                                builder: (context) => Autenticacao()),
+                                builder: (context) => Autenticacao(
+                                      escolherTela: true,
+                                    )),
                           );
                         },
                         style: ElevatedButton.styleFrom(
@@ -89,7 +91,9 @@ class _MainOrigem extends State<MainOrigem> {
                           Navigator.push(
                             context,
                             MaterialPageRoute(
-                                builder: (context) => Autenticacao()),
+                                builder: (context) => Autenticacao(
+                                      escolherTela: false,
+                                    )),
                           );
                         },
                         style: ElevatedButton.styleFrom(

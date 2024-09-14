@@ -2,17 +2,19 @@ import 'package:flutter/material.dart';
 import 'package:vida_leve/componentes/decoracao_campo_autenticacao.dart';
 import 'package:vida_leve/model/validar_senha.dart';
 import 'package:vida_leve/servicos/autenticacao_servico.dart';
+import 'package:vida_leve/telas/perfil.dart';
 import 'package:vida_leve/telas/queremos_conhecer.dart';
 
 class Autenticacao extends StatefulWidget {
-  const Autenticacao({super.key});
+  final bool escolherTela;
+  const Autenticacao({super.key, required this.escolherTela});
 
   @override
   State<Autenticacao> createState() => _AutenticacaoState();
 }
 
 class _AutenticacaoState extends State<Autenticacao> {
-  bool queroEntrar = true;
+  late bool queroEntrar = widget.escolherTela;
   bool _obscureText = true; // Variável que define se o texto estará oculto
   bool _obscureTextConf = true;
   final _formKey = GlobalKey<FormState>();
@@ -34,16 +36,6 @@ class _AutenticacaoState extends State<Autenticacao> {
     setState(() {
       _obscureTextConf = !_obscureTextConf;
     });
-  }
-
-  @override
-  void dispose() {
-    _emailController.dispose();
-    _senhaController.dispose();
-    _confirmarSenhaController.dispose();
-    _nomeController.dispose();
-    ScaffoldMessenger.of(context).clearSnackBars(); // Limpar mensagens
-    super.dispose();
   }
 
   @override
@@ -240,11 +232,6 @@ class _AutenticacaoState extends State<Autenticacao> {
                         onPressed: () {
                           setState(() {
                             queroEntrar = !queroEntrar;
-                            _emailController.clear();
-                            _senhaController.clear();
-                            _confirmarSenhaController.clear();
-                            _nomeController.clear();
-                            _formKey.currentState?.reset();
                           });
                         },
                         style: ElevatedButton.styleFrom(
@@ -283,7 +270,7 @@ class _AutenticacaoState extends State<Autenticacao> {
   }
 
   void botaoPrincipalClicado() async {
-    String nome = _nomeController.text;
+    String userName = _nomeController.text;
     String email = _emailController.text;
     String senha = _senhaController.text;
 
@@ -294,12 +281,12 @@ class _AutenticacaoState extends State<Autenticacao> {
             email: email, senha: senha);
         Navigator.push(
           context,
-          MaterialPageRoute(builder: (context) => QueremosConhecer()),
+          MaterialPageRoute(builder: (context) => PerfilUser()),
         );
       } else {
         // Chama a API para cadastrar o usuário
         await _autenticacaoServico.cadastrarUsuario(
-            nome: nome, senha: senha, email: email);
+            userName: userName, email: email, senha: senha);
         Navigator.push(
           context,
           MaterialPageRoute(builder: (context) => QueremosConhecer()),
