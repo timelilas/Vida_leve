@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:vida_leve/servicos/nutricionais_service.dart';
 import 'package:vida_leve/telas/meta.dart';
-import 'package:vida_leve/telas/queremos_conhecer.dart';
 import 'package:flutter/services.dart';
 
 class InfoNutricionais extends StatefulWidget {
