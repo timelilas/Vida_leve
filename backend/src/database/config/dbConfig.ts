@@ -1,10 +1,17 @@
-import { Sequelize } from "sequelize";
+import { Sequelize } from 'sequelize';
+import * as dotenv from 'dotenv';
 
-const sequelize = new Sequelize({
-  dialect: 'mysql',
-  host: process.env.DB_HOST || 'localhost',
-  port: parseInt(process.env.DB_PORT || '3306', 10),
-  username: process.env.DB_USER || 'root',
-  password: process.env.DB_PASSWORD || 'password',
-  database: process.env.DB_NAME || 'database',
+dotenv.config();
+
+const sequelize = new Sequelize(process.env.DATABASE_URL || '', {
+  dialect: 'postgres',
+  dialectOptions: {
+    ssl: {
+      require: true, // Necessário para conexões seguras
+      rejectUnauthorized: false // Se o certificado não for verificado
+    }
+  },
+  logging: false
 });
+
+export default sequelize;

@@ -1,15 +1,14 @@
 "use strict";
 exports.__esModule = true;
 var config = {
-    username: process.env.DB_USER || 'root',
-    password: process.env.DB_PASS || 'password',
-    database: process.env.DB_NAME || 'database',
-    host: process.env.DB_HOST || 'localhost',
-    port: Number(process.env.DB_PORT) || 3306,
-    dialect: 'mysql',
-    dialectOptions: {
-        timezone: 'Z'
-    },
-    logging: false
+  url: process.env.DATABASE_URL || 'postgresql://localhost:5432/database',
+  dialect: 'postgres',
+  dialectOptions: {
+    ssl: {
+      require: true, // Necessário para conexões seguras
+      rejectUnauthorized: false // Se o certificado não for verificado
+    }
+  },
+  logging: false
 };
 module.exports = config;
