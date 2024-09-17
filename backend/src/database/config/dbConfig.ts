@@ -1,10 +1,16 @@
-import { Sequelize } from "sequelize";
+import { Sequelize } from 'sequelize';
 
-const sequelize = new Sequelize({
-  dialect: 'mysql',
-  host: process.env.DB_HOST || 'localhost',
-  port: parseInt(process.env.DB_PORT || '3306', 10),
-  username: process.env.DB_USER || 'root',
-  password: process.env.DB_PASSWORD || 'password',
-  database: process.env.DB_NAME || 'database',
+// Obtém a URL de conexão do banco de dados do ambiente
+const DATABASE_URL = process.env.DATABASE_URL || 'postgresql://localhost:5432/database';
+
+const sequelize = new Sequelize(DATABASE_URL, {
+  dialect: 'postgres',
+  dialectOptions: {
+    ssl: {
+      require: true,
+      rejectUnauthorized: false, // Configure conforme necessário
+    },
+  },
 });
+
+export default sequelize;
