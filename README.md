@@ -26,7 +26,8 @@ Agora e so aproveitar <a>http://localhost:8080</a>
 
     Saida:
     {
-        "message": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6MiwiZW1haWwiOiJyb290QHJvb3QuY29tbSIsInBhc3N3b3JkIjoiJDJhJDEwJHI0SWl5amJFRnczelQuUzBKUm1sRk9vVmdaQThiTUR0OUY5UnpPazV0VEVMS1dYLnFJLkZlIiwiaWF0IjoxNzI0ODYxMTY2LCJleHAiOjIxOTgyMjUxNjZ9.hrfhfGwkyRtcdwXQRSdEBINd3ICvtD9Gnq1xXTnngR8"
+        "id": 4,
+        "message": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6NCwiZW1haWwiOiJyb290QHJvb3QuY29tbSIsInNlbmhhIjoiJDJhJDEwJEswZGVKc2JvSmM4WnNOMWJzSDVRNnVMS3c1dnFJRVc2ZXh5NU1HM3NWMXpMTXpHZHY2NmplIiwiaWF0IjoxNzI1NDEzNDAwLCJleHAiOjIxOTg3Nzc0MDB9.vXldqXKlWEZzsKwbk5a_0bIXbKHu83ec2ZoZHsVH2GU"
     }
 
 
@@ -58,7 +59,7 @@ Agora e so aproveitar <a>http://localhost:8080</a>
         "message": "Dados completado com sucesso"
     }
 
-#### POST  `/prgress/:id`
+#### POST  `/progress/:id`
     Entrada:
     {
         "altura": 1.25,
