@@ -10,7 +10,7 @@ class NutricionaisService {
     required String meta,
     required String atividade,
   }) async {
-    final endpoint = '/prgress/:$id';
+    final endpoint = '/progress/:$id';
     final body = {
       'apelido': altura,
       'telefone': peso,

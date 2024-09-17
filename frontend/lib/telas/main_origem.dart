@@ -56,7 +56,7 @@ class _MainOrigem extends State<MainOrigem> {
                             context,
                             MaterialPageRoute(
                                 builder: (context) => Autenticacao(
-                                      escolherTela: true,
+                                      escolherTela: false,
                                     )),
                           );
                         },
@@ -92,7 +92,7 @@ class _MainOrigem extends State<MainOrigem> {
                             context,
                             MaterialPageRoute(
                                 builder: (context) => Autenticacao(
-                                      escolherTela: false,
+                                      escolherTela: true,
                                     )),
                           );
                         },
