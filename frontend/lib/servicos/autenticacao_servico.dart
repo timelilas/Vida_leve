@@ -1,7 +1,7 @@
 import 'package:vida_leve/servicos/api_service.dart';
 
 class AutenticacaoServico {
-  final ApiService _apiService = ApiService(baseUrl: 'http://192.168.5.8');
+  final ApiService _apiService = ApiService(baseUrl: 'http://localhost:3000');
 
   Future<void> cadastrarUsuario({
     required String userName,
