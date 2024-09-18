@@ -295,6 +295,15 @@ class _AutenticacaoState extends State<Autenticacao> {
     );
   }
 
+  @override
+  void dispose() {
+    _confirmarSenhaController.dispose();
+    _emailController.dispose();
+    _senhaController.dispose();
+    _nomeController.dispose();
+    super.dispose();
+  }
+
   void botaoPrincipalClicado() async {
     int? usuarioId;
     String userName = _nomeController.text;
