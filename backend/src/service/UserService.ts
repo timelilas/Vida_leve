@@ -3,6 +3,17 @@ import bcrypt from 'bcrypt';
 import { generateToken } from '../utils/JWT';
 
 export default class UserService {
+  
+  public get = async () => {
+    try {
+      const users = await User.findAll();
+      return { type: 200, message: users };
+    } catch (error) {
+      console.error('Error getting users:', error);
+      throw new Error('Error getting users');
+    }
+  };
+
   public post = async (userName: string | undefined, email: string, senha: string) => {
     try {
       senha = await bcrypt.hash(senha, 10);
