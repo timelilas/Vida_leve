@@ -21,9 +21,7 @@ class AutenticacaoServico {
 
     final response = await _apiService.postData(endpoint, body);
     if (response != null) {
-      final usuarioId = int.tryParse(response['id'].toString());
-      Provider.of<User>(context, listen: false).manterID(usuarioId!);
-      print('Usuário cadastrado com sucesso: $usuarioId');
+      print('Usuário cadastrado com sucesso: $response');
     } else {
       print('Erro ao cadastrar usuário');
     }
