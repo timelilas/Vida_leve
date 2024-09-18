@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:flutter_multi_formatter/formatters/masked_input_formatter.dart';
 import 'package:intl/intl.dart';
 import 'package:provider/provider.dart';
@@ -138,6 +139,11 @@ class _AutenticacaoState extends State<QueremosConhecer> {
                       ),
                       TextFormField(
                         controller: _telefoneController,
+                        inputFormatters: [
+                          FilteringTextInputFormatter
+                              .digitsOnly, // Permite apenas números
+                          MaskedInputFormatter('(##) #####-####'),
+                        ],
                         decoration: InputDecoration(
                           hintText: '(XX) XXXXX-XXXX',
                           fillColor: Colors.white,
@@ -154,9 +160,6 @@ class _AutenticacaoState extends State<QueremosConhecer> {
                           ),
                         ),
                         keyboardType: TextInputType.phone,
-                        inputFormatters: [
-                          MaskedInputFormatter('(##) #####-####'),
-                        ],
                         validator: validarTelefone,
                       ),
                       const SizedBox(
@@ -283,7 +286,7 @@ class _AutenticacaoState extends State<QueremosConhecer> {
                               ),
                               child: Center(
                                 child: Text(
-                                  'Homem',
+                                  'Masculino',
                                   style: TextStyle(
                                     color: const Color.fromARGB(
                                         255, 5, 5, 5), // Cor do texto branca
@@ -309,8 +312,8 @@ class _AutenticacaoState extends State<QueremosConhecer> {
                           enviarDadosValidadosParaAPI(usuarioId);
                         },
                         style: ElevatedButton.styleFrom(
-                          backgroundColor:
-                              Colors.orange, // Cor de fundo laranja
+                          backgroundColor: Color.fromARGB(
+                              255, 248, 174, 63), // Cor de fundo laranja
                           shape: RoundedRectangleBorder(
                             borderRadius: BorderRadius.circular(
                                 6.0), // Bordas arredondadas

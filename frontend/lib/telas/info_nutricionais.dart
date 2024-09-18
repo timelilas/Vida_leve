@@ -345,8 +345,8 @@ class _AutenticacaoState extends State<InfoNutricionais> {
                           enviarDadosNutricionaisParaAPI(usuarioId);
                         },
                         style: ElevatedButton.styleFrom(
-                          backgroundColor:
-                              Colors.orange, // Cor de fundo laranja
+                          backgroundColor: Color.fromARGB(
+                              255, 248, 174, 63), // Cor de fundo laranja
                           shape: RoundedRectangleBorder(
                             borderRadius: BorderRadius.circular(
                                 6.0), // Bordas arredondadas

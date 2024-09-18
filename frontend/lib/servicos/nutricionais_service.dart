@@ -1,4 +1,3 @@
-import 'package:flutter/material.dart';
 import 'package:vida_leve/servicos/api_service.dart';
 
 class NutricionaisService {

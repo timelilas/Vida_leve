@@ -79,7 +79,7 @@ class _AutenticacaoState extends State<Autenticacao> {
                         ),
                       ),
                       const Text(
-                        "Cadastre-se para continuar",
+                        "Entre em sua conta para continuar",
                         textAlign: TextAlign.center,
                         style: TextStyle(
                           fontSize: 20,
@@ -87,10 +87,46 @@ class _AutenticacaoState extends State<Autenticacao> {
                           color: Color(0xFF4E4B66),
                         ),
                       ),
+                      const SizedBox(
+                        height: 40,
+                      ),
+                      Visibility(
+                        visible: !queroEntrar,
+                        child: Column(
+                          crossAxisAlignment: CrossAxisAlignment.start,
+                          children: [
+                            Text(
+                              "Como você gostaria de ser chamado?",
+                              style: TextStyle(fontSize: 16),
+                            ),
+                            TextFormField(
+                              controller: _nomeController,
+                              decoration: getAutenticacaoDecoracao("ex:Nome"),
+                              maxLength: 40,
+                              validator: (String? value) {
+                                if (value == null) {
+                                  return "O nome não pode ser vazio.";
+                                }
+                                if (value.length < 2) {
+                                  return "Nome muito pequeno";
+                                }
+                                if (value.length > 20) {
+                                  return "Nome muito grande.";
+                                }
+                                return null;
+                              },
+                            ),
+                          ],
+                        ),
+                      ),
+                      Text(
+                        "Endereço de e-mail",
+                        style: TextStyle(fontSize: 16),
+                      ),
                       TextFormField(
                         controller: _emailController,
-                        decoration:
-                            getAutenticacaoDecoracao("Endereço de e-mail"),
+                        decoration: getAutenticacaoDecoracao(
+                            "ex: vidaleve@vidaleve.com"),
                         maxLength: 30,
                         validator: (String? value) {
                           if (value == null) {
@@ -105,20 +141,21 @@ class _AutenticacaoState extends State<Autenticacao> {
                           return null;
                         },
                       ),
+                      Text("Senha", style: TextStyle(fontSize: 16)),
                       TextFormField(
                         controller: _senhaController,
                         obscureText: _obscureText,
                         maxLength: 10,
                         decoration: InputDecoration(
-                          labelText: 'Senha',
+                          labelText: '**********',
                           fillColor: Colors.white,
                           filled: true,
                           contentPadding:
                               const EdgeInsets.fromLTRB(16, 8, 8, 8),
                           border: OutlineInputBorder(
-                              borderRadius: BorderRadius.circular(4.0)),
+                              borderRadius: BorderRadius.circular(10.0)),
                           enabledBorder: OutlineInputBorder(
-                            borderRadius: BorderRadius.circular(9.0),
+                            borderRadius: BorderRadius.circular(10.0),
                           ),
                           suffixIcon: IconButton(
                             icon: Icon(
@@ -142,21 +179,26 @@ class _AutenticacaoState extends State<Autenticacao> {
                       Visibility(
                         visible: !queroEntrar,
                         child: Column(
+                          crossAxisAlignment: CrossAxisAlignment.start,
                           children: [
+                            Text(
+                              "Confirmar sua senha",
+                              style: TextStyle(fontSize: 16),
+                            ),
                             TextFormField(
                               controller: _confirmarSenhaController,
                               obscureText: _obscureTextConf,
                               maxLength: 10,
                               decoration: InputDecoration(
-                                labelText: 'Confirmar Senha',
+                                labelText: '**********',
                                 fillColor: Colors.white,
                                 filled: true,
                                 contentPadding:
                                     const EdgeInsets.fromLTRB(16, 8, 8, 8),
                                 border: OutlineInputBorder(
-                                    borderRadius: BorderRadius.circular(4.0)),
+                                    borderRadius: BorderRadius.circular(10.0)),
                                 enabledBorder: OutlineInputBorder(
-                                  borderRadius: BorderRadius.circular(9.0),
+                                  borderRadius: BorderRadius.circular(10.0),
                                 ),
                                 suffixIcon: IconButton(
                                   icon: Icon(
@@ -178,36 +220,19 @@ class _AutenticacaoState extends State<Autenticacao> {
                                 return null;
                               },
                             ),
-                            TextFormField(
-                              controller: _nomeController,
-                              decoration: getAutenticacaoDecoracao("Nome"),
-                              maxLength: 40,
-                              validator: (String? value) {
-                                if (value == null) {
-                                  return "O nome não pode ser vazio.";
-                                }
-                                if (value.length < 2) {
-                                  return "Nome muito pequeno";
-                                }
-                                if (value.length > 20) {
-                                  return "Nome muito grande.";
-                                }
-                                return null;
-                              },
-                            ),
                           ],
                         ),
                       ),
                       const SizedBox(
-                        height: 20,
+                        height: 130,
                       ),
                       ElevatedButton(
                         onPressed: () {
                           botaoPrincipalClicado();
                         },
                         style: ElevatedButton.styleFrom(
-                          backgroundColor:
-                              Colors.orange, // Cor de fundo laranja
+                          backgroundColor: Color.fromARGB(
+                              255, 248, 174, 63), // Cor de fundo laranja
                           shape: RoundedRectangleBorder(
                             borderRadius: BorderRadius.circular(
                                 18.0), // Bordas arredondadas
