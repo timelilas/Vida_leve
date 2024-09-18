@@ -10,14 +10,13 @@ class NutricionaisService {
     required String peso,
     required String meta,
     required String atividade,
-    required BuildContext context,
   }) async {
     final endpoint = '/progress/$id';
     final body = {
-      'altura': 1.99,
-      'peso': 100,
-      'meta': 70,
-      'atividade': "leve",
+      'altura': altura,
+      'peso': peso,
+      'meta': meta,
+      'atividade': atividade,
     };
 
     final response = await _apiService.postData(endpoint, body);

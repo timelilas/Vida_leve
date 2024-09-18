@@ -385,20 +385,22 @@ class _AutenticacaoState extends State<InfoNutricionais> {
   }
 
   void enviarDadosNutricionaisParaAPI() async {
-    int id = Provider.of<User>(context).clienteId!;
+    int id = 2;
     String altura = _alturaController.text;
     String peso = _peso_atualController.text;
     String meta = _peso_desejadoController.text;
     String atividade = _atividade_opController.text;
 
+    print(altura + " " + peso + " " + meta + " " + atividade);
+
     if (_formKey.currentState!.validate()) {
       await _nutricionaisService.cadastrarInfonutricionais(
-          id: id,
-          altura: altura,
-          peso: peso,
-          meta: meta,
-          atividade: atividade,
-          context: context);
+        id: id,
+        altura: altura,
+        peso: peso,
+        meta: meta,
+        atividade: "Leve",
+      );
       Navigator.push(
         context,
         MaterialPageRoute(builder: (context) => Meta()),

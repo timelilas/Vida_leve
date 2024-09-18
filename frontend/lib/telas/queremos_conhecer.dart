@@ -19,7 +19,7 @@ class _AutenticacaoState extends State<QueremosConhecer> {
   TextEditingController _apelidolController = TextEditingController();
   TextEditingController _telefoneController = TextEditingController();
   TextEditingController _dt_nascimentoController = TextEditingController();
-  TextEditingController _generoController = TextEditingController();
+  String _generoController = '';
   String? selectedGender = '';
   DateTime? _selectedDate;
 
@@ -306,7 +306,7 @@ class _AutenticacaoState extends State<QueremosConhecer> {
                                       'link tela login: ${_dt_nascimentoController.text}')),
                             );
                           }
-                          enviarDadosValidadosParaAPI(clienteId!);
+                          enviarDadosValidadosParaAPI();
                         },
                         style: ElevatedButton.styleFrom(
                           backgroundColor:
@@ -345,16 +345,33 @@ class _AutenticacaoState extends State<QueremosConhecer> {
     _dt_nascimentoController.dispose();
     _apelidolController.dispose();
     _telefoneController.dispose();
-    _generoController.dispose();
+    _generoController = '';
     super.dispose();
   }
 
-  void enviarDadosValidadosParaAPI(int clienteId) async {
-    int id = clienteId;
+  void enviarDadosValidadosParaAPI() async {
+    int id = 2;
     String userName = _apelidolController.text;
     String telefone = _telefoneController.text;
-    String aniversario = _dt_nascimentoController.text;
-    String sexo = _generoController.text;
+
+    // Data original no formato "30/09/2024"
+    String dataOriginal = _dt_nascimentoController.text;
+    // Converter a data para um objeto DateTime
+    DateFormat formatoEntrada = DateFormat("dd/MM/yyyy");
+    DateTime dataConvertida = formatoEntrada.parse(dataOriginal);
+    // Formatar a data para o formato ISO 8601 ("1990-01-01")
+    DateFormat formatoSaida = DateFormat("yyyy-MM-dd");
+    String dataFormatada = formatoSaida.format(dataConvertida);
+    print(dataFormatada); // Saída: 2024-09-30
+    String aniversario = dataFormatada;
+
+    //Escolher sexo
+    if (selectedGender == "F") {
+      _generoController = "Mulher";
+    } else {
+      _generoController = "Homen";
+    }
+    String sexo = _generoController;
 
     await _queremosServico.cadastrarInfoQueremosConhecer(
         id: id,

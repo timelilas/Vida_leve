@@ -282,7 +282,7 @@ class _AutenticacaoState extends State<Autenticacao> {
             email: email, senha: senha, context: context);
         Navigator.push(
           context,
-          MaterialPageRoute(builder: (context) => InfoNutricionais()),
+          MaterialPageRoute(builder: (context) => QueremosConhecer()),
         );
       } else {
         // Chama a API para cadastrar o usuário
