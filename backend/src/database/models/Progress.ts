@@ -19,11 +19,11 @@ Progress.init(
             primaryKey: true,
         },
         altura: {
-            type: DataTypes.FLOAT,
+            type: DataTypes.STRING,
             allowNull: false,
         },
         peso: {
-            type: DataTypes.FLOAT,
+            type: DataTypes.STRING,
             allowNull: false,
         },
         meta: {
