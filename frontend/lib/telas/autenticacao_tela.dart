@@ -1,9 +1,9 @@
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
 import 'package:vida_leve/componentes/decoracao_campo_autenticacao.dart';
+import 'package:vida_leve/model/user.dart';
 import 'package:vida_leve/model/validar_senha.dart';
 import 'package:vida_leve/servicos/autenticacao_servico.dart';
-import 'package:vida_leve/telas/info_nutricionais.dart';
-import 'package:vida_leve/telas/perfil.dart';
 import 'package:vida_leve/telas/queremos_conhecer.dart';
 
 class Autenticacao extends StatefulWidget {
@@ -271,6 +271,7 @@ class _AutenticacaoState extends State<Autenticacao> {
   }
 
   void botaoPrincipalClicado() async {
+    int? usuarioId;
     String userName = _nomeController.text;
     String email = _emailController.text;
     String senha = _senhaController.text;
@@ -278,15 +279,16 @@ class _AutenticacaoState extends State<Autenticacao> {
     if (_formKey.currentState!.validate()) {
       if (queroEntrar) {
         // Chama a API para autenticar o usuário
-        await _autenticacaoServico.autenticarUsuario(
+        usuarioId = await _autenticacaoServico.autenticarUsuario(
             email: email, senha: senha, context: context);
+        Provider.of<User>(context, listen: false).manterID(usuarioId!);
         Navigator.push(
           context,
-          MaterialPageRoute(builder: (context) => InfoNutricionais()),
+          MaterialPageRoute(builder: (context) => QueremosConhecer()),
         );
       } else {
         // Chama a API para cadastrar o usuário
-        await _autenticacaoServico.cadastrarUsuario(
+        usuarioId = await _autenticacaoServico.cadastrarUsuario(
             userName: userName, email: email, senha: senha, context: context);
         Navigator.push(
           context,
