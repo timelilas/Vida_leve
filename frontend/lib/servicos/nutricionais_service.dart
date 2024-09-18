@@ -1,3 +1,4 @@
+import 'package:flutter/material.dart';
 import 'package:vida_leve/servicos/api_service.dart';
 
 class NutricionaisService {
@@ -9,13 +10,14 @@ class NutricionaisService {
     required String peso,
     required String meta,
     required String atividade,
+    required BuildContext context,
   }) async {
-    final endpoint = '/progress/:$id';
+    final endpoint = '/progress/$id';
     final body = {
-      'apelido': altura,
-      'telefone': peso,
-      'meta': meta,
-      'atividade': atividade,
+      'altura': 1.99,
+      'peso': 100,
+      'meta': 70,
+      'atividade': "leve",
     };
 
     final response = await _apiService.postData(endpoint, body);

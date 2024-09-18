@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:vida_leve/componentes/decoracao_campo_autenticacao.dart';
 import 'package:vida_leve/model/validar_senha.dart';
 import 'package:vida_leve/servicos/autenticacao_servico.dart';
+import 'package:vida_leve/telas/info_nutricionais.dart';
 import 'package:vida_leve/telas/perfil.dart';
 import 'package:vida_leve/telas/queremos_conhecer.dart';
 
@@ -278,18 +279,19 @@ class _AutenticacaoState extends State<Autenticacao> {
       if (queroEntrar) {
         // Chama a API para autenticar o usuário
         await _autenticacaoServico.autenticarUsuario(
-            email: email, senha: senha);
+            email: email, senha: senha, context: context);
         Navigator.push(
           context,
-          MaterialPageRoute(builder: (context) => PerfilUser()),
+          MaterialPageRoute(builder: (context) => InfoNutricionais()),
         );
       } else {
         // Chama a API para cadastrar o usuário
         await _autenticacaoServico.cadastrarUsuario(
-            userName: userName, email: email, senha: senha);
+            userName: userName, email: email, senha: senha, context: context);
         Navigator.push(
           context,
-          MaterialPageRoute(builder: (context) => QueremosConhecer()),
+          MaterialPageRoute(
+              builder: (context) => Autenticacao(escolherTela: true)),
         );
       }
     } else {

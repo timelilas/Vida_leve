@@ -1,3 +1,6 @@
+import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
+import 'package:vida_leve/model/user.dart';
 import 'package:vida_leve/servicos/api_service.dart';
 
 class AutenticacaoServico {
@@ -7,6 +10,7 @@ class AutenticacaoServico {
     required String userName,
     required String email,
     required String senha,
+    required BuildContext context, // Adiciona o context aqui
   }) async {
     final endpoint = '/user/create';
     final body = {
@@ -17,7 +21,9 @@ class AutenticacaoServico {
 
     final response = await _apiService.postData(endpoint, body);
     if (response != null) {
-      print('Usuário cadastrado com sucesso: $response');
+      final usuarioId = int.tryParse(response['id'].toString());
+      Provider.of<User>(context, listen: false).manterID(usuarioId!);
+      print('Usuário cadastrado com sucesso: $usuarioId');
     } else {
       print('Erro ao cadastrar usuário');
     }
@@ -26,6 +32,7 @@ class AutenticacaoServico {
   Future<void> autenticarUsuario({
     required String email,
     required String senha,
+    required BuildContext context,
   }) async {
     final endpoint = '/user/login';
     final body = {
@@ -35,7 +42,9 @@ class AutenticacaoServico {
 
     final response = await _apiService.postData(endpoint, body);
     if (response != null) {
-      print('Usuário autenticado com sucesso: $response');
+      final usuarioId = int.tryParse(response['id'].toString());
+      Provider.of<User>(context, listen: false).manterID(usuarioId!);
+      print('Usuário autenticado com sucesso: $usuarioId');
     } else {
       print('Erro ao autenticar usuário');
     }
