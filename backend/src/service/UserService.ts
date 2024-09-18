@@ -1,5 +1,5 @@
 import User from '../database/models/User';
-import bcrypt from 'bcryptjs';
+import bcrypt from 'bcrypt';
 import { generateToken } from '../utils/JWT';
 
 export default class UserService {
