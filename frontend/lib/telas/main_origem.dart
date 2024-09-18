@@ -55,12 +55,23 @@ class _MainOrigem extends State<MainOrigem> {
                           Navigator.push(
                             context,
                             MaterialPageRoute(
-                                builder: (context) => Autenticacao()),
+                                builder: (context) => Autenticacao(
+                                      escolherTela: false,
+                                    )),
                           );
                         },
                         style: ElevatedButton.styleFrom(
                           backgroundColor:
-                              Color(0xFFFFAE31), // Cor de fundo do botão
+                              Colors.orange, // Cor de fundo laranja
+                          shape: RoundedRectangleBorder(
+                            borderRadius: BorderRadius.circular(
+                                18.0), // Bordas arredondadas
+                            side: BorderSide(
+                                color: const Color.fromARGB(255, 87, 87, 87),
+                                width: 2.0), // Borda preta com largura de 2
+                          ),
+                          padding: EdgeInsets.symmetric(
+                              horizontal: 20, vertical: 15), // Tamanho do botão
                         ),
                         child: const Text(
                           "Começar agora",
@@ -80,12 +91,23 @@ class _MainOrigem extends State<MainOrigem> {
                           Navigator.push(
                             context,
                             MaterialPageRoute(
-                                builder: (context) => Autenticacao()),
+                                builder: (context) => Autenticacao(
+                                      escolherTela: true,
+                                    )),
                           );
                         },
                         style: ElevatedButton.styleFrom(
-                          backgroundColor: Color.fromARGB(
-                              255, 231, 229, 227), // Cor de fundo do botão
+                          backgroundColor: const Color.fromARGB(
+                              255, 180, 179, 179), // Cor de fundo laranja
+                          shape: RoundedRectangleBorder(
+                            borderRadius: BorderRadius.circular(
+                                18.0), // Bordas arredondadas
+                            side: BorderSide(
+                                color: const Color.fromARGB(255, 87, 87, 87),
+                                width: 2.0), // Borda preta com largura de 2
+                          ),
+                          padding: EdgeInsets.symmetric(
+                              horizontal: 20, vertical: 15), // Tamanho do botão
                         ),
                         child: const Text(
                           "Já tenho uma conta",

@@ -1,7 +1,9 @@
 import 'package:flutter/material.dart';
-import 'package:vida_leve/componentes/decoracao_campo_autenticacao.dart';
-import 'package:vida_leve/model/validar_senha.dart';
-import 'package:vida_leve/telas/queremos_conhecer.dart';
+import 'package:provider/provider.dart';
+import 'package:vida_leve/model/user.dart';
+import 'package:vida_leve/servicos/nutricionais_service.dart';
+import 'package:vida_leve/telas/meta.dart';
+import 'package:flutter/services.dart';
 
 class InfoNutricionais extends StatefulWidget {
   const InfoNutricionais({super.key});
@@ -11,25 +13,18 @@ class InfoNutricionais extends StatefulWidget {
 }
 
 class _AutenticacaoState extends State<InfoNutricionais> {
-  bool queroEntrar = true;
-  final _formkey = GlobalKey<FormState>();
-
   TextEditingController _alturaController = TextEditingController();
   TextEditingController _peso_atualController = TextEditingController();
   TextEditingController _peso_desejadoController = TextEditingController();
   TextEditingController _atividade_opController = TextEditingController();
-  bool _showAlternateText =
-      false; // Estado para controlar a exibição do texto alternativo
-  bool _showAlternateText01 =
-      false; // Estado para controlar a exibição do texto alternativo
 
-  void _toggleText() {
+  NutricionaisService _nutricionaisService = NutricionaisService();
+
+  List<bool> _isSubtextVisible = [false, false, false, false];
+
+  void _toggleSubtext(int index) {
     setState(() {
-      if (_showAlternateText == false) {
-        _showAlternateText = !_showAlternateText; //
-      } else {
-        _showAlternateText01 = !_showAlternateText01;
-      }
+      _isSubtextVisible[index] = !_isSubtextVisible[index];
     });
   }
 
@@ -63,7 +58,7 @@ class _AutenticacaoState extends State<InfoNutricionais> {
                     children: [
                       Image.asset(
                         "assets/logoperfil.png",
-                        height: 200,
+                        height: 50,
                       ),
                       const Text(
                         "Qual a sua meta?",
@@ -73,9 +68,6 @@ class _AutenticacaoState extends State<InfoNutricionais> {
                           fontWeight: FontWeight.bold,
                           color: Color(0xFF4E4B66),
                         ),
-                      ),
-                      const SizedBox(
-                        height: 15,
                       ),
                       const Text(
                         "Qual a sua altura?",
@@ -88,10 +80,18 @@ class _AutenticacaoState extends State<InfoNutricionais> {
                       ),
                       TextFormField(
                         controller: _alturaController,
-                        decoration: getAutenticacaoDecoracao(""),
-                      ),
-                      const SizedBox(
-                        height: 32,
+                        decoration: InputDecoration(
+                          labelText: 'ex: 1.80',
+                          fillColor: Colors.white,
+                          filled: true,
+                          border: OutlineInputBorder(),
+                        ),
+                        keyboardType:
+                            TextInputType.numberWithOptions(decimal: true),
+                        inputFormatters: [
+                          FilteringTextInputFormatter.allow(RegExp(r'[0-9.]')),
+                          formatarTextoAltura(),
+                        ],
                       ),
                       const Text(
                         "Qual é seu peso atual?",
@@ -104,10 +104,18 @@ class _AutenticacaoState extends State<InfoNutricionais> {
                       ),
                       TextFormField(
                         controller: _peso_atualController,
-                        decoration: getAutenticacaoDecoracao(""),
-                      ),
-                      const SizedBox(
-                        height: 32,
+                        decoration: InputDecoration(
+                          labelText: 'ex: 100.0',
+                          fillColor: Colors.white,
+                          filled: true,
+                          border: OutlineInputBorder(),
+                        ),
+                        keyboardType:
+                            TextInputType.numberWithOptions(decimal: true),
+                        inputFormatters: [
+                          FilteringTextInputFormatter.allow(RegExp(r'[0-9.]')),
+                          formatarTextoPeso(),
+                        ],
                       ),
                       const Text(
                         "Qual é o peso que você deseja alcançar? ",
@@ -120,7 +128,18 @@ class _AutenticacaoState extends State<InfoNutricionais> {
                       ),
                       TextFormField(
                         controller: _peso_desejadoController,
-                        decoration: getAutenticacaoDecoracao(""),
+                        decoration: InputDecoration(
+                          labelText: 'ex: 100.0',
+                          fillColor: const Color.fromARGB(255, 255, 255, 255),
+                          filled: true,
+                          border: OutlineInputBorder(),
+                        ),
+                        keyboardType:
+                            TextInputType.numberWithOptions(decimal: true),
+                        inputFormatters: [
+                          FilteringTextInputFormatter.allow(RegExp(r'[0-9.]')),
+                          formatarTextoPeso(),
+                        ],
                       ),
                       const SizedBox(
                         height: 32,
@@ -131,79 +150,219 @@ class _AutenticacaoState extends State<InfoNutricionais> {
                         style: TextStyle(
                           fontSize: 15,
                           fontWeight: FontWeight.bold,
-                          color: Color(0xFF4E4B66),
+                          color: Color.fromARGB(255, 45, 45, 47),
                         ),
                       ),
                       const SizedBox(
-                        height: 12,
+                        height: 10,
                       ),
-
-                      ElevatedButton(
-                        onPressed: _toggleText,
-                        child: Text('Pouca atividade'),
-                        style: ElevatedButton.styleFrom(
-                          backgroundColor:
-                              Color(0xFFFFAE31), // Cor de fundo do botão
-                        ),
+                      Column(
+                        mainAxisAlignment: MainAxisAlignment.center,
+                        children: [
+                          SizedBox(
+                            width: double.infinity,
+                            child: ElevatedButton(
+                              onPressed: () => _toggleSubtext(0),
+                              style: ElevatedButton.styleFrom(
+                                backgroundColor: _isSubtextVisible[0]
+                                    ? Colors.orange
+                                    : const Color.fromARGB(255, 254, 255, 255),
+                                shape: RoundedRectangleBorder(
+                                  borderRadius: BorderRadius.circular(
+                                      6.0), // Bordas arredondadas
+                                  side: BorderSide(
+                                      color:
+                                          const Color.fromARGB(255, 70, 68, 68),
+                                      width:
+                                          1.0), // Borda preta com largura de 2
+                                ),
+                                padding: EdgeInsets.symmetric(
+                                    horizontal: 10, vertical: 5),
+                              ),
+                              child: Column(
+                                mainAxisSize: MainAxisSize.min,
+                                children: [
+                                  Text(
+                                    'Pouca atividade',
+                                    style: TextStyle(
+                                      fontSize: 14, // Tamanho do texto
+                                      color: const Color.fromARGB(
+                                          255, 10, 10, 10), // Cor do texto
+                                      fontWeight:
+                                          FontWeight.bold, // Negrito opcional
+                                    ),
+                                  ),
+                                  if (_isSubtextVisible[0])
+                                    Text(
+                                      'Pouco tempo em pé. p. ex. home office/escritório',
+                                      style: TextStyle(
+                                          fontSize: 15,
+                                          color: const Color.fromARGB(
+                                              179, 10, 10, 10)),
+                                    ),
+                                ],
+                              ),
+                            ),
+                          ),
+                          SizedBox(height: 10),
+                          SizedBox(
+                            width: double.infinity,
+                            child: ElevatedButton(
+                              onPressed: () => _toggleSubtext(1),
+                              style: ElevatedButton.styleFrom(
+                                backgroundColor: _isSubtextVisible[1]
+                                    ? Colors.orange
+                                    : Color.fromARGB(255, 255, 255, 255),
+                                shape: RoundedRectangleBorder(
+                                  borderRadius: BorderRadius.circular(
+                                      6.0), // Bordas arredondadas
+                                  side: BorderSide(
+                                      color:
+                                          const Color.fromARGB(255, 70, 68, 68),
+                                      width:
+                                          1.0), // Borda preta com largura de 2
+                                ),
+                                padding: EdgeInsets.symmetric(
+                                    horizontal: 10, vertical: 5),
+                              ),
+                              child: Column(
+                                mainAxisSize: MainAxisSize.min,
+                                children: [
+                                  Text('Atividade leve',
+                                      style: TextStyle(
+                                        fontSize: 14, // Tamanho do texto
+                                        color: const Color.fromARGB(
+                                            255, 10, 10, 10), // Cor do texto
+                                        fontWeight:
+                                            FontWeight.bold, // Negrito opcional
+                                      )),
+                                  if (_isSubtextVisible[1])
+                                    Text(
+                                      'Pouco tempo em pé. p. ex. home office/escritório',
+                                      style: TextStyle(
+                                          fontSize: 12,
+                                          color: const Color.fromARGB(
+                                              179, 7, 7, 7)),
+                                    ),
+                                ],
+                              ),
+                            ),
+                          ),
+                          SizedBox(height: 10),
+                          SizedBox(
+                            width: double.infinity,
+                            child: ElevatedButton(
+                              onPressed: () => _toggleSubtext(2),
+                              style: ElevatedButton.styleFrom(
+                                backgroundColor: _isSubtextVisible[2]
+                                    ? Colors.orange
+                                    : Color.fromARGB(255, 255, 255, 255),
+                                shape: RoundedRectangleBorder(
+                                  borderRadius: BorderRadius.circular(
+                                      6.0), // Bordas arredondadas
+                                  side: BorderSide(
+                                      color:
+                                          const Color.fromARGB(255, 70, 68, 68),
+                                      width:
+                                          1.0), // Borda preta com largura de 2
+                                ),
+                                padding: EdgeInsets.symmetric(
+                                    horizontal: 10, vertical: 5),
+                              ),
+                              child: Column(
+                                mainAxisSize: MainAxisSize.min,
+                                children: [
+                                  Text('Atividade moderada',
+                                      style: TextStyle(
+                                        fontSize: 14, // Tamanho do texto
+                                        color: const Color.fromARGB(
+                                            255, 10, 10, 10), // Cor do texto
+                                        fontWeight:
+                                            FontWeight.bold, // Negrito opcional
+                                      )),
+                                  if (_isSubtextVisible[2])
+                                    Text(
+                                      'Pouco tempo em pé. p. ex. home office/escritório',
+                                      style: TextStyle(
+                                          fontSize: 12,
+                                          color: const Color.fromARGB(
+                                              179, 5, 5, 5)),
+                                    ),
+                                ],
+                              ),
+                            ),
+                          ),
+                          SizedBox(height: 10),
+                          SizedBox(
+                            width: double.infinity,
+                            child: ElevatedButton(
+                              onPressed: () => _toggleSubtext(3),
+                              style: ElevatedButton.styleFrom(
+                                backgroundColor: _isSubtextVisible[3]
+                                    ? Colors.orange
+                                    : Color.fromARGB(255, 255, 255, 255),
+                                shape: RoundedRectangleBorder(
+                                  borderRadius: BorderRadius.circular(
+                                      6.0), // Bordas arredondadas
+                                  side: BorderSide(
+                                      color:
+                                          const Color.fromARGB(255, 70, 68, 68),
+                                      width:
+                                          1.0), // Borda preta com largura de 2
+                                ),
+                                padding: EdgeInsets.symmetric(
+                                    horizontal: 10, vertical: 5),
+                              ),
+                              child: Column(
+                                mainAxisSize: MainAxisSize.min,
+                                children: [
+                                  Text('Atividade intensa',
+                                      style: TextStyle(
+                                        fontSize: 14, // Tamanho do texto
+                                        color: const Color.fromARGB(
+                                            255, 10, 10, 10), // Cor do texto
+                                        fontWeight:
+                                            FontWeight.bold, // Negrito opcional
+                                      )),
+                                  if (_isSubtextVisible[3])
+                                    Text(
+                                      'Pouco tempo em pé. p. ex. home office/escritório',
+                                      style: TextStyle(
+                                          fontSize: 12,
+                                          color: const Color.fromARGB(
+                                              179, 10, 10, 10)),
+                                    ),
+                                ],
+                              ),
+                            ),
+                          ),
+                        ],
                       ),
-                      const SizedBox(
-                          height: 10), // Espaçamento entre o botão e o texto
-                      if (_showAlternateText == true &&
-                          _showAlternateText01 ==
-                              false) // Condicional para mostrar o texto alternativo
-                        const Text(
-                          'Pouco tempo em pé. p. ex. home office/escritório',
-                          style: TextStyle(
-                              fontSize: 12,
-                              color: const Color.fromARGB(255, 70, 71, 71)),
-                        ),
-
-                      const SizedBox(
-                        height: 12,
-                      ),
-                      ElevatedButton(
-                        onPressed: _toggleText,
-                        child: Text('Pouca leve'),
-                        style: ElevatedButton.styleFrom(
-                          backgroundColor:
-                              Color(0xFFFFAE31), // Cor de fundo do botão
-                        ),
-                      ),
-                      const SizedBox(
-                          height: 10), // Espaçamento entre o botão e o texto
-                      if (_showAlternateText01 == true &&
-                          _showAlternateText ==
-                              false) // Condicional para mostrar o texto alternativo
-                        const Text(
-                          'Pouco tempo em pé. p. ex. home office/escritório',
-                          style: TextStyle(
-                              fontSize: 12,
-                              color: const Color.fromARGB(255, 70, 71, 71)),
-                        ),
-                      ElevatedButton(
-                        onPressed: () {},
-                        style: ElevatedButton.styleFrom(
-                          backgroundColor:
-                              Color(0xFFFFAE31), // Cor de fundo do botão
-                        ),
-                        child: Text("Atividade intensa"),
-                      ),
-                      const SizedBox(
-                        height: 35,
-                      ),
+                      SizedBox(height: 20),
                       ElevatedButton(
                         onPressed: () {
-                          Navigator.push(
-                            context,
-                            MaterialPageRoute(
-                                builder: (context) => QueremosConhecer()),
-                          );
+                          enviarDadosNutricionaisParaAPI();
                         },
                         style: ElevatedButton.styleFrom(
                           backgroundColor:
-                              Color(0xFFFFAE31), // Cor de fundo do botão
+                              Colors.orange, // Cor de fundo laranja
+                          shape: RoundedRectangleBorder(
+                            borderRadius: BorderRadius.circular(
+                                6.0), // Bordas arredondadas
+                            side: BorderSide(
+                                color: const Color.fromARGB(255, 87, 87, 87),
+                                width: 2.0), // Borda preta com largura de 2
+                          ),
+                          padding: EdgeInsets.symmetric(
+                              horizontal: 20, vertical: 15), // Tamanho do botão
                         ),
-                        child: Text("Salvar alterações"),
+                        child: Text("Salvar alterações",
+                            style: TextStyle(
+                              fontSize: 16, // Tamanho do texto
+                              color: const Color.fromARGB(
+                                  255, 10, 10, 10), // Cor do texto
+                              fontWeight: FontWeight.bold, // Negrito opcional
+                            )),
                       ),
                     ],
                   ),
@@ -214,5 +373,68 @@ class _AutenticacaoState extends State<InfoNutricionais> {
         ],
       ),
     );
+  }
+
+  @override
+  void dispose() {
+    _alturaController.dispose();
+    _peso_atualController.dispose();
+    _peso_desejadoController.dispose();
+    _alturaController.dispose();
+    super.dispose();
+  }
+
+  void enviarDadosNutricionaisParaAPI() async {
+    int id = Provider.of<User>(context).clienteId!;
+    String altura = _alturaController.text;
+    String peso = _peso_atualController.text;
+    String meta = _peso_desejadoController.text;
+    String atividade = _atividade_opController.text;
+
+    if (_formKey.currentState!.validate()) {
+      await _nutricionaisService.cadastrarInfonutricionais(
+          id: id,
+          altura: altura,
+          peso: peso,
+          meta: meta,
+          atividade: atividade,
+          context: context);
+      Navigator.push(
+        context,
+        MaterialPageRoute(builder: (context) => Meta()),
+      );
+    } else {
+      print("Formulário inválido");
+    }
+  }
+}
+
+class formatarTextoAltura extends TextInputFormatter {
+  @override
+  TextEditingValue formatEditUpdate(
+    TextEditingValue oldValue,
+    TextEditingValue newValue,
+  ) {
+    final RegExp regExp = RegExp(r'^\d{0,2}(\.\d{0,2})?$');
+
+    if (regExp.hasMatch(newValue.text)) {
+      return newValue;
+    }
+    return oldValue;
+  }
+}
+
+class formatarTextoPeso extends TextInputFormatter {
+  @override
+  TextEditingValue formatEditUpdate(
+    TextEditingValue oldValue,
+    TextEditingValue newValue,
+  ) {
+    final RegExp regExp = RegExp(r'^\d{0,3}(\.\d?)?$');
+
+    if (regExp.hasMatch(newValue.text)) {
+      return newValue;
+    }
+    return oldValue;
   }
 }
