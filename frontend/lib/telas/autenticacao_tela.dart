@@ -290,7 +290,8 @@ class _AutenticacaoState extends State<Autenticacao> {
             userName: userName, email: email, senha: senha, context: context);
         Navigator.push(
           context,
-          MaterialPageRoute(builder: (context) => InfoNutricionais()),
+          MaterialPageRoute(
+              builder: (context) => Autenticacao(escolherTela: true)),
         );
       }
     } else {

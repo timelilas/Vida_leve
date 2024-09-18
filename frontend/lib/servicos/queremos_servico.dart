@@ -20,7 +20,7 @@ class QueremosServico {
       'sexo': sexo,
     };
 
-    final response = await _apiService.postData(endpoint, body);
+    final response = await _apiService.putData(endpoint, body);
     if (response != null) {
       print(
           'Informacoes queremos te conhecer cadastradas com sucesso: $response');
