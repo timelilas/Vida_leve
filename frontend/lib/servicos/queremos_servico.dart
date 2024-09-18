@@ -1,3 +1,4 @@
+import 'package:flutter/material.dart';
 import 'package:vida_leve/servicos/api_service.dart';
 
 class QueremosServico {
@@ -9,8 +10,9 @@ class QueremosServico {
     required String telefone,
     required String aniversario,
     required String sexo,
+    required BuildContext context,
   }) async {
-    final endpoint = '/user/profile/:$id';
+    final endpoint = '/user/profile/$id';
     final body = {
       'apelido': userName,
       'telefone': telefone,

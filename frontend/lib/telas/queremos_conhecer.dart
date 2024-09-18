@@ -1,7 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_multi_formatter/formatters/masked_input_formatter.dart';
 import 'package:intl/intl.dart';
+import 'package:provider/provider.dart';
 import 'package:vida_leve/componentes/decoracao_campo_autenticacao.dart';
+import 'package:vida_leve/model/user.dart';
 import 'package:vida_leve/servicos/queremos_servico.dart';
 import 'package:vida_leve/telas/info_nutricionais.dart';
 
@@ -48,6 +50,8 @@ class _AutenticacaoState extends State<QueremosConhecer> {
 
   @override
   Widget build(BuildContext context) {
+    final clienteId = Provider.of<User>(context).clienteId;
+
     return Scaffold(
       backgroundColor: Colors.blueGrey,
       body: Stack(
@@ -302,7 +306,7 @@ class _AutenticacaoState extends State<QueremosConhecer> {
                                       'link tela login: ${_dt_nascimentoController.text}')),
                             );
                           }
-                          enviarDadosValidadosParaAPI();
+                          enviarDadosValidadosParaAPI(clienteId!);
                         },
                         style: ElevatedButton.styleFrom(
                           backgroundColor:
@@ -345,18 +349,20 @@ class _AutenticacaoState extends State<QueremosConhecer> {
     super.dispose();
   }
 
-  void enviarDadosValidadosParaAPI() async {
+  void enviarDadosValidadosParaAPI(int clienteId) async {
+    int id = clienteId;
     String userName = _apelidolController.text;
     String telefone = _telefoneController.text;
     String aniversario = _dt_nascimentoController.text;
     String sexo = _generoController.text;
 
     await _queremosServico.cadastrarInfoQueremosConhecer(
-        id: 7,
+        id: id,
         userName: userName,
         telefone: telefone,
         aniversario: aniversario,
-        sexo: sexo);
+        sexo: sexo,
+        context: context);
     Navigator.push(
       context,
       MaterialPageRoute(builder: (context) => InfoNutricionais()),

@@ -1,4 +1,6 @@
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
+import 'package:vida_leve/model/user.dart';
 import 'package:vida_leve/servicos/nutricionais_service.dart';
 import 'package:vida_leve/telas/meta.dart';
 import 'package:flutter/services.dart';
@@ -15,7 +17,6 @@ class _AutenticacaoState extends State<InfoNutricionais> {
   TextEditingController _peso_atualController = TextEditingController();
   TextEditingController _peso_desejadoController = TextEditingController();
   TextEditingController _atividade_opController = TextEditingController();
-  int ID = 0;
 
   NutricionaisService _nutricionaisService = NutricionaisService();
 
@@ -384,6 +385,7 @@ class _AutenticacaoState extends State<InfoNutricionais> {
   }
 
   void enviarDadosNutricionaisParaAPI() async {
+    int id = Provider.of<User>(context).clienteId!;
     String altura = _alturaController.text;
     String peso = _peso_atualController.text;
     String meta = _peso_desejadoController.text;
@@ -391,7 +393,12 @@ class _AutenticacaoState extends State<InfoNutricionais> {
 
     if (_formKey.currentState!.validate()) {
       await _nutricionaisService.cadastrarInfonutricionais(
-          id: 7, altura: altura, peso: peso, meta: meta, atividade: atividade);
+          id: id,
+          altura: altura,
+          peso: peso,
+          meta: meta,
+          atividade: atividade,
+          context: context);
       Navigator.push(
         context,
         MaterialPageRoute(builder: (context) => Meta()),
