@@ -50,7 +50,7 @@ class _AutenticacaoState extends State<QueremosConhecer> {
 
   @override
   Widget build(BuildContext context) {
-    final clienteId = Provider.of<User>(context).clienteId;
+    final usuarioId = Provider.of<User>(context).id;
 
     return Scaffold(
       backgroundColor: Colors.blueGrey,
@@ -306,7 +306,7 @@ class _AutenticacaoState extends State<QueremosConhecer> {
                                       'link tela login: ${_dt_nascimentoController.text}')),
                             );
                           }
-                          enviarDadosValidadosParaAPI();
+                          enviarDadosValidadosParaAPI(usuarioId);
                         },
                         style: ElevatedButton.styleFrom(
                           backgroundColor:
@@ -349,8 +349,8 @@ class _AutenticacaoState extends State<QueremosConhecer> {
     super.dispose();
   }
 
-  void enviarDadosValidadosParaAPI() async {
-    int id = 2;
+  void enviarDadosValidadosParaAPI(int? usuarioId) async {
+    int? id = usuarioId!;
     String userName = _apelidolController.text;
     String telefone = _telefoneController.text;
 

@@ -32,6 +32,7 @@ class _AutenticacaoState extends State<InfoNutricionais> {
 
   @override
   Widget build(BuildContext context) {
+    final usuarioId = Provider.of<User>(context).id;
     return Scaffold(
       backgroundColor: Colors.blueGrey,
       body: Stack(
@@ -341,7 +342,7 @@ class _AutenticacaoState extends State<InfoNutricionais> {
                       SizedBox(height: 20),
                       ElevatedButton(
                         onPressed: () {
-                          enviarDadosNutricionaisParaAPI();
+                          enviarDadosNutricionaisParaAPI(usuarioId);
                         },
                         style: ElevatedButton.styleFrom(
                           backgroundColor:
@@ -384,8 +385,8 @@ class _AutenticacaoState extends State<InfoNutricionais> {
     super.dispose();
   }
 
-  void enviarDadosNutricionaisParaAPI() async {
-    int id = 2;
+  void enviarDadosNutricionaisParaAPI(int? usuarioId) async {
+    int? id = usuarioId!;
     String altura = _alturaController.text;
     String peso = _peso_atualController.text;
     String meta = _peso_desejadoController.text;
