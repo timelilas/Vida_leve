@@ -65,7 +65,7 @@ class _AutenticacaoState extends State<InfoNutricionais> {
                         "Qual a sua meta?",
                         textAlign: TextAlign.left,
                         style: TextStyle(
-                          fontSize: 25,
+                          fontSize: 20,
                           fontWeight: FontWeight.bold,
                           color: Color(0xFF4E4B66),
                         ),
@@ -79,20 +79,24 @@ class _AutenticacaoState extends State<InfoNutricionais> {
                           color: Color(0xFF4E4B66),
                         ),
                       ),
-                      TextFormField(
-                        controller: _alturaController,
-                        decoration: InputDecoration(
-                          labelText: 'ex: 1.80',
-                          fillColor: Colors.white,
-                          filled: true,
-                          border: OutlineInputBorder(),
+                      Container(
+                        height: 40,
+                        child: TextFormField(
+                          controller: _alturaController,
+                          decoration: InputDecoration(
+                            labelText: 'ex: 1.80',
+                            fillColor: Colors.white,
+                            filled: true,
+                            border: OutlineInputBorder(),
+                          ),
+                          keyboardType:
+                              TextInputType.numberWithOptions(decimal: true),
+                          inputFormatters: [
+                            FilteringTextInputFormatter.allow(
+                                RegExp(r'[0-9.]')),
+                            formatarTextoAltura(),
+                          ],
                         ),
-                        keyboardType:
-                            TextInputType.numberWithOptions(decimal: true),
-                        inputFormatters: [
-                          FilteringTextInputFormatter.allow(RegExp(r'[0-9.]')),
-                          formatarTextoAltura(),
-                        ],
                       ),
                       const Text(
                         "Qual é seu peso atual?",
@@ -103,20 +107,24 @@ class _AutenticacaoState extends State<InfoNutricionais> {
                           color: Color(0xFF4E4B66),
                         ),
                       ),
-                      TextFormField(
-                        controller: _peso_atualController,
-                        decoration: InputDecoration(
-                          labelText: 'ex: 100.0',
-                          fillColor: Colors.white,
-                          filled: true,
-                          border: OutlineInputBorder(),
+                      Container(
+                        height: 40,
+                        child: TextFormField(
+                          controller: _peso_atualController,
+                          decoration: InputDecoration(
+                            labelText: 'ex: 100.0',
+                            fillColor: Colors.white,
+                            filled: true,
+                            border: OutlineInputBorder(),
+                          ),
+                          keyboardType:
+                              TextInputType.numberWithOptions(decimal: true),
+                          inputFormatters: [
+                            FilteringTextInputFormatter.allow(
+                                RegExp(r'[0-9.]')),
+                            formatarTextoPeso(),
+                          ],
                         ),
-                        keyboardType:
-                            TextInputType.numberWithOptions(decimal: true),
-                        inputFormatters: [
-                          FilteringTextInputFormatter.allow(RegExp(r'[0-9.]')),
-                          formatarTextoPeso(),
-                        ],
                       ),
                       const Text(
                         "Qual é o peso que você deseja alcançar? ",
@@ -127,23 +135,27 @@ class _AutenticacaoState extends State<InfoNutricionais> {
                           color: Color(0xFF4E4B66),
                         ),
                       ),
-                      TextFormField(
-                        controller: _peso_desejadoController,
-                        decoration: InputDecoration(
-                          labelText: 'ex: 100.0',
-                          fillColor: const Color.fromARGB(255, 255, 255, 255),
-                          filled: true,
-                          border: OutlineInputBorder(),
+                      Container(
+                        height: 40,
+                        child: TextFormField(
+                          controller: _peso_desejadoController,
+                          decoration: InputDecoration(
+                            labelText: 'ex: 100.0',
+                            fillColor: const Color.fromARGB(255, 255, 255, 255),
+                            filled: true,
+                            border: OutlineInputBorder(),
+                          ),
+                          keyboardType:
+                              TextInputType.numberWithOptions(decimal: true),
+                          inputFormatters: [
+                            FilteringTextInputFormatter.allow(
+                                RegExp(r'[0-9.]')),
+                            formatarTextoPeso(),
+                          ],
                         ),
-                        keyboardType:
-                            TextInputType.numberWithOptions(decimal: true),
-                        inputFormatters: [
-                          FilteringTextInputFormatter.allow(RegExp(r'[0-9.]')),
-                          formatarTextoPeso(),
-                        ],
                       ),
                       const SizedBox(
-                        height: 32,
+                        height: 12,
                       ),
                       const Text(
                         "Qual é o seu nível de atividade física diária?",
@@ -155,7 +167,7 @@ class _AutenticacaoState extends State<InfoNutricionais> {
                         ),
                       ),
                       const SizedBox(
-                        height: 10,
+                        height: 7,
                       ),
                       Column(
                         mainAxisAlignment: MainAxisAlignment.center,

@@ -111,19 +111,22 @@ class _AutenticacaoState extends State<QueremosConhecer> {
                           color: Color(0xFF4E4B66),
                         ),
                       ),
-                      TextFormField(
-                        controller: _apelidolController,
-                        maxLength: 40,
-                        decoration: getAutenticacaoDecoracao(""),
-                        validator: (String? value) {
-                          if (value == null) {
-                            return "O nome não pode ser vazio.";
-                          }
-                          if (value.length < 1 || value.length > 10) {
-                            return "Nome deve conter ate 10";
-                          }
-                          return null;
-                        },
+                      Container(
+                        height: 60,
+                        child: TextFormField(
+                          controller: _apelidolController,
+                          maxLength: 40,
+                          decoration: getAutenticacaoDecoracao(""),
+                          validator: (String? value) {
+                            if (value == null) {
+                              return "O nome não pode ser vazio.";
+                            }
+                            if (value.length < 1 || value.length > 10) {
+                              return "Nome deve conter ate 10";
+                            }
+                            return null;
+                          },
+                        ),
                       ),
                       const SizedBox(
                         height: 1,
@@ -137,30 +140,33 @@ class _AutenticacaoState extends State<QueremosConhecer> {
                           color: Color(0xFF4E4B66),
                         ),
                       ),
-                      TextFormField(
-                        controller: _telefoneController,
-                        inputFormatters: [
-                          FilteringTextInputFormatter
-                              .digitsOnly, // Permite apenas números
-                          MaskedInputFormatter('(##) #####-####'),
-                        ],
-                        decoration: InputDecoration(
-                          hintText: '(XX) XXXXX-XXXX',
-                          fillColor: Colors.white,
-                          filled: true,
-                          contentPadding:
-                              const EdgeInsets.fromLTRB(16, 8, 8, 8),
-                          border: OutlineInputBorder(
-                              borderRadius: BorderRadius.circular(4.0)),
-                          enabledBorder: OutlineInputBorder(
-                            borderRadius: BorderRadius.circular(9.0),
-                            borderSide: const BorderSide(
-                                color: Color.fromARGB(255, 114, 118, 153),
-                                width: 2),
+                      Container(
+                        height: 60,
+                        child: TextFormField(
+                          controller: _telefoneController,
+                          inputFormatters: [
+                            FilteringTextInputFormatter
+                                .digitsOnly, // Permite apenas números
+                            MaskedInputFormatter('(##) #####-####'),
+                          ],
+                          decoration: InputDecoration(
+                            hintText: '(XX) XXXXX-XXXX',
+                            fillColor: Colors.white,
+                            filled: true,
+                            contentPadding:
+                                const EdgeInsets.fromLTRB(16, 8, 8, 8),
+                            border: OutlineInputBorder(
+                                borderRadius: BorderRadius.circular(4.0)),
+                            enabledBorder: OutlineInputBorder(
+                              borderRadius: BorderRadius.circular(9.0),
+                              borderSide: const BorderSide(
+                                  color: Color.fromARGB(255, 114, 118, 153),
+                                  width: 2),
+                            ),
                           ),
+                          keyboardType: TextInputType.phone,
+                          validator: validarTelefone,
                         ),
-                        keyboardType: TextInputType.phone,
-                        validator: validarTelefone,
                       ),
                       const SizedBox(
                         height: 20,
@@ -174,43 +180,46 @@ class _AutenticacaoState extends State<QueremosConhecer> {
                           color: Color(0xFF4E4B66),
                         ),
                       ),
-                      TextFormField(
-                        controller: _dt_nascimentoController,
-                        decoration: InputDecoration(
-                          labelText: 'Selecione a Data',
-                          hintText: 'Clique para selecionar uma data',
-                          suffixIcon: Icon(Icons.calendar_today),
-                          fillColor: Colors.white,
-                          filled: true,
-                          contentPadding:
-                              const EdgeInsets.fromLTRB(16, 8, 8, 8),
-                          border: OutlineInputBorder(
-                              borderRadius: BorderRadius.circular(4.0)),
-                          enabledBorder: OutlineInputBorder(
-                            borderRadius: BorderRadius.circular(9.0),
-                            borderSide: const BorderSide(
-                                color: Color.fromARGB(255, 114, 118, 153),
-                                width: 2),
+                      Container(
+                        height: 60,
+                        child: TextFormField(
+                          controller: _dt_nascimentoController,
+                          decoration: InputDecoration(
+                            labelText: 'Selecione a Data',
+                            hintText: 'Clique para selecionar uma data',
+                            suffixIcon: Icon(Icons.calendar_today),
+                            fillColor: Colors.white,
+                            filled: true,
+                            contentPadding:
+                                const EdgeInsets.fromLTRB(16, 8, 8, 8),
+                            border: OutlineInputBorder(
+                                borderRadius: BorderRadius.circular(4.0)),
+                            enabledBorder: OutlineInputBorder(
+                              borderRadius: BorderRadius.circular(9.0),
+                              borderSide: const BorderSide(
+                                  color: Color.fromARGB(255, 114, 118, 153),
+                                  width: 2),
+                            ),
                           ),
-                        ),
-                        readOnly: true,
-                        onTap: () async {
-                          FocusScope.of(context).requestFocus(FocusNode());
-                          DateTime? pickedDate = await showDatePicker(
-                            context: context,
-                            initialDate: DateTime.now(),
-                            firstDate: DateTime(2000),
-                            lastDate: DateTime(2100),
-                          );
+                          readOnly: true,
+                          onTap: () async {
+                            FocusScope.of(context).requestFocus(FocusNode());
+                            DateTime? pickedDate = await showDatePicker(
+                              context: context,
+                              initialDate: DateTime.now(),
+                              firstDate: DateTime(2000),
+                              lastDate: DateTime(2100),
+                            );
 
-                          if (pickedDate != null) {
-                            String formattedDate =
-                                DateFormat('dd/MM/yyyy').format(pickedDate);
-                            setState(() {
-                              _dt_nascimentoController.text = formattedDate;
-                            });
-                          }
-                        },
+                            if (pickedDate != null) {
+                              String formattedDate =
+                                  DateFormat('dd/MM/yyyy').format(pickedDate);
+                              setState(() {
+                                _dt_nascimentoController.text = formattedDate;
+                              });
+                            }
+                          },
+                        ),
                       ),
                       const SizedBox(
                         height: 12,
@@ -236,7 +245,7 @@ class _AutenticacaoState extends State<QueremosConhecer> {
                             },
                             child: Container(
                               width: 82, // Largura fixa de 82px
-                              height: 48, // Altura fixa de 48px
+                              height: 45, // Altura fixa de 48px
                               padding: const EdgeInsets.only(
                                   top: 8), // Padding superior de 8px
                               decoration: BoxDecoration(
@@ -271,7 +280,7 @@ class _AutenticacaoState extends State<QueremosConhecer> {
                             },
                             child: Container(
                               width: 82, // Largura fixa de 82px
-                              height: 48, // Altura fixa de 48px
+                              height: 45, // Altura fixa de 48px
                               padding: const EdgeInsets.only(
                                   top: 8), // Padding superior de 8px
                               decoration: BoxDecoration(
@@ -298,7 +307,7 @@ class _AutenticacaoState extends State<QueremosConhecer> {
                         ],
                       ),
                       const SizedBox(
-                        height: 100,
+                        height: 45,
                       ),
                       ElevatedButton(
                         onPressed: () {
