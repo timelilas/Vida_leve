@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:vida_leve/telas/main_origem.dart';
 
 class Meta extends StatefulWidget {
   const Meta({super.key});
@@ -47,8 +48,19 @@ class _Meta extends State<Meta> {
                         ),
                       ),
                       const SizedBox(
-                        height: 182,
+                        height: 82,
                       ),
+                      ElevatedButton(
+                          onPressed: () {
+                            Color.fromARGB(255, 248, 174, 63);
+                            Navigator.pushAndRemoveUntil(
+                              context,
+                              MaterialPageRoute(
+                                  builder: (context) => MainOrigem()),
+                              (Route<dynamic> route) => false,
+                            );
+                          },
+                          child: Text('Fechar app'))
                     ],
                   ),
                 ),

@@ -1,9 +1,8 @@
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
 import 'package:vida_leve/componentes/decoracao_campo_autenticacao.dart';
-import 'package:vida_leve/model/validar_senha.dart';
+import 'package:vida_leve/model/user.dart';
 import 'package:vida_leve/servicos/autenticacao_servico.dart';
-import 'package:vida_leve/telas/info_nutricionais.dart';
-import 'package:vida_leve/telas/perfil.dart';
 import 'package:vida_leve/telas/queremos_conhecer.dart';
 
 class Autenticacao extends StatefulWidget {
@@ -67,19 +66,10 @@ class _AutenticacaoState extends State<Autenticacao> {
                     children: [
                       Image.asset(
                         "assets/logo.png",
-                        height: 150,
+                        height: 100,
                       ),
                       const Text(
                         "Boas vindas!",
-                        textAlign: TextAlign.center,
-                        style: TextStyle(
-                          fontSize: 30,
-                          fontWeight: FontWeight.bold,
-                          color: Color(0xFF4E4B66),
-                        ),
-                      ),
-                      const Text(
-                        "Cadastre-se para continuar",
                         textAlign: TextAlign.center,
                         style: TextStyle(
                           fontSize: 20,
@@ -87,127 +77,176 @@ class _AutenticacaoState extends State<Autenticacao> {
                           color: Color(0xFF4E4B66),
                         ),
                       ),
-                      TextFormField(
-                        controller: _emailController,
-                        decoration:
-                            getAutenticacaoDecoracao("Endereço de e-mail"),
-                        maxLength: 30,
-                        validator: (String? value) {
-                          if (value == null) {
-                            return "O e-mail não pode ser vazio.";
-                          }
-                          if (value.length < 5) {
-                            return "E-mail muito pequeno";
-                          }
-                          if (!value.contains("@")) {
-                            return "E-mail não é válido.";
-                          }
-                          return null;
-                        },
-                      ),
-                      TextFormField(
-                        controller: _senhaController,
-                        obscureText: _obscureText,
-                        maxLength: 10,
-                        decoration: InputDecoration(
-                          labelText: 'Senha',
-                          fillColor: Colors.white,
-                          filled: true,
-                          contentPadding:
-                              const EdgeInsets.fromLTRB(16, 8, 8, 8),
-                          border: OutlineInputBorder(
-                              borderRadius: BorderRadius.circular(4.0)),
-                          enabledBorder: OutlineInputBorder(
-                            borderRadius: BorderRadius.circular(9.0),
-                          ),
-                          suffixIcon: IconButton(
-                            icon: Icon(
-                              _obscureText
-                                  ? Icons.visibility_off
-                                  : Icons.visibility, // Ícone do olho
-                            ),
-                            onPressed:
-                                _togglePasswordVisibility, // Função para alternar a visibilidade
-                          ),
+                      const Text(
+                        "Entre em sua conta para continuar",
+                        textAlign: TextAlign.center,
+                        style: TextStyle(
+                          fontSize: 15,
+                          fontWeight: FontWeight.bold,
+                          color: Color(0xFF4E4B66),
                         ),
-                        validator: (String? value) {
-                          String? validationMessage =
-                              PasswordValidator.validate(value ?? '');
-                          if (validationMessage != null) {
-                            return validationMessage;
-                          }
-                          return null;
-                        },
                       ),
                       Visibility(
                         visible: !queroEntrar,
                         child: Column(
+                          crossAxisAlignment: CrossAxisAlignment.start,
                           children: [
-                            TextFormField(
-                              controller: _confirmarSenhaController,
-                              obscureText: _obscureTextConf,
-                              maxLength: 10,
-                              decoration: InputDecoration(
-                                labelText: 'Confirmar Senha',
-                                fillColor: Colors.white,
-                                filled: true,
-                                contentPadding:
-                                    const EdgeInsets.fromLTRB(16, 8, 8, 8),
-                                border: OutlineInputBorder(
-                                    borderRadius: BorderRadius.circular(4.0)),
-                                enabledBorder: OutlineInputBorder(
-                                  borderRadius: BorderRadius.circular(9.0),
-                                ),
-                                suffixIcon: IconButton(
-                                  icon: Icon(
-                                    _obscureTextConf
-                                        ? Icons.visibility_off
-                                        : Icons.visibility, // Ícone do olho
-                                  ),
-                                  onPressed:
-                                      _togglePasswordVisibilityConfir, // Função para alternar a visibilidade
-                                ),
-                              ),
-                              validator: (String? value) {
-                                if (value == null || value.isEmpty) {
-                                  return "Por favor, confirme sua senha.";
-                                }
-                                if (value != _senhaController.text) {
-                                  return "As senhas não coincidem.";
-                                }
-                                return null;
-                              },
+                            Text(
+                              "Como você gostaria de ser chamado?",
+                              style: TextStyle(fontSize: 16),
                             ),
-                            TextFormField(
-                              controller: _nomeController,
-                              decoration: getAutenticacaoDecoracao("Nome"),
-                              maxLength: 40,
-                              validator: (String? value) {
-                                if (value == null) {
-                                  return "O nome não pode ser vazio.";
-                                }
-                                if (value.length < 2) {
-                                  return "Nome muito pequeno";
-                                }
-                                if (value.length > 20) {
-                                  return "Nome muito grande.";
-                                }
-                                return null;
-                              },
+                            Container(
+                              height: 60,
+                              child: TextFormField(
+                                controller: _nomeController,
+                                decoration:
+                                    getAutenticacaoDecoracao("ex: Nome"),
+                                maxLength: 40,
+                                validator: (String? value) {
+                                  if (value == null) {
+                                    return "O nome não pode ser vazio.";
+                                  }
+                                  if (value.length < 2) {
+                                    return "Nome muito pequeno";
+                                  }
+                                  if (value.length > 20) {
+                                    return "Nome muito grande.";
+                                  }
+                                  return null;
+                                },
+                              ),
                             ),
                           ],
                         ),
                       ),
-                      const SizedBox(
-                        height: 20,
+                      Text(
+                        "Endereço de e-mail",
+                        style: TextStyle(fontSize: 16),
+                      ),
+                      Container(
+                        height: 80,
+                        child: TextFormField(
+                          controller: _emailController,
+                          decoration: getAutenticacaoDecoracao(
+                              "ex: vidaleve@vidaleve.com"),
+                          maxLength: 30,
+                          validator: (String? value) {
+                            if (value == null) {
+                              return "O e-mail não pode ser vazio.";
+                            }
+                            if (value.length < 5) {
+                              return "E-mail muito pequeno";
+                            }
+                            if (!value.contains("@")) {
+                              return "E-mail não é válido.";
+                            }
+                            return null;
+                          },
+                        ),
+                      ),
+                      Text("Senha", style: TextStyle(fontSize: 16)),
+                      Container(
+                        height: 60,
+                        child: TextFormField(
+                          controller: _senhaController,
+                          obscureText: _obscureText,
+                          maxLength: 10,
+                          decoration: InputDecoration(
+                            labelText: '**********',
+                            fillColor: Colors.white,
+                            filled: true,
+                            contentPadding:
+                                const EdgeInsets.fromLTRB(16, 8, 8, 8),
+                            border: OutlineInputBorder(
+                                borderRadius: BorderRadius.circular(10.0)),
+                            enabledBorder: OutlineInputBorder(
+                              borderRadius: BorderRadius.circular(10.0),
+                            ),
+                            suffixIcon: IconButton(
+                              icon: Icon(
+                                _obscureText
+                                    ? Icons.visibility_off
+                                    : Icons.visibility, // Ícone do olho
+                              ),
+                              onPressed:
+                                  _togglePasswordVisibility, // Função para alternar a visibilidade
+                            ),
+                          ),
+                          // validator: (String? value) {
+                          //  String? validationMessage =
+                          //      PasswordValidator.validate(value ?? '');
+                          //  if (validationMessage != null) {
+                          //    return validationMessage;
+                          //  }
+                          //  return null;
+                          // },
+                        ),
+                      ),
+                      Visibility(
+                        visible: !queroEntrar,
+                        child: Column(
+                          crossAxisAlignment: CrossAxisAlignment.start,
+                          children: [
+                            Text(
+                              "Confirmar sua senha",
+                              style: TextStyle(fontSize: 16),
+                            ),
+                            Container(
+                              height: 60,
+                              child: TextFormField(
+                                controller: _confirmarSenhaController,
+                                obscureText: _obscureTextConf,
+                                maxLength: 10,
+                                decoration: InputDecoration(
+                                  labelText: '**********',
+                                  fillColor: Colors.white,
+                                  filled: true,
+                                  contentPadding:
+                                      const EdgeInsets.fromLTRB(16, 8, 8, 8),
+                                  border: OutlineInputBorder(
+                                      borderRadius:
+                                          BorderRadius.circular(10.0)),
+                                  enabledBorder: OutlineInputBorder(
+                                    borderRadius: BorderRadius.circular(10.0),
+                                  ),
+                                  suffixIcon: IconButton(
+                                    icon: Icon(
+                                      _obscureTextConf
+                                          ? Icons.visibility_off
+                                          : Icons.visibility, // Ícone do olho
+                                    ),
+                                    onPressed:
+                                        _togglePasswordVisibilityConfir, // Função para alternar a visibilidade
+                                  ),
+                                ),
+                                validator: (String? value) {
+                                  if (value == null || value.isEmpty) {
+                                    return "Por favor, confirme sua senha.";
+                                  }
+                                  if (value != _senhaController.text) {
+                                    return "As senhas não coincidem.";
+                                  }
+                                  return null;
+                                },
+                              ),
+                            ),
+                          ],
+                        ),
                       ),
                       ElevatedButton(
                         onPressed: () {
+                          String senha = _senhaController.text;
+
+                          if (!validarSenha(senha)) {
+                            mostrarModalErroSenha(context);
+                            return;
+                          }
+
                           botaoPrincipalClicado();
                         },
                         style: ElevatedButton.styleFrom(
-                          backgroundColor:
-                              Colors.orange, // Cor de fundo laranja
+                          backgroundColor: Color.fromARGB(
+                              255, 248, 174, 63), // Cor de fundo laranja
                           shape: RoundedRectangleBorder(
                             borderRadius: BorderRadius.circular(
                                 18.0), // Bordas arredondadas
@@ -227,7 +266,7 @@ class _AutenticacaoState extends State<Autenticacao> {
                             )),
                       ),
                       const SizedBox(
-                        height: 15,
+                        height: 20,
                       ),
                       TextButton(
                         onPressed: () {
@@ -270,7 +309,58 @@ class _AutenticacaoState extends State<Autenticacao> {
     );
   }
 
+  @override
+  void dispose() {
+    _confirmarSenhaController.dispose();
+    _emailController.dispose();
+    _senhaController.dispose();
+    _nomeController.dispose();
+    super.dispose();
+  }
+
+  bool validarSenha(String senha) {
+    bool hasMinLength = senha.length >= 7;
+    bool hasUppercase = senha.contains(RegExp(r'[A-Z]'));
+    bool hasLowercase = senha.contains(RegExp(r'[a-z]'));
+    bool hasDigit = senha.contains(RegExp(r'[0-9]'));
+    bool hasSpecialCharacter = senha.contains(RegExp(r'[!@#\$%&*]'));
+
+    return hasMinLength &&
+        hasUppercase &&
+        hasLowercase &&
+        hasDigit &&
+        hasSpecialCharacter;
+  }
+
+  void mostrarModalErroSenha(BuildContext context) {
+    showDialog(
+      context: context,
+      builder: (BuildContext context) {
+        return AlertDialog(
+          title: Text("Erro de Validação de Senha"),
+          content: Text(
+            "A senha deve atender aos seguintes critérios:\n"
+            "• Pelo menos 7 caracteres.\n"
+            "• Pelo menos uma letra maiúscula.\n"
+            "• Pelo menos uma letra minúscula.\n"
+            "• Pelo menos um número.\n"
+            "• Pelo menos um caractere especial (!@#\$%&*).",
+          ),
+          actions: <Widget>[
+            ElevatedButton(
+              child: Text("OK"),
+              onPressed: () {
+                Navigator.of(context).pop();
+              },
+            ),
+          ],
+        );
+      },
+    );
+  }
+
   void botaoPrincipalClicado() async {
+    int? usuarioId;
     String userName = _nomeController.text;
     String email = _emailController.text;
     String senha = _senhaController.text;
@@ -278,15 +368,16 @@ class _AutenticacaoState extends State<Autenticacao> {
     if (_formKey.currentState!.validate()) {
       if (queroEntrar) {
         // Chama a API para autenticar o usuário
-        await _autenticacaoServico.autenticarUsuario(
+        usuarioId = await _autenticacaoServico.autenticarUsuario(
             email: email, senha: senha, context: context);
+        Provider.of<User>(context, listen: false).manterID(usuarioId!);
         Navigator.push(
           context,
-          MaterialPageRoute(builder: (context) => InfoNutricionais()),
+          MaterialPageRoute(builder: (context) => QueremosConhecer()),
         );
       } else {
         // Chama a API para cadastrar o usuário
-        await _autenticacaoServico.cadastrarUsuario(
+        usuarioId = await _autenticacaoServico.cadastrarUsuario(
             userName: userName, email: email, senha: senha, context: context);
         Navigator.push(
           context,

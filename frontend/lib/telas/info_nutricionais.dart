@@ -32,6 +32,7 @@ class _AutenticacaoState extends State<InfoNutricionais> {
 
   @override
   Widget build(BuildContext context) {
+    final usuarioId = Provider.of<User>(context).id;
     return Scaffold(
       backgroundColor: Colors.blueGrey,
       body: Stack(
@@ -64,7 +65,7 @@ class _AutenticacaoState extends State<InfoNutricionais> {
                         "Qual a sua meta?",
                         textAlign: TextAlign.left,
                         style: TextStyle(
-                          fontSize: 25,
+                          fontSize: 20,
                           fontWeight: FontWeight.bold,
                           color: Color(0xFF4E4B66),
                         ),
@@ -78,20 +79,24 @@ class _AutenticacaoState extends State<InfoNutricionais> {
                           color: Color(0xFF4E4B66),
                         ),
                       ),
-                      TextFormField(
-                        controller: _alturaController,
-                        decoration: InputDecoration(
-                          labelText: 'ex: 1.80',
-                          fillColor: Colors.white,
-                          filled: true,
-                          border: OutlineInputBorder(),
+                      Container(
+                        height: 40,
+                        child: TextFormField(
+                          controller: _alturaController,
+                          decoration: InputDecoration(
+                            labelText: 'ex: 1.80',
+                            fillColor: Colors.white,
+                            filled: true,
+                            border: OutlineInputBorder(),
+                          ),
+                          keyboardType:
+                              TextInputType.numberWithOptions(decimal: true),
+                          inputFormatters: [
+                            FilteringTextInputFormatter.allow(
+                                RegExp(r'[0-9.]')),
+                            formatarTextoAltura(),
+                          ],
                         ),
-                        keyboardType:
-                            TextInputType.numberWithOptions(decimal: true),
-                        inputFormatters: [
-                          FilteringTextInputFormatter.allow(RegExp(r'[0-9.]')),
-                          formatarTextoAltura(),
-                        ],
                       ),
                       const Text(
                         "Qual é seu peso atual?",
@@ -102,20 +107,24 @@ class _AutenticacaoState extends State<InfoNutricionais> {
                           color: Color(0xFF4E4B66),
                         ),
                       ),
-                      TextFormField(
-                        controller: _peso_atualController,
-                        decoration: InputDecoration(
-                          labelText: 'ex: 100.0',
-                          fillColor: Colors.white,
-                          filled: true,
-                          border: OutlineInputBorder(),
+                      Container(
+                        height: 40,
+                        child: TextFormField(
+                          controller: _peso_atualController,
+                          decoration: InputDecoration(
+                            labelText: 'ex: 100.0',
+                            fillColor: Colors.white,
+                            filled: true,
+                            border: OutlineInputBorder(),
+                          ),
+                          keyboardType:
+                              TextInputType.numberWithOptions(decimal: true),
+                          inputFormatters: [
+                            FilteringTextInputFormatter.allow(
+                                RegExp(r'[0-9.]')),
+                            formatarTextoPeso(),
+                          ],
                         ),
-                        keyboardType:
-                            TextInputType.numberWithOptions(decimal: true),
-                        inputFormatters: [
-                          FilteringTextInputFormatter.allow(RegExp(r'[0-9.]')),
-                          formatarTextoPeso(),
-                        ],
                       ),
                       const Text(
                         "Qual é o peso que você deseja alcançar? ",
@@ -126,23 +135,27 @@ class _AutenticacaoState extends State<InfoNutricionais> {
                           color: Color(0xFF4E4B66),
                         ),
                       ),
-                      TextFormField(
-                        controller: _peso_desejadoController,
-                        decoration: InputDecoration(
-                          labelText: 'ex: 100.0',
-                          fillColor: const Color.fromARGB(255, 255, 255, 255),
-                          filled: true,
-                          border: OutlineInputBorder(),
+                      Container(
+                        height: 40,
+                        child: TextFormField(
+                          controller: _peso_desejadoController,
+                          decoration: InputDecoration(
+                            labelText: 'ex: 100.0',
+                            fillColor: const Color.fromARGB(255, 255, 255, 255),
+                            filled: true,
+                            border: OutlineInputBorder(),
+                          ),
+                          keyboardType:
+                              TextInputType.numberWithOptions(decimal: true),
+                          inputFormatters: [
+                            FilteringTextInputFormatter.allow(
+                                RegExp(r'[0-9.]')),
+                            formatarTextoPeso(),
+                          ],
                         ),
-                        keyboardType:
-                            TextInputType.numberWithOptions(decimal: true),
-                        inputFormatters: [
-                          FilteringTextInputFormatter.allow(RegExp(r'[0-9.]')),
-                          formatarTextoPeso(),
-                        ],
                       ),
                       const SizedBox(
-                        height: 32,
+                        height: 12,
                       ),
                       const Text(
                         "Qual é o seu nível de atividade física diária?",
@@ -154,7 +167,7 @@ class _AutenticacaoState extends State<InfoNutricionais> {
                         ),
                       ),
                       const SizedBox(
-                        height: 10,
+                        height: 7,
                       ),
                       Column(
                         mainAxisAlignment: MainAxisAlignment.center,
@@ -341,11 +354,25 @@ class _AutenticacaoState extends State<InfoNutricionais> {
                       SizedBox(height: 20),
                       ElevatedButton(
                         onPressed: () {
-                          enviarDadosNutricionaisParaAPI();
+                          String carga = _atividade_opController.text = "Leve";
+                          if (_alturaController.text.isNotEmpty &&
+                              _peso_atualController.text.isNotEmpty &&
+                              carga.isNotEmpty &&
+                              _peso_desejadoController.text.isNotEmpty) {
+                            enviarDadosNutricionaisParaAPI(usuarioId);
+                          } else {
+                            // Exibir uma mensagem de erro ou alerta
+                            ScaffoldMessenger.of(context).showSnackBar(
+                              SnackBar(
+                                content: Text('Todos os campos obrigatórios.'),
+                                backgroundColor: Colors.red,
+                              ),
+                            );
+                          }
                         },
                         style: ElevatedButton.styleFrom(
-                          backgroundColor:
-                              Colors.orange, // Cor de fundo laranja
+                          backgroundColor: Color.fromARGB(
+                              255, 248, 174, 63), // Cor de fundo laranja
                           shape: RoundedRectangleBorder(
                             borderRadius: BorderRadius.circular(
                                 6.0), // Bordas arredondadas
@@ -384,21 +411,23 @@ class _AutenticacaoState extends State<InfoNutricionais> {
     super.dispose();
   }
 
-  void enviarDadosNutricionaisParaAPI() async {
-    int id = Provider.of<User>(context).clienteId!;
+  void enviarDadosNutricionaisParaAPI(int? usuarioId) async {
+    int? id = usuarioId!;
     String altura = _alturaController.text;
     String peso = _peso_atualController.text;
     String meta = _peso_desejadoController.text;
     String atividade = _atividade_opController.text;
 
+    print(altura + " " + peso + " " + meta + " " + atividade);
+
     if (_formKey.currentState!.validate()) {
       await _nutricionaisService.cadastrarInfonutricionais(
-          id: id,
-          altura: altura,
-          peso: peso,
-          meta: meta,
-          atividade: atividade,
-          context: context);
+        id: id,
+        altura: altura,
+        peso: peso,
+        meta: meta,
+        atividade: atividade,
+      );
       Navigator.push(
         context,
         MaterialPageRoute(builder: (context) => Meta()),

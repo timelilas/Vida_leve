@@ -14,7 +14,7 @@ class QueremosServico {
   }) async {
     final endpoint = '/user/profile/$id';
     final body = {
-      'apelido': userName,
+      'userName': userName,
       'telefone': telefone,
       'aniversario': aniversario,
       'sexo': sexo,
