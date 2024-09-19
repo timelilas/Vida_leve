@@ -342,7 +342,21 @@ class _AutenticacaoState extends State<InfoNutricionais> {
                       SizedBox(height: 20),
                       ElevatedButton(
                         onPressed: () {
-                          enviarDadosNutricionaisParaAPI(usuarioId);
+                          String carga = _atividade_opController.text = "Leve";
+                          if (_alturaController.text.isNotEmpty &&
+                              _peso_atualController.text.isNotEmpty &&
+                              carga.isNotEmpty &&
+                              _peso_desejadoController.text.isNotEmpty) {
+                            enviarDadosNutricionaisParaAPI(usuarioId);
+                          } else {
+                            // Exibir uma mensagem de erro ou alerta
+                            ScaffoldMessenger.of(context).showSnackBar(
+                              SnackBar(
+                                content: Text('Todos os campos obrigatórios.'),
+                                backgroundColor: Colors.red,
+                              ),
+                            );
+                          }
                         },
                         style: ElevatedButton.styleFrom(
                           backgroundColor: Color.fromARGB(
@@ -400,7 +414,7 @@ class _AutenticacaoState extends State<InfoNutricionais> {
         altura: altura,
         peso: peso,
         meta: meta,
-        atividade: "Leve",
+        atividade: atividade,
       );
       Navigator.push(
         context,

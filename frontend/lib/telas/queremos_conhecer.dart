@@ -302,6 +302,18 @@ class _AutenticacaoState extends State<QueremosConhecer> {
                       ),
                       ElevatedButton(
                         onPressed: () {
+                          if (_dt_nascimentoController.text.isEmpty ||
+                              _apelidolController.text.isEmpty ||
+                              _telefoneController.text.isEmpty ||
+                              selectedGender!.isEmpty) {
+                            ScaffoldMessenger.of(context).showSnackBar(
+                              SnackBar(
+                                content: Text('Todos os campos obrigatórios'),
+                                backgroundColor: Colors.red,
+                              ),
+                            );
+                            return;
+                          }
                           if (_selectedDate != null) {
                             ScaffoldMessenger.of(context).showSnackBar(
                               SnackBar(
