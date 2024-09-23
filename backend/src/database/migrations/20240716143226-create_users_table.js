@@ -1,41 +1,44 @@
 'use strict';
 
 module.exports = {
-  up: async (queryInterface, Sequelize) => {
-    await queryInterface.createTable('Users', {
+  async up (queryInterface, Sequelize) {
+    await queryInterface.createTable('Progress', {
       id: {
         allowNull: false,
         autoIncrement: true,
         primaryKey: true,
         type: Sequelize.INTEGER
       },
-      userName: {
+      altura: {
+        type: Sequelize.STRING,
         allowNull: false,
-        type: Sequelize.STRING
       },
-      email: {
+      peso: {
+        type: Sequelize.STRING,
         allowNull: false,
-        type: Sequelize.STRING
       },
-      senha: {
+      meta: {
+        type: Sequelize.STRING,
+        allowNull: true,
+      },
+      atividade: {
+        type: Sequelize.STRING,
+        allowNull: true,
+      },
+      userId: {
+        type: Sequelize.INTEGER,
         allowNull: false,
-        type: Sequelize.STRING
-      },
-      telefone: {
-        allowNull: true,
-        type: Sequelize.STRING
-      },
-      aniversario: {
-        allowNull: true,
-        type: Sequelize.DATE
-      },
-      sexo: {
-        allowNull: true,
-        type: Sequelize.STRING
+        references: {
+          model: 'Users',
+          key: 'id',     
+        },
+        onUpdate: 'CASCADE', 
+        onDelete: 'CASCADE',
       }
-    });
+    })
   },
-  down: async (queryInterface, Sequelize) => {
-    await queryInterface.dropTable('Users');
+
+  async down (queryInterface, Sequelize) {
+    await queryInterface.dropTable('Progress')
   }
 };

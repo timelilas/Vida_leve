@@ -1,6 +1,3 @@
-const config = require('../config/dbConfig'); // Importar configurações do JSON
-
-import { Sequelize } from 'sequelize';
-const sequelize = new Sequelize(config);
+import sequelize from '../config';
 
 export default sequelize;

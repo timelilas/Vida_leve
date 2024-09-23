@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:vida_leve/servicos/api_service.dart';
 
 class QueremosServico {
-  final ApiService _apiService = ApiService(baseUrl: 'http://localhost:3000');
+  final ApiService _apiService = ApiService(baseUrl: 'https://vida-leve.onrender.com');
 
   Future<void> cadastrarInfoQueremosConhecer({
     required int id,

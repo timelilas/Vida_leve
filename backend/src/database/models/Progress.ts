@@ -1,5 +1,5 @@
 import { Model, DataTypes } from 'sequelize';
-import sequelize from '.';
+import sequelize from '.'
 import User from './User';
 
 class Progress extends Model {
