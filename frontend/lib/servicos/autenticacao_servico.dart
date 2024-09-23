@@ -4,7 +4,7 @@ import 'package:vida_leve/model/user.dart';
 import 'package:vida_leve/servicos/api_service.dart';
 
 class AutenticacaoServico {
-  final ApiService _apiService = ApiService(baseUrl: 'http://localhost:3000');
+  final ApiService _apiService = ApiService(baseUrl: 'https://vida-leve.onrender.com');
 
   Future<int?> cadastrarUsuario({
     required String userName,
