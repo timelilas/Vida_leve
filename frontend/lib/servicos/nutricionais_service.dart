@@ -1,8 +1,7 @@
-import 'package:flutter/material.dart';
 import 'package:vida_leve/servicos/api_service.dart';
 
 class NutricionaisService {
-  final ApiService _apiService = ApiService(baseUrl: 'http://localhost:3000');
+  final ApiService _apiService = ApiService(baseUrl: 'https://vida-leve.onrender.com');
 
   Future<void> cadastrarInfonutricionais({
     required int id,
