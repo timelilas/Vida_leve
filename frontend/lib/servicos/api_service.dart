@@ -58,6 +58,7 @@ class ApiService {
     if (response.statusCode >= 200 && response.statusCode < 300) {
       return jsonDecode(response.body);
     } else {
+      print("bODY: " + response.body);
       print('Falha na requisição: ${response.statusCode}');
       return null;
     }

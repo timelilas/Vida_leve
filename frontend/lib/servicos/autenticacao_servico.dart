@@ -4,7 +4,8 @@ import 'package:vida_leve/model/user.dart';
 import 'package:vida_leve/servicos/api_service.dart';
 
 class AutenticacaoServico {
-  final ApiService _apiService = ApiService(baseUrl: 'https://vida-leve.onrender.com');
+  final ApiService _apiService =
+      ApiService(baseUrl: 'https://vida-leve.onrender.com');
 
   Future<int?> cadastrarUsuario({
     required String userName,
@@ -23,7 +24,7 @@ class AutenticacaoServico {
 
     if (response != null && response['id'] != null) {
       final usuarioId = int.tryParse(response['id'].toString());
-      print('Token: $response["message"]');
+
       print('Usuário cadastrado com sucesso. ID: $usuarioId');
       return usuarioId; // Retorna o ID do usuário
     } else {
