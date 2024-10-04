@@ -50,4 +50,16 @@ export default class UserController {
       return res.status(500).json({ error: 'Error creating user' });
     }
   };
+
+  async delete (req: Request, res: Response): Promise<Response> {
+    const { id } = req.params;
+
+    try {
+      const { type, message } = await this._userService.delete(Number(id));
+      return res.status(type).json(message);
+    } catch (error) {
+      console.error('Error in UserController:', error);
+      return res.status(500).json({ error: 'Error deleting user' });
+    }
+  };
 }

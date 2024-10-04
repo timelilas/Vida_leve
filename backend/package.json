@@ -6,7 +6,8 @@
   "scripts": {
     "build": "tsc",
     "start": "node dist/server.js",
-    "dev": "ts-node-dev src/server.ts"
+    "dev": "ts-node-dev src/server.ts",
+    "db:reset": "npx sequelize-cli db:drop && npx sequelize-cli db:create && npx sequelize-cli db:migrate && npx sequelize-cli db:seed:all"
   },
   "keywords": [],
   "author": "",
