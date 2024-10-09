@@ -1,8 +1,19 @@
 import User from '../database/models/User';
-import bcrypt from 'bcryptjs';
+import bcrypt from 'bcrypt';
 import { generateToken } from '../utils/JWT';
 
 export default class UserService {
+  
+  public get = async () => {
+    try {
+      const users = await User.findAll();
+      return { type: 200, message: users };
+    } catch (error) {
+      console.error('Error getting users:', error);
+      throw new Error('Error getting users');
+    }
+  };
+
   public post = async (userName: string | undefined, email: string, senha: string) => {
     try {
       senha = await bcrypt.hash(senha, 10);
@@ -59,4 +70,20 @@ export default class UserService {
       throw new Error('Error logging in');
     }
   }
+
+  public delete = async (id: number) => {
+    try {
+      const user = await User.findByPk(id);
+
+      if (!user) {
+        return { type: 404, message: { error: 'Usuario não encontrado' } };
+      }
+
+      await User.destroy({ where: { id } });
+      return { type: 200, message: { message: 'Usuario deletado com sucesso' } };
+    } catch (error) {
+      console.error('Error deleting user:', error);
+      throw new Error('Error deleting user');
+    }
+  };
 }

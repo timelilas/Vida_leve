@@ -36,7 +36,7 @@ class _MainOrigem extends State<MainOrigem> {
                     children: [
                       Image.asset(
                         "assets/logo.png",
-                        height: 200,
+                        height: 250,
                       ),
                       const Text(
                         "Transforme sua jornada de perda de peso com o Vida Leve!",
@@ -48,19 +48,21 @@ class _MainOrigem extends State<MainOrigem> {
                         ),
                       ),
                       const SizedBox(
-                        height: 182,
+                        height: 180,
                       ),
                       ElevatedButton(
                         onPressed: () {
                           Navigator.push(
                             context,
                             MaterialPageRoute(
-                                builder: (context) => Autenticacao()),
+                                builder: (context) => Autenticacao(
+                                      escolherTela: false,
+                                    )),
                           );
                         },
                         style: ElevatedButton.styleFrom(
-                          backgroundColor:
-                              Colors.orange, // Cor de fundo laranja
+                          backgroundColor: const Color.fromARGB(
+                              255, 248, 174, 63), // Cor de fundo laranja
                           shape: RoundedRectangleBorder(
                             borderRadius: BorderRadius.circular(
                                 18.0), // Bordas arredondadas
@@ -76,8 +78,8 @@ class _MainOrigem extends State<MainOrigem> {
                           style: TextStyle(
                             fontSize: 16,
                             fontWeight: FontWeight.bold,
-                            color: const Color.fromARGB(
-                                255, 37, 36, 36), // Cor do texto do botão
+                            color: Color.fromARGB(
+                                255, 27, 27, 27), // Cor do texto do botão
                           ),
                         ),
                       ),
@@ -89,18 +91,20 @@ class _MainOrigem extends State<MainOrigem> {
                           Navigator.push(
                             context,
                             MaterialPageRoute(
-                                builder: (context) => Autenticacao()),
+                                builder: (context) => Autenticacao(
+                                      escolherTela: true,
+                                    )),
                           );
                         },
                         style: ElevatedButton.styleFrom(
                           backgroundColor: const Color.fromARGB(
-                              255, 180, 179, 179), // Cor de fundo laranja
+                              255, 255, 255, 255), // Cor de fundo laranja
                           shape: RoundedRectangleBorder(
                             borderRadius: BorderRadius.circular(
                                 18.0), // Bordas arredondadas
                             side: BorderSide(
-                                color: const Color.fromARGB(255, 87, 87, 87),
-                                width: 2.0), // Borda preta com largura de 2
+                                color: const Color.fromARGB(255, 35, 35, 35),
+                                width: 1.0), // Borda preta com largura de 2
                           ),
                           padding: EdgeInsets.symmetric(
                               horizontal: 20, vertical: 15), // Tamanho do botão

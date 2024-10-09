@@ -1,5 +1,5 @@
 import Progress from "../database/models/Progress";
-import User from "../database/models/User"
+import User from "../database/models/User";
 
 export default class ProgressService {
     public post = async (altura: number, peso: number, meta:number, atividade: string, userId: number) => {

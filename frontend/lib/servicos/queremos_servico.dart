@@ -1,7 +1,8 @@
+import 'package:flutter/material.dart';
 import 'package:vida_leve/servicos/api_service.dart';
 
 class QueremosServico {
-  final ApiService _apiService = ApiService(baseUrl: 'http://localhost:3000');
+  final ApiService _apiService = ApiService(baseUrl: 'https://vida-leve.onrender.com');
 
   Future<void> cadastrarInfoQueremosConhecer({
     required int id,
@@ -9,20 +10,22 @@ class QueremosServico {
     required String telefone,
     required String aniversario,
     required String sexo,
+    required BuildContext context,
   }) async {
-    final endpoint = '/user/profile/:$id';
+    final endpoint = '/user/profile/$id';
     final body = {
-      'apelido': userName,
+      'userName': userName,
       'telefone': telefone,
       'aniversario': aniversario,
       'sexo': sexo,
     };
 
-    final response = await _apiService.postData(endpoint, body);
+    final response = await _apiService.putData(endpoint, body);
     if (response != null) {
-      print('Informacoes cadastradas com sucesso: $response');
+      print(
+          'Informacoes queremos te conhecer cadastradas com sucesso: $response');
     } else {
-      print('Erro ao cadastrar informacoes');
+      print('Erro ao cadastrar queremos te conhecer');
     }
   }
 }

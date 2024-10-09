@@ -26,7 +26,7 @@ class App {
 
   private routes(): void {
     this.app.use('/user', userRouter);
-    this.app.use('/progress', progressRouter)
+    this.app.use('/progress', progressRouter);
   }
 
   public start(PORT: string | number): void {
@@ -34,4 +34,4 @@ class App {
   }
 }
 
-export default new App().app;
+export default App;

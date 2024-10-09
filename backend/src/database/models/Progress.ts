@@ -1,5 +1,5 @@
 import { Model, DataTypes } from 'sequelize';
-import sequelize from '.';
+import sequelize from '.'
 import User from './User';
 
 class Progress extends Model {
@@ -19,11 +19,11 @@ Progress.init(
             primaryKey: true,
         },
         altura: {
-            type: DataTypes.FLOAT,
+            type: DataTypes.STRING,
             allowNull: false,
         },
         peso: {
-            type: DataTypes.FLOAT,
+            type: DataTypes.STRING,
             allowNull: false,
         },
         meta: {

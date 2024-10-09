@@ -10,11 +10,11 @@ module.exports = {
         type: Sequelize.INTEGER
       },
       altura: {
-        type: Sequelize.FLOAT,
+        type: Sequelize.STRING,
         allowNull: false,
       },
       peso: {
-        type: Sequelize.FLOAT,
+        type: Sequelize.STRING,
         allowNull: false,
       },
       meta: {
