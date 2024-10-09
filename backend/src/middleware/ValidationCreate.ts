@@ -7,8 +7,8 @@ const validateUser = async (req: Request, res: Response, next: NextFunction) => 
     const emailExist = await Users.findOne({ where: { email } });
 
     if (emailExist) {
-        return res.status(400).json({ message: 'Email já cadastrado' });
-    }
+        return res.status(409).json({ message: 'Email já cadastrado' });
+    }    
 
     if (!email || !senha) {
         return res.status(400).json({ message: 'Email e senha obrigatorio' });
@@ -37,14 +37,14 @@ const validateLogin = async (req: Request, res: Response, next: NextFunction) =>
     const emailExist = await Users.findOne({ where: { email } });
 
     if (!emailExist) {
-        return res.status(400).json({ message: 'Email não cadastrado' });
+        return res.status(404).json({ message: 'Email não cadastrado' });
     }
 
     const senhaExist = await Users.findOne({ where: { senha } });
-
+    
     if (senhaExist) {
-        return res.status(400).json({ message: 'Senha invalida' });
-    }
+        return res.status(401).json({ message: 'Senha inválida' });
+    }    
 
     next();
 }
