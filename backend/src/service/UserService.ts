@@ -1,6 +1,6 @@
 import User from '../database/models/User';
-import bcrypt from 'bcrypt';
-import { generateToken } from '../utils/JWT';
+// import bcrypt from 'bcrypt';
+// import { generateToken } from '../utils/JWT';
 
 export default class UserService {
   
@@ -16,7 +16,7 @@ export default class UserService {
 
   public post = async (userName: string | undefined, email: string, senha: string) => {
     try {
-      senha = await bcrypt.hash(senha, 10);
+      // senha = await bcrypt.hash(senha, 10);
       const user = await User.create({ userName, email, senha });
       return { type: 201, message: { message: user.id } };
     } catch (error) {
@@ -29,18 +29,13 @@ export default class UserService {
     try {
       const user = await User.findOne({ where: { email } });
 
-      if (!user || !user.senha) {
-        return { type: 401, message: { error: 'Usuário ou senha incorretos' } };
-      }
+      // const senhaassword = await bcrypt.compare(senha, user.senha);
 
-      const senhaassword = await bcrypt.compare(senha, user.senha);
+      // if (!senhaassword) {
+      //   return { type: 401, message: { error: 'Senha incorreta' } };
+      // }
 
-      if (!senhaassword) {
-        return { type: 401, message: { error: 'Senha incorreta' } };
-      }
-
-      const token = generateToken({ id: user!.id, email: user!.email, senha: user!.senha });
-      return { type: 200, message: {  id: user.dataValues.id, message: token } };
+      return { type: 200, message: {  id: user!.dataValues.id, message: "Login completo!" } };
 
     } catch (error) {
       console.error('Error logging in:', error);
