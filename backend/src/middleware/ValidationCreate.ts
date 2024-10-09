@@ -41,10 +41,10 @@ const validateLogin = async (req: Request, res: Response, next: NextFunction) =>
     }
 
     const senhaExist = await Users.findOne({ where: { senha } });
-    
-    if (senhaExist) {
-        return res.status(401).json({ message: 'Senha inválida' });
-    }    
+
+    if (senhaExist?.senha !== senha) {
+        return res.status(409).json({ message: 'Senha invalida' });
+    }
 
     next();
 }
