@@ -1,7 +1,5 @@
 import User from '../../database/models/User';
 import { CreateUserDTO, UpdateUserDTO } from './types';
-// import bcrypt from 'bcrypt';
-// import { generateToken } from '../utils/JWT';
 
 export default class UserService {
   public getAll = async () => {
@@ -18,22 +16,9 @@ export default class UserService {
     return { type: 201, message: { message: user.id } };
   };
 
-  public login = async (email: string, senha: string) => {
-    try {
-      const user = await User.findOne({ where: { email }});
-
-      // const senhaassword = await bcrypt.compare(senha, user.senha);
-
-      // if (!senhaassword) {
-      //   return { type: 401, message: { error: 'Senha incorreta' } };
-      // }
-
-      return { type: 200, message: {  id: user!.dataValues.id, message: "Login completo!" } };
-
-    } catch (error) {
-      console.error('Error logging in:', error);
-      throw new Error('Error logging in');
-    }
+  public getUserByEmail = async (email: string) => {
+    const foundUser = await User.findOne({where: {email}})
+    return foundUser?.toJSON()
   }
 
   public update = async (params: UpdateUserDTO) => {
