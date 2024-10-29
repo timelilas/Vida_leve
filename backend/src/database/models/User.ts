@@ -11,6 +11,11 @@ class User extends Model<InferAttributes<User>, InferCreationAttributes<User>> i
   declare telefone: string | null;
   declare aniversario: Date | null;
   declare sexo: "masculino" | "feminino" | null
+
+  public getProfile(): Omit<UserEntity, "senha">{
+    const {senha, ...profileProps} = super.toJSON()
+    return profileProps
+  }
 }
 
 User.init(
