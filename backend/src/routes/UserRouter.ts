@@ -5,10 +5,11 @@ import { authorizationMiddleware } from "../middleware/authorization/authorizati
 const userRouter = Router()
 const userController = new UserController();
 
+userRouter.get('/profile/', authorizationMiddleware, (req, res)=>userController.getById(req, res));
 userRouter.put('/profile/', authorizationMiddleware, (req, res)=>userController.put(req, res));
 
 //Rotas utilizada em desenvolvimento apenas. Não requerem autorização
 userRouter.get('/profile/all', (req, res)=>userController.getAll(req, res));
-userRouter.delete('/delete/:id', (req, res)=>userController.delete(req, res));
+userRouter.delete('/:id', (req, res)=>userController.delete(req, res));
 
 export default userRouter;
