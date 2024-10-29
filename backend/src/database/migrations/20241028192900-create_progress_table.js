@@ -1,20 +1,20 @@
 'use strict';
 
+/** @type {import('sequelize-cli').Migration} */
 module.exports = {
   async up (queryInterface, Sequelize) {
-    await queryInterface.createTable('Progress', {
+    await queryInterface.createTable("progress", {
       id: {
-        allowNull: false,
+        type: Sequelize.INTEGER,
         autoIncrement: true,
         primaryKey: true,
-        type: Sequelize.INTEGER
       },
       altura: {
-        type: Sequelize.STRING,
+        type: Sequelize.DECIMAL(3, 2),
         allowNull: false,
       },
       peso: {
-        type: Sequelize.STRING,
+        type: Sequelize.SMALLINT,
         allowNull: false,
       },
       meta: {
@@ -28,17 +28,13 @@ module.exports = {
       userId: {
         type: Sequelize.INTEGER,
         allowNull: false,
-        references: {
-          model: 'Users',
-          key: 'id',     
-        },
-        onUpdate: 'CASCADE', 
-        onDelete: 'CASCADE',
-      }
+        onUpdate: 'NO ACTION',
+        onDelete: 'NO ACTION',
+      },
     })
   },
 
   async down (queryInterface, Sequelize) {
-    await queryInterface.dropTable('Progress')
+    await queryInterface.dropTable("progress")
   }
 };
