@@ -11,6 +11,11 @@ class Progress extends Model<InferAttributes<Progress>, InferCreationAttributes<
     declare peso: number;
     declare meta: number | null;
     declare atividade: string | null;
+
+    public toJSON(): Omit<ProgressEntity, "userId">{
+        const {id, altura, atividade, meta, peso} = super.get()  
+        return {id, altura, atividade, meta, peso}
+    }
 }
 
 Progress.init(
