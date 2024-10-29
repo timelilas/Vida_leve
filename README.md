@@ -17,6 +17,11 @@ Siga os seguintes passo para a visualização do projeto:
 
 Agora e so aproveitar <a>http://localhost:8080</a> 
 
+> **Observação**
+> O id do usuário é obtido após a validação do token JWT e armazenado em `req.user`.
+> Dessa forma todas as rotas que exigem autenticação conseguem acessar o id do usuário após 
+> a validação do token.
+
 ## API:
 <a>http://localhost:3000</a>
 
@@ -29,8 +34,10 @@ Agora e so aproveitar <a>http://localhost:8080</a>
 
     Saida:
     {
-        "id": 4,
-        "message": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6NCwiZW1haWwiOiJyb290QHJvb3QuY29tbSIsInNlbmhhIjoiJDJhJDEwJEswZGVKc2JvSmM4WnNOMWJzSDVRNnVMS3c1dnFJRVc2ZXh5NU1HM3NWMXpMTXpHZHY2NmplIiwiaWF0IjoxNzI1NDEzNDAwLCJleHAiOjIxOTg3Nzc0MDB9.vXldqXKlWEZzsKwbk5a_0bIXbKHu83ec2ZoZHsVH2GU"
+        data:{
+            "id": 4,
+            "token": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6NCwiZW1haWwiOiJyb290QHJvb3QuY29tbSIsInNlbmhhIjoiJDJhJDEwJEswZGVKc2JvSmM4WnNOMWJzSDVRNnVMS3c1dnFJRVc2ZXh5NU1HM3NWMXpMTXpHZHY2NmplIiwiaWF0IjoxNzI1NDEzNDAwLCJleHAiOjIxOTg3Nzc0MDB9.vXldqXKlWEZzsKwbk5a_0bIXbKHu83ec2ZoZHsVH2GU"
+        }
     }
 
 
@@ -44,11 +51,31 @@ Agora e so aproveitar <a>http://localhost:8080</a>
 
     Saida:
     {
-        "message": 2
+        "data":{
+            "id": 1,
+            "userName": "Test",
+            "email": "root@root.comm",
+            "telefone": null,
+            "aniversario": null
+            "sexo": null
+        }
+    }
+
+#### GET `/user/profile` :
+    Saída:
+    {
+        "data": {
+            "id": 1,
+            "email": "teste@email.com,
+            "userName": "Test Jr",
+            "telefone": "11 987654321",
+            "aniversario": "1990-01-01",
+            "sexo": "masculino"
+        }
     }
 
 
-#### PUT `/user/profile/:id` :
+#### PUT `/user/profile/` :
     Entrada:
     {
         "userName": "Test Jr",
@@ -59,10 +86,17 @@ Agora e so aproveitar <a>http://localhost:8080</a>
 
     Saida: 
     {
-        "message": "Dados completado com sucesso"
+        "data": {
+            "id": 1
+            "email": teste@email.com"
+            "userName": "Test Jr",
+            "telefone": "11 987654321",
+            "aniversario": "1990-01-01",
+            "sexo": "masculino"
+        }
     }
 
-#### POST  `/progress/:id`
+#### POST  `/progress/`
     Entrada:
     {
         "altura": 1.25,
@@ -73,5 +107,11 @@ Agora e so aproveitar <a>http://localhost:8080</a>
 
     Saida:
     {
-        "message": "Dados completos!"
+        "data": {
+            "id": 1
+            "altura": 1.25,
+            "peso": 80.4,
+            "meta": 30,
+            "atividade": "leve"
+        }
     }
