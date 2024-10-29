@@ -1,4 +1,4 @@
-# Pipoca Agil
+# Pipoca Ágil
 App mobile com o objetivo de uma vida mais saudável
 
 ## Script para desenvolvimento
@@ -10,7 +10,10 @@ Siga os seguintes passo para a visualização do projeto:
 * Primeiro vamos faz o clone do projeto, em seu terminal utilize o seguinte comando `git clone git@github.com:timelilas/Vida_leve.git`.
 * Entre na pasta do projeto `cd Vida_leve`.
 * Execute o comando `docker compose up -d --build` para subir os container no Docker.
-* Quando o docker estiver de montado entre na pasta `cd backend` e execute `npm run prestart`, para a contrução das tabelas no banco de dados.
+* Quando o docker estiver de montado entre na pasta `cd backend` 
+* Crie um arquivo .env na pasta backend com as variáveis de ambiente presentes em .env.sample
+* Execute `npm run build` para compilar o projeto e carregar as configurações das migrations.
+* execute `npm run db:setup`, para iniciar a construção das tabelas no banco de dados.
 
 Agora e so aproveitar <a>http://localhost:8080</a> 
 
