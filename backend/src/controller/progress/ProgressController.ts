@@ -1,5 +1,5 @@
 import { Request, Response,  } from "express";
-import ProgressService from "../service/progress/ProgressService";
+import ProgressService from "../../service/progress/ProgressService";
 
 export default class ProgressController {
     private _ProgressService = new ProgressService();

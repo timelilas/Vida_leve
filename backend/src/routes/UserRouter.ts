@@ -1,12 +1,18 @@
 import { Router } from "express";
-import UserController from "../controller/UserController";
+import UserController from "../controller/user/UserController";
 import { authorizationMiddleware } from "../middleware/authorization/authorizationMiddleware";
+import { validationMiddleware } from "../middleware/validation/validationMiddleware";
+import { updateUserSchema } from "../controller/user/schemas";
 
 const userRouter = Router()
 const userController = new UserController();
 
 userRouter.get('/profile/', authorizationMiddleware, (req, res)=>userController.getById(req, res));
-userRouter.put('/profile/', authorizationMiddleware, (req, res)=>userController.put(req, res));
+userRouter.put('/profile/', 
+  authorizationMiddleware, 
+  validationMiddleware(updateUserSchema), 
+  (req, res)=>userController.put(req, res)
+);
 
 //Rotas utilizada em desenvolvimento apenas. Não requerem autorização
 userRouter.get('/profile/all', (req, res)=>userController.getAll(req, res));
