@@ -14,18 +14,6 @@ export default class UserController {
     }
   };
 
-  async post(req: Request, res: Response): Promise<Response> {
-    const { userName, email, senha } = req.body;
-
-    try {
-      const { type, message } = await this._userService.create({userName, email, senha});
-      return res.status(type).json(message);
-    } catch (error) {
-      console.error('Server internal error:', error);
-      return res.status(500).json({ error: 'Erro na tentativa de criar um usuário' });
-    }
-  };
-
   async put (req: Request, res: Response): Promise<Response> {
     const { userName, telefone, aniversario, sexo} = req.body;
     const { id } = req.params;
