@@ -20,5 +20,7 @@ export const authorizationMiddleware = async (req: Request, res: Response, next:
     return res.status(401).json({error: "Usuário não encontrado"})
   }
 
+  req.user = {id: tokenPayload.userId, email: tokenPayload.email}
+  
   return next()
 }

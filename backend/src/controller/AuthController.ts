@@ -40,9 +40,9 @@ export class AuthController{
       }
 
       const hashedPassword = await hashString(senha)
-      const { type, message } = await this._userService.create({userName, email, senha: hashedPassword});
+      const createdUser = await this._userService.create({userName, email, senha: hashedPassword});
       
-      return res.status(type).json(message);
+      return res.status(200).json({data: createdUser});
     } catch (error) {
       console.error('Server internal error:', error);
       return res.status(500).json({ error: 'Erro na tentativa de criar um usuário' });

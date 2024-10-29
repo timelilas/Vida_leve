@@ -4,16 +4,26 @@ import { CreateUserDTO, UpdateUserDTO } from './types';
 export default class UserService {
   public getAll = async () => {
     const users = await User.findAll({ attributes:{exclude:["senha"]}});
-    const usersProps = users.map((user)=>user.getProfile())
+    const profiles = users.map((user)=>user.getProfile())
     
-    return { type: 200, message: usersProps };
+    return profiles
   };
 
   public create = async (params: CreateUserDTO) => {
     const {userName, senha, email} = params
     const user = await User.create({ userName, email, senha });
 
-    return { type: 201, message: { message: user.id } };
+    return user.getProfile()
+  };
+
+  public get = async (id: number) => {
+    const foundUser = await User.findOne({where: {id}, attributes:{exclude:["senha"]}});
+
+    if(!foundUser){
+      return null
+    }
+    
+    return foundUser.getProfile();
   };
 
   public getUserByEmail = async (email: string) => {
@@ -30,25 +40,25 @@ export default class UserService {
       return null
     }
 
-    await User.update({ 
-        userName: userName,
-        telefone: telefone,
-        aniversario: aniversario,
-        sexo: sexo
-      },
+    await User.update(
+      { userName: userName,telefone: telefone,aniversario: aniversario,sexo: sexo },
       { where: { id } }
     )
 
-    return { type: 200, message: { message: 'Dados atualizados com sucesso' } }
+    const updatedUser = await User.findOne({
+      where: {id},
+      attributes: {exclude: ["senha"]}
+    })
+    return (updatedUser as User).getProfile()
   }
 
   public delete = async (id: number) => {
     const deletedCount = await User.destroy({ where: { id } });
 
     if(deletedCount === 0){
-      return {type: 404, message: {error: "Usuário não encontrado"}}
+      return false
     }
 
-    return { type: 200, message: { message: 'Usuário deletado com sucesso' } };
+    return true
   };
 }
