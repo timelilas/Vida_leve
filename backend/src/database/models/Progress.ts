@@ -1,58 +1,56 @@
-import { Model, DataTypes } from 'sequelize';
-import sequelize from '.'
+import { Model, InferAttributes, InferCreationAttributes, CreationOptional } from 'sequelize';
+import { db } from '../index';
 import User from './User';
+import Sequelize from 'sequelize';
 
-class Progress extends Model {
-    public id!: number;
-    public altura!: number;
-    public peso!: number;
-    public meta!: number;
-    public atividade!: string;
-    public userId!: number;
+class Progress extends Model<InferAttributes<Progress>, InferCreationAttributes<Progress>>{
+    declare id: CreationOptional<number>;
+    declare userId: number;
+    declare altura: number;
+    declare peso: number;
+    declare meta: number | null;
+    declare atividade: string | null;
 }
 
 Progress.init(
     {
         id: {
-            type: DataTypes.INTEGER,
+            type: Sequelize.INTEGER,
             autoIncrement: true,
             primaryKey: true,
         },
         altura: {
-            type: DataTypes.STRING,
+            type: Sequelize.DECIMAL(3, 2),
             allowNull: false,
         },
         peso: {
-            type: DataTypes.STRING,
+            type: Sequelize.SMALLINT,
             allowNull: false,
         },
         meta: {
-            type: DataTypes.STRING,
+            type: Sequelize.STRING,
             allowNull: true,
         },
         atividade: {
-            type: DataTypes.STRING,
+            type: Sequelize.STRING,
             allowNull: true,
         },
         userId: {
-            type: DataTypes.INTEGER,
+            type: Sequelize.INTEGER,
             allowNull: false,
-            references: {
-                model: User,
-                key: 'id',
-            },
+            onUpdate: 'NO ACTION',
+            onDelete: 'NO ACTION',
         },
     },
     {
-        sequelize,
-        modelName: 'Progress',
-        tableName: 'Progress',
+        sequelize: db,
+        tableName: 'progress',
         timestamps: false,
         freezeTableName: true,
     }
 );
 
-User.hasMany(Progress, { foreignKey: 'userId', as: 'progresses' });
-Progress.belongsTo(User, { foreignKey: 'userId', as: 'user' });
+User.hasMany(Progress, { foreignKey: 'userId'});
+Progress.belongsTo(User, { foreignKey: 'userId'});
 
 export default Progress;
