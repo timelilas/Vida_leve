@@ -18,12 +18,12 @@ module.exports = {
         allowNull: false,
       },
       meta: {
-        type: Sequelize.STRING,
-        allowNull: true,
+        type: Sequelize.SMALLINT,
+        allowNull: false,
       },
       atividade: {
         type: Sequelize.STRING,
-        allowNull: true,
+        allowNull: false,
       },
       userId: {
         type: Sequelize.INTEGER,

@@ -1,5 +1,4 @@
 import Progress from "../../database/models/Progress";
-import User from "../../database/models/User";
 import { CreateProgressDTO } from "./types";
 
 export default class ProgressService {

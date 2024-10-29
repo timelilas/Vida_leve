@@ -9,8 +9,8 @@ class Progress extends Model<InferAttributes<Progress>, InferCreationAttributes<
     declare userId: number;
     declare altura: number;
     declare peso: number;
-    declare meta: number | null;
-    declare atividade: string | null;
+    declare meta: number;
+    declare atividade: string;
 
     public toJSON(): Omit<ProgressEntity, "userId">{
         const {id, altura, atividade, meta, peso} = super.get()  
@@ -34,12 +34,12 @@ Progress.init(
             allowNull: false,
         },
         meta: {
-            type: Sequelize.STRING,
-            allowNull: true,
+            type: Sequelize.SMALLINT,
+            allowNull: false,
         },
         atividade: {
             type: Sequelize.STRING,
-            allowNull: true,
+            allowNull: false,
         },
         userId: {
             type: Sequelize.INTEGER,
