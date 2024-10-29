@@ -1,7 +1,7 @@
 import { Request, Response } from "express";
-import UserService from "../service/user/UserService";
-import { compareHash, hashString } from "../utils/bcrypt/helpers";
-import { generateToken } from "../utils/jwt/helpers";
+import UserService from "../../service/user/UserService";
+import { compareHash, hashString } from "../../utils/bcrypt/helpers";
+import { generateToken } from "../../utils/jwt/helpers";
 
 
 export class AuthController{

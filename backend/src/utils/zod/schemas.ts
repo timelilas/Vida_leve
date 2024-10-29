@@ -19,6 +19,5 @@ export const progressZodSchema = z.object({
   altura: ZodHelper.number(0, 9.99),
   peso: ZodHelper.number(0, 1000).int("Deve ser um número inteiro"),
   meta: ZodHelper.number(0, 1000).int("Deve ser um número inteiro"),
-  telefone: ZodHelper.phone(11).nullable(),
   atividade: ZodHelper.string(4, 100)
 }).strict({message: "Não é um campo válido"})

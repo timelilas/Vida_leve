@@ -7,12 +7,15 @@ const lengthMsg = (length: number) => `Deve ter exatamente ${length} caracteres`
 const invalidEmailMsg = () => "É um campo de email inválido"
 const invalidDateMsg = () => "É uma data inválida"
 const minSizeMsg =(min: number)=> `Deve ser maior ou igual a ${min}`
-const maxSizeMsg =(max: number)=> `Deve ser menor ou igual a${max}`
+const maxSizeMsg =(max: number)=> `Deve ser menor ou igual a ${max}`
+const stringMsg =()=> `Deve ser uma string`
+const booleanMsg =()=> `Deve ser um booleano`
+const numberMsg =()=> `Deve ser um número`
 
 
 export class ZodHelper {
     public static boolean() {
-        return z.boolean({ required_error: requiredMsg() })
+        return z.boolean({ required_error: requiredMsg(), invalid_type_error: booleanMsg() })
     }
 
     public static date(){
@@ -20,7 +23,9 @@ export class ZodHelper {
     }
 
     public static number(min: number, max?: number) {
-        const base = z.number({ required_error: requiredMsg() }).gte(min, minSizeMsg(min))
+        const base = z
+            .number({ required_error: requiredMsg(), invalid_type_error: numberMsg()})
+            .gte(min, minSizeMsg(min))
         return max ? base.lte(max, maxSizeMsg(max)) : base
     }
 
@@ -32,7 +37,9 @@ export class ZodHelper {
     }
 
     public static email(max?: number) {
-        const baseEmail = z.string({ required_error: requiredMsg() }).email(invalidEmailMsg())
+        const baseEmail = z
+            .string({ required_error: requiredMsg(), invalid_type_error: stringMsg() })
+            .email(invalidEmailMsg())
         return max ? baseEmail.max(max, maxLengthMsg(max)) : baseEmail
     }
 
@@ -44,10 +51,13 @@ export class ZodHelper {
     }
 
     public static phone(length: number){
-      return z.string().length(length, lengthMsg(length)).refine(
-        (phone)=>phone.match(/^[0-9]+$/g), 
-        {message: "Deve conter apenas caracteres números"}
-      )
+      return z
+        .string({required_error:requiredMsg(), invalid_type_error: stringMsg()})
+        .length(length, lengthMsg(length))
+        .refine(
+            (phone)=>phone.match(/^[0-9]+$/g), 
+            {message: "Deve conter apenas caracteres numéricos"}
+        )
     }
 
     public static formatZodError(error: ZodError): string[] {
@@ -69,7 +79,9 @@ export class ZodHelper {
     }
 
     private static baseString(min: number, max?: number) {
-        const base = z.string({ required_error: requiredMsg() }).min(min, minLengthMsg(min))
+        const base = z
+            .string({ required_error: requiredMsg(), invalid_type_error: stringMsg() })
+            .min(min, minLengthMsg(min))
         return (max ? base.max(max, maxLengthMsg(max)) : base).trim()
     }
 }
