@@ -1,9 +1,10 @@
 import { Model, InferAttributes, InferCreationAttributes, CreationOptional } from 'sequelize';
+import { ProgressEntity } from '../../entity/ProgressEntity';
 import { db } from '../index';
 import User from './User';
 import Sequelize from 'sequelize';
 
-class Progress extends Model<InferAttributes<Progress>, InferCreationAttributes<Progress>>{
+class Progress extends Model<InferAttributes<Progress>, InferCreationAttributes<Progress>> implements ProgressEntity{
     declare id: CreationOptional<number>;
     declare userId: number;
     declare altura: number;

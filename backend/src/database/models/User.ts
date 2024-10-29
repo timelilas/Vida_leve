@@ -1,8 +1,9 @@
 import { Model, InferAttributes, InferCreationAttributes, CreationOptional} from 'sequelize';
 import { db } from "../index"
 import Sequelize from 'sequelize';
+import { UserEntity } from '../../entity/UserEntity';
 
-class User extends Model<InferAttributes<User>, InferCreationAttributes<User>> {
+class User extends Model<InferAttributes<User>, InferCreationAttributes<User>> implements UserEntity {
   declare id: CreationOptional<number>;
   declare userName: string;
   declare email: string;
