@@ -1,12 +1,10 @@
-// src/App.tsx
 import React from 'react';
-import { SafeAreaView } from 'react-native';
-import LoginScreen from './src/screens/LoginScreen';
+import Navigation from './src/Navigation';
 
-export default function App() {
+const App = () => {
   return (
-    <SafeAreaView style={{ flex: 1 }}>
-      <LoginScreen />
-    </SafeAreaView>
+    <Navigation />
   );
-}
+};
+
+export default App;

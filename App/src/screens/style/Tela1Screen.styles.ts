@@ -7,11 +7,6 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     backgroundColor: '#EFF0F6',
   },
-  logo: {
-    width: 164, // Largura da imagem
-    height: 164, // Altura da imagem
-    marginBottom: 20, // Espaçamento abaixo da imagem
-  },
   button: {
     width: "100%",
     display: "flex",
