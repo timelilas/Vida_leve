@@ -13,7 +13,7 @@ const Tela1Screen: React.FC<Tela1ScreenProps> = ({ navigation }) => {
 
     <View style={styles.container}>
       <Logo />
-      <View>
+      <View style={styles.containerButton}>
         <TouchableOpacity style={styles.button}
           onPress={() => navigation.navigate('Login')}
         >
@@ -23,9 +23,9 @@ const Tela1Screen: React.FC<Tela1ScreenProps> = ({ navigation }) => {
           >Começar agora</Text>
         </TouchableOpacity>
         <br />
-        <TouchableOpacity style={styles.button} 
+        <TouchableOpacity style={styles.button2} 
         >
-          <Text style={styles.buttonText2}>Já tenho uma conta</Text>
+          <Text style={styles.buttonText}>Já tenho uma conta</Text>
         </TouchableOpacity>
       </View>
     </View>
