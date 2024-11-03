@@ -21,6 +21,7 @@ const styles = StyleSheet.create({
     borderColor: 'rgba(0, 0, 0, 0.7)',
     display: "flex",
     alignItems: "center",
+    margin: 10
   },
   button2: {
     backgroundColor : '#F7F7FC',
