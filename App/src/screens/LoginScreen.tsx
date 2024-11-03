@@ -1,5 +1,5 @@
 import React from 'react';
-import { View, TouchableOpacity, Text, Image } from 'react-native';
+import { View, TouchableOpacity, Text, Image, ScrollView } from 'react-native';
 import Logo from '../components/Logo';
 import EmailSenha from '../components/EmailSenha';
 import styles from './style/LoginScreen.style';
@@ -8,13 +8,12 @@ import { Link } from '@react-navigation/native';
 const LoginScreen = () =>{
     return(
         <View style={styles.container}>
-            <Logo />
+          <ScrollView>
             <View style={styles.inputs}>
-              <Text>
-                  Boas vindas!
-              </Text>
-              <Text>
-                  Cadastre-se para continuar
+              <Logo />
+              <Text style={styles.text}>
+                  Boas vindas! {"\n"}
+                  Entre em sua conta para continuar      
               </Text>
               <EmailSenha />
             </View>
@@ -22,6 +21,7 @@ const LoginScreen = () =>{
             >
               <Text style={styles.buttonText}>Já tenho uma conta</Text>
             </TouchableOpacity>
+          </ScrollView>
         </View>
     )
 };
