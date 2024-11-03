@@ -7,7 +7,12 @@ const EmailSenha = () => {
           <Text>Endereço de e-mail</Text>
           <TextInput 
             // style={styles.input}
-            placeholder="Digite seu email"
+            placeholder="Joao@email.com"
+          />
+          <Text>Senha</Text>
+          <TextInput 
+            // style={styles.input}
+            placeholder="*************"
           />
         </View>
     )
