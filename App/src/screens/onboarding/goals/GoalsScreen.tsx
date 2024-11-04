@@ -17,7 +17,7 @@ import { AcceleratedGoalButton } from "../../../components/buttons/GoalButtons/A
 import { SubmitButton } from "../../../components/buttons/SubmitButton";
 import { ScreenWrapper } from "../../../components/ScreenWrapper";
 
-export function GoalsScreen() {
+export default function GoalsScreen() {
   const [selectedGoal, setSelectedGoal] = useState<GoalType | null>(null);
 
   function selectGoal(goal: GoalType) {
