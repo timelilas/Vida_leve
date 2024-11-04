@@ -3,8 +3,8 @@ import { StyleSheet } from "react-native";
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    alignItems: 'center',
-    backgroundColor: '#EFF0F6',
+    alignItems: "center",
+    backgroundColor: "#EFF0F6",
     paddingHorizontal: 24,
     paddingVertical: 16,
   },
@@ -13,6 +13,9 @@ const styles = StyleSheet.create({
     flexGrow: 1,
     justifyContent: "space-around",
     alignItems: "center",
+  },
+  logo: {
+    marginBottom: 40,
   },
   inputs: {
     width: "100%",
@@ -28,12 +31,12 @@ const styles = StyleSheet.create({
     marginBottom: 20,
   },
   button: {
-    backgroundColor : "#FFAE31",
+    backgroundColor: "#FFAE31",
     width: "100%",
-    height: 48, 
-    padding: 16, 
-    borderRadius: 16, 
-    borderWidth: 1, 
+    height: 48,
+    padding: 16,
+    borderRadius: 16,
+    borderWidth: 1,
     borderColor: "rgba(0, 0, 0, 0.7)",
     display: "flex",
     alignItems: "center",
