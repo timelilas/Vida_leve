@@ -16,6 +16,7 @@ const styles = StyleSheet.create({
     borderColor: '#ccc',
     backgroundColor: '#F7F7FC',
     marginBottom: 24,
+    borderRadius: 8,
   },
   icon: {
     width: 24,
@@ -24,6 +25,10 @@ const styles = StyleSheet.create({
   },
   text: {
     marginTop: 24,
+  },
+  errorText: {
+    color: 'red',
+    marginBottom: 24,
   },
 });
 
