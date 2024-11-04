@@ -29,12 +29,12 @@ const Navigation = () => {
           options={{ headerShown: false }}
         />
         <Stack.Screen
-          name="onboarding/goals"
+          name="Onboarding/goals"
           component={GoalsScreen}
           options={{ headerShown: false }}
         />
         <Stack.Screen
-          name="onboarding/goal-guidance"
+          name="Onboarding/goal-guidance"
           component={GoalGuidanceScreen}
           options={{ headerShown: false }}
         />
