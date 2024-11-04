@@ -3,15 +3,14 @@ import { StyleSheet } from "react-native";
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    alignItems: "center",
     backgroundColor: "#EFF0F6",
-    paddingHorizontal: 24,
-    paddingVertical: 16,
   },
   scrollView: {
+    paddingHorizontal: 24,
+    paddingVertical: 16,
     width: "100%",
     flexGrow: 1,
-    justifyContent: "space-around",
+    justifyContent: "space-between",
     alignItems: "center",
   },
   logo: {
@@ -27,7 +26,7 @@ const styles = StyleSheet.create({
     lineHeight: 28.8,
     textAlign: "center",
     color: "#4E4B66",
-    marginBottom: 20,
+    marginBottom: 40,
   },
   button: {
     backgroundColor: "#FFAE31",
