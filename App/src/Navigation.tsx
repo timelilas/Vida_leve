@@ -3,6 +3,7 @@ import { NavigationContainer } from '@react-navigation/native';
 import { createNativeStackNavigator } from '@react-navigation/native-stack';
 import Tela1Screen from './screens/Tela1Screen';
 import LoginScreen from './screens/LoginScreen';
+import Cadastro from './screens/CadastroScreen';
 
 const Stack = createNativeStackNavigator();
 
@@ -19,6 +20,11 @@ const Navigation = () => {
           name="Login" 
           component={LoginScreen} 
           options={{ headerShown: false }} 
+        />
+        <Stack.Screen 
+          name='Cadastro'
+          component={Cadastro}
+          options={{ headerShown: false}}
         />
       </Stack.Navigator>
     </NavigationContainer>

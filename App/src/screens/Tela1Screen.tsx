@@ -22,7 +22,7 @@ const Tela1Screen: React.FC<Tela1ScreenProps> = ({ navigation }) => {
           >Começar agora</Text>
         </TouchableOpacity>
         <TouchableOpacity style={styles.button2} 
-          onPress={() => navigation.navigate('Login')}
+          onPress={() => navigation.navigate('Cadastro')}
         >
           <Text style={styles.buttonText}>Já tenho uma conta</Text>
         </TouchableOpacity>

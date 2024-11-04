@@ -4,9 +4,9 @@ import Logo from '../components/Logo';
 import EmailSenha from '../components/EmailSenha';
 import styles from './style/LoginScreen.style';
 
-const LoginScreen = () => {
+const Cadastro = () => {
   const [comparePassword, setComparePassword] = useState(false);
-  const [isLogin, setLogin] = useState(false); // Aqui deve ser true
+  const [isLogin, setLogin] = useState(true); // Aqui deve ser false
 
   return (
     <View style={styles.container}>
@@ -15,18 +15,17 @@ const LoginScreen = () => {
           <Logo />
           <Text style={styles.text}>
             Boas vindas! {"\n"}
-            Entre em sua conta para continuar      
+            Crie sua conta para continuar      
           </Text>
           <EmailSenha
-            comparePassword={comparePassword}
-            setComparePassword={setComparePassword}
             isLogin={isLogin}
             setLogin={setLogin}
+            comparePassword={comparePassword}
+            setComparePassword={setComparePassword}
           />
         </View>
         <TouchableOpacity 
           style={styles.button}
-          disabled={!comparePassword} // Desabilita se as senhas não coincidirem
         >
           <Text style={styles.buttonText}>Continuar</Text>
         </TouchableOpacity>
@@ -35,4 +34,4 @@ const LoginScreen = () => {
   );
 };
 
-export default LoginScreen;
+export default Cadastro;

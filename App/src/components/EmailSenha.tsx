@@ -5,11 +5,11 @@ import styles from './style/EmailSenha.style';
 interface EmailSenhaProps {
   comparePassword: boolean;
   setComparePassword: React.Dispatch<React.SetStateAction<boolean>>;
-  isLogin: boolean;
+  isLogin: boolean; // Adiciona a prop isLogin
   setLogin: React.Dispatch<React.SetStateAction<boolean>>;
 }
 
-const EmailSenha: React.FC<EmailSenhaProps> = ({ comparePassword, setComparePassword, isLogin, setLogin }) => {
+const EmailSenha: React.FC<EmailSenhaProps> = ({ comparePassword, setComparePassword, isLogin }) => {
   const [isPasswordVisible, setPasswordVisible] = useState(false);
   const [isPasswordVisible2, setPasswordVisible2] = useState(false);
   const [name, setName] = useState('');
@@ -17,13 +17,16 @@ const EmailSenha: React.FC<EmailSenhaProps> = ({ comparePassword, setComparePass
   const [password, setPassword] = useState('');
   const [confirmPassword, setConfirmPassword] = useState('');
 
+  // Verifica a comparação de senhas apenas no cadastro
   useEffect(() => {
-    setComparePassword(password === confirmPassword);
-  }, [password, confirmPassword]);
+    if (!isLogin) {
+      setComparePassword(password === confirmPassword); // Atualiza a comparação somente se não for login
+    }
+  }, [password, confirmPassword, isLogin]);
 
   return (
     <View style={styles.container}>
-      {isLogin && (
+      {!isLogin && ( // Exibe nome apenas no cadastro
         <>
           <Text>Nome</Text>
           <TextInput
@@ -61,7 +64,7 @@ const EmailSenha: React.FC<EmailSenhaProps> = ({ comparePassword, setComparePass
         </TouchableOpacity>
       </View>
 
-      {isLogin && (
+      {!isLogin && ( // Confirmação de senha apenas no cadastro
         <>
           <Text>Confirme sua senha</Text>
           <View style={styles.containerInput}>
