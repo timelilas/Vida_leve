@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import { View, Text, TextInput, Image, TouchableOpacity } from 'react-native';
 import styles from './style/EmailSenha.style';
+import { EyeOffIcon } from './icons/EyeOffIcon';
 
 interface EmailSenhaProps {
   comparePassword: boolean;
@@ -57,10 +58,9 @@ const EmailSenha: React.FC<EmailSenhaProps> = ({ comparePassword, setComparePass
           onChangeText={setPassword}
         />
         <TouchableOpacity onPress={() => setPasswordVisible(!isPasswordVisible)}>
-          <Image 
-            source={require('../assets/Eyeoff.png')}
-            style={styles.icon}
-          />
+          <View style={styles.icon}>
+            <EyeOffIcon/>
+          </View>
         </TouchableOpacity>
       </View>
 
@@ -77,10 +77,9 @@ const EmailSenha: React.FC<EmailSenhaProps> = ({ comparePassword, setComparePass
               onChangeText={setConfirmPassword}
             />
             <TouchableOpacity onPress={() => setPasswordVisible2(!isPasswordVisible2)}>
-              <Image 
-                source={require('../assets/Eyeoff.png')}
-                style={styles.icon}
-              />
+              <View style={styles.icon}>
+                <EyeOffIcon/>
+              </View>
             </TouchableOpacity>
           </View>
           {confirmPassword && !comparePassword && (
