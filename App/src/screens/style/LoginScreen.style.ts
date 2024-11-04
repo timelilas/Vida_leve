@@ -6,9 +6,10 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     backgroundColor: '#EFF0F6',
     paddingHorizontal: 24,
-    paddingVertical: 16 
+    paddingVertical: 16,
   },
   scrollView: {
+    width: "100%",
     flexGrow: 1,
     justifyContent: "space-around",
     alignItems: "center",

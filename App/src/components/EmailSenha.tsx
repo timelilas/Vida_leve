@@ -19,15 +19,15 @@ const EmailSenha: React.FC<EmailSenhaProps> = ({ comparePassword, setComparePass
 
   // Verifica a comparação de senhas apenas no cadastro
   useEffect(() => {
-    if (!isLogin) {
+    if (isLogin) {
       setComparePassword(password === confirmPassword); // Atualiza a comparação somente se não for login
     }
   }, [password, confirmPassword, isLogin]);
 
   return (
     <View style={styles.container}>
-      {!isLogin && ( // Exibe nome apenas no cadastro
-        <>
+      {isLogin && ( // Exibe nome apenas no cadastro
+        <View style={styles.containerEmailPassword}>
           <Text>Nome</Text>
           <TextInput
             style={styles.textInput}
@@ -35,7 +35,7 @@ const EmailSenha: React.FC<EmailSenhaProps> = ({ comparePassword, setComparePass
             value={name}
             onChangeText={setName}
           />
-        </>
+        </View>
       )}
 
       <Text style={styles.text}>Endereço de e-mail</Text>
@@ -64,8 +64,8 @@ const EmailSenha: React.FC<EmailSenhaProps> = ({ comparePassword, setComparePass
         </TouchableOpacity>
       </View>
 
-      {!isLogin && ( // Confirmação de senha apenas no cadastro
-        <>
+      {isLogin && ( // Confirmação de senha apenas no cadastro
+        <View style={styles.containerEmailPassword}>
           <Text>Confirme sua senha</Text>
           <View style={styles.containerInput}>
             <TextInput 
@@ -86,7 +86,7 @@ const EmailSenha: React.FC<EmailSenhaProps> = ({ comparePassword, setComparePass
           {confirmPassword && !comparePassword && (
             <Text style={styles.errorText}>As senhas não coincidem</Text>
           )}
-        </>
+        </View>
       )}
     </View>
   );

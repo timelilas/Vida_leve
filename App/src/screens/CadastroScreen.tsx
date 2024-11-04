@@ -15,7 +15,7 @@ const Cadastro = () => {
           <Logo />
           <Text style={styles.text}>
             Boas vindas! {"\n"}
-            Crie sua conta para continuar      
+            Cadastre-se para continuar      
           </Text>
           <EmailSenha
             isLogin={isLogin}
@@ -26,6 +26,7 @@ const Cadastro = () => {
         </View>
         <TouchableOpacity 
           style={styles.button}
+          disabled={!comparePassword} // Desabilita se as senhas não coincidirem
         >
           <Text style={styles.buttonText}>Continuar</Text>
         </TouchableOpacity>

@@ -15,7 +15,7 @@ const LoginScreen = () => {
           <Logo />
           <Text style={styles.text}>
             Boas vindas! {"\n"}
-            Entre em sua conta para continuar      
+            Entre em sua conta para continuar 
           </Text>
           <EmailSenha
             comparePassword={comparePassword}
@@ -26,7 +26,6 @@ const LoginScreen = () => {
         </View>
         <TouchableOpacity 
           style={styles.button}
-          disabled={!comparePassword} // Desabilita se as senhas não coincidirem
         >
           <Text style={styles.buttonText}>Continuar</Text>
         </TouchableOpacity>
