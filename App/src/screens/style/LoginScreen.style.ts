@@ -22,9 +22,8 @@ const styles = StyleSheet.create({
     alignItems: "center",
   },
   text: {
-    fontFamily: "Roboto, sans-serif",
+    fontFamily: "Roboto-700",
     fontSize: 24,
-    fontWeight: 600,
     lineHeight: 28.8,
     textAlign: "center",
     color: "#4E4B66",
@@ -42,9 +41,8 @@ const styles = StyleSheet.create({
     alignItems: "center",
   },
   buttonText: {
-    fontFamily: "Roboto, sans-serif",
+    fontFamily: "Roboto-400",
     fontSize: 16,
-    fontWeight: "400",
     lineHeight: 16,
     textAlign: "left",
   },

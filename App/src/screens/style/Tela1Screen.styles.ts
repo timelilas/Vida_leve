@@ -35,9 +35,8 @@ const styles = StyleSheet.create({
     alignItems: "center",
   },
   buttonText: {
-    fontFamily: "Roboto, sans-serif",
+    fontFamily: "Roboto-400",
     fontSize: 16,
-    fontWeight: "400",
     lineHeight: 16,
     textAlign: "left",
   },
