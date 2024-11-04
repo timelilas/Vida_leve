@@ -1,6 +1,8 @@
-{
-  "config": "src/database/config.ts",
-  "migrations-path": "src/database/migrations",
-  "models-path": "src/database/models",
-  "seeders-path": "src/database/seeders"
+const {resolve} = require("path")
+
+module.exports = {
+  "config": resolve(__dirname, "./dist/database/config.js"),
+  "models-path": resolve(__dirname, "./dist/database/models"),
+  "migrations-path": resolve(__dirname, "./src/database/migrations"),
+  "seeders-path": resolve(__dirname, "./src/database/seeders")
 }

@@ -1,15 +1,21 @@
 import { Router } from "express";
-import UserController from "../controller/UserController";
-import validateUser from "../middleware/ValidationCreate";
-import errorHandler from "../middleware/ErroHandle";
+import UserController from "../controller/user/UserController";
+import { authorizationMiddleware } from "../middleware/authorization/authorizationMiddleware";
+import { validationMiddleware } from "../middleware/validation/validationMiddleware";
+import { updateUserSchema } from "../controller/user/schemas";
 
 const userRouter = Router()
 const userController = new UserController();
 
-userRouter.get('/all', (req, res) => userController.get(req, res));
-userRouter.post('/login', validateUser.validateLogin, (req, res) => userController.login(req, res));
-userRouter.post('/create', validateUser.validateUser, (req, res) => userController.post(req, res));
-userRouter.put('/profile/:id', validateUser.validateProfile, (req, res) => userController.put(req, res));
-userRouter.delete('/delete/:id', (req, res) => userController.delete(req, res));
+userRouter.get('/profile/', authorizationMiddleware, (req, res)=>userController.getById(req, res));
+userRouter.put('/profile/', 
+  authorizationMiddleware, 
+  validationMiddleware(updateUserSchema), 
+  (req, res)=>userController.put(req, res)
+);
+
+//Rotas utilizada em desenvolvimento apenas. Não requerem autorização
+userRouter.get('/profile/all', (req, res)=>userController.getAll(req, res));
+userRouter.delete('/:id', (req, res)=>userController.delete(req, res));
 
 export default userRouter;

@@ -1,9 +1,9 @@
-# Pipoca_Agil BACK-END
+# Pipoca_Ágil BACK-END
 App mobile com o objetivo de uma vida mais saudável
 
 
-## Backend Node.js com TypeScript e MySQL
-Este é um projeto de backend desenvolvido em Node.js utilizando TypeScript, Sequelize como ORM para interação com MySQL, e Docker para o ambiente de desenvolvimento.
+## Backend Node.js com TypeScript e PostgreSQL
+Este é um projeto de backend desenvolvido em Node.js utilizando TypeScript, Sequelize como ORM para interação com PostgreSQL, e Docker para o ambiente de desenvolvimento.
 
 Utilizamos o docker para elimina inconsistências que podem surgir entre diferentes ambientes de desenvolvimento, como variações de sistema operacional e configurações de software.
 
@@ -11,10 +11,11 @@ Utilizamos o docker para elimina inconsistências que podem surgir entre diferen
 No diretório do projeto, você pode executar:
 
 * `npm run dev` : Inicia o servidor em modo de desenvolvimento utilizando ts-node-dev.
-* `npm run start` : Inicia o servidor em produção a partir dos arquivos compilados.
-* `npm run db:reset` : Reinicia o banco de dados executando drop, create, migrate e seed.
 * `npm run build` : Compila o código TypeScript para JavaScript.
-* `npm run prestart` : Compila o código TypeScript, realiza o reset do banco de dados e inicia o servidor.
+* `npm run start` : Inicia o servidor em produção a partir dos arquivos compilados.
+* `npm run build` : Compila o código TypeScript para JavaScript.
+* `npm run db:reset` : Reinicia o banco de dados executando db:drop, db:create, db:migrate e db:seed.
+* `npm run db:setup` : Inicializa o banco de dados executando db:create, db:migrate e db:seed.
 
 ### Dependências 
 
@@ -43,7 +44,7 @@ No diretório do projeto, você pode executar:
         ├── /utils
         │
         ├── .Dockerfile
-        ├── .Sequelizerc
+        ├── .sequelizerc
         ├── app.ts
         └── server.ts
 
