@@ -11,15 +11,15 @@ const Navigation = () => {
     <NavigationContainer>
       <Stack.Navigator initialRouteName="Vida Leve">
         <Stack.Screen 
-          name="Tela1" 
-          component={Tela1Screen} 
-          options={{ headerShown: false }}
-        /> 
-        <Stack.Screen 
           name="Login" 
           component={LoginScreen} 
           options={{ headerShown: false }} 
         />
+        <Stack.Screen 
+          name="Tela1" 
+          component={Tela1Screen} 
+          options={{ headerShown: false }}
+        /> 
       </Stack.Navigator>
     </NavigationContainer>
   );

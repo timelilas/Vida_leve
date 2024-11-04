@@ -8,7 +8,7 @@ import { Link } from '@react-navigation/native';
 const LoginScreen = () =>{
     return(
         <View style={styles.container}>
-          <ScrollView>
+          <ScrollView contentContainerStyle={styles.scrollView}>
             <View style={styles.inputs}>
               <Logo />
               <Text style={styles.text}>
@@ -19,7 +19,7 @@ const LoginScreen = () =>{
             </View>
             <TouchableOpacity style={styles.button} 
             >
-              <Text style={styles.buttonText}>Já tenho uma conta</Text>
+              <Text style={styles.buttonText}>Continuar</Text>
             </TouchableOpacity>
           </ScrollView>
         </View>
