@@ -1,8 +1,8 @@
-import React, { useState } from 'react';
-import { View, TouchableOpacity, Text, ScrollView } from 'react-native';
-import Logo from '../components/Logo';
-import EmailSenha from '../components/EmailSenha';
-import styles from './style/LoginScreen.style';
+import React, { useState } from "react";
+import { View, TouchableOpacity, Text, ScrollView } from "react-native";
+import { LogoSVG } from "../components/Logo";
+import EmailSenha from "../components/EmailSenha";
+import styles from "./style/LoginScreen.style";
 
 const Cadastro = () => {
   const [comparePassword, setComparePassword] = useState(false);
@@ -12,10 +12,10 @@ const Cadastro = () => {
     <View style={styles.container}>
       <ScrollView contentContainerStyle={styles.scrollView}>
         <View style={styles.inputs}>
-          <Logo />
+          <LogoSVG style={styles.logo} />
           <Text style={styles.text}>
             Boas vindas! {"\n"}
-            Cadastre-se para continuar      
+            Cadastre-se para continuar
           </Text>
           <EmailSenha
             isLogin={isLogin}
@@ -24,7 +24,7 @@ const Cadastro = () => {
             setComparePassword={setComparePassword}
           />
         </View>
-        <TouchableOpacity 
+        <TouchableOpacity
           style={styles.button}
           disabled={!comparePassword} // Desabilita se as senhas não coincidirem
         >

@@ -1,8 +1,7 @@
-import React from 'react';
-import { View, TouchableOpacity, Text, Image } from 'react-native';
-import styles from './style/Tela1Screen.styles';
-import Logo from '../components/Logo';
-import { NavigationProp } from '@react-navigation/native';
+import { View, TouchableOpacity, Text } from "react-native";
+import styles from "./style/Tela1Screen.styles";
+import { LogoSVG } from "../components/Logo";
+import { NavigationProp } from "@react-navigation/native";
 
 type Tela1ScreenProps = {
   navigation: NavigationProp<any>;
@@ -10,19 +9,18 @@ type Tela1ScreenProps = {
 
 const Tela1Screen: React.FC<Tela1ScreenProps> = ({ navigation }) => {
   return (
-
     <View style={styles.container}>
-      <Logo />
+      <LogoSVG />
       <View style={styles.containerButton}>
-        <TouchableOpacity style={styles.button}
-          onPress={() => navigation.navigate('Cadastro')}
+        <TouchableOpacity
+          style={styles.button}
+          onPress={() => navigation.navigate("Cadastro")}
         >
-          <Text 
-            style={styles.buttonText} 
-          >Começar agora</Text>
+          <Text style={styles.buttonText}>Começar agora</Text>
         </TouchableOpacity>
-        <TouchableOpacity style={styles.button2} 
-          onPress={() => navigation.navigate('Login')}
+        <TouchableOpacity
+          style={styles.button2}
+          onPress={() => navigation.navigate("Login")}
         >
           <Text style={styles.buttonText}>Já tenho uma conta</Text>
         </TouchableOpacity>

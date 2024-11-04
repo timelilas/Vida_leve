@@ -3,7 +3,7 @@
     "name": "App",
     "slug": "App",
     "version": "1.0.0",
-    "orientation": "portrait",
+    "orientation": "default",
     "icon": "./assets/icon.png",
     "userInterfaceStyle": "light",
     "splash": {
@@ -14,14 +14,26 @@
     "ios": {
       "supportsTablet": true
     },
+    "plugins": [
+      [
+        "expo-font",
+        {
+          "fonts": [
+            "./src/assets/fonts/Roboto-Light.ttf",
+            "./src/assets/fonts/Roboto-Regular.ttf",
+            "./src/assets/fonts/Roboto-Medium.ttf",
+            "./src/assets/fonts/Roboto-Bold.ttf",
+            "./src/assets/fonts/Roboto-Black.ttf"
+          ]
+        }
+      ]
+    ],
     "android": {
       "adaptiveIcon": {
         "foregroundImage": "./assets/adaptive-icon.png",
         "backgroundColor": "#ffffff"
       }
     },
-    "web": {
-      
-    }
+    "web": {}
   }
 }

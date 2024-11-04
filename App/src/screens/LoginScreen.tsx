@@ -1,8 +1,8 @@
-import React, { useState } from 'react';
-import { View, TouchableOpacity, Text, ScrollView } from 'react-native';
-import Logo from '../components/Logo';
-import EmailSenha from '../components/EmailSenha';
-import styles from './style/LoginScreen.style';
+import { useState } from "react";
+import { View, TouchableOpacity, Text, ScrollView } from "react-native";
+import { LogoSVG } from "../components/Logo";
+import EmailSenha from "../components/EmailSenha";
+import styles from "./style/LoginScreen.style";
 
 const LoginScreen = () => {
   const [comparePassword, setComparePassword] = useState(false);
@@ -12,10 +12,10 @@ const LoginScreen = () => {
     <View style={styles.container}>
       <ScrollView contentContainerStyle={styles.scrollView}>
         <View style={styles.inputs}>
-          <Logo />
+          <LogoSVG style={styles.logo} />
           <Text style={styles.text}>
             Boas vindas! {"\n"}
-            Entre em sua conta para continuar 
+            Entre em sua conta para continuar
           </Text>
           <EmailSenha
             comparePassword={comparePassword}
@@ -24,9 +24,7 @@ const LoginScreen = () => {
             setLogin={setLogin}
           />
         </View>
-        <TouchableOpacity 
-          style={styles.button}
-        >
+        <TouchableOpacity style={styles.button}>
           <Text style={styles.buttonText}>Continuar</Text>
         </TouchableOpacity>
       </ScrollView>
