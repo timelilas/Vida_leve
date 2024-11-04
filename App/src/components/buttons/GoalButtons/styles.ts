@@ -26,6 +26,7 @@ export function useGoalButtonStyles() {
     },
     weekTarget: {
       fontSize: 24,
+      lineHeight:28.8,
       color: "#242424",
       fontFamily: "Roboto-700",
     },
