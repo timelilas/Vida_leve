@@ -1,4 +1,4 @@
-import { Router } from "express";
+import { Request, Response, Router } from "express";
 import UserController from "../controller/user/UserController";
 import { authorizationMiddleware } from "../middleware/authorization/authorizationMiddleware";
 import { validationMiddleware } from "../middleware/validation/validationMiddleware";
@@ -7,7 +7,7 @@ import { updateUserSchema } from "../controller/user/schemas";
 const userRouter = Router()
 const userController = new UserController();
 
-userRouter.get('/profile/', authorizationMiddleware, (req, res)=>userController.getById(req, res));
+userRouter.get('/profile/', authorizationMiddleware, (req: Request, res: Response)=>userController.getById(req, res));
 userRouter.put('/profile/', 
   authorizationMiddleware, 
   validationMiddleware(updateUserSchema), 
