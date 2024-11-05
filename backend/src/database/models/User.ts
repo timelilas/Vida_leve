@@ -1,5 +1,5 @@
 import { Model, InferAttributes, InferCreationAttributes, CreationOptional} from 'sequelize';
-import { db } from "../index"
+import { sequelize } from "../config";
 import Sequelize from 'sequelize';
 import { UserEntity } from '../../entity/UserEntity';
 
@@ -52,7 +52,7 @@ User.init(
     }
   },
   {
-    sequelize: db,
+    sequelize,
     tableName: 'user',
     timestamps: false,
     freezeTableName: true,
