@@ -1,53 +1,59 @@
-import { Model, DataTypes } from 'sequelize';
-import sequelize from '.';
-import Progress from './Progress';
+import { Model, InferAttributes, InferCreationAttributes, CreationOptional} from 'sequelize';
+import { db } from "../index"
+import Sequelize from 'sequelize';
+import { UserEntity } from '../../entity/UserEntity';
 
-class User extends Model {
-  public id!: number;
-  public userName?: string;
-  public email?: string;
-  public senha?: string;
-  public telefone?: string;
-  public aniversario?: Date;
-  public sexo?: string;
+class User extends Model<InferAttributes<User>, InferCreationAttributes<User>> implements UserEntity {
+  declare id: CreationOptional<number>;
+  declare userName: string;
+  declare email: string;
+  declare senha: string;
+  declare telefone: string | null;
+  declare aniversario: Date | null;
+  declare sexo: "masculino" | "feminino" | null
+
+  public getProfile(): Omit<UserEntity, "senha">{
+    const {senha, ...profileProps} = super.toJSON()
+    return profileProps
+  }
 }
 
 User.init(
   {
     id: {
-      type: DataTypes.INTEGER,
+      type: Sequelize.INTEGER,
       autoIncrement: true,
       primaryKey: true,
     },
     userName: {
-      type: DataTypes.STRING,
-      allowNull: true,
+      type: Sequelize.STRING(100),
+      allowNull: false,
     },
     email: {
-      type: DataTypes.STRING,
-      allowNull: true,
+      type: Sequelize.STRING(100),
+      unique: true,
+      allowNull: false,
     },
     senha: {
-      type: DataTypes.STRING,
-      allowNull: true,
+      type: Sequelize.STRING(100),
+      allowNull: false,
     },
     telefone: {
-      type: DataTypes.STRING,
+      type: Sequelize.STRING(11),
       allowNull: true,
     },
     aniversario: {
-      type: DataTypes.DATE,
+      type: Sequelize.DATEONLY,
       allowNull: true,
     },
     sexo: {
-      type: DataTypes.STRING,
+      type: Sequelize.ENUM("masculino", "feminino"),
       allowNull: true,
     }
   },
   {
-    sequelize,
-    modelName: 'User',
-    tableName: 'Users',
+    sequelize: db,
+    tableName: 'user',
     timestamps: false,
     freezeTableName: true,
   }
