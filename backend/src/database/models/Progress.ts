@@ -1,6 +1,6 @@
 import { Model, InferAttributes, InferCreationAttributes, CreationOptional } from 'sequelize';
 import { ProgressEntity } from '../../entity/ProgressEntity';
-import { db } from '../index';
+import { sequelize } from '../config';
 import User from './User';
 import Sequelize from 'sequelize';
 
@@ -49,7 +49,7 @@ Progress.init(
         },
     },
     {
-        sequelize: db,
+        sequelize,
         tableName: 'progress',
         timestamps: false,
         freezeTableName: true,
