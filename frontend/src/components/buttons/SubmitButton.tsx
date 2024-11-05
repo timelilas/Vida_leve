@@ -8,14 +8,21 @@ import {
 } from "react-native";
 
 interface SubmitButtonProps {
-  type: "primary";
+  type: "primary" | "outlined";
   title: string;
   style?: StyleProp<ViewStyle>;
+  onPress?: () => void;
 }
 
-export function SubmitButton({ title, type, style }: SubmitButtonProps) {
+export function SubmitButton({
+  title,
+  type,
+  style,
+  onPress,
+}: SubmitButtonProps) {
   return (
     <TouchableOpacity
+      onPressOut={onPress}
       activeOpacity={0.8}
       onPress={() => {}}
       style={[styles.container, style]}
@@ -40,6 +47,9 @@ const styles = StyleSheet.create({
   },
   primary: {
     backgroundColor: "#ffae31",
+  },
+  outlined: {
+    backgroundColor: "#f7f7fc",
   },
   text: {
     fontSize: 16,

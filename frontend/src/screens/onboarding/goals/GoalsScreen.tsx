@@ -16,8 +16,13 @@ import { ModeratedGoalButton } from "../../../components/buttons/GoalButtons/Mod
 import { AcceleratedGoalButton } from "../../../components/buttons/GoalButtons/AcceleratedGoalButton";
 import { SubmitButton } from "../../../components/buttons/SubmitButton";
 import { ScreenWrapper } from "../../../components/ScreenWrapper";
+import { NavigationProp } from "@react-navigation/native";
 
-export default function GoalsScreen() {
+export default function GoalsScreen({
+  navigation,
+}: {
+  navigation: NavigationProp<any>;
+}) {
   const [selectedGoal, setSelectedGoal] = useState<GoalType | null>(null);
 
   function selectGoal(goal: GoalType) {
@@ -30,7 +35,7 @@ export default function GoalsScreen() {
         <View>
           <View style={styles.headerContainer}>
             <Pressable
-              onPress={() => {}}
+              onPress={() => navigation.goBack()}
               hitSlop={4}
               style={styles.goBackButton}
             >
@@ -57,6 +62,7 @@ export default function GoalsScreen() {
           </View>
         </View>
         <SubmitButton
+          onPress={() => navigation.navigate("Onboarding/GoalGuidance")}
           title="Salvar informações"
           type="primary"
           style={styles.submitButton}
@@ -95,7 +101,7 @@ const styles = StyleSheet.create({
     fontSize: 24,
     fontFamily: "Roboto-700",
     color: "#4e4b66",
-    lineHeight: 28.8
+    lineHeight: 28.8,
   },
   goalsWrapper: {
     overflow: Platform.OS === "android" ? "hidden" : "visible",
