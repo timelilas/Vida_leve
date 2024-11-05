@@ -9,9 +9,11 @@ export function useGoalButtonStyles() {
       alignItems: "center",
       justifyContent: "space-between",
       gap: screen.width >= 430 ? 0 : 8,
+      paddingVertical: 14,
+      paddingHorizontal: 6,
     },
     titleContainer: {
-      flexDirection: "row",
+      flexDirection: screen.width >= 300 ? "row" : "column",
       alignItems: "center",
       gap: 6,
     },
@@ -20,20 +22,23 @@ export function useGoalButtonStyles() {
       fontSize: 16,
       fontFamily: "Roboto-400",
       color: "#242424",
+      textAlign: "center",
     },
     weekGoal: {
       alignItems: screen.width >= 430 ? "flex-end" : "center",
     },
     weekTarget: {
       fontSize: 24,
-      lineHeight:28.8,
+      lineHeight: 28.8,
       color: "#242424",
       fontFamily: "Roboto-700",
+      textAlign: "center",
     },
     weekPeriod: {
       fontSize: 14,
       fontFamily: "Roboto-300",
       color: "#242424",
+      textAlign: "center",
     },
   });
 }

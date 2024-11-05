@@ -1,20 +1,28 @@
-import { Model, InferAttributes, InferCreationAttributes, CreationOptional} from 'sequelize';
-import { sequelize } from "../config";
-import Sequelize from 'sequelize';
-import { UserEntity } from '../../entity/UserEntity';
+import {
+  Model,
+  InferAttributes,
+  InferCreationAttributes,
+  CreationOptional,
+} from "sequelize";
+import { sequelize } from "../index";
+import Sequelize from "sequelize";
+import { UserEntity } from "../../entity/UserEntity";
 
-class User extends Model<InferAttributes<User>, InferCreationAttributes<User>> implements UserEntity {
+class User
+  extends Model<InferAttributes<User>, InferCreationAttributes<User>>
+  implements UserEntity
+{
   declare id: CreationOptional<number>;
   declare userName: string;
   declare email: string;
   declare senha: string;
   declare telefone: string | null;
   declare aniversario: Date | null;
-  declare sexo: "masculino" | "feminino" | null
+  declare sexo: "masculino" | "feminino" | null;
 
-  public getProfile(): Omit<UserEntity, "senha">{
-    const {senha, ...profileProps} = super.toJSON()
-    return profileProps
+  public getProfile(): Omit<UserEntity, "senha"> {
+    const { senha, ...profileProps } = super.toJSON();
+    return profileProps;
   }
 }
 
@@ -49,11 +57,11 @@ User.init(
     sexo: {
       type: Sequelize.ENUM("masculino", "feminino"),
       allowNull: true,
-    }
+    },
   },
   {
     sequelize,
-    tableName: 'user',
+    tableName: "user",
     timestamps: false,
     freezeTableName: true,
   }
