@@ -40,7 +40,7 @@ const styles = StyleSheet.create({
   },
   base: {
     borderRadius: 16,
-    padding: 16,
+    padding: 15,
     alignItems: "center",
     borderWidth: 1,
     borderColor: "#4e4b66",
@@ -52,7 +52,9 @@ const styles = StyleSheet.create({
     backgroundColor: "#f7f7fc",
   },
   text: {
+    textAlign: "center",
     fontSize: 16,
+    lineHeight: 16,
     fontFamily: "Roboto-400",
     color: "#242424",
   },

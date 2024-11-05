@@ -96,11 +96,11 @@ const styles = StyleSheet.create({
   },
   closeButton: {
     position: "absolute",
-    height: 31,
-    borderRadius: 31 / 2,
+    padding: 2,
+    borderRadius: 28 / 2,
     right: 0,
     top: "50%",
-    transform: [{ translateY: -31 / 2 }],
+    transform: [{ translateY: -28 / 2 }],
   },
   contentContainer: {
     marginTop: 64,
