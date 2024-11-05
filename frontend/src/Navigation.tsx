@@ -1,9 +1,9 @@
 import React from "react";
 import { NavigationContainer } from "@react-navigation/native";
 import { createNativeStackNavigator } from "@react-navigation/native-stack";
-import Tela1Screen from "./screens/Tela1Screen";
-import LoginScreen from "./screens/LoginScreen";
-import Cadastro from "./screens/CadastroScreen";
+import HomeScreen from "./screens/HomeScreen";
+import LoginScreen from "./screens/auth/LoginScreen";
+import SignupScreen from "./screens/auth/SignupScreen";
 import GoalsScreen from "./screens/onboarding/goals/GoalsScreen";
 import GoalGuidanceScreen from "./screens/onboarding/goalGuidance/GoalGuidanceScreen";
 
@@ -12,10 +12,10 @@ const Stack = createNativeStackNavigator();
 const Navigation = () => {
   return (
     <NavigationContainer>
-      <Stack.Navigator initialRouteName="Vida Leve">
+      <Stack.Navigator initialRouteName="Home">
         <Stack.Screen
-          name="Tela1"
-          component={Tela1Screen}
+          name="Home"
+          component={HomeScreen}
           options={{ headerShown: false }}
         />
         <Stack.Screen
@@ -24,17 +24,17 @@ const Navigation = () => {
           options={{ headerShown: false }}
         />
         <Stack.Screen
-          name="Cadastro"
-          component={Cadastro}
+          name="Signup"
+          component={SignupScreen}
           options={{ headerShown: false }}
         />
         <Stack.Screen
-          name="Onboarding/goals"
+          name="Onboarding/Goals"
           component={GoalsScreen}
           options={{ headerShown: false }}
         />
         <Stack.Screen
-          name="Onboarding/goal-guidance"
+          name="Onboarding/GoalGuidance"
           component={GoalGuidanceScreen}
           options={{ headerShown: false }}
         />

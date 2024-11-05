@@ -15,14 +15,23 @@ import { GuidanceItem } from "./components/GuidanceItem";
 import { FoodTrayIcon } from "../../../components/icons/FoodTrayIcon";
 import { ClipboardIcon } from "../../../components/icons/ClipboardIcon";
 import { TargetIcon } from "../../../components/icons/TargetIcon";
+import { NavigationProp } from "@react-navigation/native";
 
-export default function GoalGuidanceScreen() {
+export default function GoalGuidanceScreen({
+  navigation,
+}: {
+  navigation: NavigationProp<any>;
+}) {
   return (
     <ScreenWrapper>
       <ScrollView contentContainerStyle={styles.scrollContainer}>
         <View style={styles.headerContainer}>
           <HorizontalLogoSVG />
-          <Pressable onPress={() => {}} hitSlop={4} style={styles.closeButton}>
+          <Pressable
+            onPress={() => navigation.goBack()}
+            hitSlop={4}
+            style={styles.closeButton}
+          >
             <CloseIcon />
           </Pressable>
         </View>
