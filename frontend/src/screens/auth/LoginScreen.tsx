@@ -22,7 +22,6 @@ const LoginScreen = ({ navigation }: { navigation: NavigationProp<any> }) => {
         </Text>
         <View style={styles.form}>
           <Input
-            error="adasdsadasd"
             autoFocus
             textContentType="emailAddress"
             value={email}

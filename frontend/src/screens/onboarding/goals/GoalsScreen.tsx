@@ -55,7 +55,7 @@ export default function GoalsScreen({
           </View>
         </View>
         <SubmitButton
-          onPress={() => navigation.navigate("Onboarding/GoalGuidance")}
+          onPress={() => navigation.navigate("Onboarding/NutritionForm")}
           title="Salvar informações"
           type="primary"
           style={styles.submitButton}
