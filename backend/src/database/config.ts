@@ -1,14 +1,9 @@
-import { Options } from 'sequelize';
+import { Sequelize } from 'sequelize';
 import * as dotenv from 'dotenv';
 
 dotenv.config(); // Carrega variáveis do arquivo .env
 
-const sequelizeOptions: Options = {
-  host: process.env.DATABASE_HOST,
-  database: process.env.DATABASE_NAME,
-  port: parseInt(process.env.DATABASE_PORT as string),
-  username: process.env.DATABASE_USER,
-  password: process.env.DATABASE_PASSWORD,
+const sequelize = new Sequelize(process.env.SERVER_PORT as string, {
   dialect: 'postgres', // Certifique-se de especificar o dialecto
   dialectOptions: {
     ssl: {
@@ -17,6 +12,5 @@ const sequelizeOptions: Options = {
     }
   },
   logging: false, // Desativa o log das consultas SQL no console
-}
-
-export = sequelizeOptions
+});
+export default sequelize;
