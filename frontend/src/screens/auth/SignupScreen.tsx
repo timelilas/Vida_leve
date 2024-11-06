@@ -28,7 +28,7 @@ const SignupScreen = ({ navigation }: { navigation: NavigationProp<any> }) => {
             textContentType="name"
             value={name}
             onChange={(data) => setName(data)}
-            name="Name"
+            name="Nome"
             placeholder="Aryela"
           />
           <Input

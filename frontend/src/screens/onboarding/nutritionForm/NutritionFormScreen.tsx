@@ -41,18 +41,18 @@ export default function NutritionFromScreen({
             keyboardType="numeric"
             autoFocus
             placeholder="1,60"
-            name="Height"
+            name="Altura"
             hideLabel
           />
           <Input
             keyboardType="numeric"
-            name="Weight"
+            name="Peso"
             placeholder="60 kg"
             hideLabel
           />
           <Input
             keyboardType="numeric"
-            name="Goal"
+            name="Meta"
             placeholder="55 kg"
             hideLabel
           />
