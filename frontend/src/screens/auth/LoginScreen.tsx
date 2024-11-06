@@ -12,6 +12,7 @@ import { request } from "../../services/Request";
 const LoginScreen = ({ navigation }: { navigation: NavigationProp<any> }) => {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
+  const [error, setError] = useState("");
 
   const login = async () => {
     try {
@@ -20,10 +21,12 @@ const LoginScreen = ({ navigation }: { navigation: NavigationProp<any> }) => {
         const { data } = await request("POST", "/auth/login", user )
         console.log(data);
         navigation.navigate("Onboarding/Goals")
-        } else {
-        console.log('Por favor, insira email e senha.');
+      } else {
+        setError('Por favor, insira email e senha.');
       }
-    } catch (error) {
+    } catch (AxiosError: any) {
+      console.log(AxiosError.response.data.error);
+      setError(AxiosError.response.data.error)
     }
   }
 
@@ -50,6 +53,7 @@ const LoginScreen = ({ navigation }: { navigation: NavigationProp<any> }) => {
             name="Senha"
             placeholder="**********"
           />
+        <Text style={styles.error}>{error}</Text>
         </View>
         <SubmitButton
           style={styles.button}
