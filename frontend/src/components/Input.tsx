@@ -11,7 +11,7 @@ interface InputProps {
   name: string;
   error?: string;
   value?: string;
-  hideLabel?: boolean;
+  label?: string;
   autoFocus?: boolean;
   placeholder?: string;
   keyboardType?: TextInputProps["keyboardType"];
@@ -22,7 +22,7 @@ interface InputProps {
 export function Input(props: InputProps) {
   return (
     <View style={styles.inputField}>
-      {props.hideLabel ? null : <Text style={styles.label}>{props.name}</Text>}
+      {props.label ? <Text style={styles.label}>{props.label}</Text> : null}
       <View
         style={[styles.boxShadow, props.error ? styles.boxShadowError : null]}
       >
@@ -83,7 +83,6 @@ const styles = StyleSheet.create({
     fontSize: 16,
     color: "#242424",
     paddingHorizontal: 16,
-    paddingRight: 0,
     borderRadius: 8,
     width: "100%",
     height: "100%",
@@ -99,7 +98,7 @@ const styles = StyleSheet.create({
     color: "#F95D4D",
   },
   errorIcon: {
-    paddingLeft: 16,
+    paddingLeft: 0,
     paddingRight: 15,
   },
 });

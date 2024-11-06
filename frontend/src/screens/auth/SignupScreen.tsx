@@ -28,26 +28,30 @@ const SignupScreen = ({ navigation }: { navigation: NavigationProp<any> }) => {
             textContentType="name"
             value={name}
             onChange={(data) => setName(data)}
-            name="Nome"
+            name="name"
+            label="Nome"
             placeholder="Aryela"
           />
           <Input
             textContentType="emailAddress"
             value={email}
             onChange={(data) => setEmail(data)}
-            name="Email"
+            name="email"
+            label="Email"
             placeholder="aryela.scostaux@gmail.com"
           />
           <PasswordInput
             value={password}
             onChange={(data) => setPassword(data)}
-            name="Senha"
+            name="password"
+            label="Senha"
             placeholder="**********"
           />
           <PasswordInput
             value={passwordConfirmation}
             onChange={(data) => setPasswordConfirmation(data)}
-            name="Confirme sua senha"
+            name="passwordConfirmation"
+            label="Confirme sua senha"
             placeholder="**********"
           />
         </View>

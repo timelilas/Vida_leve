@@ -13,9 +13,10 @@ import { AlertIcon } from "./icons/AlertIcon";
 interface PasswordInputProps {
   name: string;
   value?: string;
+  label?: string;
   autoFocus?: boolean;
   placeholder?: string;
-  error?: boolean;
+  error?: string;
   onChange?: (text: string) => void;
 }
 
@@ -24,15 +25,17 @@ export function PasswordInput(props: PasswordInputProps) {
 
   return (
     <View style={styles.inputField}>
-      <Text style={styles.label}>{props.name}</Text>
-      <View style={[styles.boxShadow, props.error && styles.boxShadowError]}>
+      {props.label ? <Text style={styles.label}>{props.label}</Text> : null}
+      <View
+        style={[styles.boxShadow, props.error ? styles.boxShadowError : null]}
+      >
         <View style={styles.inputBox}>
           <TextInput
             autoFocus={props.autoFocus}
             textContentType="password"
             secureTextEntry={!isPasswordVisible}
             placeholderTextColor={props.error ? "#F95D4D88" : "#05050533"}
-            style={[styles.input, props.error && styles.inputError]}
+            style={[styles.input, props.error ? styles.inputError : null]}
             placeholder="*************"
             value={props.value}
             onChangeText={props.onChange}
@@ -52,11 +55,7 @@ export function PasswordInput(props: PasswordInputProps) {
           </TouchableOpacity>
         </View>
       </View>
-      {props.error && (
-        <Text style={styles.error}>
-          Ops! Parece que a senha está incorreta. Por favor, tente novamente.
-        </Text>
-      )}
+      {props.error && <Text style={styles.error}>{props.error}</Text>}
     </View>
   );
 }
