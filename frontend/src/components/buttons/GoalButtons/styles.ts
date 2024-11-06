@@ -20,6 +20,7 @@ export function useGoalButtonStyles() {
     subtitle: {
       width: "100%",
       fontSize: 16,
+      lineHeight: 16,
       fontFamily: "Roboto-400",
       color: "#242424",
       textAlign: "center",
@@ -29,13 +30,13 @@ export function useGoalButtonStyles() {
     },
     weekTarget: {
       fontSize: 24,
-      lineHeight: 28.8,
       color: "#242424",
       fontFamily: "Roboto-700",
       textAlign: "center",
     },
     weekPeriod: {
       fontSize: 14,
+      lineHeight: 14,
       fontFamily: "Roboto-300",
       color: "#242424",
       textAlign: "center",

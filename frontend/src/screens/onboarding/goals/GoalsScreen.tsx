@@ -7,8 +7,6 @@ import {
   Platform,
   StatusBar,
 } from "react-native";
-import { HorizontalLogoSVG } from "../../../components/HorizontalLogoSVG";
-import { ArrowIcon } from "../../../components/icons/ArrowIcon";
 import { useState } from "react";
 import { GoalType } from "./types/types";
 import { GradualGoalButton } from "../../../components/buttons/GoalButtons/GradualGoalButton";
@@ -17,6 +15,7 @@ import { AcceleratedGoalButton } from "../../../components/buttons/GoalButtons/A
 import { SubmitButton } from "../../../components/buttons/SubmitButton";
 import { ScreenWrapper } from "../../../components/ScreenWrapper";
 import { NavigationProp } from "@react-navigation/native";
+import { ScreenHeader } from "../../../components/ScreenHeader";
 
 export default function GoalsScreen({
   navigation,
@@ -33,16 +32,10 @@ export default function GoalsScreen({
     <ScreenWrapper>
       <ScrollView contentContainerStyle={styles.scrollContainer}>
         <View>
-          <View style={styles.headerContainer}>
-            <Pressable
-              onPress={() => navigation.goBack()}
-              hitSlop={4}
-              style={styles.goBackButton}
-            >
-              <ArrowIcon />
-            </Pressable>
-            <HorizontalLogoSVG />
-          </View>
+          <ScreenHeader
+            navigation={navigation}
+            style={styles.headerContainer}
+          />
           <View style={styles.contentContainer}>
             <Text style={styles.contentTitle}>Estamos quase lá!</Text>
             <View style={styles.goalsWrapper}>
@@ -62,7 +55,7 @@ export default function GoalsScreen({
           </View>
         </View>
         <SubmitButton
-          onPress={() => navigation.navigate("Onboarding/GoalGuidance")}
+          onPress={() => navigation.navigate("Onboarding/NutritionForm")}
           title="Salvar informações"
           type="primary"
           style={styles.submitButton}
@@ -83,16 +76,6 @@ const styles = StyleSheet.create({
   },
   headerContainer: {
     marginTop: 24,
-    flexDirection: "row",
-    justifyContent: "center",
-  },
-  goBackButton: {
-    position: "absolute",
-    padding: 2,
-    borderRadius: 28 / 2,
-    left: 0,
-    top: "50%",
-    transform: [{ translateY: -28 / 2 }],
   },
   contentContainer: {
     marginTop: 64,
