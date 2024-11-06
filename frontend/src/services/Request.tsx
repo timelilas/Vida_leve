@@ -5,7 +5,7 @@ const api = axios.create({
     timeout: 5000,
 });
 
-export const request = async (method: string, endpoint: string, data = null) => {
+export const request = async (method: string, endpoint: string, data?: object) => {
     try {
         const response = await api({
             method,
