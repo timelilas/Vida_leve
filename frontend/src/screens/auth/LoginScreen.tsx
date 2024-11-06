@@ -12,23 +12,23 @@ import { request } from "../../services/Request";
 const LoginScreen = ({ navigation }: { navigation: NavigationProp<any> }) => {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
-  const [error, setError] = useState("");
+  const [error, setError] = useState<string | null>(null);
 
   const login = async () => {
     try {
       if (email && password) {
         const user = { email, senha: password };
-        const { data } = await request("POST", "/auth/login", user )
+        const { data } = await request("POST", "/auth/login", user);
         console.log(data);
-        navigation.navigate("Onboarding/Goals")
+        navigation.navigate("Onboarding/Goals");
       } else {
-        setError('Por favor, insira email e senha.');
+        setError("Por favor, insira email e senha.");
       }
     } catch (AxiosError: any) {
       console.log(AxiosError.response.data.error);
-      setError(AxiosError.response.data.error)
+      setError(AxiosError.response.data.error);
     }
-  }
+  };
 
   return (
     <ScreenWrapper>
@@ -40,6 +40,7 @@ const LoginScreen = ({ navigation }: { navigation: NavigationProp<any> }) => {
         </Text>
         <View style={styles.form}>
           <Input
+            error={error}
             autoFocus
             textContentType="emailAddress"
             value={email}
@@ -49,19 +50,19 @@ const LoginScreen = ({ navigation }: { navigation: NavigationProp<any> }) => {
             placeholder="aryela.scostaux@gmail.com"
           />
           <PasswordInput
+            error={error}
             value={password}
             onChange={(data) => setPassword(data)}
             name="password"
             label="Senha"
             placeholder="**********"
           />
-        <Text style={styles.error}>{error}</Text>
         </View>
         <SubmitButton
           style={styles.button}
           title="Continuar"
           type="primary"
-          onPress={ login }
+          onPress={login}
         />
       </ScrollView>
     </ScreenWrapper>
