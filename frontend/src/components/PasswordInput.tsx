@@ -16,7 +16,7 @@ interface PasswordInputProps {
   label?: string;
   autoFocus?: boolean;
   placeholder?: string;
-  error?: string;
+  error?: string | null;
   onChange?: (text: string) => void;
 }
 

@@ -30,6 +30,13 @@ const styles = StyleSheet.create({
     width: "100%",
     marginTop: "auto",
   },
+  error: {
+    fontFamily: "Roboto-400",
+    fontSize: 14,
+    lineHeight: 16.8,
+    color: "#FF377F",
+    textAlign: "left",
+  },
 });
 
 export default styles;

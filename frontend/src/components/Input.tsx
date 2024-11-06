@@ -9,7 +9,7 @@ import { AlertIcon } from "./icons/AlertIcon";
 
 interface InputProps {
   name: string;
-  error?: string;
+  error?: string | null;
   value?: string;
   label?: string;
   autoFocus?: boolean;
