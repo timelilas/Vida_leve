@@ -13,7 +13,7 @@ export class AuthController{
     try {
       const foundUser = await this._userService.getUserByEmail(email)
       if (!foundUser){
-        return res.status(401).json({error: "Email ou senha incorretos"})
+        return res.status(401).json({error: "Email não cadastrado"})
       }
 
       const isPasswordCorrect = await compareHash(senha, foundUser.senha)
