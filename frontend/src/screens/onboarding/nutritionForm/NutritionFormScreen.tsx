@@ -41,21 +41,10 @@ export default function NutritionFromScreen({
             keyboardType="numeric"
             autoFocus
             placeholder="1,60"
-            name="Height"
-            hideLabel
+            name="height"
           />
-          <Input
-            keyboardType="numeric"
-            name="Weight"
-            placeholder="60 kg"
-            hideLabel
-          />
-          <Input
-            keyboardType="numeric"
-            name="Goal"
-            placeholder="55 kg"
-            hideLabel
-          />
+          <Input keyboardType="numeric" name="wight" placeholder="60 kg" />
+          <Input keyboardType="numeric" name="goal" placeholder="55 kg" />
         </View>
         <View style={styles.exerciseLevel}>
           <Text style={styles.text}>
