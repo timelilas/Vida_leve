@@ -7,12 +7,24 @@ import { ScreenWrapper } from "../../components/ScreenWrapper";
 import { Input } from "../../components/Input";
 import { PasswordInput } from "../../components/PasswordInput";
 import { SubmitButton } from "../../components/buttons/SubmitButton";
+import { request } from "../../services/Request";
 
 const SignupScreen = ({ navigation }: { navigation: NavigationProp<any> }) => {
   const [name, setName] = useState("");
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [passwordConfirmation, setPasswordConfirmation] = useState("");
+
+
+  const signup = async () => {
+    try {
+      const newUser = { userName: name, email, senha: password };
+      const { data } = await request("POST", "/auth/signup", newUser )
+      console.log(data);
+      navigation.navigate("Login")
+    } catch (error) {
+    }
+  }
 
   return (
     <ScreenWrapper>
@@ -55,7 +67,7 @@ const SignupScreen = ({ navigation }: { navigation: NavigationProp<any> }) => {
           style={styles.button}
           title="Continuar"
           type="primary"
-          onPress={() => navigation.navigate("Login")}
+          onPress={signup}
         />
       </ScrollView>
     </ScreenWrapper>
