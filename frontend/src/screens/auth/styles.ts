@@ -14,7 +14,7 @@ const styles = StyleSheet.create({
   },
   form: {
     width: "100%",
-    gap: 24,
+    gap: 16,
     marginTop: 40,
     marginBottom: 56,
   },

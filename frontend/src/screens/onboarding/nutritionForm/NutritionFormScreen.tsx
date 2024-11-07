@@ -4,11 +4,11 @@ import {
   Platform,
   StatusBar,
   Text,
+  View,
 } from "react-native";
 import { ScreenWrapper } from "../../../components/ScreenWrapper";
 import { NavigationProp } from "@react-navigation/native";
 import { ScreenHeader } from "../../../components/ScreenHeader";
-import { View } from "react-native";
 import { Input } from "../../../components/Input";
 import { FrequencyButton } from "./components/FrequencyButton";
 import { useState } from "react";
@@ -36,44 +36,55 @@ export default function NutritionFromScreen({
           Precisamos da sua altura, peso atual, meta de peso e frequência de
           atividade física para personalizar sua jornada.
         </Text>
-        <View style={styles.inputGroup}>
+        <View style={styles.form}>
           <Input
             keyboardType="numeric"
             autoFocus
-            placeholder="1,60"
+            label="Altura"
+            placeholder="Ex.: 1,60"
             name="height"
           />
-          <Input keyboardType="numeric" name="wight" placeholder="60 kg" />
-          <Input keyboardType="numeric" name="goal" placeholder="55 kg" />
-        </View>
-        <View style={styles.exerciseLevel}>
-          <Text style={styles.text}>
-            Qual é o seu nível de atividade física diária?
-          </Text>
-          <FrequencyButton
-            selected={activityLevel === "sedentary"}
-            onPress={() => selectLevel("sedentary")}
-            title="Pouca atividade"
-            description="Pouco tempo em pé. p. ex. home office/escritório"
+          <Input
+            label="Peso atual"
+            keyboardType="numeric"
+            name="wight"
+            placeholder="Ex.: 60 kg"
           />
-          <FrequencyButton
-            selected={activityLevel === "light"}
-            onPress={() => selectLevel("light")}
-            title="Atividade leve"
-            description="Quase sempre em pé. p. ex. professor(a)"
+          <Input
+            label="Peso desejado"
+            keyboardType="numeric"
+            name="goal"
+            placeholder="Ex.: 55 kg"
           />
-          <FrequencyButton
-            selected={activityLevel === "moderate"}
-            onPress={() => selectLevel("moderate")}
-            title="Atividade moderada"
-            description="Quase sempre em pé. p. ex. professor(a)/ atendente"
-          />
-          <FrequencyButton
-            selected={activityLevel === "intense"}
-            onPress={() => selectLevel("intense")}
-            title="Atividade intensa"
-            description="Fisicamente árduo. p. ex. construção civil"
-          />
+          <View style={styles.exerciseLevel}>
+            <Text style={styles.text}>
+              Qual é o seu nível de atividade física diária?
+            </Text>
+            <FrequencyButton
+              selected={activityLevel === "sedentary"}
+              onPress={() => selectLevel("sedentary")}
+              title="Pouca atividade"
+              description="Pouco tempo em pé. p. ex. home office/escritório"
+            />
+            <FrequencyButton
+              selected={activityLevel === "light"}
+              onPress={() => selectLevel("light")}
+              title="Atividade leve"
+              description="Quase sempre em pé. p. ex. professor(a)"
+            />
+            <FrequencyButton
+              selected={activityLevel === "moderate"}
+              onPress={() => selectLevel("moderate")}
+              title="Atividade moderada"
+              description="Quase sempre em pé. p. ex. professor(a)/ atendente"
+            />
+            <FrequencyButton
+              selected={activityLevel === "intense"}
+              onPress={() => selectLevel("intense")}
+              title="Atividade intensa"
+              description="Fisicamente árduo. p. ex. construção civil"
+            />
+          </View>
         </View>
         <SubmitButton
           onPress={() => navigation.navigate("Onboarding/GoalGuidance")}
@@ -109,14 +120,14 @@ const styles = StyleSheet.create({
   description: {
     marginTop: 8,
   },
-  inputGroup: {
+  form: {
+    gap: 16,
     marginTop: 24,
-    gap: 24,
+    marginBottom: 40,
   },
   exerciseLevel: {
     gap: 8,
-    marginTop: 100,
-    paddingBottom: 32,
+    paddingBottom: 16,
     overflow: "hidden",
   },
   submitButton: {

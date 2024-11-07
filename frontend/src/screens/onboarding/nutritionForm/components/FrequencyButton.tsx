@@ -11,18 +11,11 @@ interface FrequencyButtonProps {
 export function FrequencyButton(props: FrequencyButtonProps) {
   return (
     <ToggleButton selected={props.selected} onPress={props.onPress}>
-      <View
-        style={[styles.container, props.selected && styles.containerExpanded]}
-      >
+      <View style={styles.container}>
         <Text style={styles.title}>{props.title}</Text>
-        <Text
-          style={[
-            styles.description,
-            !props.selected && styles.descriptionHidden,
-          ]}
-        >
-          {props.description}
-        </Text>
+        {props.selected && (
+          <Text style={[styles.description]}>{props.description}</Text>
+        )}
       </View>
     </ToggleButton>
   );
@@ -30,12 +23,8 @@ export function FrequencyButton(props: FrequencyButtonProps) {
 
 const styles = StyleSheet.create({
   container: {
-    minHeight: 42,
+    padding: 14,
     justifyContent: "center",
-    paddingHorizontal: 12,
-  },
-  containerExpanded: {
-    paddingVertical: 6,
   },
   title: {
     textAlign: "center",

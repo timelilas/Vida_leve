@@ -95,6 +95,6 @@ const styles = StyleSheet.create({
     borderTopRightRadius: 8,
   },
   submitButton: {
-    marginTop: 48,
+    marginTop: 40,
   },
 });
