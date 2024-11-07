@@ -1,5 +1,5 @@
 import { useState } from "react";
-import { View, Text, ScrollView } from "react-native";
+import { View, ScrollView } from "react-native";
 import { LogoSVG } from "../../components/Logo";
 import styles from "./styles";
 import { NavigationProp } from "@react-navigation/native";
@@ -8,6 +8,7 @@ import { PasswordInput } from "../../components/PasswordInput";
 import { ScreenWrapper } from "../../components/ScreenWrapper";
 import { SubmitButton } from "../../components/buttons/SubmitButton";
 import { request } from "../../services/Request";
+import { ScreenTitle } from "../../components/ScreenTitle";
 
 const LoginScreen = ({ navigation }: { navigation: NavigationProp<any> }) => {
   const [email, setEmail] = useState("");
@@ -34,10 +35,9 @@ const LoginScreen = ({ navigation }: { navigation: NavigationProp<any> }) => {
     <ScreenWrapper>
       <ScrollView contentContainerStyle={styles.scrollView}>
         <LogoSVG style={styles.logo} />
-        <Text style={styles.title}>
-          Boas vindas! {"\n"}
-          Entre em sua conta para continuar
-        </Text>
+        <ScreenTitle
+          title={`Boas vindas!\nEntre em sua conta para continuar`}
+        />
         <View style={styles.form}>
           <Input
             error={error}

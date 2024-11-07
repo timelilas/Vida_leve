@@ -5,15 +5,15 @@ export function useGoalButtonStyles() {
 
   return StyleSheet.create({
     contentContainer: {
-      flexDirection: screen.width >= 430 ? "row" : "column",
+      flexDirection: screen.width >= 390 ? "row" : "column",
       alignItems: "center",
       justifyContent: "space-between",
-      gap: screen.width >= 430 ? 0 : 8,
+      gap: screen.width >= 390 ? 0 : 8,
       paddingVertical: 14,
       paddingHorizontal: 6,
     },
     titleContainer: {
-      flexDirection: screen.width >= 300 ? "row" : "column",
+      flexDirection: screen.width >= 240 ? "row" : "column",
       alignItems: "center",
       gap: 6,
     },
@@ -26,7 +26,7 @@ export function useGoalButtonStyles() {
       textAlign: "center",
     },
     weekGoal: {
-      alignItems: screen.width >= 430 ? "flex-end" : "center",
+      alignItems: screen.width >= 390 ? "flex-end" : "center",
     },
     weekTarget: {
       fontSize: 24,

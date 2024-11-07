@@ -14,6 +14,7 @@ import { FrequencyButton } from "./components/FrequencyButton";
 import { useState } from "react";
 import { PhysicalActivityLevel } from "./types/types";
 import { SubmitButton } from "../../../components/buttons/SubmitButton";
+import { ScreenTitle } from "../../../components/ScreenTitle";
 
 export default function NutritionFromScreen({
   navigation,
@@ -31,7 +32,7 @@ export default function NutritionFromScreen({
     <ScreenWrapper>
       <ScrollView contentContainerStyle={styles.scrollContainer}>
         <ScreenHeader navigation={navigation} />
-        <Text style={styles.title}>Nos conte mais sobre você!</Text>
+        <ScreenTitle title="Nos conte mais sobre você!" style={styles.title} />
         <Text style={[styles.text, styles.description]}>
           Precisamos da sua altura, peso atual, meta de peso e frequência de
           atividade física para personalizar sua jornada.
@@ -106,11 +107,7 @@ const styles = StyleSheet.create({
       24 + (Platform.OS === "android" ? StatusBar.currentHeight || 0 : 0),
   },
   title: {
-    fontSize: 24,
-    lineHeight: 28.8,
-    fontFamily: "Roboto-700",
-    color: "#4E4B66",
-    marginTop: 64,
+    marginTop: 16,
   },
   text: {
     fontSize: 16,

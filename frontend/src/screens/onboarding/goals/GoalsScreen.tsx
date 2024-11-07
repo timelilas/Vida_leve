@@ -16,6 +16,7 @@ import { SubmitButton } from "../../../components/buttons/SubmitButton";
 import { ScreenWrapper } from "../../../components/ScreenWrapper";
 import { NavigationProp } from "@react-navigation/native";
 import { ScreenHeader } from "../../../components/ScreenHeader";
+import { ScreenTitle } from "../../../components/ScreenTitle";
 
 export default function GoalsScreen({
   navigation,
@@ -37,7 +38,10 @@ export default function GoalsScreen({
             style={styles.headerContainer}
           />
           <View style={styles.contentContainer}>
-            <Text style={styles.contentTitle}>Estamos quase lá!</Text>
+            <ScreenTitle
+              style={styles.title}
+              title="Escolha o plano ideal para você!"
+            />
             <View style={styles.goalsWrapper}>
               <GradualGoalButton
                 selected={selectedGoal === "gradual"}
@@ -69,7 +73,7 @@ const styles = StyleSheet.create({
   scrollContainer: {
     justifyContent: "space-between",
     flexGrow: 1,
-    paddingHorizontal: 40,
+    paddingHorizontal: 16,
     paddingBottom: 24,
     paddingTop:
       24 + (Platform.OS === "android" ? StatusBar.currentHeight || 0 : 0),
@@ -77,18 +81,15 @@ const styles = StyleSheet.create({
   headerContainer: {
     marginTop: 24,
   },
-  contentContainer: {
-    marginTop: 64,
+  title: {
+    textAlign: "left",
   },
-  contentTitle: {
-    fontSize: 24,
-    fontFamily: "Roboto-700",
-    color: "#4e4b66",
-    lineHeight: 28.8,
+  contentContainer: {
+    marginTop: 16,
   },
   goalsWrapper: {
     overflow: Platform.OS === "android" ? "hidden" : "visible",
-    marginTop: 72,
+    marginTop: 24,
     paddingBottom: 16,
     gap: 16,
     borderTopLeftRadius: 8,

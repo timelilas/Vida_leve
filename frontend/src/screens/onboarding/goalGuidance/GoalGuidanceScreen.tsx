@@ -16,6 +16,7 @@ import { FoodTrayIcon } from "../../../components/icons/FoodTrayIcon";
 import { ClipboardIcon } from "../../../components/icons/ClipboardIcon";
 import { TargetIcon } from "../../../components/icons/TargetIcon";
 import { NavigationProp } from "@react-navigation/native";
+import { ScreenTitle } from "../../../components/ScreenTitle";
 
 export default function GoalGuidanceScreen({
   navigation,
@@ -36,7 +37,10 @@ export default function GoalGuidanceScreen({
           </Pressable>
         </View>
         <View style={styles.contentContainer}>
-          <Text style={styles.heading}>Como chegar no seu objetivo?</Text>
+          <ScreenTitle
+            style={styles.title}
+            title="Como chegar no seu objetivo?"
+          />
           <View style={styles.guidanceWrapperShadow}>
             <View style={styles.guidanceWrapper}>
               <GuidanceItem
@@ -44,11 +48,13 @@ export default function GoalGuidanceScreen({
                 description="Você escolhe e nós te ajudamos a encontrar seus alimentos preferidos"
                 icon={<FoodTrayIcon />}
               />
+              <View style={styles.separator} />
               <GuidanceItem
                 title="Registre suas refeições  "
                 description="Adicione o que comeu e monitore sua ingestão calórica."
                 icon={<ClipboardIcon />}
               />
+              <View style={styles.separator} />
               <GuidanceItem
                 title="Coma o que ama, sem restrições!"
                 description="Você terá um limite diário de calorias para garantir que alcance a sua meta."
@@ -57,9 +63,10 @@ export default function GoalGuidanceScreen({
             </View>
           </View>
           <View style={styles.adviceWrapper}>
-            <Text style={styles.heading}>
-              O que acontece ao seu redor importa!
-            </Text>
+            <ScreenTitle
+              style={styles.title}
+              title="O que acontece ao seu redor importa!"
+            />
             <Text style={styles.adviceDescription}>
               O processo de emagrecimento é individual e depende de muitos
               fatores.
@@ -105,11 +112,11 @@ const styles = StyleSheet.create({
   contentContainer: {
     marginTop: 64,
   },
-  heading: {
-    fontSize: 24,
-    lineHeight: 28.8,
-    fontFamily: "Roboto-700",
-    color: "#4e4b66",
+  separator: {
+    height: 2,
+    backgroundColor: "#B7B7B7",
+  },
+  title: {
     textAlign: "center",
   },
   guidanceWrapperShadow: {
