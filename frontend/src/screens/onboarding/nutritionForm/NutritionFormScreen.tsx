@@ -15,6 +15,7 @@ import { useState } from "react";
 import { PhysicalActivityLevel } from "./types/types";
 import { SubmitButton } from "../../../components/buttons/SubmitButton";
 import { ScreenTitle } from "../../../components/ScreenTitle";
+import { Paragraph } from "../../../components/Paragraph";
 
 export default function NutritionFromScreen({
   navigation,
@@ -33,10 +34,10 @@ export default function NutritionFromScreen({
       <ScrollView contentContainerStyle={styles.scrollContainer}>
         <ScreenHeader navigation={navigation} />
         <ScreenTitle title="Nos conte mais sobre você!" style={styles.title} />
-        <Text style={[styles.text, styles.description]}>
-          Precisamos da sua altura, peso atual, meta de peso e frequência de
-          atividade física para personalizar sua jornada.
-        </Text>
+        <Paragraph
+          text="Precisamos da sua altura, peso atual, meta de peso e frequência de atividade física para personalizar sua jornada."
+          style={styles.description}
+        />
         <View style={styles.form}>
           <Input
             keyboardType="numeric"
@@ -58,9 +59,10 @@ export default function NutritionFromScreen({
             placeholder="Ex.: 55 kg"
           />
           <View style={styles.exerciseLevel}>
-            <Text style={styles.text}>
-              Qual é o seu nível de atividade física diária?
-            </Text>
+            <Paragraph
+              style={styles.label}
+              text="Qual é o seu nível de atividade física diária?"
+            />
             <FrequencyButton
               selected={activityLevel === "sedentary"}
               onPress={() => selectLevel("sedentary")}
@@ -109,13 +111,11 @@ const styles = StyleSheet.create({
   title: {
     marginTop: 16,
   },
-  text: {
-    fontSize: 16,
-    fontFamily: "Roboto-400",
-    color: "#4E4B66",
-  },
   description: {
     marginTop: 8,
+  },
+  label: {
+    lineHeight: 16,
   },
   form: {
     gap: 16,

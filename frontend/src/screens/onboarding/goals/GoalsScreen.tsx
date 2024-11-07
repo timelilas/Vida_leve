@@ -17,6 +17,7 @@ import { ScreenWrapper } from "../../../components/ScreenWrapper";
 import { NavigationProp } from "@react-navigation/native";
 import { ScreenHeader } from "../../../components/ScreenHeader";
 import { ScreenTitle } from "../../../components/ScreenTitle";
+import { Paragraph } from "../../../components/Paragraph";
 
 export default function GoalsScreen({
   navigation,
@@ -41,6 +42,10 @@ export default function GoalsScreen({
             <ScreenTitle
               style={styles.title}
               title="Escolha o plano ideal para você!"
+            />
+            <Paragraph
+              style={styles.text}
+              text="Selecione entre 3 opções de planos para alcançar seus objetivos no seu próprio tempo. Seja qual for a sua escolha, estamos prontos para te ajudar a chegar lá!"
             />
             <View style={styles.goalsWrapper}>
               <GradualGoalButton
@@ -83,6 +88,9 @@ const styles = StyleSheet.create({
   },
   title: {
     textAlign: "left",
+  },
+  text: {
+    marginTop: 8,
   },
   contentContainer: {
     marginTop: 16,
