@@ -1,11 +1,5 @@
 import { useState } from "react";
-import {
-  StyleSheet,
-  Text,
-  TextInput,
-  View,
-  TouchableOpacity,
-} from "react-native";
+import { StyleSheet, Text, TextInput, View, Pressable } from "react-native";
 import { EyeOffIcon } from "./icons/EyeOffIcon";
 import { EyeOpenIcon } from "./icons/EyeOpenIcon";
 import { AlertIcon } from "./icons/AlertIcon";
@@ -34,9 +28,9 @@ export function PasswordInput(props: PasswordInputProps) {
             autoFocus={props.autoFocus}
             textContentType="password"
             secureTextEntry={!isPasswordVisible}
-            placeholderTextColor={props.error ? "#F95D4D88" : "#05050533"}
+            placeholderTextColor={props.error ? "#F95D4D88" : "#B7B7B7"}
             style={[styles.input, props.error ? styles.inputError : null]}
-            placeholder="*************"
+            placeholder={props.placeholder}
             value={props.value}
             onChangeText={props.onChange}
           />
@@ -45,14 +39,13 @@ export function PasswordInput(props: PasswordInputProps) {
               <AlertIcon />
             </View>
           )}
-          <TouchableOpacity
-            activeOpacity={1}
+          <Pressable
             hitSlop={{ top: 14, bottom: 14 }}
             style={styles.visibilityButton}
             onPress={() => setIsPasswordVisible((prev) => !prev)}
           >
             {isPasswordVisible ? <EyeOpenIcon /> : <EyeOffIcon />}
-          </TouchableOpacity>
+          </Pressable>
         </View>
       </View>
       {props.error && <Text style={styles.error}>{props.error}</Text>}
@@ -88,6 +81,7 @@ const styles = StyleSheet.create({
     fontFamily: "Roboto-400",
     fontSize: 16,
     lineHeight: 16,
+    color: "#4E4B66",
   },
   input: {
     fontFamily: "Roboto-400",
@@ -110,7 +104,6 @@ const styles = StyleSheet.create({
     justifyContent: "center",
   },
   error: {
-    marginTop: 8,
     fontFamily: "Roboto-400",
     fontSize: 14,
     lineHeight: 14,

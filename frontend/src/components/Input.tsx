@@ -30,7 +30,7 @@ export function Input(props: InputProps) {
           <TextInput
             autoFocus={props.autoFocus}
             textContentType="password"
-            placeholderTextColor={props.error ? "#F95D4D88" : "#05050533"}
+            placeholderTextColor={props.error ? "#F95D4D88" : "#B7B7B7"}
             style={[styles.input, props.error ? styles.inputError : null]}
             placeholder={props.placeholder}
             value={props.value}
@@ -76,6 +76,7 @@ const styles = StyleSheet.create({
     fontFamily: "Roboto-400",
     fontSize: 16,
     lineHeight: 16,
+    color: "#4E4B66",
   },
   input: {
     fontFamily: "Roboto-400",
