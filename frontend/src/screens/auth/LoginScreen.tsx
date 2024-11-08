@@ -40,7 +40,7 @@ const LoginScreen = ({ navigation }: { navigation: NavigationProp<any> }) => {
         />
         <View style={styles.form}>
           <Input
-            error={error}
+            error={!!error}
             autoFocus
             textContentType="emailAddress"
             value={email}
@@ -50,7 +50,7 @@ const LoginScreen = ({ navigation }: { navigation: NavigationProp<any> }) => {
             placeholder="aryela.scostaux@gmail.com"
           />
           <PasswordInput
-            error={error}
+            error={!!error}
             value={password}
             onChange={(data) => setPassword(data)}
             name="password"
