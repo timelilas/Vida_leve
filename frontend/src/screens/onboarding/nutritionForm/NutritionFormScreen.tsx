@@ -3,7 +3,6 @@ import {
   StyleSheet,
   Platform,
   StatusBar,
-  Text,
   View,
 } from "react-native";
 import { ScreenWrapper } from "../../../components/ScreenWrapper";
@@ -76,8 +75,8 @@ export default function NutritionFromScreen({
               description="Quase sempre em pé. p. ex. professor(a)"
             />
             <FrequencyButton
-              selected={activityLevel === "moderate"}
-              onPress={() => selectLevel("moderate")}
+              selected={activityLevel === "moderated"}
+              onPress={() => selectLevel("moderated")}
               title="Atividade moderada"
               description="Quase sempre em pé. p. ex. professor(a)/ atendente"
             />
@@ -90,7 +89,7 @@ export default function NutritionFromScreen({
           </View>
         </View>
         <SubmitButton
-          onPress={() => navigation.navigate("Onboarding/GoalGuidance")}
+          onPress={() => navigation.navigate("Onboarding/Goals")}
           style={styles.submitButton}
           type="primary"
           title="Continuar cadastro"

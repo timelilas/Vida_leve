@@ -1,5 +1,5 @@
 export type PhysicalActivityLevel =
   | "sedentary"
   | "light"
-  | "moderate"
+  | "moderated"
   | "intense";

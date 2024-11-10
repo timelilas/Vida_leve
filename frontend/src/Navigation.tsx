@@ -1,12 +1,13 @@
 import { NavigationContainer } from "@react-navigation/native";
 import { createNativeStackNavigator } from "@react-navigation/native-stack";
+import { StatusBar } from "expo-status-bar";
 import HomeScreen from "./screens/HomeScreen";
 import LoginScreen from "./screens/auth/LoginScreen";
 import SignupScreen from "./screens/auth/SignupScreen";
 import GoalsScreen from "./screens/onboarding/goals/GoalsScreen";
 import GoalGuidanceScreen from "./screens/onboarding/goalGuidance/GoalGuidanceScreen";
 import NutritionFromScreen from "./screens/onboarding/nutritionForm/NutritionFormScreen";
-import { StatusBar } from "expo-status-bar";
+import ProfileFormScreen from "./screens/onboarding/profileForm/ProfileFormScreen";
 
 const Stack = createNativeStackNavigator();
 
@@ -43,6 +44,11 @@ const Navigation = () => {
         <Stack.Screen
           name="Onboarding/NutritionForm"
           component={NutritionFromScreen}
+          options={{ headerShown: false }}
+        />
+        <Stack.Screen
+          name="Onboarding/ProfileForm"
+          component={ProfileFormScreen}
           options={{ headerShown: false }}
         />
       </Stack.Navigator>
