@@ -9,9 +9,9 @@ export function numberToMonth(number: number): string {
 }
 
 export function dateToPTBR(date: Date) {
-  return date.toLocaleDateString("pt-BR", {
-    year: "numeric",
-    month: "numeric",
-    day: "numeric",
-  });
+  const day = `0${date.getUTCDate()}`.slice(-2);
+  const month = `0${date.getUTCMonth() + 1}`.slice(-2);
+  const year = date.getUTCFullYear();
+
+  return `${day}/${month}/${year}`;
 }
