@@ -13,15 +13,15 @@ class User
   implements UserEntity
 {
   declare id: CreationOptional<number>;
-  declare userName: string;
   declare email: string;
-  declare senha: string;
-  declare telefone: string | null;
-  declare aniversario: Date | null;
-  declare sexo: "masculino" | "feminino" | null;
+  declare password: string;
+  declare name: string | null;
+  declare phone: string | null;
+  declare birthDate: Date | null;
+  declare gender: "masculino" | "feminino" | null;
 
-  public getProfile(): Omit<UserEntity, "senha"> {
-    const { senha, ...profileProps } = super.toJSON();
+  public getProfile(): Omit<UserEntity, "password"> {
+    const { password, ...profileProps } = super.toJSON();
     return profileProps;
   }
 }
@@ -33,28 +33,28 @@ User.init(
       autoIncrement: true,
       primaryKey: true,
     },
-    userName: {
+    name: {
       type: Sequelize.STRING(100),
-      allowNull: false,
+      allowNull: true,
     },
     email: {
       type: Sequelize.STRING(100),
       unique: true,
       allowNull: false,
     },
-    senha: {
+    password: {
       type: Sequelize.STRING(100),
       allowNull: false,
     },
-    telefone: {
+    phone: {
       type: Sequelize.STRING(11),
       allowNull: true,
     },
-    aniversario: {
+    birthDate: {
       type: Sequelize.DATEONLY,
       allowNull: true,
     },
-    sexo: {
+    gender: {
       type: Sequelize.ENUM("masculino", "feminino"),
       allowNull: true,
     },

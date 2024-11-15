@@ -15,14 +15,14 @@ class Progress
 {
   declare id: CreationOptional<number>;
   declare userId: number;
-  declare altura: number;
-  declare peso: number;
-  declare meta: number;
-  declare atividade: string;
+  declare height: number;
+  declare weight: number;
+  declare goalWeight: number;
+  declare activityFrequency: string;
 
   public toJSON(): Omit<ProgressEntity, "userId"> {
-    const { id, altura, atividade, meta, peso } = super.get();
-    return { id, altura, atividade, meta, peso };
+    const { id, height, activityFrequency, goalWeight, weight } = super.get();
+    return { id, height, activityFrequency, goalWeight, weight };
   }
 }
 
@@ -33,19 +33,19 @@ Progress.init(
       autoIncrement: true,
       primaryKey: true,
     },
-    altura: {
+    height: {
       type: Sequelize.DECIMAL(3, 2),
       allowNull: false,
     },
-    peso: {
+    weight: {
       type: Sequelize.SMALLINT,
       allowNull: false,
     },
-    meta: {
+    goalWeight: {
       type: Sequelize.SMALLINT,
       allowNull: false,
     },
-    atividade: {
+    activityFrequency: {
       type: Sequelize.STRING,
       allowNull: false,
     },
