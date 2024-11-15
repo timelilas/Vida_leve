@@ -1,5 +1,5 @@
 import z, { ZodError } from "zod";
-import * as messages from "./messages"
+import * as messages from "./messages";
 
 export class ZodHelper {
   public static boolean(field: string) {
@@ -40,7 +40,9 @@ export class ZodHelper {
         invalid_type_error: messages.stringMsg(field),
       })
       .email(messages.invalidEmailMsg());
-    return max ? baseEmail.max(max, messages.maxLengthMsg(field, max)) : baseEmail;
+    return max
+      ? baseEmail.max(max, messages.maxLengthMsg(field, max))
+      : baseEmail;
   }
 
   public static password(field: string, min: number, max: number) {
@@ -89,6 +91,8 @@ export class ZodHelper {
         invalid_type_error: messages.stringMsg(field),
       })
       .min(min, messages.minLengthMsg(field, min));
-    return (max ? base.max(max, messages.maxLengthMsg(field, max)) : base).trim();
+    return (
+      max ? base.max(max, messages.maxLengthMsg(field, max)) : base
+    ).trim();
   }
 }
