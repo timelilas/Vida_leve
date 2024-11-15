@@ -12,7 +12,7 @@ export default class UserController {
       console.error("Server internal error:", error);
       return res
         .status(500)
-        .json({ error: "Erro ao obter a lista de usuários" });
+        .json({ error: "Erro ao obter a lista de usuários." });
     }
   }
 
@@ -32,7 +32,7 @@ export default class UserController {
       if (!foundUser) {
         return res
           .status(404)
-          .json({ error: `Usuário com id ${id} não encontrado` });
+          .json({ error: `Usuário com id ${id} não encontrado.` });
       }
 
       return res.status(200).json({ data: foundUser });
@@ -40,7 +40,7 @@ export default class UserController {
       console.error("Server internal error:", error);
       return res
         .status(500)
-        .json({ error: "Erro ao atualizar os dados do usuário" });
+        .json({ error: "Erro ao atualizar os dados do usuário." });
     }
   }
 
@@ -52,7 +52,7 @@ export default class UserController {
       if (!foundUser) {
         return res
           .status(404)
-          .json({ error: `Usuário com id ${userId} não encontrado` });
+          .json({ error: `Usuário com id ${userId} não encontrado.` });
       }
 
       return res.status(200).json({ data: foundUser });
@@ -60,7 +60,7 @@ export default class UserController {
       console.error("Server internal error:", error);
       return res
         .status(500)
-        .json({ error: "Erro ao obter o perfil do usuário" });
+        .json({ error: "Erro ao obter o perfil do usuário." });
     }
   }
 
@@ -75,10 +75,10 @@ export default class UserController {
           .status(404)
           .json({ error: `Usuário com id ${id} não encontrado` });
       }
-      return res.status(200).json({ data: "Usuário deletado com sucesso" });
+      return res.status(200).json({ data: "Usuário deletado com sucesso." });
     } catch (error) {
       console.error("Server internal error:", error);
-      return res.status(500).json({ error: "Erro ao deletar o usuário" });
+      return res.status(500).json({ error: "Erro ao deletar o usuário." });
     }
   }
 }

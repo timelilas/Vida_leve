@@ -19,7 +19,7 @@ export default class ProgressController {
       return res.status(200).json({ data: createdProgress });
     } catch (error) {
       console.error("Server internal error:", error);
-      return res.status(500).json({ error: "Erro na criação do progresso" });
+      return res.status(500).json({ error: "Erro na criação do progresso." });
     }
   }
 }
