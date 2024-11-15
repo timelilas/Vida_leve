@@ -23,4 +23,9 @@ export const signupSchema = userZodSchema
     }
   );
 
-export const loginSchema = userZodSchema.pick({ email: true, password: true });
+export const loginSchema = userZodSchema.pick({ email: true }).extend({
+  password: z.string({
+    invalid_type_error: stringMsg("Senha"),
+    required_error: requiredMsg("Senha"),
+  }),
+});
