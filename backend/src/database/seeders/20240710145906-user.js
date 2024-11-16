@@ -1,12 +1,12 @@
 'use strict';
-
+const bcrypt = require("bcrypt")
 module.exports = {
   up: async (queryInterface, Sequelize) => {
     await queryInterface.bulkInsert('user', [
       {
-        userName: 'root',
+        name: 'root',
         email: 'root@root.com',
-        senha: 'root123!',
+        password: await bcrypt.hash('root123!', 12),
       },
     ], {});
   },

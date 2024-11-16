@@ -1,9 +1,9 @@
 export interface UserEntity {
-  id: number
-  userName: string
-  email: string
-  senha: string
-  telefone: string | null
-  aniversario: Date | null
-  sexo: "masculino" | "feminino" | null
+  id: number;
+  email: string;
+  password: string;
+  name: string | null;
+  phone: string | null;
+  birthDate: Date | null;
+  gender: "masculino" | "feminino" | null;
 }

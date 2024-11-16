@@ -1,7 +1,7 @@
-export interface ProgressEntity{
-  id: number
-  altura: number
-  peso: number
-  meta: number
-  atividade: string
+export interface ProgressEntity {
+  id: number;
+  height: number;
+  weight: number;
+  goalWeight: number;
+  activityFrequency: string;
 }
