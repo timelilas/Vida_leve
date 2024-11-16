@@ -15,12 +15,20 @@ import { PhysicalActivityLevel } from "./types/types";
 import { SubmitButton } from "../../../components/buttons/SubmitButton";
 import { ScreenTitle } from "../../../components/ScreenTitle";
 import { Paragraph } from "../../../components/Paragraph";
+import { useForm } from "../../../hooks/useForm";
 
 type NutritionFormScreenProps = {
   navigation: NavigationProp<any>;
 };
 
+const nutritionFromInitialState = {
+  height: "",
+  weight: "",
+  goalWeight: "",
+};
+
 const NutritionFormScreen = (props: NutritionFormScreenProps) => {
+  const { data, handleChange } = useForm(nutritionFromInitialState);
   const [activityLevel, setActivityLevel] =
     useState<PhysicalActivityLevel | null>(null);
 
@@ -42,21 +50,24 @@ const NutritionFormScreen = (props: NutritionFormScreenProps) => {
         />
         <View style={styles.form}>
           <Input
-            value=""
+            onChange={(value) => handleChange("height", value)}
+            value={data.values.height}
             keyboardType="numeric"
             label="Altura"
             placeholder="Ex.: 1,60"
             name="height"
           />
           <Input
-            value=""
+            onChange={(value) => handleChange("weight", value)}
+            value={data.values.weight}
             label="Peso atual"
             keyboardType="numeric"
             name="wight"
             placeholder="Ex.: 60 kg"
           />
           <Input
-            value=""
+            onChange={(value) => handleChange("goalWeight", value)}
+            value={data.values.goalWeight}
             label="Peso desejado"
             keyboardType="numeric"
             name="goal"

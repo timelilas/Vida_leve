@@ -17,14 +17,22 @@ import { GenderType } from "./types/types";
 import { useState } from "react";
 import { Paragraph } from "../../../components/Paragraph";
 import { ScreenTitle } from "../../../components/ScreenTitle";
+import { useForm } from "../../../hooks/useForm";
 
 type ProfileFromScreenProps = {
   navigation: NavigationProp<any>;
 };
 
+const profileFromInitialState = {
+  name: "",
+  phone: "",
+  birthDate: "",
+};
+
 const ProfileFormScreen = (props: ProfileFromScreenProps) => {
   const [gender, setGender] = useState<GenderType | null>(null);
-  const [birthDate, setBirthDate] = useState("");
+  const { data, handleChange } = useForm(profileFromInitialState);
+  const { values } = data;
 
   function selectGender(value: GenderType) {
     setGender(value === gender ? null : value);
@@ -50,23 +58,25 @@ const ProfileFormScreen = (props: ProfileFromScreenProps) => {
         />
         <View style={styles.form}>
           <Input
-            value=""
+            value={values.name}
+            onChange={(value) => handleChange("name", value)}
             name="name"
             label="Nome completo"
             placeholder="Nome completo (Ex.: Maria Silva)"
             textContentType="name"
           />
           <Input
-            value=""
+            value={values.phone}
+            onChange={(value) => handleChange("phone", value)}
             name="phone"
             label="Telefone"
             placeholder="(DDD) + número de telefone"
             textContentType="telephoneNumber"
           />
           <DateInput
+            value={values.birthDate}
             textContentType="birthdate"
-            value={birthDate}
-            onChange={setBirthDate}
+            onChange={(value) => handleChange("birthDate", value)}
             label="Data de nascimento"
             placeholder="dd/mm/aaaa"
             name="birthDate"
