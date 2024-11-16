@@ -1,4 +1,4 @@
-import { StyleSheet, Text, View } from "react-native";
+import { Pressable, StyleSheet, Text, View } from "react-native";
 import { CheckIcon } from "../icons/CheckIcon";
 import { GenericItem } from "./types";
 import { memo } from "react";
@@ -12,15 +12,15 @@ interface CalendarMenuItemProps {
 export const CalendarMenuItem = memo(
   (props: CalendarMenuItemProps) => {
     return (
-      <View
-        onTouchEnd={props.onTouch}
+      <Pressable
+        onPress={props.onTouch}
         style={[styles.item, props.selected && styles.itemSelected]}
       >
         <View style={styles.itemIcon}>
           {props.selected ? <CheckIcon /> : null}
         </View>
         <Text style={styles.itemText}>{props.item.value || props.item.id}</Text>
-      </View>
+      </Pressable>
     );
   },
   (prev, next) => prev.selected === next.selected
