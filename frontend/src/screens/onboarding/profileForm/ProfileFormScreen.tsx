@@ -9,9 +9,9 @@ import {
 import { ScreenWrapper } from "../../../components/ScreenWrapper";
 import { ScreenHeader } from "../../../components/ScreenHeader";
 import { NavigationProp } from "@react-navigation/native";
-import { Input } from "../../../components/Input";
+import { Input } from "../../../components/inputs/Input";
 import { SubmitButton } from "../../../components/buttons/SubmitButton";
-import { DateInput } from "../../../components/DateInput";
+import { DateInput } from "../../../components/inputs/DateInput";
 import { ToggleButton } from "../../../components/buttons/ToggleButton";
 import { GenderType } from "./types/types";
 import { useState } from "react";
@@ -47,6 +47,7 @@ export default function ProfileFormScreen(props: ProfileFromScreenProps) {
         />
         <View style={styles.form}>
           <Input
+            value=""
             name="name"
             label="Como gostaria de ser chamado?"
             placeholder="Aryela"
@@ -54,6 +55,7 @@ export default function ProfileFormScreen(props: ProfileFromScreenProps) {
             autoFocus
           />
           <Input
+            value=""
             name="phone"
             label="Telefone"
             placeholder="(DDD) + número de telefone"

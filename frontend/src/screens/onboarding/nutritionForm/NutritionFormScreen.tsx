@@ -8,7 +8,7 @@ import {
 import { ScreenWrapper } from "../../../components/ScreenWrapper";
 import { NavigationProp } from "@react-navigation/native";
 import { ScreenHeader } from "../../../components/ScreenHeader";
-import { Input } from "../../../components/Input";
+import { Input } from "../../../components/inputs/Input";
 import { FrequencyButton } from "./components/FrequencyButton";
 import { useState } from "react";
 import { PhysicalActivityLevel } from "./types/types";
@@ -39,6 +39,7 @@ export default function NutritionFromScreen({
         />
         <View style={styles.form}>
           <Input
+            value=""
             keyboardType="numeric"
             autoFocus
             label="Altura"
@@ -46,12 +47,14 @@ export default function NutritionFromScreen({
             name="height"
           />
           <Input
+            value=""
             label="Peso atual"
             keyboardType="numeric"
             name="wight"
             placeholder="Ex.: 60 kg"
           />
           <Input
+            value=""
             label="Peso desejado"
             keyboardType="numeric"
             name="goal"
