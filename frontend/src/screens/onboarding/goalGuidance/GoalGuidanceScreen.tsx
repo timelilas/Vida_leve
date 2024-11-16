@@ -9,7 +9,7 @@ import {
   Text,
 } from "react-native";
 import { ScreenWrapper } from "../../../components/ScreenWrapper";
-import { HorizontalLogoSVG } from "../../../components/HorizontalLogoSVG";
+import { HorizontalLogoSVG } from "../../../components/logos/HorizontalLogoSVG";
 import { CloseIcon } from "../../../components/icons/CloseIcon";
 import { GuidanceItem } from "./components/GuidanceItem";
 import { FoodTrayIcon } from "../../../components/icons/FoodTrayIcon";

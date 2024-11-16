@@ -1,6 +1,6 @@
 import { useState } from "react";
 import { View, ScrollView } from "react-native";
-import { LogoSVG } from "../../components/Logo";
+import { LogoSVG } from "../../components/logos/LogoSVG";
 import styles from "./styles";
 import { NavigationProp } from "@react-navigation/native";
 import { Input } from "../../components/inputs/Input";

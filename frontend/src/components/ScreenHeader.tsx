@@ -8,7 +8,7 @@ import {
 } from "react-native";
 
 import { ArrowIcon } from "./icons/ArrowIcon";
-import { HorizontalLogoSVG } from "./HorizontalLogoSVG";
+import { HorizontalLogoSVG } from "./logos/HorizontalLogoSVG";
 
 interface ScreenHeaderProps {
   navigation: NavigationProp<any>;

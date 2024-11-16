@@ -5,7 +5,7 @@ import {
   Platform,
   StatusBar,
 } from "react-native";
-import { LogoSVG } from "../components/Logo";
+import { LogoSVG } from "../components/logos/LogoSVG";
 import { NavigationProp } from "@react-navigation/native";
 import { ScreenWrapper } from "../components/ScreenWrapper";
 import { SubmitButton } from "../components/buttons/SubmitButton";

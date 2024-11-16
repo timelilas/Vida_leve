@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 import { View, ScrollView } from "react-native";
-import { LogoSVG } from "../../components/Logo";
+import { LogoSVG } from "../../components/logos/LogoSVG";
 import styles from "./styles";
 import { NavigationProp } from "@react-navigation/native";
 import { ScreenWrapper } from "../../components/ScreenWrapper";
