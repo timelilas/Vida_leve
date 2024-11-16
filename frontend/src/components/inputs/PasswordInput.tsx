@@ -12,7 +12,6 @@ interface PasswordInputProps {
   withBoard?: boolean;
   enableBoard?: boolean;
   disabled?: boolean;
-  filled?: boolean;
   label?: string;
   autoFocus?: boolean;
   placeholder?: string;
@@ -32,11 +31,11 @@ export function PasswordInput(props: PasswordInputProps) {
         <View
           style={[
             defaultInputStyles.boxShadow,
-            props.filled ? defaultInputStyles.boxShadowFilled : null,
-            props.filled && props.disabled
+            props.value.length ? defaultInputStyles.boxShadowFilled : null,
+            props.value.length && props.disabled
               ? defaultInputStyles.boxShadowDisabled
               : null,
-            !props.filled && props.disabled
+            !props.value.length && props.disabled
               ? defaultInputStyles.boxShadowEmpty
               : null,
             props.error ? defaultInputStyles.boxShadowError : null,

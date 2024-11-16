@@ -82,7 +82,6 @@ export default function LoginScreen(props: LoginScreenProps) {
           <Input
             onChange={(data) => handleChange("email", data)}
             onBlur={() => validateField("email", values.email, validateEmail)}
-            filled={values.email.length > 0}
             disabled={isLoading}
             error={error.field === "email"}
             textContentType="emailAddress"
@@ -97,7 +96,6 @@ export default function LoginScreen(props: LoginScreenProps) {
             onBlur={() =>
               validateField("password", values.password, validateEmptyField)
             }
-            filled={values.password.length > 0}
             disabled={isLoading}
             error={error.field === "password"}
             value={values.password}

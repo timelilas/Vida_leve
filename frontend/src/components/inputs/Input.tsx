@@ -6,7 +6,6 @@ interface InputProps {
   name: string;
   value: string;
   disabled?: boolean;
-  filled?: boolean;
   error?: boolean;
   label?: string;
   autoFocus?: boolean;
@@ -25,11 +24,11 @@ export function Input(props: InputProps) {
         <View
           style={[
             defaultInputStyles.boxShadow,
-            props.filled ? defaultInputStyles.boxShadowFilled : null,
-            props.filled && props.disabled
+            props.value.length ? defaultInputStyles.boxShadowFilled : null,
+            props.value.length && props.disabled
               ? defaultInputStyles.boxShadowDisabled
               : null,
-            !props.filled && props.disabled
+            !props.value.length && props.disabled
               ? defaultInputStyles.boxShadowEmpty
               : null,
             props.error ? defaultInputStyles.boxShadowError : null,

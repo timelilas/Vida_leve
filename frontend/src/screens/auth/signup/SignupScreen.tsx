@@ -58,7 +58,6 @@ export default function SignupScreen(props: SignupScreenProps) {
           <Input
             onBlur={() => validateField("email", values.email, validateEmail)}
             onChange={(value) => handleChange("email", value)}
-            filled={values.email.length > 0}
             disabled={isLoading}
             textContentType="emailAddress"
             error={error.field === "email"}
@@ -73,7 +72,6 @@ export default function SignupScreen(props: SignupScreenProps) {
             onChange={handlePasswordChange}
             withBoard={passwordFocused}
             enableBoard={isTypingPassword}
-            filled={values.password.length > 0}
             disabled={isLoading}
             error={error.field === "password"}
             value={values.password}
@@ -84,7 +82,6 @@ export default function SignupScreen(props: SignupScreenProps) {
           <PasswordInput
             onChange={(value) => handleChange("passwordConfirmation", value)}
             onBlur={handlePasswordConfirmationValidation}
-            filled={values.passwordConfirmation.length > 0}
             disabled={isLoading}
             error={error.field === "passwordConfirmation"}
             value={values.passwordConfirmation}

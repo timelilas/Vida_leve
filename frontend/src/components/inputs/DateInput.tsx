@@ -20,7 +20,6 @@ interface PasswordInputProps {
   name: string;
   value: string;
   disabled?: boolean;
-  filled?: boolean;
   onChange?: (text: string) => void;
   label?: string;
   autoFocus?: boolean;
@@ -76,11 +75,11 @@ export function DateInput(props: PasswordInputProps) {
           style={[
             defaultInputStyles.boxShadow,
             styles.boxShadow,
-            props.filled ? defaultInputStyles.boxShadowFilled : null,
-            props.filled && props.disabled
+            props.value.length ? defaultInputStyles.boxShadowFilled : null,
+            props.value.length && props.disabled
               ? defaultInputStyles.boxShadowDisabled
               : null,
-            !props.filled && props.disabled
+            !props.value.length && props.disabled
               ? defaultInputStyles.boxShadowEmpty
               : null,
             props.error ? defaultInputStyles.boxShadowError : null,
