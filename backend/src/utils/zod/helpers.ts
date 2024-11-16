@@ -66,18 +66,16 @@ export class ZodHelper {
       });
   }
 
-  public static formatZodError(error: ZodError): string[] {
-    const errors: string[] = [];
+  public static formatZodError(error: ZodError) {
+    const errors: { field: string | null; message: string }[] = [];
     for (const issue of error.issues) {
       if (issue.path.length) {
-        errors.push(issue.message);
+        errors.push({ field: issue.path.join("."), message: issue.message });
       } else {
         const key = (issue as { keys: string[] }).keys.join(".");
-        errors.push(
-          `${key[0].toUpperCase()}${key.slice(
-            1
-          )} ${issue.message.toLowerCase()}`
-        );
+        const outerField = `${key[0].toUpperCase()}${key.slice(1)}`;
+        const message = `${outerField} ${issue.message.toLowerCase()}`;
+        errors.push({ field: null, message });
       }
     }
 
