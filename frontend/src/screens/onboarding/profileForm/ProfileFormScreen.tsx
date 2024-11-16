@@ -18,11 +18,11 @@ import { useState } from "react";
 import { Paragraph } from "../../../components/Paragraph";
 import { ScreenTitle } from "../../../components/ScreenTitle";
 
-interface ProfileFromScreenProps {
+type ProfileFromScreenProps = {
   navigation: NavigationProp<any>;
-}
+};
 
-export default function ProfileFormScreen(props: ProfileFromScreenProps) {
+const ProfileFormScreen = (props: ProfileFromScreenProps) => {
   const [gender, setGender] = useState<GenderType | null>(null);
   const [birthDate, setBirthDate] = useState("");
 
@@ -98,7 +98,9 @@ export default function ProfileFormScreen(props: ProfileFromScreenProps) {
       </ScrollView>
     </ScreenWrapper>
   );
-}
+};
+
+export default ProfileFormScreen;
 
 const styles = StyleSheet.create({
   scrollContainer: {

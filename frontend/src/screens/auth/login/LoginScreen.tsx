@@ -14,16 +14,16 @@ import { validateEmail } from "../../../utils/validations/email";
 import { validateEmptyField } from "../../../utils/validations/common";
 import styles from "../styles";
 
-interface LoginScreenProps {
+type LoginScreenProps = {
   navigation: NavigationProp<any>;
-}
+};
 
 const loginInitialState = {
   email: "",
   password: "",
 };
 
-export default function LoginScreen(props: LoginScreenProps) {
+const LoginScreen = (props: LoginScreenProps) => {
   const scrollRef = useRef<ScrollView | null>(null);
   const { data, handleChange, setIsLoading, setError, validateField } =
     useForm(loginInitialState);
@@ -119,4 +119,6 @@ export default function LoginScreen(props: LoginScreenProps) {
       </ScrollView>
     </ScreenWrapper>
   );
-}
+};
+
+export default LoginScreen;

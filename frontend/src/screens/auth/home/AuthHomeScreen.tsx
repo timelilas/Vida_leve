@@ -9,7 +9,7 @@ type AuthHomeProps = {
   navigation: NavigationProp<any>;
 };
 
-export default function AuthHomeScreen({ navigation }: AuthHomeProps) {
+const AuthHomeScreen = ({ navigation }: AuthHomeProps) => {
   return (
     <ScreenWrapper>
       <ScrollView
@@ -57,7 +57,9 @@ export default function AuthHomeScreen({ navigation }: AuthHomeProps) {
       </ScrollView>
     </ScreenWrapper>
   );
-}
+};
+
+export default AuthHomeScreen;
 
 const styles = StyleSheet.create({
   scrollView: {

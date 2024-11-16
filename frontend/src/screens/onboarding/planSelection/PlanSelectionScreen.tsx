@@ -17,11 +17,11 @@ import { ScreenHeader } from "../../../components/ScreenHeader";
 import { ScreenTitle } from "../../../components/ScreenTitle";
 import { Paragraph } from "../../../components/Paragraph";
 
-interface PlanSelectionScreenProps {
+type PlanSelectionScreenProps = {
   navigation: NavigationProp<any>;
-}
+};
 
-export default function PlanSelectionScreen(props: PlanSelectionScreenProps) {
+const PlanSelectionScreen = (props: PlanSelectionScreenProps) => {
   const [selectedGoal, setSelectedGoal] = useState<PlanType | null>(null);
 
   function selectGoal(goal: PlanType) {
@@ -73,7 +73,9 @@ export default function PlanSelectionScreen(props: PlanSelectionScreenProps) {
       </ScrollView>
     </ScreenWrapper>
   );
-}
+};
+
+export default PlanSelectionScreen;
 
 const styles = StyleSheet.create({
   scrollContainer: {

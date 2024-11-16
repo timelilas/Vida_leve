@@ -18,11 +18,11 @@ import { TargetIcon } from "../../../components/icons/TargetIcon";
 import { NavigationProp } from "@react-navigation/native";
 import { ScreenTitle } from "../../../components/ScreenTitle";
 
-interface GoalGuidanceScreenProps {
+type GoalGuidanceScreenProps = {
   navigation: NavigationProp<any>;
-}
+};
 
-export default function GoalGuidanceScreen(props: GoalGuidanceScreenProps) {
+const GoalGuidanceScreen = (props: GoalGuidanceScreenProps) => {
   return (
     <ScreenWrapper>
       <ScrollView
@@ -89,7 +89,9 @@ export default function GoalGuidanceScreen(props: GoalGuidanceScreenProps) {
       </ScrollView>
     </ScreenWrapper>
   );
-}
+};
+
+export default GoalGuidanceScreen;
 
 const styles = StyleSheet.create({
   scrollContainer: {

@@ -16,11 +16,11 @@ import { SubmitButton } from "../../../components/buttons/SubmitButton";
 import { ScreenTitle } from "../../../components/ScreenTitle";
 import { Paragraph } from "../../../components/Paragraph";
 
-interface NutritionFormScreenProps {
+type NutritionFormScreenProps = {
   navigation: NavigationProp<any>;
-}
+};
 
-export default function NutritionFormScreen(props: NutritionFormScreenProps) {
+const NutritionFormScreen = (props: NutritionFormScreenProps) => {
   const [activityLevel, setActivityLevel] =
     useState<PhysicalActivityLevel | null>(null);
 
@@ -102,7 +102,9 @@ export default function NutritionFormScreen(props: NutritionFormScreenProps) {
       </ScrollView>
     </ScreenWrapper>
   );
-}
+};
+
+export default NutritionFormScreen;
 
 const styles = StyleSheet.create({
   scrollContainer: {

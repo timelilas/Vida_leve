@@ -14,11 +14,11 @@ import { validatePasswordConfirmation } from "../../../utils/validations/passwor
 import { useSignupForm } from "./useSignupForm";
 import styles from "../styles";
 
-interface SignupScreenProps {
+type SignupScreenProps = {
   navigation: NavigationProp<any>;
-}
+};
 
-export default function SignupScreen(props: SignupScreenProps) {
+const SignupScreen = (props: SignupScreenProps) => {
   const [passwordFocused, setPasswordFocused] = useState(false);
   const [isTypingPassword, setIsTypingPassword] = useState(false);
   const { values, error, isLoading, ref, handleChange, signup, validateField } =
@@ -104,4 +104,6 @@ export default function SignupScreen(props: SignupScreenProps) {
       </ScrollView>
     </ScreenWrapper>
   );
-}
+};
+
+export default SignupScreen;
