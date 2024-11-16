@@ -8,9 +8,12 @@ const styles = StyleSheet.create({
     paddingTop:
       24 + (Platform.OS === "android" ? StatusBar.currentHeight || 0 : 0),
   },
+  title: {
+    marginTop: 40,
+  },
   logo: {
     alignSelf: "center",
-    marginVertical: 40,
+    marginTop: 40,
   },
   form: {
     width: "100%",
@@ -22,11 +25,7 @@ const styles = StyleSheet.create({
     marginTop: "auto",
   },
   error: {
-    fontFamily: "Roboto-400",
-    fontSize: 14,
-    lineHeight: 16.8,
-    color: "#FF377F",
-    textAlign: "left",
+    marginTop: 40,
   },
 });
 
