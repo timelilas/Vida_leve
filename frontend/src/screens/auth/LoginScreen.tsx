@@ -7,7 +7,7 @@ import { Input } from "../../components/Input";
 import { PasswordInput } from "../../components/PasswordInput";
 import { ScreenWrapper } from "../../components/ScreenWrapper";
 import { SubmitButton } from "../../components/buttons/SubmitButton";
-import { request } from "../../services/Request";
+import { request } from "../../libs/axios/Request";
 import { ScreenTitle } from "../../components/ScreenTitle";
 
 const LoginScreen = ({ navigation }: { navigation: NavigationProp<any> }) => {
