@@ -18,11 +18,12 @@ const SignupScreen = ({ navigation }: { navigation: NavigationProp<any> }) => {
 
   const signup = async () => {
     try {
-      const newUser = { userName: name, email, senha: password };
+      const newUser = { name, email, password, passwordConfirmation };
       const { data } = await request("POST", "/auth/signup", newUser )
       console.log(data);
       navigation.navigate("Login")
-    } catch (error) {
+    } catch (AxiosError: any ) {
+      console.log(AxiosError.response.data.error)
     }
   }
 
