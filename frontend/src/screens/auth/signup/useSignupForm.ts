@@ -25,7 +25,6 @@ export function useSignupForm({ navigation }: UseSignupFormParams) {
 
   async function signup() {
     if (!validateAllFields()) return;
-
     setError({});
     setIsLoading(true);
 
@@ -35,10 +34,12 @@ export function useSignupForm({ navigation }: UseSignupFormParams) {
       const field = result.error.field || undefined;
       setIsLoading(false);
       setError({ field: field as any, message: result.error.message });
-      return ref.current?.scrollTo({ y: 0, animated: true });
+      if (!field) {
+        ref.current?.scrollTo({ y: 0, animated: true });
+      }
+    } else {
+      navigation.dispatch(StackActions.replace("Auth/Login"));
     }
-
-    return navigation.dispatch(StackActions.replace("Auth/Login"));
   }
 
   function validateAllFields() {

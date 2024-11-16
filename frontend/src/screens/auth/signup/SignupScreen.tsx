@@ -47,7 +47,7 @@ export default function SignupScreen(props: SignupScreenProps) {
         contentContainerStyle={styles.scrollView}
       >
         <LogoSVG style={styles.logo} />
-        {error.message && error.field !== "password" && (
+        {error.message && !error.field && (
           <ErrorMessage style={styles.error} message={error.message} />
         )}
         <ScreenTitle
@@ -59,35 +59,39 @@ export default function SignupScreen(props: SignupScreenProps) {
             onBlur={() => validateField("email", values.email, validateEmail)}
             onChange={(value) => handleChange("email", value)}
             disabled={isLoading}
-            textContentType="emailAddress"
-            error={error.field === "email"}
-            value={values.email}
+            autoFocus
             name="email"
             label="E-mail"
+            textContentType="emailAddress"
             placeholder="Ex.: joaodasilva@email.com"
-            autoFocus
+            value={values.email}
+            error={error.field === "email"}
+            errorMessage={error.field === "email" ? error.message : undefined}
           />
           <PasswordInput
             onFocus={() => setPasswordFocused(true)}
             onChange={handlePasswordChange}
-            withBoard={passwordFocused}
-            enableBoard={isTypingPassword}
-            disabled={isLoading}
-            error={error.field === "password"}
-            value={values.password}
             name="password"
             label="Senha"
             placeholder="**********"
+            value={values.password}
+            disabled={isLoading}
+            withBoard={passwordFocused}
+            enableBoard={isTypingPassword}
+            error={error.field === "password"}
           />
           <PasswordInput
             onChange={(value) => handleChange("passwordConfirmation", value)}
             onBlur={handlePasswordConfirmationValidation}
-            disabled={isLoading}
-            error={error.field === "passwordConfirmation"}
-            value={values.passwordConfirmation}
             name="passwordConfirmation"
             label="Confirmar senha"
             placeholder="**********"
+            value={values.passwordConfirmation}
+            disabled={isLoading}
+            error={error.field === "passwordConfirmation"}
+            errorMessage={
+              error.field === "passwordConfirmation" ? error.message : undefined
+            }
           />
         </View>
         <SubmitButton

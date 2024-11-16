@@ -31,7 +31,6 @@ export default function LoginScreen(props: LoginScreenProps) {
 
   async function login() {
     if (!validateAllFields()) return;
-
     setError({});
     setIsLoading(true);
     const result = await httpAuthService.login(values);
@@ -40,7 +39,9 @@ export default function LoginScreen(props: LoginScreenProps) {
       const field = result.error.field || undefined;
       setIsLoading(false);
       setError({ message: result.error.message, field: field as any });
-      scrollRef.current?.scrollTo({ y: 0, animated: true });
+      if (!field) {
+        scrollRef.current?.scrollTo({ y: 0, animated: true });
+      }
     } else {
       props.navigation.dispatch(
         CommonActions.reset({ routes: [{ name: "Onboarding/ProfileForm" }] })
@@ -71,7 +72,7 @@ export default function LoginScreen(props: LoginScreenProps) {
         contentContainerStyle={styles.scrollView}
       >
         <LogoSVG style={styles.logo} />
-        {error.message && (
+        {error.message && !error.field && (
           <ErrorMessage style={styles.error} message={error.message} />
         )}
         <ScreenTitle
@@ -82,26 +83,30 @@ export default function LoginScreen(props: LoginScreenProps) {
           <Input
             onChange={(data) => handleChange("email", data)}
             onBlur={() => validateField("email", values.email, validateEmail)}
-            disabled={isLoading}
-            error={error.field === "email"}
-            textContentType="emailAddress"
-            value={values.email}
+            autoFocus
             name="email"
             label="E-mail"
-            placeholder="aryela.scostaux@gmail.com"
-            autoFocus
+            placeholder="Ex: joaodasilva@email.com"
+            textContentType="emailAddress"
+            value={values.email}
+            disabled={isLoading}
+            error={error.field === "email"}
+            errorMessage={error.field === "email" ? error.message : undefined}
           />
           <PasswordInput
             onChange={(data) => handleChange("password", data)}
             onBlur={() =>
               validateField("password", values.password, validateEmptyField)
             }
-            disabled={isLoading}
-            error={error.field === "password"}
-            value={values.password}
             name="password"
             label="Senha"
             placeholder="**********"
+            value={values.password}
+            disabled={isLoading}
+            error={error.field === "password"}
+            errorMessage={
+              error.field === "password" ? error.message : undefined
+            }
           />
         </View>
         <SubmitButton

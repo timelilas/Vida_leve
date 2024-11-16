@@ -53,7 +53,7 @@ export default function ProfileFormScreen(props: ProfileFromScreenProps) {
             value=""
             name="name"
             label="Nome completo"
-            placeholder="Aryela"
+            placeholder="Nome completo (Ex.: Maria Silva)"
             textContentType="name"
           />
           <Input
