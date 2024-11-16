@@ -52,7 +52,7 @@ export default function ProfileFormScreen(props: ProfileFromScreenProps) {
           <Input
             value=""
             name="name"
-            label="Como gostaria de ser chamado?"
+            label="Nome completo"
             placeholder="Aryela"
             textContentType="name"
           />
