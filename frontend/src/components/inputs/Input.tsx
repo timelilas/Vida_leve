@@ -1,12 +1,14 @@
 import { Text, TextInput, View, TextInputProps } from "react-native";
 import { AlertIcon } from "../icons/AlertIcon";
 import { defaultInputStyles } from "./styles";
+import { ErrorMessage } from "../ErrorMessage";
 
 interface InputProps {
   name: string;
   value: string;
   disabled?: boolean;
   error?: boolean;
+  errorMessage?: string;
   label?: string;
   autoFocus?: boolean;
   placeholder?: string;
@@ -61,6 +63,7 @@ export function Input(props: InputProps) {
           <AlertIcon style={defaultInputStyles.errorIcon} />
         ) : null}
       </View>
+      {props.errorMessage && <ErrorMessage message={props.errorMessage} />}
     </View>
   );
 }

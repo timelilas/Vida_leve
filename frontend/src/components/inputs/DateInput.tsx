@@ -15,6 +15,7 @@ import { DateData } from "react-native-calendars";
 import { useCalendar } from "../calendar/useCalendar";
 import { dateToPTBR } from "../../utils/helpers";
 import { defaultInputStyles } from "./styles";
+import { ErrorMessage } from "../ErrorMessage";
 
 interface PasswordInputProps {
   name: string;
@@ -27,6 +28,7 @@ interface PasswordInputProps {
   keyboardType?: TextInputProps["keyboardType"];
   textContentType?: TextInputProps["textContentType"];
   error?: boolean;
+  errorMessage?: string;
 }
 
 export function DateInput(props: PasswordInputProps) {
@@ -122,6 +124,7 @@ export function DateInput(props: PasswordInputProps) {
           </View>
         )}
       </View>
+      {props.errorMessage && <ErrorMessage message={props.errorMessage} />}
       {isCalendarVisible && (
         <Calendar
           month={month}

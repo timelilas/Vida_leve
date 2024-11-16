@@ -1,10 +1,18 @@
 import { useState } from "react";
-import { StyleSheet, Text, TextInput, View, Pressable } from "react-native";
+import {
+  StyleSheet,
+  Text,
+  TextInput,
+  View,
+  Pressable,
+  ViewProps,
+} from "react-native";
 import { EyeOffIcon } from "../icons/EyeOffIcon";
 import { EyeOpenIcon } from "../icons/EyeOpenIcon";
 import { AlertIcon } from "../icons/AlertIcon";
 import { defaultInputStyles } from "./styles";
 import { PasswordValidationBoard } from "../validationBoard/PasswordValidationBoard";
+import { ErrorMessage } from "../ErrorMessage";
 
 interface PasswordInputProps {
   name: string;
@@ -16,6 +24,7 @@ interface PasswordInputProps {
   autoFocus?: boolean;
   placeholder?: string;
   error?: boolean;
+  errorMessage?: string;
   onFocus?: () => void;
   onBlur?: () => void;
   onChange?: (text: string) => void;
@@ -81,6 +90,7 @@ export function PasswordInput(props: PasswordInputProps) {
           <AlertIcon style={defaultInputStyles.errorIcon} />
         ) : null}
       </View>
+      {props.errorMessage && <ErrorMessage message={props.errorMessage} />}
       {props.withBoard && (
         <PasswordValidationBoard
           enabled={!!props.enableBoard}
