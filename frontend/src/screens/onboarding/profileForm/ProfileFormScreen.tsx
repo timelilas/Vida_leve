@@ -32,7 +32,10 @@ export default function ProfileFormScreen(props: ProfileFromScreenProps) {
 
   return (
     <ScreenWrapper>
-      <ScrollView contentContainerStyle={styles.scrollContainer}>
+      <ScrollView
+        showsVerticalScrollIndicator={false}
+        contentContainerStyle={styles.scrollContainer}
+      >
         <ScreenHeader
           navigation={props.navigation}
           style={styles.headerContainer}
@@ -52,7 +55,6 @@ export default function ProfileFormScreen(props: ProfileFromScreenProps) {
             label="Como gostaria de ser chamado?"
             placeholder="Aryela"
             textContentType="name"
-            autoFocus
           />
           <Input
             value=""
@@ -60,7 +62,6 @@ export default function ProfileFormScreen(props: ProfileFromScreenProps) {
             label="Telefone"
             placeholder="(DDD) + número de telefone"
             textContentType="telephoneNumber"
-            autoFocus
           />
           <DateInput
             textContentType="birthdate"

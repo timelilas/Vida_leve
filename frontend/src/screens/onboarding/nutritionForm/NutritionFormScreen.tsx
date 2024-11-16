@@ -16,11 +16,11 @@ import { SubmitButton } from "../../../components/buttons/SubmitButton";
 import { ScreenTitle } from "../../../components/ScreenTitle";
 import { Paragraph } from "../../../components/Paragraph";
 
-export default function NutritionFromScreen({
-  navigation,
-}: {
+interface NutritionFormScreenProps {
   navigation: NavigationProp<any>;
-}) {
+}
+
+export default function NutritionFormScreen(props: NutritionFormScreenProps) {
   const [activityLevel, setActivityLevel] =
     useState<PhysicalActivityLevel | null>(null);
 
@@ -30,8 +30,11 @@ export default function NutritionFromScreen({
 
   return (
     <ScreenWrapper>
-      <ScrollView contentContainerStyle={styles.scrollContainer}>
-        <ScreenHeader navigation={navigation} />
+      <ScrollView
+        showsVerticalScrollIndicator={false}
+        contentContainerStyle={styles.scrollContainer}
+      >
+        <ScreenHeader navigation={props.navigation} />
         <ScreenTitle title="Nos conte mais sobre você!" style={styles.title} />
         <Paragraph
           text="Precisamos da sua altura, peso atual, meta de peso e frequência de atividade física para personalizar sua jornada."
@@ -41,7 +44,6 @@ export default function NutritionFromScreen({
           <Input
             value=""
             keyboardType="numeric"
-            autoFocus
             label="Altura"
             placeholder="Ex.: 1,60"
             name="height"
@@ -66,33 +68,33 @@ export default function NutritionFromScreen({
               text="Qual é o seu nível de atividade física diária?"
             />
             <FrequencyButton
-              selected={activityLevel === "sedentary"}
-              onPress={() => selectLevel("sedentary")}
+              selected={activityLevel === "pouco"}
+              onPress={() => selectLevel("pouco")}
               title="Pouca atividade"
               description="Pouco tempo em pé. p. ex. home office/escritório"
             />
             <FrequencyButton
-              selected={activityLevel === "light"}
-              onPress={() => selectLevel("light")}
+              selected={activityLevel === "leve"}
+              onPress={() => selectLevel("leve")}
               title="Atividade leve"
               description="Quase sempre em pé. p. ex. professor(a)"
             />
             <FrequencyButton
-              selected={activityLevel === "moderated"}
-              onPress={() => selectLevel("moderated")}
+              selected={activityLevel === "moderado"}
+              onPress={() => selectLevel("moderado")}
               title="Atividade moderada"
               description="Quase sempre em pé. p. ex. professor(a)/ atendente"
             />
             <FrequencyButton
-              selected={activityLevel === "intense"}
-              onPress={() => selectLevel("intense")}
+              selected={activityLevel === "intenso"}
+              onPress={() => selectLevel("intenso")}
               title="Atividade intensa"
               description="Fisicamente árduo. p. ex. construção civil"
             />
           </View>
         </View>
         <SubmitButton
-          onPress={() => navigation.navigate("Onboarding/Goals")}
+          onPress={() => props.navigation.navigate("Onboarding/PlanSelection")}
           style={styles.submitButton}
           type="primary"
           title="Continuar cadastro"

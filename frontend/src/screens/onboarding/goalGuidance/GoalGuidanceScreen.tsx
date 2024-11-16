@@ -18,18 +18,21 @@ import { TargetIcon } from "../../../components/icons/TargetIcon";
 import { NavigationProp } from "@react-navigation/native";
 import { ScreenTitle } from "../../../components/ScreenTitle";
 
-export default function GoalGuidanceScreen({
-  navigation,
-}: {
+interface GoalGuidanceScreenProps {
   navigation: NavigationProp<any>;
-}) {
+}
+
+export default function GoalGuidanceScreen(props: GoalGuidanceScreenProps) {
   return (
     <ScreenWrapper>
-      <ScrollView contentContainerStyle={styles.scrollContainer}>
+      <ScrollView
+        showsVerticalScrollIndicator={false}
+        contentContainerStyle={styles.scrollContainer}
+      >
         <View style={styles.headerContainer}>
           <HorizontalLogoSVG />
           <Pressable
-            onPress={() => navigation.goBack()}
+            onPress={() => props.navigation.goBack()}
             hitSlop={4}
             style={styles.closeButton}
           >
@@ -56,7 +59,7 @@ export default function GoalGuidanceScreen({
               />
               <View style={styles.separator} />
               <GuidanceItem
-                title="Coma o que ama, sem restrições!"
+                title="Meta personalizada "
                 description="Você terá um limite diário de calorias para garantir que alcance a sua meta."
                 icon={<TargetIcon />}
               />
@@ -74,7 +77,7 @@ export default function GoalGuidanceScreen({
             <View style={styles.adviceImageBox}>
               <Image
                 style={styles.adviceImage}
-                source={require("../../../assets/healthy-lifestyle.png")}
+                source={require("../../../assets/images/healthy-lifestyle.png")}
               />
             </View>
             <Text style={styles.adviceLabel}>

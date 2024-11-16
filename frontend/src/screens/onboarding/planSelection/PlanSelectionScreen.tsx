@@ -1,17 +1,15 @@
 import {
-  Pressable,
   StyleSheet,
-  Text,
   View,
   ScrollView,
   Platform,
   StatusBar,
 } from "react-native";
 import { useState } from "react";
-import { GoalType } from "./types/types";
-import { GradualGoalButton } from "../../../components/buttons/GoalButtons/GradualGoalButton";
-import { ModeratedGoalButton } from "../../../components/buttons/GoalButtons/ModeratedGoalButton";
-import { AcceleratedGoalButton } from "../../../components/buttons/GoalButtons/AcceleratedGoalButton";
+import { PlanType } from "./types/types";
+import { GradualPlanButton } from "../../../components/buttons/planButtons/GradualPlanButton";
+import { ModeratedPlanButton } from "../../../components/buttons/planButtons/ModeratedPlanButton";
+import { AcceleratedGoalButton } from "../../../components/buttons/planButtons/AcceleratedPlanButton";
 import { SubmitButton } from "../../../components/buttons/SubmitButton";
 import { ScreenWrapper } from "../../../components/ScreenWrapper";
 import { NavigationProp } from "@react-navigation/native";
@@ -19,23 +17,26 @@ import { ScreenHeader } from "../../../components/ScreenHeader";
 import { ScreenTitle } from "../../../components/ScreenTitle";
 import { Paragraph } from "../../../components/Paragraph";
 
-export default function GoalsScreen({
-  navigation,
-}: {
+interface PlanSelectionScreenProps {
   navigation: NavigationProp<any>;
-}) {
-  const [selectedGoal, setSelectedGoal] = useState<GoalType | null>(null);
+}
 
-  function selectGoal(goal: GoalType) {
+export default function PlanSelectionScreen(props: PlanSelectionScreenProps) {
+  const [selectedGoal, setSelectedGoal] = useState<PlanType | null>(null);
+
+  function selectGoal(goal: PlanType) {
     setSelectedGoal(goal === selectedGoal ? null : goal);
   }
 
   return (
     <ScreenWrapper>
-      <ScrollView contentContainerStyle={styles.scrollContainer}>
+      <ScrollView
+        showsVerticalScrollIndicator={false}
+        contentContainerStyle={styles.scrollContainer}
+      >
         <View>
           <ScreenHeader
-            navigation={navigation}
+            navigation={props.navigation}
             style={styles.headerContainer}
           />
           <View style={styles.contentContainer}>
@@ -48,11 +49,11 @@ export default function GoalsScreen({
               text="Selecione entre 3 opções de planos para alcançar seus objetivos no seu próprio tempo. Seja qual for a sua escolha, estamos prontos para te ajudar a chegar lá!"
             />
             <View style={styles.goalsWrapper}>
-              <GradualGoalButton
+              <GradualPlanButton
                 selected={selectedGoal === "gradual"}
                 onPress={() => selectGoal("gradual")}
               />
-              <ModeratedGoalButton
+              <ModeratedPlanButton
                 selected={selectedGoal === "moderado"}
                 onPress={() => selectGoal("moderado")}
               />
@@ -64,7 +65,7 @@ export default function GoalsScreen({
           </View>
         </View>
         <SubmitButton
-          onPress={() => navigation.navigate("Onboarding/NutritionForm")}
+          onPress={() => props.navigation.navigate("Onboarding/GoalGuidance")}
           title="Salvar informações"
           type="primary"
           style={styles.submitButton}
