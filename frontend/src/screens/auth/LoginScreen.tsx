@@ -17,7 +17,7 @@ const LoginScreen = ({ navigation }: { navigation: NavigationProp<any> }) => {
   const login = async () => {
     try {
       if (email && password) {
-        const user = { email, senha: password };
+        const user = { email, password };
         const { data } = await request("POST", "/auth/login", user);
         console.log(data);
         navigation.navigate("Onboarding/Goals");
