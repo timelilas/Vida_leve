@@ -27,10 +27,11 @@ export class ZodHelper {
   }
 
   public static string(field: string, min: number, max?: number) {
-    return this.baseString(field, min, max).refine(
-      (input) => input.replace(/[^À-ú\w]|_/g, "").length >= min,
-      { message: `Deve conter no mínimo ${min} caracteres sem símbolos.s` }
-    );
+    return this.baseString(field, min, max)
+      .trim()
+      .refine((input) => input.replace(/[^À-ú\w]|_/g, "").length >= min, {
+        message: `Deve conter no mínimo ${min} caracteres sem símbolos.`,
+      });
   }
 
   public static email(field: string, max?: number) {
@@ -39,6 +40,8 @@ export class ZodHelper {
         required_error: messages.requiredMsg(field),
         invalid_type_error: messages.stringMsg(field),
       })
+      .toLowerCase()
+      .trim()
       .email(messages.invalidEmailMsg());
     return max
       ? baseEmail.max(max, messages.maxLengthMsg(field, max))
