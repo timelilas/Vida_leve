@@ -1,21 +1,13 @@
-import { Sequelize } from 'sequelize';
-import options from './config';
-import * as dotenv from 'dotenv';
+import { Sequelize } from "sequelize";
+import sequelizeOptions = require("./config");
 
-dotenv.config()
-
-export const db = new Sequelize(options)
+export const sequelize = new Sequelize(sequelizeOptions);
 
 export const connectDB = async () => {
   try {
-    await db.authenticate();
-    //Sincroniza o banco de dados a cada alteração feita nos schemas
-    //apenas em desenvolvimento
-    if(process.env.NODE_ENV === "development"){
-      await db.sync({alter: true})
-    }
-    console.log('Database connected successfully.');
+    await sequelize.authenticate();
+    console.log("Database connected successfully.");
   } catch (error) {
-    console.error('Unable to connect to the database:', error);
+    console.error("Unable to connect to the database:", error);
   }
 };
