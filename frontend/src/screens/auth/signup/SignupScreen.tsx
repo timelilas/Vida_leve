@@ -69,15 +69,18 @@ const SignupScreen = (props: SignupScreenProps) => {
             errorMessage={error.field === "email" ? error.message : undefined}
           />
           <PasswordInput
-            onFocus={() => setPasswordFocused(true)}
             onChange={handlePasswordChange}
+            onFocus={() => setPasswordFocused(true)}
+            onBlur={() =>
+              validateField("password", values.password, validatePassword)
+            }
             name="password"
             label="Senha"
             placeholder="**********"
             value={values.password}
             disabled={isLoading}
             withBoard={passwordFocused}
-            enableBoard={isTypingPassword}
+            enableBoard={isTypingPassword || error.field === "password"}
             error={error.field === "password"}
           />
           <PasswordInput
