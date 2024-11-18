@@ -27,10 +27,11 @@ export class ZodHelper {
   }
 
   public static string(field: string, min: number, max?: number) {
-    return this.baseString(field, min, max).refine(
-      (input) => input.replace(/[^À-ú\w]|_/g, "").length >= min,
-      { message: `Deve conter no mínimo ${min} caracteres sem símbolos.s` }
-    );
+    return this.baseString(field, min, max)
+      .trim()
+      .refine((input) => input.replace(/[^À-ú\w]|_/g, "").length >= min, {
+        message: `Deve conter no mínimo ${min} caracteres sem símbolos.`,
+      });
   }
 
   public static email(field: string, max?: number) {
@@ -39,6 +40,8 @@ export class ZodHelper {
         required_error: messages.requiredMsg(field),
         invalid_type_error: messages.stringMsg(field),
       })
+      .toLowerCase()
+      .trim()
       .email(messages.invalidEmailMsg());
     return max
       ? baseEmail.max(max, messages.maxLengthMsg(field, max))
@@ -66,18 +69,16 @@ export class ZodHelper {
       });
   }
 
-  public static formatZodError(error: ZodError): string[] {
-    const errors: string[] = [];
+  public static formatZodError(error: ZodError) {
+    const errors: { field: string | null; message: string }[] = [];
     for (const issue of error.issues) {
       if (issue.path.length) {
-        errors.push(issue.message);
+        errors.push({ field: issue.path.join("."), message: issue.message });
       } else {
         const key = (issue as { keys: string[] }).keys.join(".");
-        errors.push(
-          `${key[0].toUpperCase()}${key.slice(
-            1
-          )} ${issue.message.toLowerCase()}`
-        );
+        const outerField = `${key[0].toUpperCase()}${key.slice(1)}`;
+        const message = `${outerField} ${issue.message.toLowerCase()}`;
+        errors.push({ field: null, message });
       }
     }
 
