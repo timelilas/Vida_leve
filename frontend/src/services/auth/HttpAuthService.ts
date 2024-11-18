@@ -1,5 +1,5 @@
 import { HttpResponse } from "../types";
-import { HttpLoginDTO, HttpSignupDTO } from "./types";
+import { HttpLoginDTO, HttpProfileFormnDTO, HttpSignupDTO } from "./types";
 import { HttpService } from "../HttpService";
 
 export class HttpAuthService extends HttpService {
@@ -17,5 +17,13 @@ export class HttpAuthService extends HttpService {
       path: "/auth/login",
       body: data,
     });
+  }
+
+  public async profileForm(data: HttpProfileFormnDTO): Promise<HttpResponse> {
+    return await this.submit({
+      method: "PUT",
+      path: "/user/profile",
+      body: data,
+    })
   }
 }

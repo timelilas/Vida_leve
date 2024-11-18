@@ -8,7 +8,7 @@ import {
 } from "react-native";
 import { ScreenWrapper } from "../../../components/ScreenWrapper";
 import { ScreenHeader } from "../../../components/ScreenHeader";
-import { NavigationProp } from "@react-navigation/native";
+import { CommonActions, NavigationProp } from "@react-navigation/native";
 import { Input } from "../../../components/inputs/Input";
 import { SubmitButton } from "../../../components/buttons/SubmitButton";
 import { DateInput } from "../../../components/inputs/DateInput";
@@ -18,6 +18,7 @@ import { useState } from "react";
 import { Paragraph } from "../../../components/Paragraph";
 import { ScreenTitle } from "../../../components/ScreenTitle";
 import { useForm } from "../../../hooks/useForm";
+import { httpAuthService } from "../../../services/auth";
 
 type ProfileFromScreenProps = {
   navigation: NavigationProp<any>;
@@ -27,15 +28,32 @@ const profileFromInitialState = {
   name: "",
   phone: "",
   birthDate: "",
+  gender: "",
 };
 
 const ProfileFormScreen = (props: ProfileFromScreenProps) => {
   const [gender, setGender] = useState<GenderType | null>(null);
-  const { data, handleChange } = useForm(profileFromInitialState);
+  const { data, handleChange, setError } = useForm(profileFromInitialState);
   const { values } = data;
+
+  async function ProfileForme() {
+    const result = await httpAuthService.profileForm(values)
+
+    if(!result.success) {
+      const field = result.error.field || undefined;
+      setError({ message: result.error.message, field: field as any });
+    }
+    else {
+      console.log(result);
+      props.navigation.dispatch(
+        CommonActions.reset({ routes : [{ name: "Onboarding/NutritionForm"}]})
+      )
+    }
+  }
 
   function selectGender(value: GenderType) {
     setGender(value === gender ? null : value);
+    handleChange("gender", value)
   }
 
   return (
@@ -100,7 +118,7 @@ const ProfileFormScreen = (props: ProfileFromScreenProps) => {
           </View>
         </View>
         <SubmitButton
-          onPress={() => props.navigation.navigate("Onboarding/NutritionForm")}
+          onPress={ProfileForme}
           style={styles.submitButton}
           title="Continuar"
           type="primary"
