@@ -19,11 +19,17 @@ export class HttpAuthService extends HttpService {
     });
   }
 
-  public async profileForm(data: HttpProfileFormDTO): Promise<HttpResponse> {
+  public async updateProfile(data: HttpProfileFormDTO): Promise<HttpResponse> {
+    // pegar o token no async storage
+    const token = "token-genérico";
+
     return await this.submit({
       method: "PUT",
       path: "/user/profile",
       body: data,
+      headers: {
+        Authorization: `Bearer ${token}`,
+      },
     });
   }
 }
