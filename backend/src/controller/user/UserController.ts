@@ -10,9 +10,9 @@ export default class UserController {
       return res.status(200).json({ data: profiles });
     } catch (error) {
       console.error("Server internal error:", error);
-      return res
-        .status(500)
-        .json({ error: "Erro ao obter a lista de usuários." });
+      return res.status(500).json({
+        error: { field: null, message: "Erro ao obter a lista de usuários." },
+      });
     }
   }
 
@@ -30,17 +30,23 @@ export default class UserController {
       });
 
       if (!foundUser) {
-        return res
-          .status(404)
-          .json({ error: `Usuário com id ${id} não encontrado.` });
+        return res.status(404).json({
+          error: {
+            field: "id",
+            message: `Usuário com id ${id} não encontrado.`,
+          },
+        });
       }
 
       return res.status(200).json({ data: foundUser });
     } catch (error) {
       console.error("Server internal error:", error);
-      return res
-        .status(500)
-        .json({ error: "Erro ao atualizar os dados do usuário." });
+      return res.status(500).json({
+        error: {
+          field: null,
+          message: "Erro ao atualizar os dados do usuário.",
+        },
+      });
     }
   }
 
@@ -50,17 +56,20 @@ export default class UserController {
       const foundUser = await this._userService.get(req.user.id);
 
       if (!foundUser) {
-        return res
-          .status(404)
-          .json({ error: `Usuário com id ${userId} não encontrado.` });
+        return res.status(404).json({
+          error: {
+            field: "id",
+            message: `Usuário com id ${userId} não encontrado.`,
+          },
+        });
       }
 
       return res.status(200).json({ data: foundUser });
     } catch (error) {
       console.error("Server internal error:", error);
-      return res
-        .status(500)
-        .json({ error: "Erro ao obter o perfil do usuário." });
+      return res.status(500).json({
+        error: { field: null, message: "Erro ao obter o perfil do usuário." },
+      });
     }
   }
 
@@ -71,14 +80,19 @@ export default class UserController {
       const deletedUser = await this._userService.delete(Number(id));
 
       if (!deletedUser) {
-        return res
-          .status(404)
-          .json({ error: `Usuário com id ${id} não encontrado` });
+        return res.status(404).json({
+          error: {
+            field: "id",
+            message: `Usuário com id ${id} não encontrado`,
+          },
+        });
       }
       return res.status(200).json({ data: "Usuário deletado com sucesso." });
     } catch (error) {
       console.error("Server internal error:", error);
-      return res.status(500).json({ error: "Erro ao deletar o usuário." });
+      return res.status(500).json({
+        error: { field: null, message: "Erro ao deletar o usuário." },
+      });
     }
   }
 }

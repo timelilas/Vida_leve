@@ -1,5 +1,1 @@
-export type PhysicalActivityLevel =
-  | "sedentary"
-  | "light"
-  | "moderate"
-  | "intense";
+export type PhysicalActivityLevel = "pouco" | "leve" | "moderado" | "intenso";

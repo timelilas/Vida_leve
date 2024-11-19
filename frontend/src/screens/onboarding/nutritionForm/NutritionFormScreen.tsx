@@ -3,23 +3,32 @@ import {
   StyleSheet,
   Platform,
   StatusBar,
-  Text,
+  View,
 } from "react-native";
 import { ScreenWrapper } from "../../../components/ScreenWrapper";
 import { NavigationProp } from "@react-navigation/native";
 import { ScreenHeader } from "../../../components/ScreenHeader";
-import { View } from "react-native";
-import { Input } from "../../../components/Input";
+import { Input } from "../../../components/inputs/Input";
 import { FrequencyButton } from "./components/FrequencyButton";
 import { useState } from "react";
 import { PhysicalActivityLevel } from "./types/types";
 import { SubmitButton } from "../../../components/buttons/SubmitButton";
+import { ScreenTitle } from "../../../components/ScreenTitle";
+import { Paragraph } from "../../../components/Paragraph";
+import { useForm } from "../../../hooks/useForm";
 
-export default function NutritionFromScreen({
-  navigation,
-}: {
+type NutritionFormScreenProps = {
   navigation: NavigationProp<any>;
-}) {
+};
+
+const nutritionFromInitialState = {
+  height: "",
+  weight: "",
+  goalWeight: "",
+};
+
+const NutritionFormScreen = (props: NutritionFormScreenProps) => {
+  const { data, handleChange } = useForm(nutritionFromInitialState);
   const [activityLevel, setActivityLevel] =
     useState<PhysicalActivityLevel | null>(null);
 
@@ -29,54 +38,74 @@ export default function NutritionFromScreen({
 
   return (
     <ScreenWrapper>
-      <ScrollView contentContainerStyle={styles.scrollContainer}>
-        <ScreenHeader navigation={navigation} />
-        <Text style={styles.title}>Nos conte mais sobre você!</Text>
-        <Text style={[styles.text, styles.description]}>
-          Precisamos da sua altura, peso atual, meta de peso e frequência de
-          atividade física para personalizar sua jornada.
-        </Text>
-        <View style={styles.inputGroup}>
+      <ScrollView
+        showsVerticalScrollIndicator={false}
+        contentContainerStyle={styles.scrollContainer}
+      >
+        <ScreenHeader navigation={props.navigation} />
+        <ScreenTitle title="Nos conte mais sobre você!" style={styles.title} />
+        <Paragraph
+          text="Precisamos da sua altura, peso atual, meta de peso e frequência de atividade física para personalizar sua jornada."
+          style={styles.description}
+        />
+        <View style={styles.form}>
           <Input
+            onChange={(value) => handleChange("height", value)}
+            value={data.values.height}
             keyboardType="numeric"
-            autoFocus
-            placeholder="1,60"
+            label="Altura"
+            placeholder="Ex.: 1,60"
             name="height"
           />
-          <Input keyboardType="numeric" name="wight" placeholder="60 kg" />
-          <Input keyboardType="numeric" name="goal" placeholder="55 kg" />
-        </View>
-        <View style={styles.exerciseLevel}>
-          <Text style={styles.text}>
-            Qual é o seu nível de atividade física diária?
-          </Text>
-          <FrequencyButton
-            selected={activityLevel === "sedentary"}
-            onPress={() => selectLevel("sedentary")}
-            title="Pouca atividade"
-            description="Pouco tempo em pé. p. ex. home office/escritório"
+          <Input
+            onChange={(value) => handleChange("weight", value)}
+            value={data.values.weight}
+            label="Peso atual"
+            keyboardType="numeric"
+            name="wight"
+            placeholder="Ex.: 60 kg"
           />
-          <FrequencyButton
-            selected={activityLevel === "light"}
-            onPress={() => selectLevel("light")}
-            title="Atividade leve"
-            description="Quase sempre em pé. p. ex. professor(a)"
+          <Input
+            onChange={(value) => handleChange("goalWeight", value)}
+            value={data.values.goalWeight}
+            label="Peso desejado"
+            keyboardType="numeric"
+            name="goal"
+            placeholder="Ex.: 55 kg"
           />
-          <FrequencyButton
-            selected={activityLevel === "moderate"}
-            onPress={() => selectLevel("moderate")}
-            title="Atividade moderada"
-            description="Quase sempre em pé. p. ex. professor(a)/ atendente"
-          />
-          <FrequencyButton
-            selected={activityLevel === "intense"}
-            onPress={() => selectLevel("intense")}
-            title="Atividade intensa"
-            description="Fisicamente árduo. p. ex. construção civil"
-          />
+          <View style={styles.exerciseLevel}>
+            <Paragraph
+              style={styles.label}
+              text="Qual é o seu nível de atividade física diária?"
+            />
+            <FrequencyButton
+              selected={activityLevel === "pouco"}
+              onPress={() => selectLevel("pouco")}
+              title="Pouca atividade"
+              description="Pouco tempo em pé. p. ex. home office/escritório"
+            />
+            <FrequencyButton
+              selected={activityLevel === "leve"}
+              onPress={() => selectLevel("leve")}
+              title="Atividade leve"
+              description="Quase sempre em pé. p. ex. professor(a)"
+            />
+            <FrequencyButton
+              selected={activityLevel === "moderado"}
+              onPress={() => selectLevel("moderado")}
+              title="Atividade moderada"
+              description="Quase sempre em pé. p. ex. professor(a)/ atendente"
+            />
+            <FrequencyButton
+              selected={activityLevel === "intenso"}
+              onPress={() => selectLevel("intenso")}
+              title="Atividade intensa"
+              description="Fisicamente árduo. p. ex. construção civil"
+            />
+          </View>
         </View>
         <SubmitButton
-          onPress={() => navigation.navigate("Onboarding/GoalGuidance")}
+          onPress={() => props.navigation.navigate("Onboarding/PlanSelection")}
           style={styles.submitButton}
           type="primary"
           title="Continuar cadastro"
@@ -84,7 +113,9 @@ export default function NutritionFromScreen({
       </ScrollView>
     </ScreenWrapper>
   );
-}
+};
+
+export default NutritionFormScreen;
 
 const styles = StyleSheet.create({
   scrollContainer: {
@@ -95,28 +126,22 @@ const styles = StyleSheet.create({
       24 + (Platform.OS === "android" ? StatusBar.currentHeight || 0 : 0),
   },
   title: {
-    fontSize: 24,
-    lineHeight: 28.8,
-    fontFamily: "Roboto-700",
-    color: "#4E4B66",
-    marginTop: 64,
-  },
-  text: {
-    fontSize: 16,
-    fontFamily: "Roboto-400",
-    color: "#4E4B66",
+    marginTop: 16,
   },
   description: {
     marginTop: 8,
   },
-  inputGroup: {
+  label: {
+    lineHeight: 16,
+  },
+  form: {
+    gap: 16,
     marginTop: 24,
-    gap: 24,
+    marginBottom: 40,
   },
   exerciseLevel: {
     gap: 8,
-    marginTop: 100,
-    paddingBottom: 32,
+    paddingBottom: 16,
     overflow: "hidden",
   },
   submitButton: {
