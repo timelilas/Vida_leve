@@ -1,7 +1,6 @@
 import React, { useState } from "react";
 import { View, ScrollView } from "react-native";
 import { LogoSVG } from "../../../components/logos/LogoSVG";
-import { NavigationProp } from "@react-navigation/native";
 import { ScreenWrapper } from "../../../components/ScreenWrapper";
 import { Input } from "../../../components/inputs/Input";
 import { PasswordInput } from "../../../components/inputs/PasswordInput";
@@ -12,11 +11,8 @@ import { validateEmail } from "../../../utils/validations/email";
 import { validatePassword } from "../../../utils/validations/password";
 import { validatePasswordConfirmation } from "../../../utils/validations/passwordConfirmation";
 import { useSignupForm } from "./useSignupForm";
+import { SignupScreenProps } from "./types";
 import styles from "../styles";
-
-type SignupScreenProps = {
-  navigation: NavigationProp<any>;
-};
 
 const SignupScreen = (props: SignupScreenProps) => {
   const [passwordFocused, setPasswordFocused] = useState(false);
@@ -25,7 +21,8 @@ const SignupScreen = (props: SignupScreenProps) => {
     useSignupForm({ navigation: props.navigation });
 
   function handlePasswordConfirmationValidation() {
-    if (validatePassword(values.password).success) {
+    const validPassword = validatePassword(values.password).success;
+    if (validPassword) {
       const value = values.passwordConfirmation;
       validateField("passwordConfirmation", value, (value: any) =>
         validatePasswordConfirmation(values.password, value)
@@ -100,7 +97,7 @@ const SignupScreen = (props: SignupScreenProps) => {
         <SubmitButton
           disabled={isLoading}
           style={styles.button}
-          title="Continuar"
+          title="Começar agora"
           type="primary"
           onPress={signup}
         />

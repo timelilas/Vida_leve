@@ -1,7 +1,7 @@
 import { useRef } from "react";
 import { View, ScrollView } from "react-native";
 import { LogoSVG } from "../../../components/logos/LogoSVG";
-import { CommonActions, NavigationProp } from "@react-navigation/native";
+import { CommonActions } from "@react-navigation/native";
 import { Input } from "../../../components/inputs/Input";
 import { PasswordInput } from "../../../components/inputs/PasswordInput";
 import { ScreenWrapper } from "../../../components/ScreenWrapper";
@@ -12,13 +12,10 @@ import { ErrorMessage } from "../../../components/ErrorMessage";
 import { useForm } from "../../../hooks/useForm";
 import { validateEmail } from "../../../utils/validations/email";
 import { validateEmptyField } from "../../../utils/validations/common";
+import { LoginFormData, LoginScreenProps } from "./types";
 import styles from "../styles";
 
-type LoginScreenProps = {
-  navigation: NavigationProp<any>;
-};
-
-const loginInitialState = {
+const loginInitialState: LoginFormData = {
   email: "",
   password: "",
 };
@@ -31,7 +28,6 @@ const LoginScreen = (props: LoginScreenProps) => {
 
   async function login() {
     if (!validateAllFields()) return;
-
     setError({});
     setIsLoading(true);
 
@@ -39,10 +35,8 @@ const LoginScreen = (props: LoginScreenProps) => {
 
     if (!result.success) {
       const field = result.error.field || undefined;
-
       setIsLoading(false);
       setError({ message: result.error.message, field: field as any });
-
       if (!field && field === "all") {
         scrollRef.current?.scrollTo({ y: 0, animated: true });
       }
