@@ -8,23 +8,19 @@ import {
 } from "react-native";
 import { ScreenWrapper } from "../../../components/ScreenWrapper";
 import { ScreenHeader } from "../../../components/ScreenHeader";
-import { CommonActions, NavigationProp } from "@react-navigation/native";
+import { CommonActions } from "@react-navigation/native";
 import { Input } from "../../../components/inputs/Input";
 import { SubmitButton } from "../../../components/buttons/SubmitButton";
 import { DateInput } from "../../../components/inputs/DateInput";
 import { ToggleButton } from "../../../components/buttons/ToggleButton";
-import { GenderType } from "./types/types";
-import { useState } from "react";
+import { GenderType, ProfileFormData, ProfileFromScreenProps } from "./types";
 import { Paragraph } from "../../../components/Paragraph";
 import { ScreenTitle } from "../../../components/ScreenTitle";
 import { useForm } from "../../../hooks/useForm";
 import { httpAuthService } from "../../../services/auth";
+import { maskPhone, maskDatePTBR, onlyNumbers } from "../../../utils/masks";
 
-type ProfileFromScreenProps = {
-  navigation: NavigationProp<any>;
-};
-
-const profileFromInitialState = {
+const profileFormInitialState: ProfileFormData = {
   name: "",
   phone: "",
   birthDate: "",
@@ -32,28 +28,25 @@ const profileFromInitialState = {
 };
 
 const ProfileFormScreen = (props: ProfileFromScreenProps) => {
-  const [gender, setGender] = useState<GenderType | null>(null);
-  const { data, handleChange, setError } = useForm(profileFromInitialState);
+  const { data, handleChange, setError } = useForm(profileFormInitialState);
   const { values } = data;
 
-  async function ProfileForme() {
-    const result = await httpAuthService.profileForm(values)
+  async function submitProfile() {
+    const result = await httpAuthService.updateProfile(values);
 
-    if(!result.success) {
+    if (!result.success) {
       const field = result.error.field || undefined;
       setError({ message: result.error.message, field: field as any });
-    }
-    else {
+    } else {
       console.log(result);
       props.navigation.dispatch(
-        CommonActions.reset({ routes : [{ name: "Onboarding/NutritionForm"}]})
-      )
+        CommonActions.reset({ routes: [{ name: "Onboarding/NutritionForm" }] })
+      );
     }
   }
 
   function selectGender(value: GenderType) {
-    setGender(value === gender ? null : value);
-    handleChange("gender", value)
+    handleChange("gender", value);
   }
 
   return (
@@ -76,7 +69,7 @@ const ProfileFormScreen = (props: ProfileFromScreenProps) => {
         />
         <View style={styles.form}>
           <Input
-            value={values.name}
+            value={data.values.name}
             onChange={(value) => handleChange("name", value)}
             name="name"
             label="Nome completo"
@@ -84,17 +77,17 @@ const ProfileFormScreen = (props: ProfileFromScreenProps) => {
             textContentType="name"
           />
           <Input
-            value={values.phone}
-            onChange={(value) => handleChange("phone", value)}
+            value={maskPhone(data.values.phone)}
+            onChange={(value) => handleChange("phone", onlyNumbers(value))}
             name="phone"
             label="Telefone"
             placeholder="(DDD) + número de telefone"
             textContentType="telephoneNumber"
           />
           <DateInput
-            value={values.birthDate}
+            value={data.values.birthDate}
             textContentType="birthdate"
-            onChange={(value) => handleChange("birthDate", value)}
+            onChange={(value) => handleChange("birthDate", maskDatePTBR(value))}
             label="Data de nascimento"
             placeholder="dd/mm/aaaa"
             name="birthDate"
@@ -103,13 +96,13 @@ const ProfileFormScreen = (props: ProfileFromScreenProps) => {
             <Text style={styles.genderLabel}>Gênero social</Text>
             <View style={styles.genderButtons}>
               <ToggleButton
-                selected={gender === "female"}
+                selected={data.values.gender === "female"}
                 onPress={() => selectGender("female")}
               >
                 <Text style={styles.gender}>Feminino</Text>
               </ToggleButton>
               <ToggleButton
-                selected={gender === "male"}
+                selected={data.values.gender === "male"}
                 onPress={() => selectGender("male")}
               >
                 <Text style={styles.gender}>Masculino</Text>
@@ -118,7 +111,7 @@ const ProfileFormScreen = (props: ProfileFromScreenProps) => {
           </View>
         </View>
         <SubmitButton
-          onPress={ProfileForme}
+          onPress={submitProfile}
           style={styles.submitButton}
           title="Continuar"
           type="primary"

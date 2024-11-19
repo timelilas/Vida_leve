@@ -1,5 +1,5 @@
 import { HttpResponse } from "../types";
-import { HttpLoginDTO, HttpProfileFormnDTO, HttpSignupDTO } from "./types";
+import { HttpLoginDTO, HttpProfileFormDTO, HttpSignupDTO } from "./types";
 import { HttpService } from "../HttpService";
 
 export class HttpAuthService extends HttpService {
@@ -19,11 +19,17 @@ export class HttpAuthService extends HttpService {
     });
   }
 
-  public async profileForm(data: HttpProfileFormnDTO): Promise<HttpResponse> {
+  public async updateProfile(data: HttpProfileFormDTO): Promise<HttpResponse> {
+    // pegar o token no async storage
+    const token = "token-genérico";
+
     return await this.submit({
       method: "PUT",
       path: "/user/profile",
       body: data,
-    })
+      headers: {
+        Authorization: `Bearer ${token}`,
+      },
+    });
   }
 }

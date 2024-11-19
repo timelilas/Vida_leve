@@ -1,21 +1,18 @@
 import { useForm } from "../../../hooks/useForm";
 import { useRef } from "react";
 import { ScrollView } from "react-native";
-import { NavigationProp, StackActions } from "@react-navigation/native";
+import { StackActions } from "@react-navigation/native";
 import { httpAuthService } from "../../../services/auth";
 import { validateEmail } from "../../../utils/validations/email";
 import { validatePassword } from "../../../utils/validations/password";
 import { validatePasswordConfirmation } from "../../../utils/validations/passwordConfirmation";
+import { SignupFormData, UseSignupFormParams } from "./types";
 
-const initialState = {
+const initialState: SignupFormData = {
   email: "",
   password: "",
   passwordConfirmation: "",
 };
-
-interface UseSignupFormParams {
-  navigation: NavigationProp<any>;
-}
 
 export function useSignupForm({ navigation }: UseSignupFormParams) {
   const ref = useRef<ScrollView>(null);

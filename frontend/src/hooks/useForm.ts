@@ -3,15 +3,16 @@ import { ErrorState, Validator } from "../screens/types";
 
 export function useForm<T extends Record<string, any>>(initialState: T) {
   const [values, setValues] = useState(initialState);
-  const [error, setError] = useState<ErrorState<keyof T>>({});
+  const [error, setError] = useState<ErrorState<keyof T | "all">>({});
   const [isLoading, setIsLoading] = useState(false);
 
   function validateField(field: keyof T, value: any, validator: Validator) {
     const validationResult = validator(value);
 
-    if (!validationResult.success && (error.field === field || !error.field)) {
-      const error = validationResult.error;
-      return setError({ message: error, field });
+    if (!validationResult.success) {
+      if (error.field === field || !error.field || error.field === "all") {
+        return setError({ message: validationResult.error, field });
+      }
     }
 
     if (validationResult.success && error.field === field) {
@@ -19,7 +20,7 @@ export function useForm<T extends Record<string, any>>(initialState: T) {
     }
   }
 
-  function handleChange(field: keyof T, value: string) {
+  function handleChange<K extends keyof T>(field: K, value: T[K]) {
     setValues((prev) => ({ ...prev, [field]: value }));
   }
 

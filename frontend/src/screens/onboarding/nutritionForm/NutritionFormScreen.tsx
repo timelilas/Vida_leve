@@ -6,34 +6,34 @@ import {
   View,
 } from "react-native";
 import { ScreenWrapper } from "../../../components/ScreenWrapper";
-import { NavigationProp } from "@react-navigation/native";
 import { ScreenHeader } from "../../../components/ScreenHeader";
 import { Input } from "../../../components/inputs/Input";
 import { FrequencyButton } from "./components/FrequencyButton";
-import { useState } from "react";
-import { PhysicalActivityLevel } from "./types/types";
+import {
+  ActitivyFrequency,
+  NutritionFormData,
+  NutritionFormScreenProps,
+} from "./types";
 import { SubmitButton } from "../../../components/buttons/SubmitButton";
 import { ScreenTitle } from "../../../components/ScreenTitle";
 import { Paragraph } from "../../../components/Paragraph";
 import { useForm } from "../../../hooks/useForm";
 
-type NutritionFormScreenProps = {
-  navigation: NavigationProp<any>;
-};
-
-const nutritionFromInitialState = {
+const nutritionFromInitialState: NutritionFormData = {
   height: "",
   weight: "",
   goalWeight: "",
+  activityFrequency: null,
 };
 
 const NutritionFormScreen = (props: NutritionFormScreenProps) => {
   const { data, handleChange } = useForm(nutritionFromInitialState);
-  const [activityLevel, setActivityLevel] =
-    useState<PhysicalActivityLevel | null>(null);
 
-  function selectLevel(level: PhysicalActivityLevel) {
-    setActivityLevel(level === activityLevel ? null : level);
+  function handleActivityFrequencyChange(frequency: ActitivyFrequency) {
+    handleChange(
+      "activityFrequency",
+      data.values.activityFrequency === frequency ? null : frequency
+    );
   }
 
   return (
@@ -79,26 +79,26 @@ const NutritionFormScreen = (props: NutritionFormScreenProps) => {
               text="Qual é o seu nível de atividade física diária?"
             />
             <FrequencyButton
-              selected={activityLevel === "pouco"}
-              onPress={() => selectLevel("pouco")}
+              selected={data.values.activityFrequency === "pouca"}
+              onPress={() => handleActivityFrequencyChange("pouca")}
               title="Pouca atividade"
               description="Pouco tempo em pé. p. ex. home office/escritório"
             />
             <FrequencyButton
-              selected={activityLevel === "leve"}
-              onPress={() => selectLevel("leve")}
+              selected={data.values.activityFrequency === "leve"}
+              onPress={() => handleActivityFrequencyChange("leve")}
               title="Atividade leve"
               description="Quase sempre em pé. p. ex. professor(a)"
             />
             <FrequencyButton
-              selected={activityLevel === "moderado"}
-              onPress={() => selectLevel("moderado")}
+              selected={data.values.activityFrequency === "moderada"}
+              onPress={() => handleActivityFrequencyChange("moderada")}
               title="Atividade moderada"
               description="Quase sempre em pé. p. ex. professor(a)/ atendente"
             />
             <FrequencyButton
-              selected={activityLevel === "intenso"}
-              onPress={() => selectLevel("intenso")}
+              selected={data.values.activityFrequency === "intensa"}
+              onPress={() => handleActivityFrequencyChange("intensa")}
               title="Atividade intensa"
               description="Fisicamente árduo. p. ex. construção civil"
             />

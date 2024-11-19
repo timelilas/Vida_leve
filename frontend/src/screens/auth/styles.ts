@@ -9,7 +9,7 @@ const styles = StyleSheet.create({
       24 + (Platform.OS === "android" ? StatusBar.currentHeight || 0 : 0),
   },
   title: {
-    marginTop: 40,
+    marginTop: 8,
   },
   logo: {
     alignSelf: "center",
@@ -25,7 +25,7 @@ const styles = StyleSheet.create({
     marginTop: "auto",
   },
   error: {
-    marginTop: 40,
+    marginTop: 8,
   },
 });
 

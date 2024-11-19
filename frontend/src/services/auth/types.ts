@@ -9,7 +9,7 @@ export interface HttpLoginDTO {
   password: string;
 }
 
-export interface HttpProfileFormnDTO {
+export interface HttpProfileFormDTO {
   name: string;
   phone: string;
   birthDate: string;
