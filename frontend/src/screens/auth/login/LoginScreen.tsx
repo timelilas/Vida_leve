@@ -31,15 +31,19 @@ const LoginScreen = (props: LoginScreenProps) => {
 
   async function login() {
     if (!validateAllFields()) return;
+
     setError({});
     setIsLoading(true);
+
     const result = await httpAuthService.login(values);
 
     if (!result.success) {
       const field = result.error.field || undefined;
+
       setIsLoading(false);
       setError({ message: result.error.message, field: field as any });
-      if (!field) {
+
+      if (!field && field === "all") {
         scrollRef.current?.scrollTo({ y: 0, animated: true });
       }
     } else {
@@ -72,7 +76,7 @@ const LoginScreen = (props: LoginScreenProps) => {
         contentContainerStyle={styles.scrollView}
       >
         <LogoSVG style={styles.logo} />
-        {error.message && !error.field && (
+        {error.message && (error.field === "all" || !error.field) && (
           <ErrorMessage style={styles.error} message={error.message} />
         )}
         <ScreenTitle
@@ -90,7 +94,7 @@ const LoginScreen = (props: LoginScreenProps) => {
             textContentType="emailAddress"
             value={values.email}
             disabled={isLoading}
-            error={error.field === "email"}
+            error={error.field === "email" || error.field === "all"}
             errorMessage={error.field === "email" ? error.message : undefined}
           />
           <PasswordInput
@@ -103,7 +107,7 @@ const LoginScreen = (props: LoginScreenProps) => {
             placeholder="**********"
             value={values.password}
             disabled={isLoading}
-            error={error.field === "password"}
+            error={error.field === "password" || error.field === "all"}
             errorMessage={
               error.field === "password" ? error.message : undefined
             }

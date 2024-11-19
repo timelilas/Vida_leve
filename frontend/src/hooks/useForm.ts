@@ -3,7 +3,7 @@ import { ErrorState, Validator } from "../screens/types";
 
 export function useForm<T extends Record<string, any>>(initialState: T) {
   const [values, setValues] = useState(initialState);
-  const [error, setError] = useState<ErrorState<keyof T>>({});
+  const [error, setError] = useState<ErrorState<keyof T | "all">>({});
   const [isLoading, setIsLoading] = useState(false);
 
   function validateField(field: keyof T, value: any, validator: Validator) {

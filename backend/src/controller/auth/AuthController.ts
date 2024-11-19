@@ -13,7 +13,11 @@ export class AuthController {
       const foundUser = await this._userService.getUserByEmail(email);
       if (!foundUser) {
         return res.status(401).json({
-          error: { field: "email", message: "Email não cadastrado." },
+          error: {
+            field: "all",
+            message:
+              "Ops! Parece que o e-mail ou a senha estão incorretos. Confira os dados e tente novamente.",
+          },
         });
       }
 
@@ -21,9 +25,9 @@ export class AuthController {
       if (!isPasswordCorrect) {
         return res.status(401).json({
           error: {
-            field: "password",
+            field: "all",
             message:
-              "Ops! A senha que você digitou está incorreta. Por favor, tente novamente.",
+              "Ops! Parece que o e-mail ou a senha estão incorretos. Confira os dados e tente novamente.",
           },
         });
       }
@@ -66,14 +70,12 @@ export class AuthController {
       return res.status(200).json({ data: createdUser });
     } catch (error) {
       console.error("Server internal error:", error);
-      return res
-        .status(500)
-        .json({
-          error: {
-            field: null,
-            message: "Erro na tentativa de criar um usuário.",
-          },
-        });
+      return res.status(500).json({
+        error: {
+          field: null,
+          message: "Erro na tentativa de criar um usuário.",
+        },
+      });
     }
   }
 }
