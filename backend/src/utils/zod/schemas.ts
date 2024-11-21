@@ -6,7 +6,7 @@ export const userZodSchema = z
     id: ZodHelper.number("Id", 1).int("Id deve ser um número inteiro"),
     email: ZodHelper.email("E-mail", 100),
     password: ZodHelper.password("Senha", 8, 100),
-    name: ZodHelper.string("Nome completo", 4, 100).nullable(),
+    name: ZodHelper.baseString("Nome completo", 1, 100).nullable(),
     phone: ZodHelper.phone("Telefone", 11).nullable(),
     birthDate: ZodHelper.date("Data de nascimento").nullable(),
     gender: z
