@@ -18,6 +18,8 @@ import { SubmitButton } from "../../../components/buttons/SubmitButton";
 import { ScreenTitle } from "../../../components/ScreenTitle";
 import { Paragraph } from "../../../components/Paragraph";
 import { useForm } from "../../../hooks/useForm";
+import { httpAuthService } from "../../../services/auth";
+import { CommonActions } from "@react-navigation/native";
 
 const nutritionFromInitialState: NutritionFormData = {
   height: "",
@@ -27,7 +29,8 @@ const nutritionFromInitialState: NutritionFormData = {
 };
 
 const NutritionFormScreen = (props: NutritionFormScreenProps) => {
-  const { data, handleChange } = useForm(nutritionFromInitialState);
+  const { data, handleChange, setError } = useForm(nutritionFromInitialState);
+  const { values } = data;
 
   function handleActivityFrequencyChange(frequency: ActitivyFrequency) {
     handleChange(
@@ -35,6 +38,31 @@ const NutritionFormScreen = (props: NutritionFormScreenProps) => {
       data.values.activityFrequency === frequency ? null : frequency
     );
   }
+
+  async function submitNutritionForm() {
+    const data = {
+      height: Number(values.height),
+      weight: Number(values.weight),
+      goalWeight: Number(values.goalWeight),
+      activityFrequency: values.activityFrequency || "",
+    }
+    const result = await httpAuthService.progress(data);
+
+    console.log("Result: ", result);
+    
+
+    if (!result.success) {
+      const field = result.error.field || undefined;
+
+      console.log("ERROR: ",result.error);
+      
+      setError({ message: result.error.message, field: field as any });
+    } else {
+      props.navigation.dispatch(
+        CommonActions.reset({ routes: [{ name: "Onboarding/PlanSelection" }]})
+      )
+    }
+  };
 
   return (
     <ScreenWrapper>
@@ -105,7 +133,7 @@ const NutritionFormScreen = (props: NutritionFormScreenProps) => {
           </View>
         </View>
         <SubmitButton
-          onPress={() => props.navigation.navigate("Onboarding/PlanSelection")}
+          onPress={submitNutritionForm}
           style={styles.submitButton}
           type="primary"
           title="Continuar cadastro"

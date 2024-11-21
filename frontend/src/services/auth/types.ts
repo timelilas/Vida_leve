@@ -15,3 +15,10 @@ export interface HttpProfileFormDTO {
   birthDate: string;
   gender: string;
 }
+
+export interface HttpProgressFormDTO {
+  height: number;
+  weight: number;
+  goalWeight: number;
+  activityFrequency: string;
+}
