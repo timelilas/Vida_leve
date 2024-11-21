@@ -1,11 +1,9 @@
-import { ZodHelper } from "../../utils/zod/helpers";
 import { requiredMsg, stringMsg } from "../../utils/zod/messages";
 import { userZodSchema } from "../../utils/zod/schemas";
 import z from "zod";
 
 export const signupSchema = userZodSchema
   .pick({
-    name: true,
     email: true,
     password: true,
   })
