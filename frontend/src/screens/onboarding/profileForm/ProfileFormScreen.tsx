@@ -41,12 +41,8 @@ const ProfileFormScreen = (props: ProfileFromScreenProps) => {
     const formatteBirthDate = formatDateToISO(values.birthDate);
     
     const dataSubmit = { ...values, birthDate: formatteBirthDate };
-    console.log(dataSubmit);
-    
 
     const result = await httpAuthService.updateProfile(dataSubmit);
-    
-    console.log(result);
     
     if (!result.success) {
       const field = result.error.field || undefined;
