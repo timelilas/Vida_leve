@@ -6,7 +6,7 @@ import { failedConnectionError } from "./helpers";
 export abstract class HttpService {
   protected async submit(req: HttpRequest): Promise<HttpResponse> {
     try {
-      const res = await request(req.method, req.path, req.body);
+      const res = await request(req.method, req.path, req.body, req.headers);
       return { success: true, status: res.status, response: res.data };
     } catch (error: any) {
       const axiosError = error as AxiosError;

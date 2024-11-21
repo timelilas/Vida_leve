@@ -31,14 +31,24 @@ const ProfileFormScreen = (props: ProfileFromScreenProps) => {
   const { data, handleChange, setError } = useForm(profileFormInitialState);
   const { values } = data;
 
-  async function submitProfile() {
-    const result = await httpAuthService.updateProfile(values);
+  function formatDateToISO(date: string) {
+    const [day, month, year] = date.split("/");
+    return `${year}-${month}-${day}`;
+  }
 
+
+  async function submitProfile() {
+    const formatteBirthDate = formatDateToISO(values.birthDate);
+    
+    const dataSubmit = { ...values, birthDate: formatteBirthDate };
+
+    const result = await httpAuthService.updateProfile(dataSubmit);
+    
     if (!result.success) {
       const field = result.error.field || undefined;
+      
       setError({ message: result.error.message, field: field as any });
     } else {
-      console.log(result);
       props.navigation.dispatch(
         CommonActions.reset({ routes: [{ name: "Onboarding/NutritionForm" }] })
       );
@@ -96,14 +106,14 @@ const ProfileFormScreen = (props: ProfileFromScreenProps) => {
             <Text style={styles.genderLabel}>Gênero social</Text>
             <View style={styles.genderButtons}>
               <ToggleButton
-                selected={data.values.gender === "female"}
-                onPress={() => selectGender("female")}
+                selected={data.values.gender === "feminino"}
+                onPress={() => selectGender("feminino")}
               >
                 <Text style={styles.gender}>Feminino</Text>
               </ToggleButton>
               <ToggleButton
-                selected={data.values.gender === "male"}
-                onPress={() => selectGender("male")}
+                selected={data.values.gender === "masculino"}
+                onPress={() => selectGender("masculino")}
               >
                 <Text style={styles.gender}>Masculino</Text>
               </ToggleButton>

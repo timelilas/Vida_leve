@@ -5,6 +5,7 @@ import z from "zod";
 
 export const signupSchema = userZodSchema
   .pick({
+    name: true,
     email: true,
     password: true,
   })
