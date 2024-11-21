@@ -87,8 +87,8 @@ const ProfileFormScreen = (props: ProfileFromScreenProps) => {
             value={data.values.name}
             onChange={(value) => handleChange("name", maskName(value))}
             name="name"
-            label="Nome completo"
-            placeholder="Nome completo (Ex.: Maria Silva)"
+            label="Como você gostaria de ser chamado(a)?"
+            placeholder="Ex.: Maria Silva"
             textContentType="name"
           />
           <Input
