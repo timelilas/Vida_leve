@@ -14,6 +14,7 @@ import { validateEmail } from "../../../utils/validations/email";
 import { validateEmptyField } from "../../../utils/validations/common";
 import { LoginFormData, LoginScreenProps } from "./types";
 import styles from "../styles";
+import AsyncStorage from "@react-native-async-storage/async-storage";
 
 const loginInitialState: LoginFormData = {
   email: "",
@@ -41,6 +42,7 @@ const LoginScreen = (props: LoginScreenProps) => {
         scrollRef.current?.scrollTo({ y: 0, animated: true });
       }
     } else {
+      await AsyncStorage.setItem("token", result.response.token);
       props.navigation.dispatch(
         CommonActions.reset({ routes: [{ name: "Onboarding/ProfileForm" }] })
       );

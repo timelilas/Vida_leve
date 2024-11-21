@@ -1,6 +1,7 @@
 import { HttpResponse } from "../types";
 import { HttpLoginDTO, HttpProfileFormDTO, HttpSignupDTO } from "./types";
 import { HttpService } from "../HttpService";
+import AsyncStorage from "@react-native-async-storage/async-storage";
 
 export class HttpAuthService extends HttpService {
   public async signup(data: HttpSignupDTO): Promise<HttpResponse> {
@@ -20,8 +21,7 @@ export class HttpAuthService extends HttpService {
   }
 
   public async updateProfile(data: HttpProfileFormDTO): Promise<HttpResponse> {
-    // pegar o token no async storage
-    const token = "token-genérico";
+    const token = await AsyncStorage.getItem("token");
 
     return await this.submit({
       method: "PUT",
