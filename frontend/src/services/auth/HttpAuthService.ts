@@ -1,5 +1,5 @@
 import { HttpResponse } from "../types";
-import { HttpLoginDTO, HttpProfileFormDTO, HttpSignupDTO } from "./types";
+import { HttpLoginDTO, HttpProfileFormDTO, HttpProgressFormDTO, HttpSignupDTO } from "./types";
 import { HttpService } from "../HttpService";
 import AsyncStorage from "@react-native-async-storage/async-storage";
 
@@ -31,5 +31,18 @@ export class HttpAuthService extends HttpService {
         Authorization: `Bearer ${token}`,
       },
     });
+  }
+
+  public async progress(data: HttpProgressFormDTO ): Promise<HttpResponse> {
+    const token = await AsyncStorage.getItem("token");
+    
+    return await this.submit({
+      method: "POST",
+      path: "/progress",
+      body: data,
+      headers: {
+        Authorization: `Bearer ${token}`,
+      }
+    })
   }
 }
