@@ -13,6 +13,7 @@ import { useForm } from "../../../hooks/useForm";
 import { validateEmail } from "../../../utils/validations/email";
 import { validateEmptyField } from "../../../utils/validations/common";
 import { LoginFormData, LoginScreenProps } from "./types";
+import { maskEmail } from "../../../utils/masks";
 import styles from "../styles";
 import AsyncStorage from "@react-native-async-storage/async-storage";
 
@@ -81,7 +82,7 @@ const LoginScreen = (props: LoginScreenProps) => {
         />
         <View style={styles.form}>
           <Input
-            onChange={(data) => handleChange("email", data)}
+            onChange={(data) => handleChange("email", maskEmail(data))}
             onBlur={() => validateField("email", values.email, validateEmail)}
             autoFocus
             name="email"

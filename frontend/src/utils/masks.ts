@@ -19,3 +19,7 @@ export function onlyNumbers(value: string) {
 export function maskName(name: string) {
   return name.slice(0, 40);
 }
+
+export function maskEmail(email: string) {
+  return email.slice(0, 50);
+}

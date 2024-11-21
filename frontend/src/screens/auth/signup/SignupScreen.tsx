@@ -13,6 +13,7 @@ import { validatePasswordConfirmation } from "../../../utils/validations/passwor
 import { useSignupForm } from "./useSignupForm";
 import { SignupScreenProps } from "./types";
 import styles from "../styles";
+import { maskEmail } from "../../../utils/masks";
 
 const SignupScreen = (props: SignupScreenProps) => {
   const [passwordFocused, setPasswordFocused] = useState(false);
@@ -54,7 +55,7 @@ const SignupScreen = (props: SignupScreenProps) => {
         <View style={styles.form}>
           <Input
             onBlur={() => validateField("email", values.email, validateEmail)}
-            onChange={(value) => handleChange("email", value)}
+            onChange={(value) => handleChange("email", maskEmail(value))}
             disabled={isLoading}
             autoFocus
             name="email"
