@@ -18,7 +18,12 @@ import { Paragraph } from "../../../components/Paragraph";
 import { ScreenTitle } from "../../../components/ScreenTitle";
 import { useForm } from "../../../hooks/useForm";
 import { httpAuthService } from "../../../services/auth";
-import { maskPhone, maskDatePTBR, onlyNumbers } from "../../../utils/masks";
+import {
+  maskPhone,
+  maskDatePTBR,
+  onlyNumbers,
+  maskName,
+} from "../../../utils/masks";
 
 const profileFormInitialState: ProfileFormData = {
   name: "",
@@ -80,7 +85,7 @@ const ProfileFormScreen = (props: ProfileFromScreenProps) => {
         <View style={styles.form}>
           <Input
             value={data.values.name}
-            onChange={(value) => handleChange("name", value)}
+            onChange={(value) => handleChange("name", maskName(value))}
             name="name"
             label="Nome completo"
             placeholder="Nome completo (Ex.: Maria Silva)"

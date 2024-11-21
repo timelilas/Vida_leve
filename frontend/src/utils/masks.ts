@@ -15,3 +15,7 @@ export function maskPhone(value: string) {
 export function onlyNumbers(value: string) {
   return value.replace(/[^0-9]/g, "");
 }
+
+export function maskName(name: string) {
+  return name.slice(0, 40);
+}
