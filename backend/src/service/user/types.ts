@@ -1,4 +1,4 @@
-import { UserEntity } from "../../entity/UserEntity";
+import { UserEntity } from "../../@core/entity/user/UserEntity";
 
 export type CreateUserDTO = Pick<UserEntity, "email" | "password">;
 
