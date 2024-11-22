@@ -1,3 +1,5 @@
+import { GenderType } from "../../@core/common/gender";
+
 export interface HttpSignupDTO {
   email: string;
   password: string;
@@ -13,7 +15,7 @@ export interface HttpProfileFormDTO {
   name: string;
   phone: string;
   birthDate: string;
-  gender: string;
+  gender: GenderType;
 }
 
 export interface HttpProgressFormDTO {

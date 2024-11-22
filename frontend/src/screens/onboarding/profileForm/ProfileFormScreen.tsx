@@ -8,16 +8,21 @@ import {
 } from "react-native";
 import { ScreenWrapper } from "../../../components/ScreenWrapper";
 import { ScreenHeader } from "../../../components/ScreenHeader";
-import { CommonActions } from "@react-navigation/native";
 import { Input } from "../../../components/inputs/Input";
 import { SubmitButton } from "../../../components/buttons/SubmitButton";
 import { DateInput } from "../../../components/inputs/DateInput";
 import { ToggleButton } from "../../../components/buttons/ToggleButton";
-import { GenderType, ProfileFormData, ProfileFromScreenProps } from "./types";
+import { ProfileFormData, ProfileFromScreenProps } from "./types";
 import { Paragraph } from "../../../components/Paragraph";
 import { ScreenTitle } from "../../../components/ScreenTitle";
 import { useForm } from "../../../hooks/useForm";
+import { GenderType } from "../../../@core/common/gender";
 import { httpAuthService } from "../../../services/auth";
+import { validatePhone } from "../../../utils/validations/phone";
+import { validateBirthDate } from "../../../utils/validations/date";
+import { validateName } from "../../../utils/validations/name";
+import { ErrorMessage } from "../../../components/ErrorMessage";
+import { validateGender } from "../../../utils/validations/gender";
 import {
   maskPhone,
   maskDatePTBR,
@@ -29,39 +34,38 @@ const profileFormInitialState: ProfileFormData = {
   name: "",
   phone: "",
   birthDate: "",
-  gender: "",
+  gender: null,
 };
 
 const ProfileFormScreen = (props: ProfileFromScreenProps) => {
-  const { data, handleChange, setError } = useForm(profileFormInitialState);
-  const { values } = data;
+  const { data, handleChange, setError, validateField } = useForm(
+    profileFormInitialState
+  );
+  const { values, error } = data;
 
   function formatDateToISO(date: string) {
     const [day, month, year] = date.split("/");
-    return `${year}-${month}-${day}`;
+    const sanitizedDay = day === "29" && month === "02" ? "28" : day;
+    return `${year}-${month}-${sanitizedDay}`;
   }
 
-
   async function submitProfile() {
-    const formatteBirthDate = formatDateToISO(values.birthDate);
-    
-    const dataSubmit = { ...values, birthDate: formatteBirthDate };
+    const formattedBirthDate = formatDateToISO(values.birthDate);
+    const dataSubmit = { ...values, birthDate: formattedBirthDate };
 
-    const result = await httpAuthService.updateProfile(dataSubmit);
-    
+    const result = await httpAuthService.updateProfile(dataSubmit as any);
     if (!result.success) {
       const field = result.error.field || undefined;
-      
       setError({ message: result.error.message, field: field as any });
     } else {
-      props.navigation.dispatch(
-        CommonActions.reset({ routes: [{ name: "Onboarding/NutritionForm" }] })
-      );
+      props.navigation.navigate("Onboarding/NutritionForm");
     }
   }
 
   function selectGender(value: GenderType) {
-    handleChange("gender", value);
+    const newGender = value !== values.gender ? value : null;
+    handleChange("gender", newGender);
+    validateField("gender", newGender || "", validateGender);
   }
 
   return (
@@ -84,25 +88,39 @@ const ProfileFormScreen = (props: ProfileFromScreenProps) => {
         />
         <View style={styles.form}>
           <Input
-            value={data.values.name}
+            onBlur={() => validateField("name", values.name, validateName)}
             onChange={(value) => handleChange("name", maskName(value))}
+            value={data.values.name}
+            error={error.field === "name"}
+            errorMessage={error.field === "name" ? error.message : undefined}
             name="name"
             label="Como você gostaria de ser chamado(a)?"
             placeholder="Ex.: Maria Silva"
             textContentType="name"
+            autoFocus
           />
           <Input
-            value={maskPhone(data.values.phone)}
+            onBlur={() => validateField("phone", values.phone, validatePhone)}
             onChange={(value) => handleChange("phone", onlyNumbers(value))}
+            value={maskPhone(data.values.phone)}
+            error={error.field === "phone"}
+            errorMessage={error.field === "phone" ? error.message : undefined}
             name="phone"
             label="Telefone"
             placeholder="(DDD) + número de telefone"
             textContentType="telephoneNumber"
           />
           <DateInput
-            value={data.values.birthDate}
-            textContentType="birthdate"
             onChange={(value) => handleChange("birthDate", maskDatePTBR(value))}
+            onBlur={() =>
+              validateField("birthDate", values.birthDate, validateBirthDate)
+            }
+            value={data.values.birthDate}
+            error={error.field === "birthDate"}
+            errorMessage={
+              error.field === "birthDate" ? error.message : undefined
+            }
+            textContentType="birthdate"
             label="Data de nascimento"
             placeholder="dd/mm/aaaa"
             name="birthDate"
@@ -123,6 +141,12 @@ const ProfileFormScreen = (props: ProfileFromScreenProps) => {
                 <Text style={styles.gender}>Masculino</Text>
               </ToggleButton>
             </View>
+            {error.field === "gender" && error.message && (
+              <ErrorMessage
+                style={styles.genderError}
+                message={error.message}
+              />
+            )}
           </View>
         </View>
         <SubmitButton
@@ -182,5 +206,8 @@ const styles = StyleSheet.create({
   },
   submitButton: {
     marginTop: "auto",
+  },
+  genderError: {
+    marginTop: 8,
   },
 });
