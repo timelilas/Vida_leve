@@ -10,11 +10,12 @@ function validateAge(birthDate: Date) {
     .toLocaleDateString("pt-br", { timeZone: "UTC" })
     .split("/");
 
-  const isAfterBirthMonth = parseInt(currentMonth) >= parseInt(birthMonth);
+  const isAfterBirthMonth = parseInt(currentMonth) > parseInt(birthMonth);
+  const isEqualBirthMonth = parseInt(currentMonth) === parseInt(birthMonth);
   const isAfterBirthDay = parseInt(currentDay) >= parseInt(birthDay);
-  const decrementFactor = isAfterBirthDay && isAfterBirthMonth ? 0 : 1;
+  const decrementFactor =
+    isAfterBirthMonth || (isEqualBirthMonth && isAfterBirthDay) ? 0 : 1;
 
   const age = parseInt(currentYear) - parseInt(birthYear) - decrementFactor;
-
   return age >= 18 && age <= 90;
 }
