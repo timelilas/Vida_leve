@@ -1,12 +1,13 @@
 import { StyleSheet, Platform, StatusBar } from "react-native";
 
 const styles = StyleSheet.create({
-  scrollView: {
-    paddingHorizontal: 16,
-    paddingBottom: 24,
-    flexGrow: 1,
-    paddingTop:
-      24 + (Platform.OS === "android" ? StatusBar.currentHeight || 0 : 0),
+  container: {
+    flex: 1,
+  },
+  headerNavigator: {
+    position: "absolute",
+    top: 0,
+    left: 0,
   },
   title: {
     marginTop: 8,

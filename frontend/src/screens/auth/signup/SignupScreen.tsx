@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import { View, ScrollView } from "react-native";
+import { View } from "react-native";
 import { LogoSVG } from "../../../components/logos/LogoSVG";
 import { ScreenWrapper } from "../../../components/ScreenWrapper";
 import { Input } from "../../../components/inputs/Input";
@@ -14,6 +14,7 @@ import { useSignupForm } from "./useSignupForm";
 import { SignupScreenProps } from "./types";
 import styles from "../styles";
 import { maskEmail } from "../../../utils/masks";
+import { HeaderNavigator } from "../../../components/HeaderNavigator";
 
 const SignupScreen = (props: SignupScreenProps) => {
   const [passwordFocused, setPasswordFocused] = useState(false);
@@ -38,12 +39,13 @@ const SignupScreen = (props: SignupScreenProps) => {
   }
 
   return (
-    <ScreenWrapper>
-      <ScrollView
-        ref={ref}
-        showsVerticalScrollIndicator={false}
-        contentContainerStyle={styles.scrollView}
-      >
+    <ScreenWrapper scrollable ref={ref}>
+      <View style={styles.container}>
+        <HeaderNavigator
+          style={styles.headerNavigator}
+          onGoBack={() => props.navigation.goBack()}
+          onClose={() => {}}
+        />
         <LogoSVG style={styles.logo} />
         {error.message && !error.field && (
           <ErrorMessage style={styles.error} message={error.message} />
@@ -102,7 +104,7 @@ const SignupScreen = (props: SignupScreenProps) => {
           type="primary"
           onPress={signup}
         />
-      </ScrollView>
+      </View>
     </ScreenWrapper>
   );
 };
