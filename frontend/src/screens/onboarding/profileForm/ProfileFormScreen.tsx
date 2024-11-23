@@ -1,11 +1,4 @@
-import {
-  ScrollView,
-  StyleSheet,
-  Platform,
-  StatusBar,
-  Text,
-  View,
-} from "react-native";
+import { StyleSheet, Text, View } from "react-native";
 import { ScreenWrapper } from "../../../components/ScreenWrapper";
 import { ScreenHeader } from "../../../components/ScreenHeader";
 import { Input } from "../../../components/inputs/Input";
@@ -69,93 +62,77 @@ const ProfileFormScreen = (props: ProfileFromScreenProps) => {
   }
 
   return (
-    <ScreenWrapper>
-      <ScrollView
-        showsVerticalScrollIndicator={false}
-        contentContainerStyle={styles.scrollContainer}
-      >
-        <ScreenHeader
-          navigation={props.navigation}
-          style={styles.headerContainer}
+    <ScreenWrapper scrollable>
+      <ScreenHeader onClose={() => props.navigation.goBack()} />
+      <ScreenTitle style={styles.title} title="Queremos ter conhecer melhor" />
+      <Paragraph
+        style={styles.text}
+        text="Complete seu cadastro para tornarmos sua experiência mais personalizada"
+      />
+      <View style={styles.form}>
+        <Input
+          onBlur={() => validateField("name", values.name, validateName)}
+          onChange={(value) => handleChange("name", maskName(value))}
+          value={data.values.name}
+          error={error.field === "name"}
+          errorMessage={error.field === "name" ? error.message : undefined}
+          name="name"
+          label="Como você gostaria de ser chamado(a)?"
+          placeholder="Ex.: Maria Silva"
+          textContentType="name"
+          autoFocus
         />
-        <ScreenTitle
-          style={styles.title}
-          title="Queremos ter conhecer melhor"
+        <Input
+          onBlur={() => validateField("phone", values.phone, validatePhone)}
+          onChange={(value) => handleChange("phone", onlyNumbers(value))}
+          value={maskPhone(data.values.phone)}
+          error={error.field === "phone"}
+          errorMessage={error.field === "phone" ? error.message : undefined}
+          name="phone"
+          label="Telefone"
+          placeholder="(DDD) + número de telefone"
+          textContentType="telephoneNumber"
         />
-        <Paragraph
-          style={styles.text}
-          text="Complete seu cadastro para tornarmos sua experiência mais personalizada"
+        <DateInput
+          onChange={(value) => handleChange("birthDate", maskDatePTBR(value))}
+          onBlur={() =>
+            validateField("birthDate", values.birthDate, validateBirthDate)
+          }
+          value={data.values.birthDate}
+          error={error.field === "birthDate"}
+          errorMessage={error.field === "birthDate" ? error.message : undefined}
+          textContentType="birthdate"
+          label="Data de nascimento"
+          placeholder="dd/mm/aaaa"
+          name="birthDate"
         />
-        <View style={styles.form}>
-          <Input
-            onBlur={() => validateField("name", values.name, validateName)}
-            onChange={(value) => handleChange("name", maskName(value))}
-            value={data.values.name}
-            error={error.field === "name"}
-            errorMessage={error.field === "name" ? error.message : undefined}
-            name="name"
-            label="Como você gostaria de ser chamado(a)?"
-            placeholder="Ex.: Maria Silva"
-            textContentType="name"
-            autoFocus
-          />
-          <Input
-            onBlur={() => validateField("phone", values.phone, validatePhone)}
-            onChange={(value) => handleChange("phone", onlyNumbers(value))}
-            value={maskPhone(data.values.phone)}
-            error={error.field === "phone"}
-            errorMessage={error.field === "phone" ? error.message : undefined}
-            name="phone"
-            label="Telefone"
-            placeholder="(DDD) + número de telefone"
-            textContentType="telephoneNumber"
-          />
-          <DateInput
-            onChange={(value) => handleChange("birthDate", maskDatePTBR(value))}
-            onBlur={() =>
-              validateField("birthDate", values.birthDate, validateBirthDate)
-            }
-            value={data.values.birthDate}
-            error={error.field === "birthDate"}
-            errorMessage={
-              error.field === "birthDate" ? error.message : undefined
-            }
-            textContentType="birthdate"
-            label="Data de nascimento"
-            placeholder="dd/mm/aaaa"
-            name="birthDate"
-          />
-          <View>
-            <Text style={styles.genderLabel}>Gênero social</Text>
-            <View style={styles.genderButtons}>
-              <ToggleButton
-                selected={data.values.gender === "feminino"}
-                onPress={() => selectGender("feminino")}
-              >
-                <Text style={styles.gender}>Feminino</Text>
-              </ToggleButton>
-              <ToggleButton
-                selected={data.values.gender === "masculino"}
-                onPress={() => selectGender("masculino")}
-              >
-                <Text style={styles.gender}>Masculino</Text>
-              </ToggleButton>
-            </View>
-            {error.field === "gender" && error.message && (
-              <ErrorMessage
-                style={styles.genderError}
-                message={error.message}
-              />
-            )}
+        <View>
+          <Text style={styles.genderLabel}>Gênero social</Text>
+          <View style={styles.genderButtons}>
+            <ToggleButton
+              selected={data.values.gender === "feminino"}
+              onPress={() => selectGender("feminino")}
+            >
+              <Text style={styles.gender}>Feminino</Text>
+            </ToggleButton>
+            <ToggleButton
+              selected={data.values.gender === "masculino"}
+              onPress={() => selectGender("masculino")}
+            >
+              <Text style={styles.gender}>Masculino</Text>
+            </ToggleButton>
           </View>
+          {error.field === "gender" && error.message && (
+            <ErrorMessage style={styles.genderError} message={error.message} />
+          )}
         </View>
-        <SubmitButton
-          onPress={submitProfile}
-          style={styles.submitButton}
-          title="Continuar"
-          type="primary"
-        />
-      </ScrollView>
+      </View>
+      <SubmitButton
+        onPress={submitProfile}
+        style={styles.submitButton}
+        title="Continuar"
+        type="primary"
+      />
     </ScreenWrapper>
   );
 };
@@ -163,16 +140,6 @@ const ProfileFormScreen = (props: ProfileFromScreenProps) => {
 export default ProfileFormScreen;
 
 const styles = StyleSheet.create({
-  scrollContainer: {
-    flexGrow: 1,
-    paddingHorizontal: 16,
-    paddingBottom: 24,
-    paddingTop:
-      24 + (Platform.OS === "android" ? StatusBar.currentHeight || 0 : 0),
-  },
-  headerContainer: {
-    marginTop: 24,
-  },
   title: {
     marginTop: 40,
   },

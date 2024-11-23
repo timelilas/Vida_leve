@@ -1,10 +1,4 @@
-import {
-  ScrollView,
-  StyleSheet,
-  Platform,
-  StatusBar,
-  View,
-} from "react-native";
+import { StyleSheet, Platform, StatusBar, View } from "react-native";
 import { ScreenWrapper } from "../../../components/ScreenWrapper";
 import { ScreenHeader } from "../../../components/ScreenHeader";
 import { Input } from "../../../components/inputs/Input";
@@ -45,100 +39,92 @@ const NutritionFormScreen = (props: NutritionFormScreenProps) => {
       weight: Number(values.weight),
       goalWeight: Number(values.goalWeight),
       activityFrequency: values.activityFrequency || "",
-    }
+    };
     const result = await httpAuthService.progress(data);
 
     console.log("Result: ", result);
-    
 
     if (!result.success) {
       const field = result.error.field || undefined;
 
-      console.log("ERROR: ",result.error);
-      
+      console.log("ERROR: ", result.error);
+
       setError({ message: result.error.message, field: field as any });
     } else {
-      props.navigation.dispatch(
-        CommonActions.reset({ routes: [{ name: "Onboarding/PlanSelection" }]})
-      )
+      props.navigation.navigate("Onboarding/PlanSelection");
     }
-  };
+  }
 
   return (
-    <ScreenWrapper>
-      <ScrollView
-        showsVerticalScrollIndicator={false}
-        contentContainerStyle={styles.scrollContainer}
-      >
-        <ScreenHeader navigation={props.navigation} />
-        <ScreenTitle title="Nos conte mais sobre você!" style={styles.title} />
-        <Paragraph
-          text="Precisamos da sua altura, peso atual, meta de peso e frequência de atividade física para personalizar sua jornada."
-          style={styles.description}
+    <ScreenWrapper scrollable>
+      <ScreenHeader onClose={() => props.navigation.goBack()} />
+      <ScreenTitle title="Nos conte mais sobre você!" style={styles.title} />
+      <Paragraph
+        text="Precisamos da sua altura, peso atual, meta de peso e frequência de atividade física para personalizar sua jornada."
+        style={styles.description}
+      />
+      <View style={styles.form}>
+        <Input
+          onChange={(value) => handleChange("height", value)}
+          value={data.values.height}
+          keyboardType="numeric"
+          label="Altura"
+          placeholder="Ex.: 1,60"
+          name="height"
         />
-        <View style={styles.form}>
-          <Input
-            onChange={(value) => handleChange("height", value)}
-            value={data.values.height}
-            keyboardType="numeric"
-            label="Altura"
-            placeholder="Ex.: 1,60"
-            name="height"
+        <Input
+          onChange={(value) => handleChange("weight", value)}
+          value={data.values.weight}
+          label="Peso atual"
+          keyboardType="numeric"
+          name="wight"
+          placeholder="Ex.: 60 kg"
+        />
+        <Input
+          onChange={(value) => handleChange("goalWeight", value)}
+          value={data.values.goalWeight}
+          label="Peso desejado"
+          keyboardType="numeric"
+          name="goal"
+          placeholder="Ex.: 55 kg"
+        />
+        <View style={styles.exerciseLevel}>
+          <Paragraph
+            style={styles.label}
+            text="Qual é o seu nível de atividade física diária?"
           />
-          <Input
-            onChange={(value) => handleChange("weight", value)}
-            value={data.values.weight}
-            label="Peso atual"
-            keyboardType="numeric"
-            name="wight"
-            placeholder="Ex.: 60 kg"
+          <FrequencyButton
+            selected={data.values.activityFrequency === "pouca"}
+            onPress={() => handleActivityFrequencyChange("pouca")}
+            title="Pouca atividade"
+            description="Pouco tempo em pé. p. ex. home office/escritório"
           />
-          <Input
-            onChange={(value) => handleChange("goalWeight", value)}
-            value={data.values.goalWeight}
-            label="Peso desejado"
-            keyboardType="numeric"
-            name="goal"
-            placeholder="Ex.: 55 kg"
+          <FrequencyButton
+            selected={data.values.activityFrequency === "leve"}
+            onPress={() => handleActivityFrequencyChange("leve")}
+            title="Atividade leve"
+            description="Quase sempre em pé. p. ex. professor(a)"
           />
-          <View style={styles.exerciseLevel}>
-            <Paragraph
-              style={styles.label}
-              text="Qual é o seu nível de atividade física diária?"
-            />
-            <FrequencyButton
-              selected={data.values.activityFrequency === "pouca"}
-              onPress={() => handleActivityFrequencyChange("pouca")}
-              title="Pouca atividade"
-              description="Pouco tempo em pé. p. ex. home office/escritório"
-            />
-            <FrequencyButton
-              selected={data.values.activityFrequency === "leve"}
-              onPress={() => handleActivityFrequencyChange("leve")}
-              title="Atividade leve"
-              description="Quase sempre em pé. p. ex. professor(a)"
-            />
-            <FrequencyButton
-              selected={data.values.activityFrequency === "moderada"}
-              onPress={() => handleActivityFrequencyChange("moderada")}
-              title="Atividade moderada"
-              description="Quase sempre em pé. p. ex. professor(a)/ atendente"
-            />
-            <FrequencyButton
-              selected={data.values.activityFrequency === "intensa"}
-              onPress={() => handleActivityFrequencyChange("intensa")}
-              title="Atividade intensa"
-              description="Fisicamente árduo. p. ex. construção civil"
-            />
-          </View>
+          <FrequencyButton
+            selected={data.values.activityFrequency === "moderada"}
+            onPress={() => handleActivityFrequencyChange("moderada")}
+            title="Atividade moderada"
+            description="Quase sempre em pé. p. ex. professor(a)/ atendente"
+          />
+          <FrequencyButton
+            selected={data.values.activityFrequency === "intensa"}
+            onPress={() => handleActivityFrequencyChange("intensa")}
+            title="Atividade intensa"
+            description="Fisicamente árduo. p. ex. construção civil"
+          />
         </View>
-        <SubmitButton
-          onPress={submitNutritionForm}
-          style={styles.submitButton}
-          type="primary"
-          title="Continuar cadastro"
-        />
-      </ScrollView>
+      </View>
+      <SubmitButton
+        onPress={submitNutritionForm}
+        style={styles.submitButton}
+        type="primary"
+        title="Continuar cadastro"
+      />
     </ScreenWrapper>
   );
 };
@@ -146,15 +132,8 @@ const NutritionFormScreen = (props: NutritionFormScreenProps) => {
 export default NutritionFormScreen;
 
 const styles = StyleSheet.create({
-  scrollContainer: {
-    flexGrow: 1,
-    paddingHorizontal: 16,
-    paddingBottom: 24,
-    paddingTop:
-      24 + (Platform.OS === "android" ? StatusBar.currentHeight || 0 : 0),
-  },
   title: {
-    marginTop: 16,
+    marginTop: 40,
   },
   description: {
     marginTop: 8,

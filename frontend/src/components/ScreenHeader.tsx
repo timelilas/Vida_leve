@@ -1,44 +1,22 @@
-import { NavigationProp } from "@react-navigation/native";
-import {
-  Pressable,
-  View,
-  StyleProp,
-  ViewStyle,
-  StyleSheet,
-} from "react-native";
-
-import { ArrowIcon } from "./icons/ArrowIcon";
+import { View, StyleSheet } from "react-native";
 import { HorizontalLogoSVG } from "./logos/HorizontalLogoSVG";
+import { HeaderNavigator } from "./HeaderNavigator";
 
 interface ScreenHeaderProps {
-  navigation: NavigationProp<any>;
-  style?: StyleProp<ViewStyle>;
+  onGoBack?: () => void;
+  onClose?: () => void;
 }
 
-export function ScreenHeader({ navigation, style }: ScreenHeaderProps) {
+export function ScreenHeader({ onGoBack, onClose }: ScreenHeaderProps) {
   return (
-    <View style={[styles.headerContainer, style]}>
-      <Pressable
-        onPress={() => navigation.goBack()}
-        hitSlop={4}
-        style={styles.goBackButton}
-      >
-        <ArrowIcon />
-      </Pressable>
+    <View style={styles.headerContainer}>
+      <HeaderNavigator onGoBack={onGoBack} onClose={onClose} />
       <HorizontalLogoSVG />
     </View>
   );
 }
 const styles = StyleSheet.create({
   headerContainer: {
-    flexDirection: "row",
-    justifyContent: "center",
-  },
-  goBackButton: {
-    position: "absolute",
-    borderRadius: 24 / 2,
-    left: 0,
-    top: "50%",
-    transform: [{ translateY: -24 / 2 }],
+    alignItems: "center",
   },
 });
