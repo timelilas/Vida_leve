@@ -56,6 +56,8 @@ export function Input(props: InputProps) {
               value={props.value}
               onChangeText={props.onChange}
               editable={!props.disabled}
+              contextMenuHidden={props.disabled}
+              selectTextOnFocus={props.disabled}
             />
           </View>
         </View>

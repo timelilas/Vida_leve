@@ -69,6 +69,8 @@ export function PasswordInput(props: PasswordInputProps) {
               placeholder={props.placeholder}
               value={props.value}
               editable={!props.disabled}
+              contextMenuHidden={props.disabled}
+              selectTextOnFocus={props.disabled}
               onBlur={props.onBlur}
               onFocus={props.onFocus}
               onChangeText={props.onChange}

@@ -109,6 +109,8 @@ export function DateInput(props: PasswordInputProps) {
               onChangeText={props.onChange}
               onBlur={props.onBlur}
               editable={!props.disabled}
+              contextMenuHidden={props.disabled}
+              selectTextOnFocus={props.disabled}
             />
             <Pressable
               disabled={props.disabled}
