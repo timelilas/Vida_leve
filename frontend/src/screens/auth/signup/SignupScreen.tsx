@@ -20,7 +20,7 @@ const SignupScreen = (props: SignupScreenProps) => {
   const [passwordFocused, setPasswordFocused] = useState(false);
   const [isTypingPassword, setIsTypingPassword] = useState(false);
   const { values, error, isLoading, ref, handleChange, signup, validateField } =
-    useSignupForm({ navigation: props.navigation });
+    useSignupForm();
 
   function handlePasswordConfirmationValidation() {
     const validPassword = validatePassword(values.password).success;

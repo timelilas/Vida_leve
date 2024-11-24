@@ -30,6 +30,7 @@ const LoginScreen = (props: LoginScreenProps) => {
   const { values, error, isLoading } = data;
 
   async function login() {
+    if (isLoading) return;
     if (!validateAllFields()) return;
     setError({});
     setIsLoading(true);
@@ -38,8 +39,13 @@ const LoginScreen = (props: LoginScreenProps) => {
 
     if (!result.success) {
       const field = result.error.field || undefined;
+
       setIsLoading(false);
       setError({ message: result.error.message, field: field as any });
+
+      if (field === "connection") {
+        return props.navigation.navigate("ConnectionError");
+      }
       if (!field && field === "all") {
         scrollRef.current?.scrollTo({ y: 0, animated: true });
       }
