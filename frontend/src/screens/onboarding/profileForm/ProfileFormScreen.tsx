@@ -33,10 +33,10 @@ const profileFormInitialState: ProfileFormData = {
 
 const ProfileFormScreen = (props: ProfileFromScreenProps) => {
   const scrollRef = useRef<ScrollView>(null);
-  const { data, handleChange, setError, validateField } = useForm(
+  const { data, handleChange, setError, validateField, setIsLoading } = useForm(
     profileFormInitialState
   );
-  const { values, error } = data;
+  const { values, error, isLoading } = data;
 
   function formatDateToISO(date: string) {
     const [day, month, year] = date.split("/");
@@ -44,10 +44,35 @@ const ProfileFormScreen = (props: ProfileFromScreenProps) => {
     return `${year}-${month}-${sanitizedDay}`;
   }
 
+  function validateAllFields() {
+    const validationMap = {
+      name: validateName(values.name),
+      phone: validatePhone(values.phone),
+      birthDate: validateBirthDate(values.birthDate),
+      gender: validateGender(values.gender || ""),
+    };
+
+    for (const [field, validation] of Object.entries(validationMap)) {
+      if (!validation.success) {
+        setError({ field: field as any, message: validation.error });
+        return false;
+      }
+    }
+    return true;
+  }
+
   async function submitProfile() {
+    if (isLoading) return;
+    if (!validateAllFields()) return;
+
+    setError({});
+    setIsLoading(true);
+
     const formattedBirthDate = formatDateToISO(values.birthDate);
     const dataSubmit = { ...values, birthDate: formattedBirthDate };
     const result = await httpAuthService.updateProfile(dataSubmit as any);
+
+    setIsLoading(false);
 
     if (!result.success) {
       const field = result.error.field || undefined;
@@ -90,6 +115,7 @@ const ProfileFormScreen = (props: ProfileFromScreenProps) => {
           value={data.values.name}
           error={error.field === "name"}
           errorMessage={error.field === "name" ? error.message : undefined}
+          disabled={isLoading}
           name="name"
           label="Como você gostaria de ser chamado(a)?"
           placeholder="Ex.: Maria Silva"
@@ -102,6 +128,7 @@ const ProfileFormScreen = (props: ProfileFromScreenProps) => {
           value={maskPhone(data.values.phone)}
           error={error.field === "phone"}
           errorMessage={error.field === "phone" ? error.message : undefined}
+          disabled={isLoading}
           name="phone"
           label="Telefone"
           placeholder="(DDD) + número de telefone"
@@ -115,6 +142,7 @@ const ProfileFormScreen = (props: ProfileFromScreenProps) => {
           value={data.values.birthDate}
           error={error.field === "birthDate"}
           errorMessage={error.field === "birthDate" ? error.message : undefined}
+          disabled={isLoading}
           textContentType="birthdate"
           label="Data de nascimento"
           placeholder="dd/mm/aaaa"
@@ -124,12 +152,14 @@ const ProfileFormScreen = (props: ProfileFromScreenProps) => {
           <Text style={styles.genderLabel}>Gênero social</Text>
           <View style={styles.genderButtons}>
             <ToggleButton
+              disabled={isLoading}
               selected={data.values.gender === "feminino"}
               onPress={() => selectGender("feminino")}
             >
               <Text style={styles.gender}>Feminino</Text>
             </ToggleButton>
             <ToggleButton
+              disabled={isLoading}
               selected={data.values.gender === "masculino"}
               onPress={() => selectGender("masculino")}
             >
@@ -142,6 +172,7 @@ const ProfileFormScreen = (props: ProfileFromScreenProps) => {
         </View>
       </View>
       <SubmitButton
+        disabled={isLoading}
         onPress={submitProfile}
         style={styles.submitButton}
         title="Continuar"
