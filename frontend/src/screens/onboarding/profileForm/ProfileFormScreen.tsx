@@ -1,4 +1,4 @@
-import { StyleSheet, Text, View } from "react-native";
+import { ScrollView, StyleSheet, Text, View } from "react-native";
 import { ScreenWrapper } from "../../../components/ScreenWrapper";
 import { ScreenHeader } from "../../../components/ScreenHeader";
 import { Input } from "../../../components/inputs/Input";
@@ -22,6 +22,7 @@ import {
   onlyNumbers,
   maskName,
 } from "../../../utils/masks";
+import { useRef } from "react";
 
 const profileFormInitialState: ProfileFormData = {
   name: "",
@@ -31,6 +32,7 @@ const profileFormInitialState: ProfileFormData = {
 };
 
 const ProfileFormScreen = (props: ProfileFromScreenProps) => {
+  const scrollRef = useRef<ScrollView>(null);
   const { data, handleChange, setError, validateField } = useForm(
     profileFormInitialState
   );
@@ -45,10 +47,16 @@ const ProfileFormScreen = (props: ProfileFromScreenProps) => {
   async function submitProfile() {
     const formattedBirthDate = formatDateToISO(values.birthDate);
     const dataSubmit = { ...values, birthDate: formattedBirthDate };
-
     const result = await httpAuthService.updateProfile(dataSubmit as any);
+
     if (!result.success) {
       const field = result.error.field || undefined;
+      if (field === "connection") {
+        return props.navigation.navigate("ConnectionError");
+      }
+      if (!field) {
+        scrollRef.current?.scrollTo({ y: 0, animated: true });
+      }
       setError({ message: result.error.message, field: field as any });
     } else {
       props.navigation.navigate("Onboarding/NutritionForm");
@@ -62,9 +70,15 @@ const ProfileFormScreen = (props: ProfileFromScreenProps) => {
   }
 
   return (
-    <ScreenWrapper scrollable>
-      <ScreenHeader onClose={() => props.navigation.goBack()} />
-      <ScreenTitle style={styles.title} title="Queremos ter conhecer melhor" />
+    <ScreenWrapper ref={scrollRef} scrollable>
+      <ScreenHeader
+        style={styles.header}
+        onClose={() => props.navigation.goBack()}
+      />
+      {!error.field && error.message && (
+        <ErrorMessage style={styles.error} message={error.message} />
+      )}
+      <ScreenTitle title="Queremos ter conhecer melhor" />
       <Paragraph
         style={styles.text}
         text="Complete seu cadastro para tornarmos sua experiência mais personalizada"
@@ -140,8 +154,11 @@ const ProfileFormScreen = (props: ProfileFromScreenProps) => {
 export default ProfileFormScreen;
 
 const styles = StyleSheet.create({
-  title: {
-    marginTop: 40,
+  header: {
+    marginBottom: 40,
+  },
+  error: {
+    marginBottom: 8,
   },
   text: {
     marginTop: 8,
