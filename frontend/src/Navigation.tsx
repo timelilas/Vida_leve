@@ -8,6 +8,7 @@ import PlanSelectionScreen from "./screens/onboarding/planSelection/PlanSelectio
 import GoalGuidanceScreen from "./screens/onboarding/goalGuidance/GoalGuidanceScreen";
 import NutritionFromScreen from "./screens/onboarding/nutritionForm/NutritionFormScreen";
 import ProfileFormScreen from "./screens/onboarding/profileForm/ProfileFormScreen";
+import { ConnectionErrorScreen } from "./screens/error/ConnectionErrorScreen";
 
 const Stack = createNativeStackNavigator();
 
@@ -20,6 +21,7 @@ const Navigation = () => {
         screenOptions={{
           animation: "simple_push",
           animationDuration: 300,
+          orientation: "all",
         }}
       >
         <Stack.Screen
@@ -55,6 +57,11 @@ const Navigation = () => {
         <Stack.Screen
           name="Onboarding/GoalGuidance"
           component={GoalGuidanceScreen}
+          options={{ headerShown: false }}
+        />
+        <Stack.Screen
+          name="ConnectionError"
+          component={ConnectionErrorScreen}
           options={{ headerShown: false }}
         />
       </Stack.Navigator>
