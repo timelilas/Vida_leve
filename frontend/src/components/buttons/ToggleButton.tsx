@@ -57,6 +57,7 @@ const styles = StyleSheet.create({
     borderRadius: 8,
   },
   disabled: {
-    opacity: 0.5,
+    opacity: 0.6,
+    backgroundColor: "#f7f7fc",
   },
 });
