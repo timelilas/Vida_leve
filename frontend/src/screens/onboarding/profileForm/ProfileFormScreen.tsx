@@ -124,7 +124,7 @@ const ProfileFormScreen = (props: ProfileFromScreenProps) => {
         />
         <Input
           onBlur={() => validateField("phone", values.phone, validatePhone)}
-          onChange={(value) => handleChange("phone", onlyNumbers(value))}
+          onChange={(value) => handleChange("phone", onlyNumbers(value, 11))}
           value={maskPhone(data.values.phone)}
           error={error.field === "phone"}
           errorMessage={error.field === "phone" ? error.message : undefined}

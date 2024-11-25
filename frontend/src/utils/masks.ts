@@ -20,8 +20,9 @@ export function maskPhone(value: string) {
     .replace(/(\d{2})(\d{5})(\d{1,4})/, "($1) $2-$3");
 }
 
-export function onlyNumbers(value: string) {
-  return value.replace(/[^0-9]/g, "");
+export function onlyNumbers(value: string, length?: number) {
+  const onlyNumbers = value.replace(/[^0-9]/g, "");
+  return length ? onlyNumbers.slice(0, length) : onlyNumbers;
 }
 
 export function maskName(name: string) {
