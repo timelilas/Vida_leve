@@ -1,132 +1,183 @@
-import {
-  ScrollView,
-  StyleSheet,
-  Platform,
-  StatusBar,
-  Text,
-  View,
-} from "react-native";
+import { ScrollView, StyleSheet, Text, View } from "react-native";
 import { ScreenWrapper } from "../../../components/ScreenWrapper";
 import { ScreenHeader } from "../../../components/ScreenHeader";
-import { CommonActions } from "@react-navigation/native";
 import { Input } from "../../../components/inputs/Input";
 import { SubmitButton } from "../../../components/buttons/SubmitButton";
 import { DateInput } from "../../../components/inputs/DateInput";
 import { ToggleButton } from "../../../components/buttons/ToggleButton";
-import { GenderType, ProfileFormData, ProfileFromScreenProps } from "./types";
+import { ProfileFormData, ProfileFromScreenProps } from "./types";
 import { Paragraph } from "../../../components/Paragraph";
 import { ScreenTitle } from "../../../components/ScreenTitle";
 import { useForm } from "../../../hooks/useForm";
+import { GenderType } from "../../../@core/common/gender";
 import { httpAuthService } from "../../../services/auth";
-import { maskPhone, maskDatePTBR, onlyNumbers } from "../../../utils/masks";
+import { validatePhone } from "../../../utils/validations/phone";
+import { validateBirthDate } from "../../../utils/validations/date";
+import { validateName } from "../../../utils/validations/name";
+import { ErrorMessage } from "../../../components/ErrorMessage";
+import { validateGender } from "../../../utils/validations/gender";
+import {
+  maskPhone,
+  maskDatePTBR,
+  onlyNumbers,
+  maskName,
+} from "../../../utils/masks";
+import { useRef } from "react";
 
 const profileFormInitialState: ProfileFormData = {
   name: "",
   phone: "",
   birthDate: "",
-  gender: "",
+  gender: null,
 };
 
 const ProfileFormScreen = (props: ProfileFromScreenProps) => {
-  const { data, handleChange, setError } = useForm(profileFormInitialState);
-  const { values } = data;
+  const scrollRef = useRef<ScrollView>(null);
+  const { data, handleChange, setError, validateField, setIsLoading } = useForm(
+    profileFormInitialState
+  );
+  const { values, error, isLoading } = data;
 
   function formatDateToISO(date: string) {
     const [day, month, year] = date.split("/");
-    return `${year}-${month}-${day}`;
+    const sanitizedDay = day === "29" && month === "02" ? "28" : day;
+    return `${year}-${month}-${sanitizedDay}`;
   }
 
+  function validateAllFields() {
+    const validationMap = {
+      name: validateName(values.name),
+      phone: validatePhone(values.phone),
+      birthDate: validateBirthDate(values.birthDate),
+      gender: validateGender(values.gender || ""),
+    };
+
+    for (const [field, validation] of Object.entries(validationMap)) {
+      if (!validation.success) {
+        setError({ field: field as any, message: validation.error });
+        return false;
+      }
+    }
+    return true;
+  }
 
   async function submitProfile() {
-    const formatteBirthDate = formatDateToISO(values.birthDate);
-    
-    const dataSubmit = { ...values, birthDate: formatteBirthDate };
+    if (isLoading) return;
+    if (!validateAllFields()) return;
 
-    const result = await httpAuthService.updateProfile(dataSubmit);
-    
+    setError({});
+    setIsLoading(true);
+
+    const formattedBirthDate = formatDateToISO(values.birthDate);
+    const dataSubmit = { ...values, birthDate: formattedBirthDate };
+    const result = await httpAuthService.updateProfile(dataSubmit as any);
+
+    setIsLoading(false);
+
     if (!result.success) {
       const field = result.error.field || undefined;
-      
+      if (field === "connection") {
+        return props.navigation.navigate("ConnectionError");
+      }
+      if (!field) {
+        scrollRef.current?.scrollTo({ y: 0, animated: true });
+      }
       setError({ message: result.error.message, field: field as any });
     } else {
-      props.navigation.dispatch(
-        CommonActions.reset({ routes: [{ name: "Onboarding/NutritionForm" }] })
-      );
+      props.navigation.navigate("Onboarding/NutritionForm");
     }
   }
 
   function selectGender(value: GenderType) {
-    handleChange("gender", value);
+    const newGender = value !== values.gender ? value : null;
+    handleChange("gender", newGender);
+    validateField("gender", newGender || "", validateGender);
   }
 
   return (
-    <ScreenWrapper>
-      <ScrollView
-        showsVerticalScrollIndicator={false}
-        contentContainerStyle={styles.scrollContainer}
-      >
-        <ScreenHeader
-          navigation={props.navigation}
-          style={styles.headerContainer}
+    <ScreenWrapper ref={scrollRef} scrollable>
+      <ScreenHeader
+        style={styles.header}
+        onClose={() => props.navigation.goBack()}
+      />
+      {!error.field && error.message && (
+        <ErrorMessage style={styles.error} message={error.message} />
+      )}
+      <ScreenTitle title="Queremos ter conhecer melhor" />
+      <Paragraph
+        style={styles.text}
+        text="Complete seu cadastro para tornarmos sua experiência mais personalizada"
+      />
+      <View style={styles.form}>
+        <Input
+          onBlur={() => validateField("name", values.name, validateName)}
+          onChange={(value) => handleChange("name", maskName(value))}
+          value={data.values.name}
+          error={error.field === "name"}
+          errorMessage={error.field === "name" ? error.message : undefined}
+          disabled={isLoading}
+          name="name"
+          label="Como você gostaria de ser chamado(a)?"
+          placeholder="Ex.: Maria Silva"
+          textContentType="name"
+          autoFocus
         />
-        <ScreenTitle
-          style={styles.title}
-          title="Queremos ter conhecer melhor"
+        <Input
+          onBlur={() => validateField("phone", values.phone, validatePhone)}
+          onChange={(value) => handleChange("phone", onlyNumbers(value))}
+          value={maskPhone(data.values.phone)}
+          error={error.field === "phone"}
+          errorMessage={error.field === "phone" ? error.message : undefined}
+          disabled={isLoading}
+          name="phone"
+          label="Telefone"
+          placeholder="(DDD) + número de telefone"
+          textContentType="telephoneNumber"
         />
-        <Paragraph
-          style={styles.text}
-          text="Complete seu cadastro para tornarmos sua experiência mais personalizada"
+        <DateInput
+          onChange={(value) => handleChange("birthDate", maskDatePTBR(value))}
+          onBlur={() =>
+            validateField("birthDate", values.birthDate, validateBirthDate)
+          }
+          value={data.values.birthDate}
+          error={error.field === "birthDate"}
+          errorMessage={error.field === "birthDate" ? error.message : undefined}
+          disabled={isLoading}
+          textContentType="birthdate"
+          label="Data de nascimento"
+          placeholder="dd/mm/aaaa"
+          name="birthDate"
         />
-        <View style={styles.form}>
-          <Input
-            value={data.values.name}
-            onChange={(value) => handleChange("name", value)}
-            name="name"
-            label="Nome completo"
-            placeholder="Nome completo (Ex.: Maria Silva)"
-            textContentType="name"
-          />
-          <Input
-            value={maskPhone(data.values.phone)}
-            onChange={(value) => handleChange("phone", onlyNumbers(value))}
-            name="phone"
-            label="Telefone"
-            placeholder="(DDD) + número de telefone"
-            textContentType="telephoneNumber"
-          />
-          <DateInput
-            value={data.values.birthDate}
-            textContentType="birthdate"
-            onChange={(value) => handleChange("birthDate", maskDatePTBR(value))}
-            label="Data de nascimento"
-            placeholder="dd/mm/aaaa"
-            name="birthDate"
-          />
-          <View>
-            <Text style={styles.genderLabel}>Gênero social</Text>
-            <View style={styles.genderButtons}>
-              <ToggleButton
-                selected={data.values.gender === "feminino"}
-                onPress={() => selectGender("feminino")}
-              >
-                <Text style={styles.gender}>Feminino</Text>
-              </ToggleButton>
-              <ToggleButton
-                selected={data.values.gender === "masculino"}
-                onPress={() => selectGender("masculino")}
-              >
-                <Text style={styles.gender}>Masculino</Text>
-              </ToggleButton>
-            </View>
+        <View>
+          <Text style={styles.genderLabel}>Gênero social</Text>
+          <View style={styles.genderButtons}>
+            <ToggleButton
+              disabled={isLoading}
+              selected={data.values.gender === "feminino"}
+              onPress={() => selectGender("feminino")}
+            >
+              <Text style={styles.gender}>Feminino</Text>
+            </ToggleButton>
+            <ToggleButton
+              disabled={isLoading}
+              selected={data.values.gender === "masculino"}
+              onPress={() => selectGender("masculino")}
+            >
+              <Text style={styles.gender}>Masculino</Text>
+            </ToggleButton>
           </View>
+          {error.field === "gender" && error.message && (
+            <ErrorMessage style={styles.genderError} message={error.message} />
+          )}
         </View>
-        <SubmitButton
-          onPress={submitProfile}
-          style={styles.submitButton}
-          title="Continuar"
-          type="primary"
-        />
-      </ScrollView>
+      </View>
+      <SubmitButton
+        disabled={isLoading}
+        onPress={submitProfile}
+        style={styles.submitButton}
+        title="Continuar"
+        type="primary"
+      />
     </ScreenWrapper>
   );
 };
@@ -134,18 +185,11 @@ const ProfileFormScreen = (props: ProfileFromScreenProps) => {
 export default ProfileFormScreen;
 
 const styles = StyleSheet.create({
-  scrollContainer: {
-    flexGrow: 1,
-    paddingHorizontal: 16,
-    paddingBottom: 24,
-    paddingTop:
-      24 + (Platform.OS === "android" ? StatusBar.currentHeight || 0 : 0),
+  header: {
+    marginBottom: 40,
   },
-  headerContainer: {
-    marginTop: 24,
-  },
-  title: {
-    marginTop: 40,
+  error: {
+    marginBottom: 8,
   },
   text: {
     marginTop: 8,
@@ -177,5 +221,8 @@ const styles = StyleSheet.create({
   },
   submitButton: {
     marginTop: "auto",
+  },
+  genderError: {
+    marginTop: 8,
   },
 });

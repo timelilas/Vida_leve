@@ -1,10 +1,4 @@
-import {
-  StyleSheet,
-  View,
-  ScrollView,
-  Platform,
-  StatusBar,
-} from "react-native";
+import { StyleSheet, View, Platform } from "react-native";
 import { useState } from "react";
 import { PlanType } from "./types/types";
 import { GradualPlanButton } from "../../../components/buttons/planButtons/GradualPlanButton";
@@ -29,48 +23,41 @@ const PlanSelectionScreen = (props: PlanSelectionScreenProps) => {
   }
 
   return (
-    <ScreenWrapper>
-      <ScrollView
-        showsVerticalScrollIndicator={false}
-        contentContainerStyle={styles.scrollContainer}
-      >
-        <View>
-          <ScreenHeader
-            navigation={props.navigation}
-            style={styles.headerContainer}
-          />
-          <View style={styles.contentContainer}>
-            <ScreenTitle
-              style={styles.title}
-              title="Escolha o plano ideal para você!"
-            />
-            <Paragraph
-              style={styles.text}
-              text="Selecione entre 3 opções de planos para alcançar seus objetivos no seu próprio tempo. Seja qual for a sua escolha, estamos prontos para te ajudar a chegar lá!"
-            />
-            <View style={styles.goalsWrapper}>
-              <GradualPlanButton
-                selected={selectedGoal === "gradual"}
-                onPress={() => selectGoal("gradual")}
-              />
-              <ModeratedPlanButton
-                selected={selectedGoal === "moderado"}
-                onPress={() => selectGoal("moderado")}
-              />
-              <AcceleratedGoalButton
-                selected={selectedGoal === "acelerado"}
-                onPress={() => selectGoal("acelerado")}
-              />
-            </View>
-          </View>
-        </View>
-        <SubmitButton
-          onPress={() => props.navigation.navigate("Onboarding/GoalGuidance")}
-          title="Salvar informações"
-          type="primary"
-          style={styles.submitButton}
+    <ScreenWrapper scrollable>
+      <ScreenHeader
+        onGoBack={() => props.navigation.goBack()}
+        onClose={() => {}}
+      />
+      <View style={styles.contentContainer}>
+        <ScreenTitle
+          style={styles.title}
+          title="Escolha o plano ideal para você!"
         />
-      </ScrollView>
+        <Paragraph
+          style={styles.text}
+          text="Selecione entre 3 opções de planos para alcançar seus objetivos no seu próprio tempo. Seja qual for a sua escolha, estamos prontos para te ajudar a chegar lá!"
+        />
+        <View style={styles.goalsWrapper}>
+          <GradualPlanButton
+            selected={selectedGoal === "gradual"}
+            onPress={() => selectGoal("gradual")}
+          />
+          <ModeratedPlanButton
+            selected={selectedGoal === "moderado"}
+            onPress={() => selectGoal("moderado")}
+          />
+          <AcceleratedGoalButton
+            selected={selectedGoal === "acelerado"}
+            onPress={() => selectGoal("acelerado")}
+          />
+        </View>
+      </View>
+      <SubmitButton
+        onPress={() => props.navigation.navigate("Onboarding/GoalGuidance")}
+        title="Salvar informações"
+        type="primary"
+        style={styles.submitButton}
+      />
     </ScreenWrapper>
   );
 };
@@ -78,17 +65,6 @@ const PlanSelectionScreen = (props: PlanSelectionScreenProps) => {
 export default PlanSelectionScreen;
 
 const styles = StyleSheet.create({
-  scrollContainer: {
-    justifyContent: "space-between",
-    flexGrow: 1,
-    paddingHorizontal: 16,
-    paddingBottom: 24,
-    paddingTop:
-      24 + (Platform.OS === "android" ? StatusBar.currentHeight || 0 : 0),
-  },
-  headerContainer: {
-    marginTop: 24,
-  },
   title: {
     textAlign: "left",
   },
@@ -97,6 +73,7 @@ const styles = StyleSheet.create({
   },
   contentContainer: {
     marginTop: 16,
+    marginBottom: 40,
   },
   goalsWrapper: {
     overflow: Platform.OS === "android" ? "hidden" : "visible",
@@ -107,6 +84,6 @@ const styles = StyleSheet.create({
     borderTopRightRadius: 8,
   },
   submitButton: {
-    marginTop: 40,
+    marginTop: "auto",
   },
 });

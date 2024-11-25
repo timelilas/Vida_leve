@@ -6,6 +6,7 @@ import { Platform } from "react-native";
 
 export interface ToggleButtonProps extends PropsWithChildren {
   selected: boolean;
+  disabled?: boolean;
   onPress?: () => void;
   style?: StyleProp<ViewStyle>;
 }
@@ -13,11 +14,13 @@ export interface ToggleButtonProps extends PropsWithChildren {
 export function ToggleButton(props: ToggleButtonProps) {
   return (
     <Pressable
+      disabled={props.disabled}
       onPress={props.onPress}
       style={[
         styles.button,
         props.style,
         props.selected && styles.buttonSelected,
+        props.disabled && styles.disabled,
       ]}
     >
       <View style={styles.container}>{props.children}</View>
@@ -52,5 +55,8 @@ const styles = StyleSheet.create({
   container: {
     backgroundColor: "#f7f7fc",
     borderRadius: 8,
+  },
+  disabled: {
+    opacity: 0.5,
   },
 });

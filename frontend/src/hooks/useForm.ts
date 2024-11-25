@@ -1,9 +1,11 @@
 import { useState } from "react";
 import { ErrorState, Validator } from "../screens/types";
 
+type GeneralFields = "all" | "connection";
+
 export function useForm<T extends Record<string, any>>(initialState: T) {
   const [values, setValues] = useState(initialState);
-  const [error, setError] = useState<ErrorState<keyof T | "all">>({});
+  const [error, setError] = useState<ErrorState<keyof T | GeneralFields>>({});
   const [isLoading, setIsLoading] = useState(false);
 
   function validateField(field: keyof T, value: any, validator: Validator) {

@@ -10,8 +10,8 @@ export default class UserService {
   };
 
   public create = async (params: CreateUserDTO) => {
-    const { name, email, password } = params;
-    const user = await User.create({ name, email, password });
+    const { email, password } = params;
+    const user = await User.create({ email, password });
 
     return user.getProfile();
   };

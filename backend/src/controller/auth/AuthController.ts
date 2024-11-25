@@ -47,8 +47,7 @@ export class AuthController {
   }
 
   async signup(req: Request, res: Response): Promise<Response> {
-    const { name, email, password } = req.body;
-
+    const { email, password } = req.body;
     try {
       const foundUser = await this._userService.getUserByEmail(email);
       if (foundUser) {
@@ -62,7 +61,6 @@ export class AuthController {
 
       const hashedPassword = await hashString(password);
       const createdUser = await this._userService.create({
-        name,
         email,
         password: hashedPassword,
       });

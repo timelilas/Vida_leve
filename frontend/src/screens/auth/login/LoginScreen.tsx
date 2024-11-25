@@ -13,6 +13,8 @@ import { useForm } from "../../../hooks/useForm";
 import { validateEmail } from "../../../utils/validations/email";
 import { validateEmptyField } from "../../../utils/validations/common";
 import { LoginFormData, LoginScreenProps } from "./types";
+import { maskEmail } from "../../../utils/masks";
+import { HeaderNavigator } from "../../../components/HeaderNavigator";
 import styles from "../styles";
 import AsyncStorage from "@react-native-async-storage/async-storage";
 
@@ -28,6 +30,7 @@ const LoginScreen = (props: LoginScreenProps) => {
   const { values, error, isLoading } = data;
 
   async function login() {
+    if (isLoading) return;
     if (!validateAllFields()) return;
     setError({});
     setIsLoading(true);
@@ -36,8 +39,13 @@ const LoginScreen = (props: LoginScreenProps) => {
 
     if (!result.success) {
       const field = result.error.field || undefined;
+
       setIsLoading(false);
       setError({ message: result.error.message, field: field as any });
+
+      if (field === "connection") {
+        return props.navigation.navigate("ConnectionError");
+      }
       if (!field && field === "all") {
         scrollRef.current?.scrollTo({ y: 0, animated: true });
       }
@@ -65,12 +73,13 @@ const LoginScreen = (props: LoginScreenProps) => {
   }
 
   return (
-    <ScreenWrapper>
-      <ScrollView
-        ref={scrollRef}
-        showsVerticalScrollIndicator={false}
-        contentContainerStyle={styles.scrollView}
-      >
+    <ScreenWrapper scrollable ref={scrollRef}>
+      <View style={styles.container}>
+        <HeaderNavigator
+          onGoBack={() => props.navigation.goBack()}
+          onClose={() => {}}
+          style={styles.headerNavigator}
+        />
         <LogoSVG style={styles.logo} />
         {error.message && (error.field === "all" || !error.field) && (
           <ErrorMessage style={styles.error} message={error.message} />
@@ -81,7 +90,7 @@ const LoginScreen = (props: LoginScreenProps) => {
         />
         <View style={styles.form}>
           <Input
-            onChange={(data) => handleChange("email", data)}
+            onChange={(data) => handleChange("email", maskEmail(data))}
             onBlur={() => validateField("email", values.email, validateEmail)}
             autoFocus
             name="email"
@@ -116,7 +125,7 @@ const LoginScreen = (props: LoginScreenProps) => {
           type="primary"
           onPress={login}
         />
-      </ScrollView>
+      </View>
     </ScreenWrapper>
   );
 };
