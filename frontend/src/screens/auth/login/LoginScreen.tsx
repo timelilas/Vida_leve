@@ -1,7 +1,7 @@
 import { useRef } from "react";
 import { View, ScrollView } from "react-native";
 import { LogoSVG } from "../../../components/logos/LogoSVG";
-import { CommonActions, NavigationProp } from "@react-navigation/native";
+import { CommonActions } from "@react-navigation/native";
 import { Input } from "../../../components/inputs/Input";
 import { PasswordInput } from "../../../components/inputs/PasswordInput";
 import { ScreenWrapper } from "../../../components/ScreenWrapper";
@@ -12,13 +12,13 @@ import { ErrorMessage } from "../../../components/ErrorMessage";
 import { useForm } from "../../../hooks/useForm";
 import { validateEmail } from "../../../utils/validations/email";
 import { validateEmptyField } from "../../../utils/validations/common";
+import { LoginFormData, LoginScreenProps } from "./types";
+import { maskEmail } from "../../../utils/masks";
+import { HeaderNavigator } from "../../../components/HeaderNavigator";
 import styles from "../styles";
+import AsyncStorage from "@react-native-async-storage/async-storage";
 
-type LoginScreenProps = {
-  navigation: NavigationProp<any>;
-};
-
-const loginInitialState = {
+const loginInitialState: LoginFormData = {
   email: "",
   password: "",
 };
@@ -30,19 +30,27 @@ const LoginScreen = (props: LoginScreenProps) => {
   const { values, error, isLoading } = data;
 
   async function login() {
+    if (isLoading) return;
     if (!validateAllFields()) return;
     setError({});
     setIsLoading(true);
+
     const result = await httpAuthService.login(values);
 
     if (!result.success) {
       const field = result.error.field || undefined;
+
       setIsLoading(false);
       setError({ message: result.error.message, field: field as any });
-      if (!field) {
+
+      if (field === "connection") {
+        return props.navigation.navigate("ConnectionError");
+      }
+      if (!field && field === "all") {
         scrollRef.current?.scrollTo({ y: 0, animated: true });
       }
     } else {
+      await AsyncStorage.setItem("token", result.response.token);
       props.navigation.dispatch(
         CommonActions.reset({ routes: [{ name: "Onboarding/ProfileForm" }] })
       );
@@ -65,14 +73,15 @@ const LoginScreen = (props: LoginScreenProps) => {
   }
 
   return (
-    <ScreenWrapper>
-      <ScrollView
-        ref={scrollRef}
-        showsVerticalScrollIndicator={false}
-        contentContainerStyle={styles.scrollView}
-      >
+    <ScreenWrapper scrollable ref={scrollRef}>
+      <View style={styles.container}>
+        <HeaderNavigator
+          onGoBack={() => props.navigation.goBack()}
+          onClose={() => {}}
+          style={styles.headerNavigator}
+        />
         <LogoSVG style={styles.logo} />
-        {error.message && !error.field && (
+        {error.message && (error.field === "all" || !error.field) && (
           <ErrorMessage style={styles.error} message={error.message} />
         )}
         <ScreenTitle
@@ -81,7 +90,7 @@ const LoginScreen = (props: LoginScreenProps) => {
         />
         <View style={styles.form}>
           <Input
-            onChange={(data) => handleChange("email", data)}
+            onChange={(data) => handleChange("email", maskEmail(data))}
             onBlur={() => validateField("email", values.email, validateEmail)}
             autoFocus
             name="email"
@@ -90,7 +99,7 @@ const LoginScreen = (props: LoginScreenProps) => {
             textContentType="emailAddress"
             value={values.email}
             disabled={isLoading}
-            error={error.field === "email"}
+            error={error.field === "email" || error.field === "all"}
             errorMessage={error.field === "email" ? error.message : undefined}
           />
           <PasswordInput
@@ -103,7 +112,7 @@ const LoginScreen = (props: LoginScreenProps) => {
             placeholder="**********"
             value={values.password}
             disabled={isLoading}
-            error={error.field === "password"}
+            error={error.field === "password" || error.field === "all"}
             errorMessage={
               error.field === "password" ? error.message : undefined
             }
@@ -116,7 +125,7 @@ const LoginScreen = (props: LoginScreenProps) => {
           type="primary"
           onPress={login}
         />
-      </ScrollView>
+      </View>
     </ScreenWrapper>
   );
 };

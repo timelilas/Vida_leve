@@ -1,16 +1,17 @@
-import axios, { AxiosResponse } from "axios";
+import axios, { AxiosRequestConfig, AxiosResponse } from "axios";
 
 const api = axios.create({
   // baseURL: "http://192.168.0.120:3000",
-  baseURL: "http://localhost:3000/",
-  // baseURL: "https://vida-leve-h7ug.onrender.com",
+  // baseURL: "http://localhost:3000/",
+  baseURL: "https://vida-leve-h7ug.onrender.com",
   timeout: 5000,
 });
 
 export const request = async (
   method: string,
   endpoint: string,
-  data?: object
+  data?: object,
+  headers?: AxiosRequestConfig["headers"]
 ): Promise<AxiosResponse> => {
   try {
     const response = await api({
@@ -19,6 +20,7 @@ export const request = async (
       data,
       headers: {
         "Content-Type": "application/json",
+        ...headers,
       },
     });
 

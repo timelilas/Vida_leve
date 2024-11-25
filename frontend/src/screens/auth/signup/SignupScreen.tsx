@@ -1,7 +1,6 @@
 import React, { useState } from "react";
-import { View, ScrollView } from "react-native";
+import { View } from "react-native";
 import { LogoSVG } from "../../../components/logos/LogoSVG";
-import { NavigationProp } from "@react-navigation/native";
 import { ScreenWrapper } from "../../../components/ScreenWrapper";
 import { Input } from "../../../components/inputs/Input";
 import { PasswordInput } from "../../../components/inputs/PasswordInput";
@@ -12,20 +11,20 @@ import { validateEmail } from "../../../utils/validations/email";
 import { validatePassword } from "../../../utils/validations/password";
 import { validatePasswordConfirmation } from "../../../utils/validations/passwordConfirmation";
 import { useSignupForm } from "./useSignupForm";
+import { SignupScreenProps } from "./types";
 import styles from "../styles";
-
-type SignupScreenProps = {
-  navigation: NavigationProp<any>;
-};
+import { maskEmail } from "../../../utils/masks";
+import { HeaderNavigator } from "../../../components/HeaderNavigator";
 
 const SignupScreen = (props: SignupScreenProps) => {
   const [passwordFocused, setPasswordFocused] = useState(false);
   const [isTypingPassword, setIsTypingPassword] = useState(false);
   const { values, error, isLoading, ref, handleChange, signup, validateField } =
-    useSignupForm({ navigation: props.navigation });
+    useSignupForm();
 
   function handlePasswordConfirmationValidation() {
-    if (validatePassword(values.password).success) {
+    const validPassword = validatePassword(values.password).success;
+    if (validPassword) {
       const value = values.passwordConfirmation;
       validateField("passwordConfirmation", value, (value: any) =>
         validatePasswordConfirmation(values.password, value)
@@ -40,12 +39,13 @@ const SignupScreen = (props: SignupScreenProps) => {
   }
 
   return (
-    <ScreenWrapper>
-      <ScrollView
-        ref={ref}
-        showsVerticalScrollIndicator={false}
-        contentContainerStyle={styles.scrollView}
-      >
+    <ScreenWrapper scrollable ref={ref}>
+      <View style={styles.container}>
+        <HeaderNavigator
+          style={styles.headerNavigator}
+          onGoBack={() => props.navigation.goBack()}
+          onClose={() => {}}
+        />
         <LogoSVG style={styles.logo} />
         {error.message && !error.field && (
           <ErrorMessage style={styles.error} message={error.message} />
@@ -57,7 +57,7 @@ const SignupScreen = (props: SignupScreenProps) => {
         <View style={styles.form}>
           <Input
             onBlur={() => validateField("email", values.email, validateEmail)}
-            onChange={(value) => handleChange("email", value)}
+            onChange={(value) => handleChange("email", maskEmail(value))}
             disabled={isLoading}
             autoFocus
             name="email"
@@ -100,11 +100,11 @@ const SignupScreen = (props: SignupScreenProps) => {
         <SubmitButton
           disabled={isLoading}
           style={styles.button}
-          title="Continuar"
+          title="Começar agora"
           type="primary"
           onPress={signup}
         />
-      </ScrollView>
+      </View>
     </ScreenWrapper>
   );
 };

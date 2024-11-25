@@ -11,7 +11,7 @@ type AuthHomeProps = {
 
 const AuthHomeScreen = ({ navigation }: AuthHomeProps) => {
   return (
-    <ScreenWrapper>
+    <ScreenWrapper statusBarColor="transparent">
       <ScrollView
         contentContainerStyle={styles.scrollView}
         showsVerticalScrollIndicator={false}

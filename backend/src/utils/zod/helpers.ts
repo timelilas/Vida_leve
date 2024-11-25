@@ -84,7 +84,7 @@ export class ZodHelper {
     return errors;
   }
 
-  private static baseString(field: string, min: number, max?: number) {
+  public static baseString(field: string, min: number, max?: number) {
     const base = z
       .string({
         required_error: messages.requiredMsg(field),

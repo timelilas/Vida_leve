@@ -1,6 +1,5 @@
 import { NavigationContainer } from "@react-navigation/native";
 import { createNativeStackNavigator } from "@react-navigation/native-stack";
-import { StatusBar } from "expo-status-bar";
 import AuthHomeScreen from "./screens/auth/home/AuthHomeScreen";
 import LoginScreen from "./screens/auth/login/LoginScreen";
 import SignupScreen from "./screens/auth/signup/SignupScreen";
@@ -8,18 +7,19 @@ import PlanSelectionScreen from "./screens/onboarding/planSelection/PlanSelectio
 import GoalGuidanceScreen from "./screens/onboarding/goalGuidance/GoalGuidanceScreen";
 import NutritionFromScreen from "./screens/onboarding/nutritionForm/NutritionFormScreen";
 import ProfileFormScreen from "./screens/onboarding/profileForm/ProfileFormScreen";
+import { ConnectionErrorScreen } from "./screens/error/ConnectionErrorScreen";
 
 const Stack = createNativeStackNavigator();
 
 const Navigation = () => {
   return (
     <NavigationContainer>
-      <StatusBar backgroundColor="transparent" style="dark" />
       <Stack.Navigator
         initialRouteName="Auth/Home"
         screenOptions={{
           animation: "simple_push",
           animationDuration: 300,
+          orientation: "all",
         }}
       >
         <Stack.Screen
@@ -55,6 +55,11 @@ const Navigation = () => {
         <Stack.Screen
           name="Onboarding/GoalGuidance"
           component={GoalGuidanceScreen}
+          options={{ headerShown: false }}
+        />
+        <Stack.Screen
+          name="ConnectionError"
+          component={ConnectionErrorScreen}
           options={{ headerShown: false }}
         />
       </Stack.Navigator>

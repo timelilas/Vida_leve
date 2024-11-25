@@ -4,7 +4,7 @@ import {
   InferCreationAttributes,
   CreationOptional,
 } from "sequelize";
-import { ProgressEntity } from "../../entity/ProgressEntity";
+import { ProgressEntity } from "../../@core/entity/progress/ProgressEntity";
 import { sequelize } from "../index";
 import User from "./User";
 import Sequelize from "sequelize";
