@@ -1,6 +1,5 @@
 import { NavigationContainer } from "@react-navigation/native";
 import { createNativeStackNavigator } from "@react-navigation/native-stack";
-import { StatusBar } from "expo-status-bar";
 import AuthHomeScreen from "./screens/auth/home/AuthHomeScreen";
 import LoginScreen from "./screens/auth/login/LoginScreen";
 import SignupScreen from "./screens/auth/signup/SignupScreen";
@@ -15,7 +14,6 @@ const Stack = createNativeStackNavigator();
 const Navigation = () => {
   return (
     <NavigationContainer>
-      <StatusBar backgroundColor="transparent" style="dark" />
       <Stack.Navigator
         initialRouteName="Auth/Home"
         screenOptions={{
