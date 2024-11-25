@@ -1,29 +1,28 @@
 import { useForm } from "../../../hooks/useForm";
 import { useRef } from "react";
 import { ScrollView } from "react-native";
-import { NavigationProp, StackActions } from "@react-navigation/native";
+import { StackActions, useNavigation } from "@react-navigation/native";
 import { httpAuthService } from "../../../services/auth";
 import { validateEmail } from "../../../utils/validations/email";
 import { validatePassword } from "../../../utils/validations/password";
 import { validatePasswordConfirmation } from "../../../utils/validations/passwordConfirmation";
+import { SignupFormData } from "./types";
 
-const initialState = {
+const initialState: SignupFormData = {
   email: "",
   password: "",
   passwordConfirmation: "",
 };
 
-interface UseSignupFormParams {
-  navigation: NavigationProp<any>;
-}
-
-export function useSignupForm({ navigation }: UseSignupFormParams) {
+export function useSignupForm() {
+  const navigation = useNavigation<any>();
   const ref = useRef<ScrollView>(null);
   const { data, setError, handleChange, setIsLoading, validateField } =
     useForm(initialState);
   const { values, error, isLoading } = data;
 
   async function signup() {
+    if (isLoading) return;
     if (!validateAllFields()) return;
     setError({});
     setIsLoading(true);
@@ -34,6 +33,9 @@ export function useSignupForm({ navigation }: UseSignupFormParams) {
       const field = result.error.field || undefined;
       setIsLoading(false);
       setError({ field: field as any, message: result.error.message });
+      if (field === "connection") {
+        return navigation.navigate("ConnectionError");
+      }
       if (!field) {
         ref.current?.scrollTo({ y: 0, animated: true });
       }

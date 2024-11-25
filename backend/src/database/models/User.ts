@@ -6,7 +6,7 @@ import {
 } from "sequelize";
 import { sequelize } from "../index";
 import Sequelize from "sequelize";
-import { UserEntity } from "../../entity/UserEntity";
+import { UserEntity } from "../../@core/entity/user/UserEntity";
 
 class User
   extends Model<InferAttributes<User>, InferCreationAttributes<User>>

@@ -1,6 +1,7 @@
 import { ZodHelper } from "../../utils/zod/helpers";
 import { requiredMsg, stringMsg } from "../../utils/zod/messages";
-import { userZodSchema } from "../../utils/zod/schemas";
+import { userZodSchema } from "../../utils/zod/schemas/user";
+
 import z from "zod";
 
 export const signupSchema = userZodSchema
@@ -9,10 +10,7 @@ export const signupSchema = userZodSchema
     password: true,
   })
   .extend({
-    passwordConfirmation: z.string({
-      invalid_type_error: stringMsg("Confirmação da senha"),
-      required_error: requiredMsg("Confirmação da senha"),
-    }),
+    passwordConfirmation: ZodHelper.baseString("Confirmação da senha", 1),
   })
   .strict()
   .refine(

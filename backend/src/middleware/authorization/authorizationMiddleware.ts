@@ -7,6 +7,7 @@ export const authorizationMiddleware = async (
   res: Response,
   next: NextFunction
 ) => {
+  
   const authorizationHeader = req.headers["authorization"];
 
   const accessToken = authorizationHeader?.split(" ")[1];

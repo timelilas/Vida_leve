@@ -8,7 +8,7 @@ import {
 } from "react-native";
 import { AlertIcon } from "../icons/AlertIcon";
 import { CalendarIcon } from "../icons/CalendarIcon";
-import { useState } from "react";
+import { useRef, useState } from "react";
 import { Calendar } from "../calendar/Calendar";
 import { CalendarSection } from "../calendar/types";
 import { DateData } from "react-native-calendars";
@@ -22,6 +22,7 @@ interface PasswordInputProps {
   value: string;
   disabled?: boolean;
   onChange?: (text: string) => void;
+  onBlur?: () => void;
   label?: string;
   autoFocus?: boolean;
   placeholder?: string;
@@ -35,7 +36,7 @@ export function DateInput(props: PasswordInputProps) {
   const [isCalendarVisible, setIsCalendarVisible] = useState<boolean>(false);
   const [section, setSection] = useState<CalendarSection>("calendar");
   const [selectedDate, setSelectedDate] = useState<DateData>();
-
+  const inputRef = useRef<TextInput | null>(null);
   const {
     month,
     year,
@@ -60,6 +61,7 @@ export function DateInput(props: PasswordInputProps) {
     if (selectedDate && props.onChange) {
       props.onChange(dateToPTBR(new Date(selectedDate.timestamp)));
       setIsCalendarVisible(false);
+      inputRef.current?.focus();
     }
   }
 
@@ -94,6 +96,7 @@ export function DateInput(props: PasswordInputProps) {
             ]}
           >
             <TextInput
+              ref={inputRef}
               autoFocus={props.autoFocus}
               textContentType={props.textContentType}
               placeholderTextColor={"#B7B7B7"}
@@ -104,7 +107,10 @@ export function DateInput(props: PasswordInputProps) {
               placeholder={props.placeholder}
               value={props.value}
               onChangeText={props.onChange}
+              onBlur={props.onBlur}
               editable={!props.disabled}
+              contextMenuHidden={props.disabled}
+              selectTextOnFocus={props.disabled}
             />
             <Pressable
               disabled={props.disabled}

@@ -3,7 +3,7 @@ import { AxiosRequestConfig } from "axios";
 export interface SuccessHttpResponse {
   status: number;
   success: true;
-  response: { data: Record<string, any> };
+  response: Record<string, any>;
 }
 
 export interface FailedHttpResponse {

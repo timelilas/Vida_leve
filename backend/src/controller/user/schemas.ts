@@ -1,4 +1,4 @@
-import { userZodSchema } from "../../utils/zod/schemas";
+import { userZodSchema } from "../../utils/zod/schemas/user";
 
 export const updateUserSchema = userZodSchema
   .pick({
