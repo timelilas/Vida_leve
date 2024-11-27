@@ -53,6 +53,10 @@ User.init(
     birthDate: {
       type: Sequelize.DATEONLY,
       allowNull: true,
+      get() {
+        const birthDate = this.getDataValue("birthDate");
+        return birthDate ? new Date(birthDate) : null;
+      },
     },
     gender: {
       type: Sequelize.ENUM("masculino", "feminino"),
