@@ -1,29 +1,28 @@
-import { StyleSheet, Platform, StatusBar, View } from "react-native";
+import { StyleSheet, View } from "react-native";
 import { ScreenWrapper } from "../../../components/ScreenWrapper";
 import { ScreenHeader } from "../../../components/ScreenHeader";
 import { Input } from "../../../components/inputs/Input";
 import { FrequencyButton } from "./components/FrequencyButton";
 import {
   ActitivyFrequency,
-  NutritionFormData,
-  NutritionFormScreenProps,
+  HealthFormData,
+  HealthFormScreenProps,
 } from "./types";
 import { SubmitButton } from "../../../components/buttons/SubmitButton";
 import { ScreenTitle } from "../../../components/ScreenTitle";
 import { Paragraph } from "../../../components/Paragraph";
 import { useForm } from "../../../hooks/useForm";
 import { httpAuthService } from "../../../services/auth";
-import { CommonActions } from "@react-navigation/native";
 
-const nutritionFromInitialState: NutritionFormData = {
+const healthFromInitialState: HealthFormData = {
   height: "",
   weight: "",
   goalWeight: "",
   activityFrequency: null,
 };
 
-const NutritionFormScreen = (props: NutritionFormScreenProps) => {
-  const { data, handleChange, setError } = useForm(nutritionFromInitialState);
+const HealthFormScreen = (props: HealthFormScreenProps) => {
+  const { data, handleChange, setError } = useForm(healthFromInitialState);
   const { values } = data;
 
   function handleActivityFrequencyChange(frequency: ActitivyFrequency) {
@@ -129,7 +128,7 @@ const NutritionFormScreen = (props: NutritionFormScreenProps) => {
   );
 };
 
-export default NutritionFormScreen;
+export default HealthFormScreen;
 
 const styles = StyleSheet.create({
   title: {

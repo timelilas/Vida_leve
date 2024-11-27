@@ -84,7 +84,7 @@ const ProfileFormScreen = (props: ProfileFromScreenProps) => {
       }
       setError({ message: result.error.message, field: field as any });
     } else {
-      props.navigation.navigate("Onboarding/NutritionForm");
+      props.navigation.navigate("Onboarding/HealthForm");
     }
   }
 
