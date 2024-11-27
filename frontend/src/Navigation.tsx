@@ -7,7 +7,7 @@ import PlanSelectionScreen from "./screens/onboarding/planSelection/PlanSelectio
 import GoalGuidanceScreen from "./screens/onboarding/goalGuidance/GoalGuidanceScreen";
 import HealthFormScreen from "./screens/onboarding/healthForm/HealthFormScreen";
 import ProfileFormScreen from "./screens/onboarding/profileForm/ProfileFormScreen";
-import { ConnectionErrorScreen } from "./screens/error/ConnectionErrorScreen";
+import ConnectionErrorScreen from "./screens/error/connectionError/ConnectionErrorScreen";
 
 const Stack = createNativeStackNavigator();
 

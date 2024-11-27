@@ -7,17 +7,17 @@ import {
   BackHandler,
   Platform,
 } from "react-native";
-import { ScreenWrapper } from "../../components/ScreenWrapper";
-import { ScreenTitle } from "../../components/ScreenTitle";
-import { Paragraph } from "../../components/Paragraph";
-import { SubmitButton } from "../../components/buttons/SubmitButton";
-import { ReloadIcon } from "../../components/icons/ReloadIcon";
+import { ScreenWrapper } from "../../../components/ScreenWrapper";
+import { ScreenTitle } from "../../../components/ScreenTitle";
+import { Paragraph } from "../../../components/Paragraph";
+import { SubmitButton } from "../../../components/buttons/SubmitButton";
+import { ReloadIcon } from "../../../components/icons/ReloadIcon";
 
 type ConnectionErrorProps = {
   navigation: NavigationProp<any>;
 };
 
-export const ConnectionErrorScreen = (props: ConnectionErrorProps) => {
+const ConnectionErrorScreen = (props: ConnectionErrorProps) => {
   function closeApp() {
     if (Platform.OS === "android") {
       BackHandler.exitApp();
@@ -82,3 +82,5 @@ const styles = StyleSheet.create({
     lineHeight: 16,
   },
 });
+
+export default ConnectionErrorScreen;
