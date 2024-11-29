@@ -37,7 +37,7 @@ const HealthFormScreen = (props: HealthFormScreenProps) => {
       goalWeight: Number(goalWeight),
       activityFrequency: activityFrequency || "",
     };
-    const result = await httpAuthService.progress(data);
+    const result = await httpAuthService.createProgress(data as any);
 
     console.log("Result: ", result);
 

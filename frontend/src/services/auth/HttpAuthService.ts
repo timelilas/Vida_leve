@@ -1,5 +1,10 @@
 import { HttpResponse } from "../types";
-import { HttpLoginDTO, HttpProfileFormDTO, HttpProgressFormDTO, HttpSignupDTO } from "./types";
+import {
+  HttpLoginDTO,
+  HttpCreateProgressDTO,
+  HttpUpdateProfileDTO,
+  HttpSignupDTO,
+} from "./types";
 import { HttpService } from "../HttpService";
 import AsyncStorage from "@react-native-async-storage/async-storage";
 
@@ -20,7 +25,9 @@ export class HttpAuthService extends HttpService {
     });
   }
 
-  public async updateProfile(data: HttpProfileFormDTO): Promise<HttpResponse> {
+  public async updateProfile(
+    data: HttpUpdateProfileDTO
+  ): Promise<HttpResponse> {
     const token = await AsyncStorage.getItem("token");
 
     return await this.submit({
@@ -33,16 +40,18 @@ export class HttpAuthService extends HttpService {
     });
   }
 
-  public async progress(data: HttpProgressFormDTO ): Promise<HttpResponse> {
+  public async createProgress(
+    data: HttpCreateProgressDTO
+  ): Promise<HttpResponse> {
     const token = await AsyncStorage.getItem("token");
-    
+
     return await this.submit({
       method: "POST",
       path: "/progress",
       body: data,
       headers: {
         Authorization: `Bearer ${token}`,
-      }
-    })
+      },
+    });
   }
 }
