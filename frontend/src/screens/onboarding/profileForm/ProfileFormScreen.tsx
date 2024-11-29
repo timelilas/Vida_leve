@@ -9,7 +9,7 @@ import { ProfileFormData, ProfileFromScreenProps } from "./types";
 import { Paragraph } from "../../../components/Paragraph";
 import { ScreenTitle } from "../../../components/ScreenTitle";
 import { useForm } from "../../../hooks/useForm";
-import { GenderType } from "../../../@core/common/gender";
+import { GenderType } from "../../../@core/user/user";
 import { httpAuthService } from "../../../services/auth";
 import { validatePhone } from "../../../utils/validations/phone";
 import { validateBirthDate } from "../../../utils/validations/date";

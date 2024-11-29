@@ -1,4 +1,4 @@
-import { GenderType } from "../common/gender";
+export type GenderType = "masculino" | "feminino";
 
 export interface UserProps {
   id: number;

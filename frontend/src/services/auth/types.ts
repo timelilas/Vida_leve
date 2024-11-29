@@ -1,4 +1,4 @@
-import { GenderType } from "../../@core/common/gender";
+import { GenderType } from "../../@core/user/user";
 
 export interface HttpSignupDTO {
   email: string;
