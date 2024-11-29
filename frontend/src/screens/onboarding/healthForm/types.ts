@@ -1,6 +1,5 @@
 import { NavigationProp } from "@react-navigation/native";
-
-export type ActitivyFrequency = "pouca" | "leve" | "moderada" | "intensa";
+import { ActitivyFrequency } from "../../../@core/progress/progress";
 
 export type HealthFormScreenProps = {
   navigation: NavigationProp<any>;

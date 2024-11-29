@@ -3,11 +3,8 @@ import { ScreenWrapper } from "../../../components/ScreenWrapper";
 import { ScreenHeader } from "../../../components/ScreenHeader";
 import { Input } from "../../../components/inputs/Input";
 import { FrequencyButton } from "./components/FrequencyButton";
-import {
-  ActitivyFrequency,
-  HealthFormData,
-  HealthFormScreenProps,
-} from "./types";
+import { HealthFormData, HealthFormScreenProps } from "./types";
+import { ActitivyFrequency } from "../../../@core/progress/progress";
 import { SubmitButton } from "../../../components/buttons/SubmitButton";
 import { ScreenTitle } from "../../../components/ScreenTitle";
 import { Paragraph } from "../../../components/Paragraph";
