@@ -43,7 +43,7 @@ type PlanSelectionScreenProps = {
 const PlanSelectionScreen = (props: PlanSelectionScreenProps) => {
   const [selectedPlan, setSelectedPlan] = useState<PlanType | null>(null);
 
-  function selectGoal(goal: PlanType) {
+  function selectPlan(goal: PlanType) {
     setSelectedPlan(goal === selectedPlan ? null : goal);
   }
 
@@ -62,7 +62,7 @@ const PlanSelectionScreen = (props: PlanSelectionScreenProps) => {
         <View style={styles.plansWrapper}>
           {plans.map((plan) => (
             <CaloriePlanButton
-              onPress={() => selectGoal(plan.type as any)}
+              onPress={() => selectPlan(plan.type as any)}
               selected={plan.type === selectedPlan}
               key={plan.type}
               icon={<plan.icon />}

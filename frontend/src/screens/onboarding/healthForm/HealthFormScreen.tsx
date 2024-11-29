@@ -13,6 +13,7 @@ import { ScreenTitle } from "../../../components/ScreenTitle";
 import { Paragraph } from "../../../components/Paragraph";
 import { useForm } from "../../../hooks/useForm";
 import { httpAuthService } from "../../../services/auth";
+import { maskHeight, onlyNumbers } from "../../../utils/masks";
 
 const healthFromInitialState: HealthFormData = {
   height: "",
@@ -24,20 +25,20 @@ const healthFromInitialState: HealthFormData = {
 const HealthFormScreen = (props: HealthFormScreenProps) => {
   const { data, handleChange, setError } = useForm(healthFromInitialState);
   const { values } = data;
+  const { height, weight, goalWeight, activityFrequency } = values;
 
-  function handleActivityFrequencyChange(frequency: ActitivyFrequency) {
-    handleChange(
-      "activityFrequency",
-      data.values.activityFrequency === frequency ? null : frequency
-    );
+  function selectActitivyFrequency(frequency: ActitivyFrequency) {
+    const newActitivyFrequency =
+      activityFrequency === frequency ? null : frequency;
+    handleChange("activityFrequency", newActitivyFrequency);
   }
 
   async function submitNutritionForm() {
     const data = {
-      height: Number(values.height),
-      weight: Number(values.weight),
-      goalWeight: Number(values.goalWeight),
-      activityFrequency: values.activityFrequency || "",
+      height: Number(height),
+      weight: Number(weight),
+      goalWeight: Number(goalWeight),
+      activityFrequency: activityFrequency || "",
     };
     const result = await httpAuthService.progress(data);
 
@@ -64,24 +65,28 @@ const HealthFormScreen = (props: HealthFormScreenProps) => {
       />
       <View style={styles.form}>
         <Input
-          onChange={(value) => handleChange("height", value)}
-          value={data.values.height}
+          onChange={(value) => handleChange("height", maskHeight(value))}
+          value={values.height.replace(".", ",")}
           keyboardType="numeric"
           label="Altura"
           placeholder="Ex.: 1,60"
           name="height"
         />
         <Input
-          onChange={(value) => handleChange("weight", value)}
-          value={data.values.weight}
+          onChange={(value) => handleChange("weight", onlyNumbers(value, 3))}
+          value={weight ? weight.concat(" kg") : weight}
+          selection={{ start: weight.length, end: weight.length }}
           label="Peso atual"
           keyboardType="numeric"
           name="wight"
           placeholder="Ex.: 60 kg"
         />
         <Input
-          onChange={(value) => handleChange("goalWeight", value)}
-          value={data.values.goalWeight}
+          onChange={(value) =>
+            handleChange("goalWeight", onlyNumbers(value, 3))
+          }
+          value={goalWeight ? goalWeight.concat(" kg") : goalWeight}
+          selection={{ start: goalWeight.length, end: goalWeight.length }}
           label="Peso desejado"
           keyboardType="numeric"
           name="goal"
@@ -93,26 +98,26 @@ const HealthFormScreen = (props: HealthFormScreenProps) => {
             text="Qual é o seu nível de atividade física diária?"
           />
           <FrequencyButton
-            selected={data.values.activityFrequency === "pouca"}
-            onPress={() => handleActivityFrequencyChange("pouca")}
+            selected={activityFrequency === "pouca"}
+            onPress={() => selectActitivyFrequency("pouca")}
             title="Pouca atividade"
             description="Pouco tempo em pé. p. ex. home office/escritório"
           />
           <FrequencyButton
-            selected={data.values.activityFrequency === "leve"}
-            onPress={() => handleActivityFrequencyChange("leve")}
+            selected={activityFrequency === "leve"}
+            onPress={() => selectActitivyFrequency("leve")}
             title="Atividade leve"
             description="Quase sempre em pé. p. ex. professor(a)"
           />
           <FrequencyButton
-            selected={data.values.activityFrequency === "moderada"}
-            onPress={() => handleActivityFrequencyChange("moderada")}
+            selected={activityFrequency === "moderada"}
+            onPress={() => selectActitivyFrequency("moderada")}
             title="Atividade moderada"
             description="Quase sempre em pé. p. ex. professor(a)/ atendente"
           />
           <FrequencyButton
-            selected={data.values.activityFrequency === "intensa"}
-            onPress={() => handleActivityFrequencyChange("intensa")}
+            selected={activityFrequency === "intensa"}
+            onPress={() => selectActitivyFrequency("intensa")}
             title="Atividade intensa"
             description="Fisicamente árduo. p. ex. construção civil"
           />
