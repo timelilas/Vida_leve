@@ -11,6 +11,8 @@ import { ScreenHeader } from "../../../components/ScreenHeader";
 import { ScreenTitle } from "../../../components/ScreenTitle";
 import { Paragraph } from "../../../components/Paragraph";
 
+const nutritionPlans = [{ title: "Progresso Gradual" }];
+
 type PlanSelectionScreenProps = {
   navigation: NavigationProp<any>;
 };
@@ -24,10 +26,7 @@ const PlanSelectionScreen = (props: PlanSelectionScreenProps) => {
 
   return (
     <ScreenWrapper scrollable>
-      <ScreenHeader
-        onGoBack={() => props.navigation.goBack()}
-        onClose={() => {}}
-      />
+      <ScreenHeader onGoBack={() => props.navigation.goBack()} />
       <View style={styles.contentContainer}>
         <ScreenTitle
           style={styles.title}
@@ -37,7 +36,7 @@ const PlanSelectionScreen = (props: PlanSelectionScreenProps) => {
           style={styles.text}
           text="Selecione entre 3 opções de planos para alcançar seus objetivos no seu próprio tempo. Seja qual for a sua escolha, estamos prontos para te ajudar a chegar lá!"
         />
-        <View style={styles.goalsWrapper}>
+        <View style={styles.plansWrapper}>
           <GradualPlanButton
             selected={selectedGoal === "gradual"}
             onPress={() => selectGoal("gradual")}
@@ -75,7 +74,7 @@ const styles = StyleSheet.create({
     marginTop: 16,
     marginBottom: 40,
   },
-  goalsWrapper: {
+  plansWrapper: {
     overflow: Platform.OS === "android" ? "hidden" : "visible",
     marginTop: 24,
     paddingBottom: 16,

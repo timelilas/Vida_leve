@@ -44,7 +44,6 @@ const SignupScreen = (props: SignupScreenProps) => {
         <HeaderNavigator
           style={styles.headerNavigator}
           onGoBack={() => props.navigation.goBack()}
-          onClose={() => {}}
         />
         <LogoSVG style={styles.logo} />
         {error.message && !error.field && (

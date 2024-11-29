@@ -56,7 +56,7 @@ const HealthFormScreen = (props: HealthFormScreenProps) => {
 
   return (
     <ScreenWrapper scrollable>
-      <ScreenHeader onClose={() => props.navigation.goBack()} />
+      <ScreenHeader onGoBack={() => props.navigation.goBack()} />
       <ScreenTitle title="Nos conte mais sobre você!" style={styles.title} />
       <Paragraph
         text="Precisamos da sua altura, peso atual, meta de peso e frequência de atividade física para personalizar sua jornada."

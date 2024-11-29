@@ -98,7 +98,7 @@ const ProfileFormScreen = (props: ProfileFromScreenProps) => {
     <ScreenWrapper ref={scrollRef} scrollable>
       <ScreenHeader
         style={styles.header}
-        onClose={() => props.navigation.goBack()}
+        onGoBack={() => props.navigation.goBack()}
       />
       {!error.field && error.message && (
         <ErrorMessage style={styles.error} message={error.message} />

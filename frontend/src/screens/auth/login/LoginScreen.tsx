@@ -77,7 +77,6 @@ const LoginScreen = (props: LoginScreenProps) => {
       <View style={styles.container}>
         <HeaderNavigator
           onGoBack={() => props.navigation.goBack()}
-          onClose={() => {}}
           style={styles.headerNavigator}
         />
         <LogoSVG style={styles.logo} />
