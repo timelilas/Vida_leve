@@ -1,5 +1,5 @@
-import React, { useState } from "react";
-import { View } from "react-native";
+import React, { useRef, useState } from "react";
+import { ScrollView, View } from "react-native";
 import { LogoSVG } from "../../../components/logos/LogoSVG";
 import { ScreenWrapper } from "../../../components/ScreenWrapper";
 import { Input } from "../../../components/inputs/Input";
@@ -10,17 +10,28 @@ import { ErrorMessage } from "../../../components/ErrorMessage";
 import { validateEmail } from "../../../utils/validations/email";
 import { validatePassword } from "../../../utils/validations/password";
 import { validatePasswordConfirmation } from "../../../utils/validations/passwordConfirmation";
-import { useSignupForm } from "./useSignupForm";
-import { SignupScreenProps } from "./types";
+import { SignupFormData, SignupScreenProps } from "./types";
 import styles from "../styles";
 import { maskEmail } from "../../../utils/masks";
 import { HeaderNavigator } from "../../../components/HeaderNavigator";
+import { useForm } from "../../../hooks/useForm";
+import { httpAuthService } from "../../../services/auth";
+import { StackActions } from "@react-navigation/native";
+
+const signupFormInitialState: SignupFormData = {
+  email: "",
+  password: "",
+  passwordConfirmation: "",
+};
 
 const SignupScreen = (props: SignupScreenProps) => {
+  const scrollRef = useRef<ScrollView>(null);
   const [passwordFocused, setPasswordFocused] = useState(false);
   const [isTypingPassword, setIsTypingPassword] = useState(false);
-  const { values, error, isLoading, ref, handleChange, signup, validateField } =
-    useSignupForm();
+  const { data, handleChange, setError, setIsLoading, validateField } = useForm(
+    signupFormInitialState
+  );
+  const { values, error, isLoading } = data;
 
   function handlePasswordConfirmationValidation() {
     const validPassword = validatePassword(values.password).success;
@@ -38,8 +49,50 @@ const SignupScreen = (props: SignupScreenProps) => {
     validateField("password", value, validatePassword);
   }
 
+  async function signup() {
+    if (isLoading) return;
+    if (!validateAllFields()) return;
+    setError({});
+    setIsLoading(true);
+
+    const result = await httpAuthService.signup(values);
+
+    if (!result.success) {
+      const field = result.error.field || undefined;
+      setIsLoading(false);
+      setError({ field: field as any, message: result.error.message });
+      if (field === "connection") {
+        return props.navigation.navigate("ConnectionError");
+      }
+      if (!field) {
+        scrollRef.current?.scrollTo({ y: 0, animated: true });
+      }
+    } else {
+      props.navigation.dispatch(StackActions.replace("Auth/Login"));
+    }
+  }
+
+  function validateAllFields() {
+    const validationMap = {
+      email: validateEmail(values.email),
+      password: validatePassword(values.password),
+      passwordConfirmation: validatePasswordConfirmation(
+        values.password,
+        values.passwordConfirmation
+      ),
+    };
+
+    for (const [field, validation] of Object.entries(validationMap)) {
+      if (!validation.success) {
+        setError({ field: field as any, message: validation.error });
+        return false;
+      }
+    }
+    return true;
+  }
+
   return (
-    <ScreenWrapper scrollable ref={ref}>
+    <ScreenWrapper scrollable ref={scrollRef}>
       <View style={styles.container}>
         <HeaderNavigator
           style={styles.headerNavigator}
