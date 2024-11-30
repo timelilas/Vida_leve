@@ -6,8 +6,8 @@ export type HealthFormScreenProps = {
 };
 
 export type HealthFormData = {
-  height: string;
-  weight: string;
-  goalWeight: string;
+  height: number;
+  weight: number;
+  goalWeight: number;
   activityFrequency: ActitivyFrequency | null;
 };

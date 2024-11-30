@@ -1,4 +1,4 @@
-import { StyleSheet, View } from "react-native";
+import { ScrollView, StyleSheet, View } from "react-native";
 import { ScreenWrapper } from "../../../components/ScreenWrapper";
 import { ScreenHeader } from "../../../components/ScreenHeader";
 import { Input } from "../../../components/inputs/Input";
@@ -11,32 +11,56 @@ import { Paragraph } from "../../../components/Paragraph";
 import { useForm } from "../../../hooks/useForm";
 import { httpAuthService } from "../../../services/auth";
 import { maskHeight, onlyNumbers } from "../../../utils/masks";
+import { validateHeight } from "../../../utils/validations/height";
+import { validateWeight } from "../../../utils/validations/weight";
+import { validateActitivyFrequency } from "../../../utils/validations/activityFrequency";
+import { ErrorMessage } from "../../../components/ErrorMessage";
+import { activityFrequencies } from "./constants";
+import { validateGoalWeight } from "../../../utils/validations/goalWeight";
+import { useRef } from "react";
 
-const healthFromInitialState: HealthFormData = {
-  height: "",
-  weight: "",
-  goalWeight: "",
+const healthFormInitialState: HealthFormData = {
+  height: NaN,
+  weight: 0,
+  goalWeight: 0,
   activityFrequency: null,
 };
 
 const HealthFormScreen = (props: HealthFormScreenProps) => {
-  const { data, handleChange, setError } = useForm(healthFromInitialState);
-  const { values } = data;
+  const scrollRef = useRef<ScrollView>(null);
+  const { data, handleChange, setError, validateField } = useForm(
+    healthFormInitialState
+  );
+  const { values, error } = data;
   const { height, weight, goalWeight, activityFrequency } = values;
 
   function selectActitivyFrequency(frequency: ActitivyFrequency) {
-    const newActitivyFrequency =
-      activityFrequency === frequency ? null : frequency;
-    handleChange("activityFrequency", newActitivyFrequency);
+    const newFrequency = activityFrequency === frequency ? null : frequency;
+    handleChange("activityFrequency", newFrequency);
+    validateField(
+      "activityFrequency",
+      newFrequency || "",
+      validateActitivyFrequency
+    );
+  }
+
+  function handleGoalWeightValidation() {
+    const { success: validWeight } = validateWeight(weight);
+    const { success: validHeight } = validateHeight(height);
+
+    if (validWeight && validHeight) {
+      validateField("goalWeight", goalWeight, (goalWeight: number) =>
+        validateGoalWeight({
+          gender: "masculino",
+          age: 25,
+          height,
+          goalWeight,
+        })
+      );
+    }
   }
 
   async function submitNutritionForm() {
-    const data = {
-      height: Number(height),
-      weight: Number(weight),
-      goalWeight: Number(goalWeight),
-      activityFrequency: activityFrequency || "",
-    };
     const result = await httpAuthService.createProgress(data as any);
 
     console.log("Result: ", result);
@@ -53,26 +77,43 @@ const HealthFormScreen = (props: HealthFormScreenProps) => {
   }
 
   return (
-    <ScreenWrapper scrollable>
-      <ScreenHeader onGoBack={() => props.navigation.goBack()} />
-      <ScreenTitle title="Nos conte mais sobre você!" style={styles.title} />
+    <ScreenWrapper ref={scrollRef} scrollable>
+      <ScreenHeader
+        style={styles.header}
+        onGoBack={() => props.navigation.goBack()}
+      />
+      {!error.field && error.message && (
+        <ErrorMessage style={styles.error} message={error.message} />
+      )}
+      <ScreenTitle title="Nos conte mais sobre você!" />
       <Paragraph
         text="Precisamos da sua altura, peso atual, meta de peso e frequência de atividade física para personalizar sua jornada."
         style={styles.description}
       />
       <View style={styles.form}>
         <Input
-          onChange={(value) => handleChange("height", maskHeight(value))}
-          value={values.height.replace(".", ",")}
+          onChange={(value) =>
+            handleChange("height", parseFloat(maskHeight(value)))
+          }
+          onBlur={() => validateField("height", height, validateHeight)}
+          error={error.field === "height"}
+          value={!isNaN(height) ? `${height}`.replace(".", ",") : ""}
+          errorMessage={error.field === "height" ? error.message : undefined}
           keyboardType="numeric"
           label="Altura"
           placeholder="Ex.: 1,60"
           name="height"
+          autoFocus
         />
         <Input
-          onChange={(value) => handleChange("weight", onlyNumbers(value, 3))}
-          value={weight ? weight.concat(" kg") : weight}
-          selection={{ start: weight.length, end: weight.length }}
+          onChange={(value) =>
+            handleChange("weight", parseInt(onlyNumbers(value, 3)))
+          }
+          error={error.field === "weight"}
+          onBlur={() => validateField("weight", weight, validateWeight)}
+          value={weight ? `${weight}`.concat(" kg") : ""}
+          selection={{ start: `${weight}`.length, end: `${weight}`.length }}
+          errorMessage={error.field === "weight" ? error.message : undefined}
           label="Peso atual"
           keyboardType="numeric"
           name="wight"
@@ -80,44 +121,40 @@ const HealthFormScreen = (props: HealthFormScreenProps) => {
         />
         <Input
           onChange={(value) =>
-            handleChange("goalWeight", onlyNumbers(value, 3))
+            handleChange("goalWeight", parseInt(onlyNumbers(value, 3)))
           }
-          value={goalWeight ? goalWeight.concat(" kg") : goalWeight}
-          selection={{ start: goalWeight.length, end: goalWeight.length }}
+          onBlur={handleGoalWeightValidation}
+          error={error.field === "goalWeight"}
+          value={goalWeight ? `${goalWeight}`.concat(" kg") : ""}
+          selection={{
+            start: `${goalWeight}`.length,
+            end: `${goalWeight}`.length,
+          }}
+          errorMessage={
+            error.field === "goalWeight" ? error.message : undefined
+          }
           label="Peso desejado"
           keyboardType="numeric"
           name="goal"
           placeholder="Ex.: 55 kg"
         />
-        <View style={styles.exerciseLevel}>
+        <View style={styles.wrapper}>
           <Paragraph
             style={styles.label}
             text="Qual é o seu nível de atividade física diária?"
           />
-          <FrequencyButton
-            selected={activityFrequency === "pouca"}
-            onPress={() => selectActitivyFrequency("pouca")}
-            title="Pouca atividade"
-            description="Pouco tempo em pé. p. ex. home office/escritório"
-          />
-          <FrequencyButton
-            selected={activityFrequency === "leve"}
-            onPress={() => selectActitivyFrequency("leve")}
-            title="Atividade leve"
-            description="Quase sempre em pé. p. ex. professor(a)"
-          />
-          <FrequencyButton
-            selected={activityFrequency === "moderada"}
-            onPress={() => selectActitivyFrequency("moderada")}
-            title="Atividade moderada"
-            description="Quase sempre em pé. p. ex. professor(a)/ atendente"
-          />
-          <FrequencyButton
-            selected={activityFrequency === "intensa"}
-            onPress={() => selectActitivyFrequency("intensa")}
-            title="Atividade intensa"
-            description="Fisicamente árduo. p. ex. construção civil"
-          />
+          {activityFrequencies.map(({ type, title, description }) => (
+            <FrequencyButton
+              key={type}
+              selected={activityFrequency === type}
+              onPress={() => selectActitivyFrequency(type)}
+              title={title}
+              description={description}
+            />
+          ))}
+          {error.field === "activityFrequency" && error.message && (
+            <ErrorMessage message={error.message} />
+          )}
         </View>
       </View>
       <SubmitButton
@@ -133,8 +170,11 @@ const HealthFormScreen = (props: HealthFormScreenProps) => {
 export default HealthFormScreen;
 
 const styles = StyleSheet.create({
-  title: {
-    marginTop: 40,
+  header: {
+    marginBottom: 40,
+  },
+  error: {
+    marginBottom: 8,
   },
   description: {
     marginTop: 8,
@@ -147,7 +187,7 @@ const styles = StyleSheet.create({
     marginTop: 24,
     marginBottom: 40,
   },
-  exerciseLevel: {
+  wrapper: {
     gap: 8,
     paddingBottom: 16,
     overflow: "hidden",
@@ -156,3 +196,40 @@ const styles = StyleSheet.create({
     marginTop: "auto",
   },
 });
+
+// const HealthFormScreen = (props: HealthFormScreenProps) => {
+//   const scrollRef = useRef<ScrollView>(null);
+//   const progress = useProgressStore((state) => state.data);
+//   const birthDate = useUserStore((state) => state.data.birthDate);
+//   const setProgress = useProgressStore((state) => state.setProgress);
+//   const { data, handleChange, setError, validateField } =
+//     useForm<HealthFormData>({
+//       height: Number(progress?.height),
+//       weight: progress?.weight ?? 0,
+//       goalWeight: progress?.height ?? 0,
+//       activityFrequency: progress?.activityFrequency ?? null,
+//     });
+
+//   const { values, error } = data;
+//   const { height, weight, goalWeight, activityFrequency } = values;
+
+//   async function submitNutritionForm() {
+//     props.navigation.navigate("Onboarding/PlanSelection");
+//     setProgress(data.values as any);
+//     // const result = await httpAuthService.createProgress(data as any);
+
+//     // console.log("Result: ", result);
+
+//     // if (!result.success) {
+//     //   const field = result.error.field || undefined;
+
+//     //   console.log("ERROR: ", result.error);
+
+//     //   setError({ message: result.error.message, field: field as any });
+//     // } else {
+//     //   props.navigation.navigate("Onboarding/PlanSelection");
+//     // }
+//   }
+
+//   return;
+// };
