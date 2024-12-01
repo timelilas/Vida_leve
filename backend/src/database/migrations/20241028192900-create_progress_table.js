@@ -30,6 +30,10 @@ module.exports = {
         allowNull: false,
         onUpdate: "NO ACTION",
         onDelete: "NO ACTION",
+        references: {
+          model: "user",
+          key: "id",
+        },
       },
     });
   },
