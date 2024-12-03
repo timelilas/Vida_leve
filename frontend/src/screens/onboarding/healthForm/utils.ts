@@ -1,5 +1,8 @@
 import { ActitivyFrequency } from "../../../@core/progress/progress";
 
+export const missingProfileFormField =
+  "Opps! Algo inesperado aconteceu, por favor, verifique se as informações do formulário anterior foram preenchidas.";
+
 export const activityFrequencies: {
   type: ActitivyFrequency;
   title: string;

@@ -5,7 +5,7 @@ import { View } from "react-native";
 import { Platform } from "react-native";
 
 export interface ToggleButtonProps extends PropsWithChildren {
-  selected: boolean;
+  selected?: boolean;
   disabled?: boolean;
   onPress?: () => void;
   style?: StyleProp<ViewStyle>;
@@ -38,15 +38,14 @@ const styles = StyleSheet.create({
   },
   buttonSelected: {
     backgroundColor: "#ffae31",
+    borderColor: "#ffae31",
     borderRadius: 10,
     ...(Platform.OS === "android"
       ? {
-          borderColor: "#ffae31",
           shadowColor: "#000000",
-          elevation: 6,
+          elevation: 4,
         }
       : {
-          borderColor: "#ffae31",
           shadowColor: "#00000040",
           shadowOffset: { width: 0, height: 4 },
           shadowRadius: 4,

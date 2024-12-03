@@ -15,23 +15,28 @@ import { validateHeight } from "../../../utils/validations/height";
 import { validateWeight } from "../../../utils/validations/weight";
 import { validateActitivyFrequency } from "../../../utils/validations/activityFrequency";
 import { ErrorMessage } from "../../../components/ErrorMessage";
-import { activityFrequencies } from "./constants";
+import { activityFrequencies, missingProfileFormField } from "./utils";
 import { validateGoalWeight } from "../../../utils/validations/goalWeight";
+import { useUserStore } from "../../../store/user";
+import { useProgressStore } from "../../../store/progress";
+import { calculateAge } from "../../../@core/user/helpers";
 import { useRef } from "react";
 
-const healthFormInitialState: HealthFormData = {
-  height: NaN,
-  weight: 0,
-  goalWeight: 0,
-  activityFrequency: null,
-};
-
 const HealthFormScreen = (props: HealthFormScreenProps) => {
+  const setProgress = useProgressStore((state) => state.setProgress);
   const scrollRef = useRef<ScrollView>(null);
-  const { data, handleChange, setError, validateField } = useForm(
-    healthFormInitialState
-  );
-  const { values, error } = data;
+  const progress = useProgressStore((state) => state.data);
+  const gender = useUserStore((state) => state.data.gender);
+  const birthDate = useUserStore((state) => state.data.birthDate);
+
+  const { data, handleChange, setError, setIsLoading, validateField } =
+    useForm<HealthFormData>({
+      height: Number(progress?.height),
+      weight: progress?.weight ?? 0,
+      goalWeight: progress?.goalWeight ?? 0,
+      activityFrequency: progress?.activityFrequency ?? null,
+    });
+  const { values, error, isLoading } = data;
   const { height, weight, goalWeight, activityFrequency } = values;
 
   function selectActitivyFrequency(frequency: ActitivyFrequency) {
@@ -45,14 +50,18 @@ const HealthFormScreen = (props: HealthFormScreenProps) => {
   }
 
   function handleGoalWeightValidation() {
+    if (!birthDate || !gender) {
+      scrollRef.current?.scrollTo({ y: 0, animated: true });
+      return setError({ message: missingProfileFormField });
+    }
     const { success: validWeight } = validateWeight(weight);
     const { success: validHeight } = validateHeight(height);
 
     if (validWeight && validHeight) {
       validateField("goalWeight", goalWeight, (goalWeight: number) =>
         validateGoalWeight({
-          gender: "masculino",
-          age: 25,
+          gender,
+          age: calculateAge(new Date(birthDate)),
           height,
           goalWeight,
         })
@@ -60,18 +69,48 @@ const HealthFormScreen = (props: HealthFormScreenProps) => {
     }
   }
 
-  async function submitNutritionForm() {
-    const result = await httpAuthService.createProgress(data as any);
+  function validateAllFields() {
+    if (!birthDate || !gender) {
+      scrollRef.current?.scrollTo({ y: 0, animated: true });
+      return setError({ message: missingProfileFormField });
+    }
+    const age = calculateAge(new Date(birthDate));
+    const validationMap = {
+      height: validateHeight(height),
+      weight: validateWeight(weight),
+      goalWeight: validateGoalWeight({ height, gender, goalWeight, age }),
+      activityFrequency: validateActitivyFrequency(activityFrequency || ""),
+    };
 
-    console.log("Result: ", result);
+    for (const [field, validation] of Object.entries(validationMap)) {
+      if (!validation.success) {
+        setError({ field: field as any, message: validation.error });
+        return false;
+      }
+    }
+    return true;
+  }
+
+  async function submitProgressForm() {
+    if (isLoading) return;
+    if (!validateAllFields()) return;
+
+    setError({});
+    setIsLoading(true);
+
+    const result = await httpAuthService.createProgress(values as any);
+    setIsLoading(false);
 
     if (!result.success) {
-      const field = result.error.field || undefined;
-
-      console.log("ERROR: ", result.error);
-
+      const field = result.error.field;
       setError({ message: result.error.message, field: field as any });
+      if (!field) {
+        scrollRef.current?.scrollTo({ y: 0, animated: true });
+      } else if (field === "connection") {
+        props.navigation.navigate("ConnectionError");
+      }
     } else {
+      setProgress(result.response as any);
       props.navigation.navigate("Onboarding/PlanSelection");
     }
   }
@@ -96,6 +135,7 @@ const HealthFormScreen = (props: HealthFormScreenProps) => {
             handleChange("height", parseFloat(maskHeight(value)))
           }
           onBlur={() => validateField("height", height, validateHeight)}
+          disabled={isLoading}
           error={error.field === "height"}
           value={!isNaN(height) ? `${height}`.replace(".", ",") : ""}
           errorMessage={error.field === "height" ? error.message : undefined}
@@ -111,6 +151,7 @@ const HealthFormScreen = (props: HealthFormScreenProps) => {
           }
           error={error.field === "weight"}
           onBlur={() => validateField("weight", weight, validateWeight)}
+          disabled={isLoading}
           value={weight ? `${weight}`.concat(" kg") : ""}
           selection={{ start: `${weight}`.length, end: `${weight}`.length }}
           errorMessage={error.field === "weight" ? error.message : undefined}
@@ -124,6 +165,7 @@ const HealthFormScreen = (props: HealthFormScreenProps) => {
             handleChange("goalWeight", parseInt(onlyNumbers(value, 3)))
           }
           onBlur={handleGoalWeightValidation}
+          disabled={isLoading}
           error={error.field === "goalWeight"}
           value={goalWeight ? `${goalWeight}`.concat(" kg") : ""}
           selection={{
@@ -146,6 +188,7 @@ const HealthFormScreen = (props: HealthFormScreenProps) => {
           {activityFrequencies.map(({ type, title, description }) => (
             <FrequencyButton
               key={type}
+              disabled={isLoading}
               selected={activityFrequency === type}
               onPress={() => selectActitivyFrequency(type)}
               title={title}
@@ -158,7 +201,8 @@ const HealthFormScreen = (props: HealthFormScreenProps) => {
         </View>
       </View>
       <SubmitButton
-        onPress={submitNutritionForm}
+        disabled={isLoading}
+        onPress={submitProgressForm}
         style={styles.submitButton}
         type="primary"
         title="Continuar cadastro"
@@ -196,40 +240,3 @@ const styles = StyleSheet.create({
     marginTop: "auto",
   },
 });
-
-// const HealthFormScreen = (props: HealthFormScreenProps) => {
-//   const scrollRef = useRef<ScrollView>(null);
-//   const progress = useProgressStore((state) => state.data);
-//   const birthDate = useUserStore((state) => state.data.birthDate);
-//   const setProgress = useProgressStore((state) => state.setProgress);
-//   const { data, handleChange, setError, validateField } =
-//     useForm<HealthFormData>({
-//       height: Number(progress?.height),
-//       weight: progress?.weight ?? 0,
-//       goalWeight: progress?.height ?? 0,
-//       activityFrequency: progress?.activityFrequency ?? null,
-//     });
-
-//   const { values, error } = data;
-//   const { height, weight, goalWeight, activityFrequency } = values;
-
-//   async function submitNutritionForm() {
-//     props.navigation.navigate("Onboarding/PlanSelection");
-//     setProgress(data.values as any);
-//     // const result = await httpAuthService.createProgress(data as any);
-
-//     // console.log("Result: ", result);
-
-//     // if (!result.success) {
-//     //   const field = result.error.field || undefined;
-
-//     //   console.log("ERROR: ", result.error);
-
-//     //   setError({ message: result.error.message, field: field as any });
-//     // } else {
-//     //   props.navigation.navigate("Onboarding/PlanSelection");
-//     // }
-//   }
-
-//   return;
-// };
