@@ -1,40 +1,14 @@
 import { StyleSheet, View, Platform } from "react-native";
 import { useState } from "react";
-import { PlanType } from "./types/types";
+import { PlanType } from "./types";
 import { SubmitButton } from "../../../components/buttons/SubmitButton";
 import { ScreenWrapper } from "../../../components/ScreenWrapper";
 import { NavigationProp } from "@react-navigation/native";
 import { ScreenHeader } from "../../../components/ScreenHeader";
 import { ScreenTitle } from "../../../components/ScreenTitle";
 import { Paragraph } from "../../../components/Paragraph";
-import { LeafIcon } from "../../../components/icons/LeafIcon";
-import { WindIcon } from "../../../components/icons/WindIcon";
-import { LightningIcon } from "../../../components/icons/LightningIcon";
 import { CaloriePlanButton } from "../../../components/buttons/CaloriePlanButton";
-
-const plans = [
-  {
-    type: "gradual",
-    title: "Progresso Gradual",
-    icon: LeafIcon,
-    duration: 15,
-    targetDailyCalories: 1800,
-  },
-  {
-    type: "moderado",
-    title: "Progresso Moderado",
-    icon: WindIcon,
-    duration: 11,
-    targetDailyCalories: 1600,
-  },
-  {
-    type: "gradual",
-    title: "Progresso Acelerado",
-    icon: LightningIcon,
-    duration: 7,
-    targetDailyCalories: 1360,
-  },
-];
+import { caloriePlans } from "./utils";
 
 type PlanSelectionScreenProps = {
   navigation: NavigationProp<any>;
@@ -43,8 +17,8 @@ type PlanSelectionScreenProps = {
 const PlanSelectionScreen = (props: PlanSelectionScreenProps) => {
   const [selectedPlan, setSelectedPlan] = useState<PlanType | null>(null);
 
-  function selectPlan(goal: PlanType) {
-    setSelectedPlan(goal === selectedPlan ? null : goal);
+  function selectPlan(plan: PlanType) {
+    setSelectedPlan(plan === selectedPlan ? null : plan);
   }
 
   return (
@@ -60,7 +34,7 @@ const PlanSelectionScreen = (props: PlanSelectionScreenProps) => {
           text="Selecione entre 3 opções de planos para alcançar seus objetivos no seu próprio tempo. Seja qual for a sua escolha, estamos prontos para te ajudar a chegar lá!"
         />
         <View style={styles.plansWrapper}>
-          {plans.map((plan) => (
+          {caloriePlans.map((plan) => (
             <CaloriePlanButton
               onPress={() => selectPlan(plan.type as any)}
               selected={plan.type === selectedPlan}
