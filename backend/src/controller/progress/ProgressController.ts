@@ -9,7 +9,7 @@ export default class ProgressController {
     const { id: userId } = req.user;
 
     try {
-      const createdProgress = await this._ProgressService.create({
+      const createdProgress = await this._ProgressService.upsert({
         height,
         weight,
         goalWeight,
