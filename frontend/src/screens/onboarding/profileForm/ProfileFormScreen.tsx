@@ -1,4 +1,4 @@
-import { ScrollView, StyleSheet, Text, View } from "react-native";
+import { Button, ScrollView, StyleSheet, Text, View } from "react-native";
 import { ScreenWrapper } from "../../../components/ScreenWrapper";
 import { ScreenHeader } from "../../../components/ScreenHeader";
 import { Input } from "../../../components/inputs/Input";
@@ -23,19 +23,20 @@ import {
   maskName,
 } from "../../../utils/masks";
 import { useRef } from "react";
-
-const profileFormInitialState: ProfileFormData = {
-  name: "",
-  phone: "",
-  birthDate: "",
-  gender: null,
-};
+import { useUserStore } from "../../../store/user";
+import { dateToPTBR } from "../../../utils/helpers";
 
 const ProfileFormScreen = (props: ProfileFromScreenProps) => {
+  const { setUser, data: user } = useUserStore((state) => state);
   const scrollRef = useRef<ScrollView>(null);
-  const { data, handleChange, setError, validateField, setIsLoading } = useForm(
-    profileFormInitialState
-  );
+  const { data, handleChange, setError, validateField, setIsLoading } =
+    useForm<ProfileFormData>({
+      name: user.name ?? "",
+      phone: user.phone ?? "",
+      birthDate: user.birthDate ? dateToPTBR(new Date(user.birthDate)) : "",
+      gender: user.gender ?? null,
+    });
+
   const { values, error, isLoading } = data;
 
   function formatDateToISO(date: string) {
@@ -84,6 +85,7 @@ const ProfileFormScreen = (props: ProfileFromScreenProps) => {
       }
       setError({ message: result.error.message, field: field as any });
     } else {
+      setUser(result.response as any);
       props.navigation.navigate("Onboarding/HealthForm");
     }
   }
@@ -93,7 +95,6 @@ const ProfileFormScreen = (props: ProfileFromScreenProps) => {
     handleChange("gender", newGender);
     validateField("gender", newGender || "", validateGender);
   }
-
   return (
     <ScreenWrapper ref={scrollRef} scrollable>
       <ScreenHeader
