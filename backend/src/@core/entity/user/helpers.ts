@@ -1,8 +1,14 @@
 export const userHelpers = {
   validateAge,
+  calculateAge,
 };
 
 function validateAge(birthDate: Date) {
+  const age = calculateAge(birthDate);
+  return age >= 18 && age <= 90;
+}
+
+function calculateAge(birthDate: Date) {
   const currentLocalDate = new Date().toLocaleDateString("pt-br");
 
   const [currentDay, currentMonth, currentYear] = currentLocalDate.split("/");
@@ -17,5 +23,5 @@ function validateAge(birthDate: Date) {
     isAfterBirthMonth || (isEqualBirthMonth && isAfterBirthDay) ? 0 : 1;
 
   const age = parseInt(currentYear) - parseInt(birthYear) - decrementFactor;
-  return age >= 18 && age <= 90;
+  return age;
 }
