@@ -29,7 +29,7 @@ import { dateToPTBR } from "../../../utils/helpers";
 const ProfileFormScreen = (props: ProfileFromScreenProps) => {
   const { setUser, data: user } = useUserStore((state) => state);
   const scrollRef = useRef<ScrollView>(null);
-  const { data, handleChange, setError, validateField, setIsLoading } =
+  const { data, handleChange, setError, validateField, setisSubmitting } =
     useForm<ProfileFormData>({
       name: user.name ?? "",
       phone: user.phone ?? "",
@@ -37,7 +37,7 @@ const ProfileFormScreen = (props: ProfileFromScreenProps) => {
       gender: user.gender ?? null,
     });
 
-  const { values, error, isLoading } = data;
+  const { values, error, isSubmitting } = data;
 
   function formatDateToISO(date: string) {
     const [day, month, year] = date.split("/");
@@ -63,17 +63,17 @@ const ProfileFormScreen = (props: ProfileFromScreenProps) => {
   }
 
   async function submitProfile() {
-    if (isLoading) return;
+    if (isSubmitting) return;
     if (!validateAllFields()) return;
 
     setError({});
-    setIsLoading(true);
+    setisSubmitting(true);
 
     const formattedBirthDate = formatDateToISO(values.birthDate);
     const dataSubmit = { ...values, birthDate: formattedBirthDate };
     const result = await httpAuthService.updateProfile(dataSubmit as any);
 
-    setIsLoading(false);
+    setisSubmitting(false);
 
     if (!result.success) {
       const field = result.error.field || undefined;
@@ -116,7 +116,7 @@ const ProfileFormScreen = (props: ProfileFromScreenProps) => {
           value={data.values.name}
           error={error.field === "name"}
           errorMessage={error.field === "name" ? error.message : undefined}
-          disabled={isLoading}
+          disabled={isSubmitting}
           name="name"
           label="Como você gostaria de ser chamado(a)?"
           placeholder="Ex.: Maria Silva"
@@ -129,7 +129,7 @@ const ProfileFormScreen = (props: ProfileFromScreenProps) => {
           value={maskPhone(data.values.phone)}
           error={error.field === "phone"}
           errorMessage={error.field === "phone" ? error.message : undefined}
-          disabled={isLoading}
+          disabled={isSubmitting}
           name="phone"
           label="Telefone"
           placeholder="(DDD) + número de telefone"
@@ -143,7 +143,7 @@ const ProfileFormScreen = (props: ProfileFromScreenProps) => {
           value={data.values.birthDate}
           error={error.field === "birthDate"}
           errorMessage={error.field === "birthDate" ? error.message : undefined}
-          disabled={isLoading}
+          disabled={isSubmitting}
           textContentType="birthdate"
           label="Data de nascimento"
           placeholder="dd/mm/aaaa"
@@ -153,14 +153,14 @@ const ProfileFormScreen = (props: ProfileFromScreenProps) => {
           <Text style={styles.genderLabel}>Gênero social</Text>
           <View style={styles.genderButtons}>
             <ToggleButton
-              disabled={isLoading}
+              disabled={isSubmitting}
               selected={data.values.gender === "feminino"}
               onPress={() => selectGender("feminino")}
             >
               <Text style={styles.gender}>Feminino</Text>
             </ToggleButton>
             <ToggleButton
-              disabled={isLoading}
+              disabled={isSubmitting}
               selected={data.values.gender === "masculino"}
               onPress={() => selectGender("masculino")}
             >
@@ -173,7 +173,7 @@ const ProfileFormScreen = (props: ProfileFromScreenProps) => {
         </View>
       </View>
       <SubmitButton
-        disabled={isLoading}
+        disabled={isSubmitting}
         onPress={submitProfile}
         style={styles.submitButton}
         title="Continuar"

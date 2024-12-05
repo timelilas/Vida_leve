@@ -29,14 +29,14 @@ const HealthFormScreen = (props: HealthFormScreenProps) => {
   const gender = useUserStore((state) => state.data.gender);
   const birthDate = useUserStore((state) => state.data.birthDate);
 
-  const { data, handleChange, setError, setIsLoading, validateField } =
+  const { data, handleChange, setError, setisSubmitting, validateField } =
     useForm<HealthFormData>({
       height: Number(progress?.height),
       weight: progress?.weight ?? 0,
       goalWeight: progress?.goalWeight ?? 0,
       activityFrequency: progress?.activityFrequency ?? null,
     });
-  const { values, error, isLoading } = data;
+  const { values, error, isSubmitting } = data;
   const { height, weight, goalWeight, activityFrequency } = values;
 
   function selectActitivyFrequency(frequency: ActitivyFrequency) {
@@ -92,14 +92,14 @@ const HealthFormScreen = (props: HealthFormScreenProps) => {
   }
 
   async function submitProgressForm() {
-    if (isLoading) return;
+    if (isSubmitting) return;
     if (!validateAllFields()) return;
 
     setError({});
-    setIsLoading(true);
+    setisSubmitting(true);
 
     const result = await httpAuthService.createProgress(values as any);
-    setIsLoading(false);
+    setisSubmitting(false);
 
     if (!result.success) {
       const field = result.error.field;
@@ -135,7 +135,7 @@ const HealthFormScreen = (props: HealthFormScreenProps) => {
             handleChange("height", parseFloat(maskHeight(value)))
           }
           onBlur={() => validateField("height", height, validateHeight)}
-          disabled={isLoading}
+          disabled={isSubmitting}
           error={error.field === "height"}
           value={!isNaN(height) ? `${height}`.replace(".", ",") : ""}
           errorMessage={error.field === "height" ? error.message : undefined}
@@ -151,7 +151,7 @@ const HealthFormScreen = (props: HealthFormScreenProps) => {
           }
           error={error.field === "weight"}
           onBlur={() => validateField("weight", weight, validateWeight)}
-          disabled={isLoading}
+          disabled={isSubmitting}
           value={weight ? `${weight}`.concat(" kg") : ""}
           selection={{ start: `${weight}`.length, end: `${weight}`.length }}
           errorMessage={error.field === "weight" ? error.message : undefined}
@@ -165,7 +165,7 @@ const HealthFormScreen = (props: HealthFormScreenProps) => {
             handleChange("goalWeight", parseInt(onlyNumbers(value, 3)))
           }
           onBlur={handleGoalWeightValidation}
-          disabled={isLoading}
+          disabled={isSubmitting}
           error={error.field === "goalWeight"}
           value={goalWeight ? `${goalWeight}`.concat(" kg") : ""}
           selection={{
@@ -188,7 +188,7 @@ const HealthFormScreen = (props: HealthFormScreenProps) => {
           {activityFrequencies.map(({ type, title, description }) => (
             <FrequencyButton
               key={type}
-              disabled={isLoading}
+              disabled={isSubmitting}
               selected={activityFrequency === type}
               onPress={() => selectActitivyFrequency(type)}
               title={title}
@@ -201,7 +201,7 @@ const HealthFormScreen = (props: HealthFormScreenProps) => {
         </View>
       </View>
       <SubmitButton
-        disabled={isLoading}
+        disabled={isSubmitting}
         onPress={submitProgressForm}
         style={styles.submitButton}
         type="primary"

@@ -28,10 +28,9 @@ const SignupScreen = (props: SignupScreenProps) => {
   const scrollRef = useRef<ScrollView>(null);
   const [passwordFocused, setPasswordFocused] = useState(false);
   const [isTypingPassword, setIsTypingPassword] = useState(false);
-  const { data, handleChange, setError, setIsLoading, validateField } = useForm(
-    signupFormInitialState
-  );
-  const { values, error, isLoading } = data;
+  const { data, handleChange, setError, setisSubmitting, validateField } =
+    useForm(signupFormInitialState);
+  const { values, error, isSubmitting } = data;
 
   function handlePasswordConfirmationValidation() {
     const validPassword = validatePassword(values.password).success;
@@ -50,16 +49,16 @@ const SignupScreen = (props: SignupScreenProps) => {
   }
 
   async function signup() {
-    if (isLoading) return;
+    if (isSubmitting) return;
     if (!validateAllFields()) return;
     setError({});
-    setIsLoading(true);
+    setisSubmitting(true);
 
     const result = await httpAuthService.signup(values);
 
     if (!result.success) {
       const field = result.error.field || undefined;
-      setIsLoading(false);
+      setisSubmitting(false);
       setError({ field: field as any, message: result.error.message });
       if (field === "connection") {
         return props.navigation.navigate("ConnectionError");
@@ -110,7 +109,7 @@ const SignupScreen = (props: SignupScreenProps) => {
           <Input
             onBlur={() => validateField("email", values.email, validateEmail)}
             onChange={(value) => handleChange("email", maskEmail(value))}
-            disabled={isLoading}
+            disabled={isSubmitting}
             autoFocus
             name="email"
             label="E-mail"
@@ -130,7 +129,7 @@ const SignupScreen = (props: SignupScreenProps) => {
             label="Senha"
             placeholder="**********"
             value={values.password}
-            disabled={isLoading}
+            disabled={isSubmitting}
             withBoard={passwordFocused}
             enableBoard={isTypingPassword || error.field === "password"}
             error={error.field === "password"}
@@ -142,7 +141,7 @@ const SignupScreen = (props: SignupScreenProps) => {
             label="Confirmar senha"
             placeholder="**********"
             value={values.passwordConfirmation}
-            disabled={isLoading}
+            disabled={isSubmitting}
             error={error.field === "passwordConfirmation"}
             errorMessage={
               error.field === "passwordConfirmation" ? error.message : undefined
@@ -150,7 +149,7 @@ const SignupScreen = (props: SignupScreenProps) => {
           />
         </View>
         <SubmitButton
-          disabled={isLoading}
+          disabled={isSubmitting}
           style={styles.button}
           title="Começar agora"
           type="primary"

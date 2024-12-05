@@ -25,22 +25,22 @@ const loginInitialState: LoginFormData = {
 
 const LoginScreen = (props: LoginScreenProps) => {
   const scrollRef = useRef<ScrollView | null>(null);
-  const { data, handleChange, setIsLoading, setError, validateField } =
+  const { data, handleChange, setisSubmitting, setError, validateField } =
     useForm(loginInitialState);
-  const { values, error, isLoading } = data;
+  const { values, error, isSubmitting } = data;
 
   async function login() {
-    if (isLoading) return;
+    if (isSubmitting) return;
     if (!validateAllFields()) return;
     setError({});
-    setIsLoading(true);
+    setisSubmitting(true);
 
     const result = await httpAuthService.login(values);
 
     if (!result.success) {
       const field = result.error.field || undefined;
 
-      setIsLoading(false);
+      setisSubmitting(false);
       setError({ message: result.error.message, field: field as any });
 
       if (field === "connection") {
@@ -97,7 +97,7 @@ const LoginScreen = (props: LoginScreenProps) => {
             placeholder="Ex: joaodasilva@email.com"
             textContentType="emailAddress"
             value={values.email}
-            disabled={isLoading}
+            disabled={isSubmitting}
             error={error.field === "email" || error.field === "all"}
             errorMessage={error.field === "email" ? error.message : undefined}
           />
@@ -110,7 +110,7 @@ const LoginScreen = (props: LoginScreenProps) => {
             label="Senha"
             placeholder="**********"
             value={values.password}
-            disabled={isLoading}
+            disabled={isSubmitting}
             error={error.field === "password" || error.field === "all"}
             errorMessage={
               error.field === "password" ? error.message : undefined
@@ -118,7 +118,7 @@ const LoginScreen = (props: LoginScreenProps) => {
           />
         </View>
         <SubmitButton
-          disabled={isLoading}
+          disabled={isSubmitting}
           style={styles.button}
           title="Continuar"
           type="primary"

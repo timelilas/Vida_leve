@@ -6,7 +6,7 @@ type GeneralFields = "all" | "connection";
 export function useForm<T extends Record<string, any>>(initialState: T) {
   const [values, setValues] = useState(initialState);
   const [error, setError] = useState<ErrorState<keyof T | GeneralFields>>({});
-  const [isLoading, setIsLoading] = useState(false);
+  const [isSubmitting, setisSubmitting] = useState(false);
 
   function validateField(field: keyof T, value: any, validator: Validator) {
     const validationResult = validator(value);
@@ -27,10 +27,10 @@ export function useForm<T extends Record<string, any>>(initialState: T) {
   }
 
   return {
-    data: { values, error, isLoading },
+    data: { values, error, isSubmitting },
     setError,
-    setIsLoading,
     handleChange,
     validateField,
+    setisSubmitting,
   };
 }
