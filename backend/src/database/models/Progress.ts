@@ -12,7 +12,7 @@ class Progress
   declare height: number;
   declare weight: number;
   declare goalWeight: number;
-  declare activityFrequency: string;
+  declare activityFrequency: ProgressEntity["activityFrequency"];
 
   public toJSON(): ProgressEntity {
     const { height, activityFrequency, goalWeight, weight } = super.get();
@@ -39,7 +39,7 @@ Progress.init(
       allowNull: false,
     },
     activityFrequency: {
-      type: Sequelize.STRING,
+      type: Sequelize.ENUM("pouca", "leve", "moderada", "intensa"),
       allowNull: false,
     },
     userId: {

@@ -21,6 +21,7 @@ export const userZodSchema = z
       ),
     gender: z
       .enum(["masculino", "feminino"], {
+        required_error: "Gênero social é um campo obrigatório",
         message:
           "Gênero social permite apenas os valores: masculino e feminino",
       })
