@@ -1,5 +1,5 @@
 import { ProgressEntity } from "../../@core/entity/progress/ProgressEntity";
 
-export interface UpsertProgressDTO extends Omit<ProgressEntity, "id"> {
+export interface UpsertProgressDTO extends ProgressEntity {
   userId: number;
 }

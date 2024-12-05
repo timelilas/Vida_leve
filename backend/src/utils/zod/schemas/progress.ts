@@ -3,7 +3,6 @@ import { ZodHelper } from "../helpers";
 
 export const progressZodSchema = z
   .object({
-    id: ZodHelper.number("Id", 1).int("Id deve ser um número inteiro"),
     height: ZodHelper.number("Altura", 0.4, 3.0),
     weight: ZodHelper.number("Peso atual", 0, 1000).int(
       "Peso atual deve ser um número inteiro"

@@ -1,9 +1,4 @@
-import {
-  Model,
-  InferAttributes,
-  InferCreationAttributes,
-  CreationOptional,
-} from "sequelize";
+import { Model, InferAttributes, InferCreationAttributes } from "sequelize";
 import { ProgressEntity } from "../../@core/entity/progress/ProgressEntity";
 import { sequelize } from "../index";
 import User from "./User";
@@ -13,29 +8,27 @@ class Progress
   extends Model<InferAttributes<Progress>, InferCreationAttributes<Progress>>
   implements ProgressEntity
 {
-  declare id: CreationOptional<number>;
   declare userId: number;
   declare height: number;
   declare weight: number;
   declare goalWeight: number;
   declare activityFrequency: string;
 
-  public toJSON(): Omit<ProgressEntity, "userId"> {
-    const { id, height, activityFrequency, goalWeight, weight } = super.get();
-    return { id, height, activityFrequency, goalWeight, weight };
+  public toJSON(): ProgressEntity {
+    const { height, activityFrequency, goalWeight, weight } = super.get();
+    return { height, activityFrequency, goalWeight, weight };
   }
 }
 
 Progress.init(
   {
-    id: {
-      type: Sequelize.INTEGER,
-      autoIncrement: true,
-      primaryKey: true,
-    },
     height: {
       type: Sequelize.DECIMAL(3, 2),
       allowNull: false,
+      get() {
+        const height = this.getDataValue("height");
+        return parseFloat(`${height}`);
+      },
     },
     weight: {
       type: Sequelize.SMALLINT,
@@ -51,6 +44,7 @@ Progress.init(
     },
     userId: {
       type: Sequelize.INTEGER,
+      primaryKey: true,
       allowNull: false,
       onUpdate: "NO ACTION",
       onDelete: "NO ACTION",
@@ -64,7 +58,7 @@ Progress.init(
   }
 );
 
-User.hasMany(Progress, { foreignKey: "userId" });
+User.hasOne(Progress, { foreignKey: "userId" });
 Progress.belongsTo(User, { foreignKey: "userId" });
 
 export default Progress;

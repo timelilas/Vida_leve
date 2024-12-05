@@ -4,10 +4,13 @@
 module.exports = {
   async up(queryInterface, Sequelize) {
     await queryInterface.createTable("progress", {
-      id: {
+      userId: {
         type: Sequelize.INTEGER,
-        autoIncrement: true,
         primaryKey: true,
+        allowNull: false,
+        onUpdate: "NO ACTION",
+        onDelete: "NO ACTION",
+        references: { model: "user", key: "id" },
       },
       height: {
         type: Sequelize.DECIMAL(3, 2),
@@ -24,16 +27,6 @@ module.exports = {
       activityFrequency: {
         type: Sequelize.STRING,
         allowNull: false,
-      },
-      userId: {
-        type: Sequelize.INTEGER,
-        allowNull: false,
-        onUpdate: "NO ACTION",
-        onDelete: "NO ACTION",
-        references: {
-          model: "user",
-          key: "id",
-        },
       },
     });
   },
