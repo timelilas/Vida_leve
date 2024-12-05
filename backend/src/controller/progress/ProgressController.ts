@@ -1,8 +1,8 @@
 import { Request, Response } from "express";
 import ProgressService from "../../service/progress/ProgressService";
 import UserService from "../../service/user/UserService";
-import { progressHelpers } from "../../@core/entity/progress/helpers";
-import { userHelpers } from "../../@core/entity/user/helpers";
+import { ProgressHelper } from "../../@core/entity/progress/helpers";
+import { UserHelper } from "../../@core/entity/user/helpers";
 
 export default class ProgressController {
   private _ProgressService = new ProgressService();
@@ -22,8 +22,8 @@ export default class ProgressController {
         },
       });
     }
-    const age = userHelpers.calculateAge(userProfile.birthDate);
-    const { min, max } = progressHelpers.calculateHealthyWeightRange(
+    const age = UserHelper.calculateAge(userProfile.birthDate);
+    const { min, max } = ProgressHelper.calculateHealthyWeightRange(
       age,
       height
     );
