@@ -1,7 +1,7 @@
 import { useState } from "react";
 import { ErrorState, Validator } from "../screens/types";
 
-type GeneralFields = "all" | "connection";
+type GeneralFields = "connection";
 
 export function useForm<T extends Record<string, any>>(initialState: T) {
   const [values, setValues] = useState(initialState);
@@ -12,7 +12,7 @@ export function useForm<T extends Record<string, any>>(initialState: T) {
     const validationResult = validator(value);
 
     if (!validationResult.success) {
-      if (error.field === field || !error.field || error.field === "all") {
+      if (error.field === field || !error.field) {
         return setError({ message: validationResult.error, field });
       }
     }
