@@ -1,4 +1,9 @@
-import { Model, InferAttributes, InferCreationAttributes } from "sequelize";
+import {
+  Model,
+  InferAttributes,
+  InferCreationAttributes,
+  CreationOptional,
+} from "sequelize";
 import { ProgressEntity } from "../../@core/entity/progress/ProgressEntity";
 import { sequelize } from "../index";
 import User from "./User";
@@ -13,6 +18,8 @@ class Progress
   declare weight: number;
   declare goalWeight: number;
   declare activityFrequency: ProgressEntity["activityFrequency"];
+  declare createdAt: CreationOptional<Date>;
+  declare updatedAt: CreationOptional<Date>;
 
   public toJSON(): ProgressEntity {
     const { height, activityFrequency, goalWeight, weight } = super.get();
@@ -48,6 +55,16 @@ Progress.init(
       allowNull: false,
       onUpdate: "NO ACTION",
       onDelete: "NO ACTION",
+    },
+    createdAt: {
+      type: Sequelize.DATE(),
+      defaultValue: Sequelize.fn("CURRENT_TIMESTAMP", 3),
+      allowNull: false,
+    },
+    updatedAt: {
+      type: Sequelize.DATE(),
+      defaultValue: Sequelize.fn("CURRENT_TIMESTAMP", 3),
+      allowNull: false,
     },
   },
   {

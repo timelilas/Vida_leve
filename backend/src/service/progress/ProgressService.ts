@@ -11,6 +11,7 @@ export default class ProgressService {
       height,
       goalWeight,
       activityFrequency,
+      updatedAt: new Date(),
     });
 
     const updatedProgress = await Progress.findOne({ where: { userId } });

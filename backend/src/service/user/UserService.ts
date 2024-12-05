@@ -19,7 +19,7 @@ export default class UserService {
   public get = async (id: number) => {
     const foundUser = await User.findOne({
       where: { id },
-      attributes: { exclude: ["senha"] },
+      attributes: { exclude: ["senha", "createdAt", "updatedAt"] },
     });
 
     if (!foundUser) {
@@ -43,11 +43,14 @@ export default class UserService {
       return null;
     }
 
-    await User.update({ name, phone, birthDate, gender }, { where: { id } });
+    await User.update(
+      { name, phone, birthDate, gender, updatedAt: new Date() },
+      { where: { id } }
+    );
 
     const updatedUser = await User.findOne({
       where: { id },
-      attributes: { exclude: ["senha"] },
+      attributes: { exclude: ["senha", "createdAt", "updatedAt"] },
     });
     return (updatedUser as User).getProfile();
   };
