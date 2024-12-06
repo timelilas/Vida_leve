@@ -7,4 +7,4 @@ export const updateUserSchema = userZodSchema
     birthDate: true,
     gender: true,
   })
-  .partial();
+  .strict();

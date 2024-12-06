@@ -14,7 +14,7 @@ export class AuthController {
       if (!foundUser) {
         return res.status(401).json({
           error: {
-            field: "all",
+            field: "password",
             message:
               "Ops! Parece que o e-mail ou a senha estão incorretos. Confira os dados e tente novamente.",
           },
@@ -25,7 +25,7 @@ export class AuthController {
       if (!isPasswordCorrect) {
         return res.status(401).json({
           error: {
-            field: "all",
+            field: "password",
             message:
               "Ops! Parece que o e-mail ou a senha estão incorretos. Confira os dados e tente novamente.",
           },

@@ -26,9 +26,15 @@ export function onlyNumbers(value: string, length?: number) {
 }
 
 export function maskName(name: string) {
-  return name.slice(0, 40);
+  return name.slice(0, 30);
 }
 
 export function maskEmail(email: string) {
   return email.slice(0, 50);
+}
+
+export function maskHeight(value: string) {
+  const maskedNumbers = onlyNumbers(value).slice(0, 3);
+  const maskedHeight = maskedNumbers.replace(/(\d{1})(\d{1,2})/, "$1.$2");
+  return maskedHeight;
 }

@@ -65,5 +65,3 @@ export function validateNumericPassword(password: string): boolean {
 export function validatePasswordSymbols(password: string): boolean {
   return !!password.match(/[\!|\@|\#|\$|\%|\^|\&|\*|\.|\,]/g);
 }
-
-console.log(validateLowercasePassword("dd"));

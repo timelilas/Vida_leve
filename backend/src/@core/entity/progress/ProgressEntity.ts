@@ -1,7 +1,6 @@
 export interface ProgressEntity {
-  id: number;
   height: number;
   weight: number;
   goalWeight: number;
-  activityFrequency: string;
+  activityFrequency: "pouca" | "leve" | "moderada" | "intensa";
 }

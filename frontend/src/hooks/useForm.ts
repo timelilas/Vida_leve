@@ -1,18 +1,18 @@
 import { useState } from "react";
 import { ErrorState, Validator } from "../screens/types";
 
-type GeneralFields = "all" | "connection";
+type GeneralFields = "connection";
 
 export function useForm<T extends Record<string, any>>(initialState: T) {
   const [values, setValues] = useState(initialState);
   const [error, setError] = useState<ErrorState<keyof T | GeneralFields>>({});
-  const [isLoading, setIsLoading] = useState(false);
+  const [isSubmitting, setisSubmitting] = useState(false);
 
   function validateField(field: keyof T, value: any, validator: Validator) {
     const validationResult = validator(value);
 
     if (!validationResult.success) {
-      if (error.field === field || !error.field || error.field === "all") {
+      if (error.field === field || !error.field) {
         return setError({ message: validationResult.error, field });
       }
     }
@@ -27,10 +27,10 @@ export function useForm<T extends Record<string, any>>(initialState: T) {
   }
 
   return {
-    data: { values, error, isLoading },
+    data: { values, error, isSubmitting },
     setError,
-    setIsLoading,
     handleChange,
     validateField,
+    setisSubmitting,
   };
 }

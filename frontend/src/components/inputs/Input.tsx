@@ -9,6 +9,7 @@ interface InputProps {
   disabled?: boolean;
   error?: boolean;
   errorMessage?: string;
+  selection?: TextInputProps["selection"];
   label?: string;
   autoFocus?: boolean;
   placeholder?: string;
@@ -43,6 +44,7 @@ export function Input(props: InputProps) {
             ]}
           >
             <TextInput
+              selection={props.selection}
               onBlur={props.onBlur}
               autoFocus={props.autoFocus}
               textContentType={props.textContentType}
