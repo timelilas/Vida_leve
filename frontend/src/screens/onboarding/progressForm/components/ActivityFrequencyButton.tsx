@@ -1,7 +1,7 @@
 import { View, Text, StyleSheet } from "react-native";
 import { ToggleButton } from "../../../../components/buttons/ToggleButton";
 
-interface FrequencyButtonProps {
+interface ActivityFrequencyButtonProps {
   title: string;
   description: string;
   selected: boolean;
@@ -9,7 +9,7 @@ interface FrequencyButtonProps {
   onPress?: () => void;
 }
 
-export function FrequencyButton(props: FrequencyButtonProps) {
+export function ActivityFrequencyButton(props: ActivityFrequencyButtonProps) {
   return (
     <ToggleButton
       disabled={props.disabled}

@@ -2,8 +2,8 @@ import { ScrollView, StyleSheet, View } from "react-native";
 import { ScreenWrapper } from "../../../components/ScreenWrapper";
 import { ScreenHeader } from "../../../components/ScreenHeader";
 import { Input } from "../../../components/inputs/Input";
-import { FrequencyButton } from "./components/FrequencyButton";
-import { HealthFormData, HealthFormScreenProps } from "./types";
+import { ActivityFrequencyButton } from "./components/ActivityFrequencyButton";
+import { ProgressFormData, ProgressFormScreenProps } from "./types";
 import { ActitivyFrequency } from "../../../@core/progress/progress";
 import { SubmitButton } from "../../../components/buttons/SubmitButton";
 import { ScreenTitle } from "../../../components/ScreenTitle";
@@ -22,7 +22,7 @@ import { useProgressStore } from "../../../store/progress";
 import { calculateAge } from "../../../@core/user/helpers";
 import { useRef } from "react";
 
-const HealthFormScreen = (props: HealthFormScreenProps) => {
+const ProgressFormScreen = (props: ProgressFormScreenProps) => {
   const setProgress = useProgressStore((state) => state.setProgress);
   const scrollRef = useRef<ScrollView>(null);
   const progress = useProgressStore((state) => state.data);
@@ -30,7 +30,7 @@ const HealthFormScreen = (props: HealthFormScreenProps) => {
   const birthDate = useUserStore((state) => state.data.birthDate);
 
   const { data, handleChange, setError, setisSubmitting, validateField } =
-    useForm<HealthFormData>({
+    useForm<ProgressFormData>({
       height: Number(progress?.height),
       weight: progress?.weight ?? 0,
       goalWeight: progress?.goalWeight ?? 0,
@@ -186,7 +186,7 @@ const HealthFormScreen = (props: HealthFormScreenProps) => {
             text="Qual é o seu nível de atividade física diária?"
           />
           {activityFrequencies.map(({ type, title, description }) => (
-            <FrequencyButton
+            <ActivityFrequencyButton
               key={type}
               disabled={isSubmitting}
               selected={activityFrequency === type}
@@ -211,7 +211,7 @@ const HealthFormScreen = (props: HealthFormScreenProps) => {
   );
 };
 
-export default HealthFormScreen;
+export default ProgressFormScreen;
 
 const styles = StyleSheet.create({
   header: {
