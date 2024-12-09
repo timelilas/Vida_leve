@@ -5,7 +5,7 @@ import LoginScreen from "./screens/auth/login/LoginScreen";
 import SignupScreen from "./screens/auth/signup/SignupScreen";
 import PlanSelectionScreen from "./screens/onboarding/planSelection/PlanSelectionScreen";
 import GoalGuidanceScreen from "./screens/onboarding/goalGuidance/GoalGuidanceScreen";
-import HealthFormScreen from "./screens/onboarding/healthForm/HealthFormScreen";
+import ProgressFormScreen from "./screens/onboarding/progressForm/ProgressFormScreen";
 import ProfileFormScreen from "./screens/onboarding/profileForm/ProfileFormScreen";
 import ConnectionErrorScreen from "./screens/error/connectionError/ConnectionErrorScreen";
 
@@ -43,8 +43,8 @@ const Navigation = () => {
           options={{ headerShown: false }}
         />
         <Stack.Screen
-          name="Onboarding/HealthForm"
-          component={HealthFormScreen}
+          name="Onboarding/ProgressForm"
+          component={ProgressFormScreen}
           options={{ headerShown: false }}
         />
         <Stack.Screen

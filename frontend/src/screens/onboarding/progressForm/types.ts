@@ -1,11 +1,11 @@
 import { NavigationProp } from "@react-navigation/native";
 import { ActitivyFrequency } from "../../../@core/progress/progress";
 
-export type HealthFormScreenProps = {
+export type ProgressFormScreenProps = {
   navigation: NavigationProp<any>;
 };
 
-export type HealthFormData = {
+export type ProgressFormData = {
   height: number;
   weight: number;
   goalWeight: number;
