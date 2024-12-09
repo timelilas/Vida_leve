@@ -5,12 +5,17 @@ interface FrequencyButtonProps {
   title: string;
   description: string;
   selected: boolean;
+  disabled?: boolean;
   onPress?: () => void;
 }
 
 export function FrequencyButton(props: FrequencyButtonProps) {
   return (
-    <ToggleButton selected={props.selected} onPress={props.onPress}>
+    <ToggleButton
+      disabled={props.disabled}
+      selected={props.selected}
+      onPress={props.onPress}
+    >
       <View style={styles.container}>
         <Text style={styles.title}>{props.title}</Text>
         {props.selected && (
@@ -38,7 +43,7 @@ const styles = StyleSheet.create({
     fontSize: 14,
     lineHeight: 14,
     fontFamily: "Roboto-300",
-    color: "#242424",
+    color: "#4E4B66",
   },
   descriptionHidden: {
     overflow: "hidden",

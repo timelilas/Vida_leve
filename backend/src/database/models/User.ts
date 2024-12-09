@@ -19,10 +19,19 @@ class User
   declare phone: string | null;
   declare birthDate: Date | null;
   declare gender: "masculino" | "feminino" | null;
+  declare createdAt: CreationOptional<Date>;
+  declare updatedAt: CreationOptional<Date>;
 
   public getProfile(): Omit<UserEntity, "password"> {
-    const { password, ...profileProps } = super.toJSON();
-    return profileProps;
+    const props = super.toJSON();
+    return {
+      id: props.id,
+      name: props.name,
+      email: props.email,
+      birthDate: props.birthDate,
+      phone: props.phone,
+      gender: props.gender,
+    };
   }
 }
 
@@ -50,13 +59,27 @@ User.init(
       type: Sequelize.STRING(11),
       allowNull: true,
     },
-    birthDate: {
-      type: Sequelize.DATEONLY,
-      allowNull: true,
-    },
     gender: {
       type: Sequelize.ENUM("masculino", "feminino"),
       allowNull: true,
+    },
+    birthDate: {
+      type: Sequelize.DATEONLY,
+      allowNull: true,
+      get() {
+        const birthDate = this.getDataValue("birthDate");
+        return birthDate ? new Date(birthDate) : null;
+      },
+    },
+    createdAt: {
+      type: Sequelize.DATE(),
+      defaultValue: Sequelize.fn("CURRENT_TIMESTAMP", 3),
+      allowNull: false,
+    },
+    updatedAt: {
+      type: Sequelize.DATE(),
+      defaultValue: Sequelize.fn("CURRENT_TIMESTAMP", 3),
+      allowNull: false,
     },
   },
   {

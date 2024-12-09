@@ -3,18 +3,17 @@ import { ZodHelper } from "../helpers";
 
 export const progressZodSchema = z
   .object({
-    id: ZodHelper.number("Id", 1).int("Id deve ser um número inteiro"),
-    height: ZodHelper.number("Alura", 0, 9.99),
+    height: ZodHelper.number("Altura", 0.4, 3.0),
     weight: ZodHelper.number("Peso atual", 0, 1000).int(
       "Peso atual deve ser um número inteiro"
     ),
     goalWeight: ZodHelper.number("Peso desejado", 0, 1000).int(
       "Peso desejado deve ser um número inteiro"
     ),
-    activityFrequency: ZodHelper.string(
-      "Frequência de atividade física",
-      4,
-      100
-    ),
+    activityFrequency: z.enum(["pouca", "leve", "moderada", "intensa"], {
+      required_error: "Frequência de atividade física é um campo obrigatório",
+      message:
+        "Frequência de atividade física permite apenas os seguintes valores: pouca, leve, moderada e intensa",
+    }),
   })
   .strict({ message: "Não é um campo válido" });

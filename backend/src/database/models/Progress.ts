@@ -13,29 +13,29 @@ class Progress
   extends Model<InferAttributes<Progress>, InferCreationAttributes<Progress>>
   implements ProgressEntity
 {
-  declare id: CreationOptional<number>;
   declare userId: number;
   declare height: number;
   declare weight: number;
   declare goalWeight: number;
-  declare activityFrequency: string;
+  declare activityFrequency: ProgressEntity["activityFrequency"];
+  declare createdAt: CreationOptional<Date>;
+  declare updatedAt: CreationOptional<Date>;
 
-  public toJSON(): Omit<ProgressEntity, "userId"> {
-    const { id, height, activityFrequency, goalWeight, weight } = super.get();
-    return { id, height, activityFrequency, goalWeight, weight };
+  public toJSON(): ProgressEntity {
+    const { height, activityFrequency, goalWeight, weight } = super.get();
+    return { height, activityFrequency, goalWeight, weight };
   }
 }
 
 Progress.init(
   {
-    id: {
-      type: Sequelize.INTEGER,
-      autoIncrement: true,
-      primaryKey: true,
-    },
     height: {
       type: Sequelize.DECIMAL(3, 2),
       allowNull: false,
+      get() {
+        const height = this.getDataValue("height");
+        return parseFloat(`${height}`);
+      },
     },
     weight: {
       type: Sequelize.SMALLINT,
@@ -46,14 +46,25 @@ Progress.init(
       allowNull: false,
     },
     activityFrequency: {
-      type: Sequelize.STRING,
+      type: Sequelize.ENUM("pouca", "leve", "moderada", "intensa"),
       allowNull: false,
     },
     userId: {
       type: Sequelize.INTEGER,
+      primaryKey: true,
       allowNull: false,
       onUpdate: "NO ACTION",
       onDelete: "NO ACTION",
+    },
+    createdAt: {
+      type: Sequelize.DATE(),
+      defaultValue: Sequelize.fn("CURRENT_TIMESTAMP", 3),
+      allowNull: false,
+    },
+    updatedAt: {
+      type: Sequelize.DATE(),
+      defaultValue: Sequelize.fn("CURRENT_TIMESTAMP", 3),
+      allowNull: false,
     },
   },
   {
@@ -64,7 +75,7 @@ Progress.init(
   }
 );
 
-User.hasMany(Progress, { foreignKey: "userId" });
+User.hasOne(Progress, { foreignKey: "userId" });
 Progress.belongsTo(User, { foreignKey: "userId" });
 
 export default Progress;

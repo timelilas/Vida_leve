@@ -25,30 +25,28 @@ const loginInitialState: LoginFormData = {
 
 const LoginScreen = (props: LoginScreenProps) => {
   const scrollRef = useRef<ScrollView | null>(null);
-  const { data, handleChange, setIsLoading, setError, validateField } =
+  const { data, handleChange, setisSubmitting, setError, validateField } =
     useForm(loginInitialState);
-  const { values, error, isLoading } = data;
+  const { values, error, isSubmitting } = data;
 
   async function login() {
-    if (isLoading) return;
+    if (isSubmitting) return;
     if (!validateAllFields()) return;
     setError({});
-    setIsLoading(true);
+    setisSubmitting(true);
 
     const result = await httpAuthService.login(values);
 
     if (!result.success) {
       const field = result.error.field || undefined;
 
-      setIsLoading(false);
+      setisSubmitting(false);
       setError({ message: result.error.message, field: field as any });
 
       if (field === "connection") {
         return props.navigation.navigate("ConnectionError");
       }
-      if (!field && field === "all") {
-        scrollRef.current?.scrollTo({ y: 0, animated: true });
-      }
+      scrollRef.current?.scrollTo({ y: 0, animated: true });
     } else {
       await AsyncStorage.setItem("token", result.response.token);
       props.navigation.dispatch(
@@ -77,11 +75,10 @@ const LoginScreen = (props: LoginScreenProps) => {
       <View style={styles.container}>
         <HeaderNavigator
           onGoBack={() => props.navigation.goBack()}
-          onClose={() => {}}
           style={styles.headerNavigator}
         />
         <LogoSVG style={styles.logo} />
-        {error.message && (error.field === "all" || !error.field) && (
+        {error.message && error.field !== "connection" && (
           <ErrorMessage style={styles.error} message={error.message} />
         )}
         <ScreenTitle
@@ -98,9 +95,8 @@ const LoginScreen = (props: LoginScreenProps) => {
             placeholder="Ex: joaodasilva@email.com"
             textContentType="emailAddress"
             value={values.email}
-            disabled={isLoading}
-            error={error.field === "email" || error.field === "all"}
-            errorMessage={error.field === "email" ? error.message : undefined}
+            disabled={isSubmitting}
+            error={error.field === "email" || error.field === "password"}
           />
           <PasswordInput
             onChange={(data) => handleChange("password", data)}
@@ -111,15 +107,12 @@ const LoginScreen = (props: LoginScreenProps) => {
             label="Senha"
             placeholder="**********"
             value={values.password}
-            disabled={isLoading}
-            error={error.field === "password" || error.field === "all"}
-            errorMessage={
-              error.field === "password" ? error.message : undefined
-            }
+            disabled={isSubmitting}
+            error={error.field === "email" || error.field === "password"}
           />
         </View>
         <SubmitButton
-          disabled={isLoading}
+          disabled={isSubmitting}
           style={styles.button}
           title="Continuar"
           type="primary"

@@ -1,6 +1,6 @@
 import z from "zod";
 import { ZodHelper } from "../helpers";
-import { userHelpers } from "../../../@core/entity/user/helpers";
+import { UserHelper } from "../../../@core/entity/user/helpers";
 
 export const userZodSchema = z
   .object({
@@ -13,7 +13,7 @@ export const userZodSchema = z
       .nullable()
       .refine(
         (isoDate) =>
-          isoDate ? userHelpers.validateAge(new Date(isoDate)) : true,
+          isoDate ? UserHelper.validateAge(new Date(isoDate)) : true,
         {
           message:
             "A idade permitida é entre 18 e 90 anos. Por favor, verifique sua data de nascimento.",
@@ -21,6 +21,7 @@ export const userZodSchema = z
       ),
     gender: z
       .enum(["masculino", "feminino"], {
+        required_error: "Gênero social é um campo obrigatório",
         message:
           "Gênero social permite apenas os valores: masculino e feminino",
       })

@@ -1,12 +1,5 @@
 import { useState } from "react";
-import {
-  StyleSheet,
-  Text,
-  TextInput,
-  View,
-  Pressable,
-  ViewProps,
-} from "react-native";
+import { StyleSheet, Text, TextInput, View, Pressable } from "react-native";
 import { EyeOffIcon } from "../icons/EyeOffIcon";
 import { EyeOpenIcon } from "../icons/EyeOpenIcon";
 import { AlertIcon } from "../icons/AlertIcon";

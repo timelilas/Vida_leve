@@ -23,8 +23,7 @@ export const request = async (
         ...headers,
       },
     });
-
-    return response.data;
+    return { ...response, data: response.data.data };
   } catch (error) {
     console.error(
       `Erro ao fazer ${method.toUpperCase()} na rota ${endpoint}:`,
