@@ -17,6 +17,8 @@ import { HeaderNavigator } from "../../../components/HeaderNavigator";
 import { useForm } from "../../../hooks/useForm";
 import { httpAuthService } from "../../../services/auth";
 import { StackActions } from "@react-navigation/native";
+import { ConnectionError } from "../../../@core/errors/connectionError";
+import { HttpError } from "../../../@core/errors/httpError";
 
 const signupFormInitialState: SignupFormData = {
   email: "",
@@ -28,8 +30,9 @@ const SignupScreen = (props: SignupScreenProps) => {
   const scrollRef = useRef<ScrollView>(null);
   const [passwordFocused, setPasswordFocused] = useState(false);
   const [isTypingPassword, setIsTypingPassword] = useState(false);
-  const { data, handleChange, setError, setisSubmitting, validateField } =
-    useForm(signupFormInitialState);
+  const { data, handleChange, setError, validateField, onSubmit } = useForm({
+    initialState: signupFormInitialState,
+  });
   const { values, error, isSubmitting } = data;
 
   function handlePasswordConfirmationValidation() {
@@ -48,27 +51,21 @@ const SignupScreen = (props: SignupScreenProps) => {
     validateField("password", value, validatePassword);
   }
 
-  async function signup() {
-    if (isSubmitting) return;
+  async function handleSubmit() {
     if (!validateAllFields()) return;
-    setError({});
-    setisSubmitting(true);
+    await httpAuthService.signup(values);
+    return props.navigation.dispatch(StackActions.replace("Auth/Login"));
+  }
 
-    const result = await httpAuthService.signup(values);
-
-    if (!result.success) {
-      const field = result.error.field || undefined;
-      setisSubmitting(false);
-      setError({ field: field as any, message: result.error.message });
-      if (field === "connection") {
-        return props.navigation.navigate("ConnectionError");
-      }
-      if (!field) {
-        scrollRef.current?.scrollTo({ y: 0, animated: true });
-      }
-    } else {
-      props.navigation.dispatch(StackActions.replace("Auth/Login"));
+  function handleError(error: Error) {
+    if (error instanceof HttpError) {
+      !error.field && scrollRef.current?.scrollTo({ y: 0, animated: true });
+      return setError({ field: error.field as any, message: error.message });
     }
+    if (error instanceof ConnectionError) {
+      return props.navigation.navigate("ConnectionError");
+    }
+    setError({ message: UNEXPECTED_ERROR_MESSAGE });
   }
 
   function validateAllFields() {
@@ -153,7 +150,7 @@ const SignupScreen = (props: SignupScreenProps) => {
           style={styles.button}
           title="Começar agora"
           type="primary"
-          onPress={signup}
+          onPress={onSubmit(handleSubmit, handleError)}
         />
       </View>
     </ScreenWrapper>

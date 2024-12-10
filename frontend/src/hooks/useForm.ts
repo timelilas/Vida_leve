@@ -1,12 +1,36 @@
 import { useState } from "react";
 import { ErrorState, Validator } from "../screens/types";
 
-type GeneralFields = "connection";
+interface UseFormParams<T> {
+  initialState: T;
+}
 
-export function useForm<T extends Record<string, any>>(initialState: T) {
-  const [values, setValues] = useState(initialState);
-  const [error, setError] = useState<ErrorState<keyof T | GeneralFields>>({});
+export function useForm<T extends Record<string, any>>(
+  params: UseFormParams<T>
+) {
+  const [values, setValues] = useState(params.initialState);
+  const [error, setError] = useState<ErrorState<keyof T | "all">>({});
   const [isSubmitting, setisSubmitting] = useState(false);
+
+  function onSubmit(
+    handleSubmit: () => void | Promise<void>,
+    handleError: (error: Error) => void
+  ) {
+    return async () => {
+      if (isSubmitting) return;
+
+      setisSubmitting(true);
+      setError({});
+
+      try {
+        await handleSubmit();
+      } catch (error: any) {
+        handleError(error);
+      } finally {
+        setisSubmitting(false);
+      }
+    };
+  }
 
   function validateField(field: keyof T, value: any, validator: Validator) {
     const validationResult = validator(value);
@@ -31,6 +55,6 @@ export function useForm<T extends Record<string, any>>(initialState: T) {
     setError,
     handleChange,
     validateField,
-    setisSubmitting,
+    onSubmit,
   };
 }
