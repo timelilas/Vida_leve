@@ -4,7 +4,7 @@ import { ScreenHeader } from "../../../components/ScreenHeader";
 import { Input } from "../../../components/inputs/Input";
 import { ActivityFrequencyButton } from "./components/ActivityFrequencyButton";
 import { ProgressFormData, ProgressFormScreenProps } from "./types";
-import { ActitivyFrequency } from "../../../@core/progress/progress";
+import { ActitivyFrequency } from "../../../@core/entities/progress/progress";
 import { SubmitButton } from "../../../components/buttons/SubmitButton";
 import { ScreenTitle } from "../../../components/ScreenTitle";
 import { Paragraph } from "../../../components/Paragraph";
@@ -19,7 +19,7 @@ import { activityFrequencies, missingProfileFormField } from "./utils";
 import { validateGoalWeight } from "../../../utils/validations/goalWeight";
 import { useUserStore } from "../../../store/user";
 import { useProgressStore } from "../../../store/progress";
-import { calculateAge } from "../../../@core/user/helpers";
+import { calculateAge } from "../../../@core/entities/user/helpers";
 import { useRef } from "react";
 
 const ProgressFormScreen = (props: ProgressFormScreenProps) => {

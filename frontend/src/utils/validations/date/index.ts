@@ -1,4 +1,4 @@
-import { validateUserAge } from "../../../@core/user/helpers";
+import { validateUserAge } from "../../../@core/entities/user/helpers";
 import { ValidationResult } from "../type";
 import {
   invalidAgeMsg,
