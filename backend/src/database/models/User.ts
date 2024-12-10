@@ -6,23 +6,32 @@ import {
 } from "sequelize";
 import { sequelize } from "../index";
 import Sequelize from "sequelize";
-import { UserEntity } from "../../entity/UserEntity";
+import { UserEntity } from "../../@core/entity/user/UserEntity";
 
 class User
   extends Model<InferAttributes<User>, InferCreationAttributes<User>>
   implements UserEntity
 {
   declare id: CreationOptional<number>;
-  declare userName: string;
   declare email: string;
-  declare senha: string;
-  declare telefone: string | null;
-  declare aniversario: Date | null;
-  declare sexo: "masculino" | "feminino" | null;
+  declare password: string;
+  declare name: string | null;
+  declare phone: string | null;
+  declare birthDate: Date | null;
+  declare gender: "masculino" | "feminino" | null;
+  declare createdAt: CreationOptional<Date>;
+  declare updatedAt: CreationOptional<Date>;
 
-  public getProfile(): Omit<UserEntity, "senha"> {
-    const { senha, ...profileProps } = super.toJSON();
-    return profileProps;
+  public getProfile(): Omit<UserEntity, "password"> {
+    const props = super.toJSON();
+    return {
+      id: props.id,
+      name: props.name,
+      email: props.email,
+      birthDate: props.birthDate,
+      phone: props.phone,
+      gender: props.gender,
+    };
   }
 }
 
@@ -33,30 +42,44 @@ User.init(
       autoIncrement: true,
       primaryKey: true,
     },
-    userName: {
+    name: {
       type: Sequelize.STRING(100),
-      allowNull: false,
+      allowNull: true,
     },
     email: {
       type: Sequelize.STRING(100),
       unique: true,
       allowNull: false,
     },
-    senha: {
+    password: {
       type: Sequelize.STRING(100),
       allowNull: false,
     },
-    telefone: {
+    phone: {
       type: Sequelize.STRING(11),
       allowNull: true,
     },
-    aniversario: {
-      type: Sequelize.DATEONLY,
-      allowNull: true,
-    },
-    sexo: {
+    gender: {
       type: Sequelize.ENUM("masculino", "feminino"),
       allowNull: true,
+    },
+    birthDate: {
+      type: Sequelize.DATEONLY,
+      allowNull: true,
+      get() {
+        const birthDate = this.getDataValue("birthDate");
+        return birthDate ? new Date(birthDate) : null;
+      },
+    },
+    createdAt: {
+      type: Sequelize.DATE(),
+      defaultValue: Sequelize.fn("CURRENT_TIMESTAMP", 3),
+      allowNull: false,
+    },
+    updatedAt: {
+      type: Sequelize.DATE(),
+      defaultValue: Sequelize.fn("CURRENT_TIMESTAMP", 3),
+      allowNull: false,
     },
   },
   {

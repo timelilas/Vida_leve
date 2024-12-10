@@ -1,40 +1,47 @@
-'use strict';
+"use strict";
 
 /** @type {import('sequelize-cli').Migration} */
 module.exports = {
-  async up (queryInterface, Sequelize) {
+  async up(queryInterface, Sequelize) {
     await queryInterface.createTable("progress", {
-      id: {
+      userId: {
         type: Sequelize.INTEGER,
-        autoIncrement: true,
         primaryKey: true,
+        allowNull: false,
+        onUpdate: "NO ACTION",
+        onDelete: "NO ACTION",
+        references: { model: "user", key: "id" },
       },
-      altura: {
+      height: {
         type: Sequelize.DECIMAL(3, 2),
         allowNull: false,
       },
-      peso: {
+      weight: {
         type: Sequelize.SMALLINT,
         allowNull: false,
       },
-      meta: {
+      goalWeight: {
         type: Sequelize.SMALLINT,
         allowNull: false,
       },
-      atividade: {
+      activityFrequency: {
         type: Sequelize.STRING,
         allowNull: false,
       },
-      userId: {
-        type: Sequelize.INTEGER,
+      createdAt: {
+        type: Sequelize.DATE(),
+        defaultValue: Sequelize.fn("CURRENT_TIMESTAMP", 3),
         allowNull: false,
-        onUpdate: 'NO ACTION',
-        onDelete: 'NO ACTION',
       },
-    })
+      updatedAt: {
+        type: Sequelize.DATE(),
+        defaultValue: Sequelize.fn("CURRENT_TIMESTAMP", 3),
+        allowNull: false,
+      },
+    });
   },
 
-  async down (queryInterface, Sequelize) {
-    await queryInterface.dropTable("progress")
-  }
+  async down(queryInterface, Sequelize) {
+    await queryInterface.dropTable("progress");
+  },
 };

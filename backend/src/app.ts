@@ -14,11 +14,16 @@ class App {
   }
 
   private config(): void {
-    const accessControl: express.RequestHandler = (_req, res, next) => {
+    const accessControl: express.RequestHandler = (req, res, next) => {
       res.header('Access-Control-Allow-Origin', '*');
       res.header('Access-Control-Allow-Methods', 'GET,POST,DELETE,OPTIONS,PUT,PATCH');
       res.header('Access-Control-Allow-Headers', '*');
-      next();
+
+      if (req.method === "OPTIONS"){
+        return res.end()
+      }
+      
+      return next()
     };
 
     this.app.use(express.json());

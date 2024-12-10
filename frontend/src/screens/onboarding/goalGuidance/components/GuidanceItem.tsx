@@ -32,11 +32,13 @@ const styles = StyleSheet.create({
   title: {
     fontFamily: "Roboto-700",
     fontSize: 20,
+    lineHeight: 20,
     color: "#242424",
   },
   description: {
     fontFamily: "Roboto-300",
     fontSize: 16,
+    lineHeight: 16,
     color: "#242424",
   },
 });

@@ -1,11 +1,32 @@
 import Progress from "../../database/models/Progress";
-import { CreateProgressDTO } from "./types";
+import User from "../../database/models/User";
+import { UpsertProgressDTO } from "./types";
 
 export default class ProgressService {
-    public create = async (params: CreateProgressDTO) => {
-        const {userId, meta, altura, atividade, peso} = params
+  public upsert = async (params: UpsertProgressDTO) => {
+    const { userId, weight, height, goalWeight, activityFrequency } = params;
 
-        const createdProgress = await Progress.create({ altura, peso, meta, atividade, userId});
-        return createdProgress.toJSON()
+    await Progress.upsert({
+      userId,
+      weight,
+      height,
+      goalWeight,
+      activityFrequency,
+      updatedAt: new Date(),
+    });
+
+    const updatedProgress = await Progress.findOne({ where: { userId } });
+    return (updatedProgress as Progress).toJSON();
+  };
+
+  public getIdealPlan = async (userId: number) => {
+    const user = await Progress.findOne({ where: { userId } });
+    const userProgress = await User.findOne({ where: { id: userId } });
+
+    if (!user || !userProgress) {
+      return null;
     }
-};
+
+    return { ...user.toJSON(), ...userProgress.dataValues };
+  }
+}

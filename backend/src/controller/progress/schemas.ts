@@ -1,8 +1,3 @@
-import { progressZodSchema } from "../../utils/zod/schemas";
+import { progressZodSchema } from "../../utils/zod/schemas/progress";
 
-export const createProgressSchema = progressZodSchema.pick({
-  altura: true,
-  peso: true,
-  meta: true,
-  atividade: true
-}).strict()
+export const createProgressSchema = progressZodSchema;

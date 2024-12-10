@@ -1,38 +1,55 @@
 import { NavigationContainer } from "@react-navigation/native";
 import { createNativeStackNavigator } from "@react-navigation/native-stack";
-import HomeScreen from "./screens/HomeScreen";
-import LoginScreen from "./screens/auth/LoginScreen";
-import SignupScreen from "./screens/auth/SignupScreen";
-import GoalsScreen from "./screens/onboarding/goals/GoalsScreen";
+import AuthHomeScreen from "./screens/auth/home/AuthHomeScreen";
+import LoginScreen from "./screens/auth/login/LoginScreen";
+import SignupScreen from "./screens/auth/signup/SignupScreen";
+import PlanSelectionScreen from "./screens/onboarding/planSelection/PlanSelectionScreen";
 import GoalGuidanceScreen from "./screens/onboarding/goalGuidance/GoalGuidanceScreen";
-import NutritionFromScreen from "./screens/onboarding/nutritionForm/NutritionFormScreen";
-import { StatusBar } from "expo-status-bar";
+import HealthFormScreen from "./screens/onboarding/healthForm/HealthFormScreen";
+import ProfileFormScreen from "./screens/onboarding/profileForm/ProfileFormScreen";
+import ConnectionErrorScreen from "./screens/error/connectionError/ConnectionErrorScreen";
 
 const Stack = createNativeStackNavigator();
 
 const Navigation = () => {
   return (
     <NavigationContainer>
-      <StatusBar backgroundColor="#EFF0F6" />
-      <Stack.Navigator initialRouteName="Home">
+      <Stack.Navigator
+        initialRouteName="Auth/Home"
+        screenOptions={{
+          animation: "simple_push",
+          animationDuration: 300,
+          orientation: "all",
+        }}
+      >
         <Stack.Screen
-          name="Home"
-          component={HomeScreen}
+          name="Auth/Home"
+          component={AuthHomeScreen}
           options={{ headerShown: false }}
         />
         <Stack.Screen
-          name="Login"
+          name="Auth/Login"
           component={LoginScreen}
           options={{ headerShown: false }}
         />
         <Stack.Screen
-          name="Signup"
+          name="Auth/Signup"
           component={SignupScreen}
           options={{ headerShown: false }}
         />
         <Stack.Screen
-          name="Onboarding/Goals"
-          component={GoalsScreen}
+          name="Onboarding/ProfileForm"
+          component={ProfileFormScreen}
+          options={{ headerShown: false }}
+        />
+        <Stack.Screen
+          name="Onboarding/HealthForm"
+          component={HealthFormScreen}
+          options={{ headerShown: false }}
+        />
+        <Stack.Screen
+          name="Onboarding/PlanSelection"
+          component={PlanSelectionScreen}
           options={{ headerShown: false }}
         />
         <Stack.Screen
@@ -41,8 +58,8 @@ const Navigation = () => {
           options={{ headerShown: false }}
         />
         <Stack.Screen
-          name="Onboarding/NutritionForm"
-          component={NutritionFromScreen}
+          name="ConnectionError"
+          component={ConnectionErrorScreen}
           options={{ headerShown: false }}
         />
       </Stack.Navigator>
