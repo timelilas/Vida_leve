@@ -1,5 +1,5 @@
 import { NavigationProp } from "@react-navigation/native";
-import { ActitivyFrequency } from "../../../@core/progress/progress";
+import { ActitivyFrequency } from "../../../@core/entities/progress/progress";
 
 export type ProgressFormScreenProps = {
   navigation: NavigationProp<any>;

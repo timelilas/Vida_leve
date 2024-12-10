@@ -1,4 +1,4 @@
-import { ActitivyFrequency } from "../../../@core/progress/progress";
+import { ActitivyFrequency } from "../../../@core/entities/progress/progress";
 
 export const missingProfileFormField =
   "Opps! Algo inesperado aconteceu, por favor, verifique se as informações do formulário anterior foram preenchidas.";

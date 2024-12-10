@@ -1,4 +1,4 @@
-import { Button, ScrollView, StyleSheet, Text, View } from "react-native";
+import { ScrollView, StyleSheet, Text, View } from "react-native";
 import { ScreenWrapper } from "../../../components/ScreenWrapper";
 import { ScreenHeader } from "../../../components/ScreenHeader";
 import { Input } from "../../../components/inputs/Input";
@@ -9,7 +9,7 @@ import { ProfileFormData, ProfileFromScreenProps } from "./types";
 import { Paragraph } from "../../../components/Paragraph";
 import { ScreenTitle } from "../../../components/ScreenTitle";
 import { useForm } from "../../../hooks/useForm";
-import { GenderType } from "../../../@core/user/user";
+import { GenderType } from "../../../@core/entities/user/user";
 import { httpAuthService } from "../../../services/auth";
 import { validatePhone } from "../../../utils/validations/phone";
 import { validateBirthDate } from "../../../utils/validations/date";
