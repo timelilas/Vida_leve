@@ -21,6 +21,8 @@ import { useUserStore } from "../../../store/user";
 import { useProgressStore } from "../../../store/progress";
 import { calculateAge } from "../../../@core/entities/user/helpers";
 import { useRef } from "react";
+import { HttpError } from "../../../@core/errors/httpError";
+import { ConnectionError } from "../../../@core/errors/connectionError";
 
 const ProgressFormScreen = (props: ProgressFormScreenProps) => {
   const setProgress = useProgressStore((state) => state.setProgress);
@@ -29,12 +31,14 @@ const ProgressFormScreen = (props: ProgressFormScreenProps) => {
   const gender = useUserStore((state) => state.data.gender);
   const birthDate = useUserStore((state) => state.data.birthDate);
 
-  const { data, handleChange, setError, setisSubmitting, validateField } =
+  const { data, handleChange, setError, validateField, onSubmit } =
     useForm<ProgressFormData>({
-      height: Number(progress?.height),
-      weight: progress?.weight ?? 0,
-      goalWeight: progress?.goalWeight ?? 0,
-      activityFrequency: progress?.activityFrequency ?? null,
+      initialState: {
+        height: Number(progress?.height),
+        weight: progress?.weight ?? 0,
+        goalWeight: progress?.goalWeight ?? 0,
+        activityFrequency: progress?.activityFrequency ?? null,
+      },
     });
   const { values, error, isSubmitting } = data;
   const { height, weight, goalWeight, activityFrequency } = values;
@@ -91,28 +95,23 @@ const ProgressFormScreen = (props: ProgressFormScreenProps) => {
     return true;
   }
 
-  async function submitProgressForm() {
-    if (isSubmitting) return;
+  async function handleSubmit() {
     if (!validateAllFields()) return;
 
-    setError({});
-    setisSubmitting(true);
+    const { data } = await httpAuthService.createProgress(values as any);
+    setProgress(data);
+    props.navigation.navigate("Onboarding/PlanSelection");
+  }
 
-    const result = await httpAuthService.createProgress(values as any);
-    setisSubmitting(false);
-
-    if (!result.success) {
-      const field = result.error.field;
-      setError({ message: result.error.message, field: field as any });
-      if (!field) {
-        scrollRef.current?.scrollTo({ y: 0, animated: true });
-      } else if (field === "connection") {
-        props.navigation.navigate("ConnectionError");
-      }
-    } else {
-      setProgress(result.response as any);
-      props.navigation.navigate("Onboarding/PlanSelection");
+  function handleError(error: Error) {
+    if (error instanceof HttpError) {
+      !error.field && scrollRef.current?.scrollTo({ y: 0, animated: true });
+      return setError({ field: error.field as any, message: error.message });
     }
+    if (error instanceof ConnectionError) {
+      return props.navigation.navigate("ConnectionError");
+    }
+    setError({ message: UNEXPECTED_ERROR_MESSAGE });
   }
 
   return (
@@ -202,7 +201,7 @@ const ProgressFormScreen = (props: ProgressFormScreenProps) => {
       </View>
       <SubmitButton
         disabled={isSubmitting}
-        onPress={submitProgressForm}
+        onPress={onSubmit(handleSubmit, handleError)}
         style={styles.submitButton}
         type="primary"
         title="Continuar cadastro"

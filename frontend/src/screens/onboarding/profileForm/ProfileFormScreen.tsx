@@ -25,19 +25,29 @@ import {
 import { useRef } from "react";
 import { useUserStore } from "../../../store/user";
 import { dateToPTBR } from "../../../utils/helpers";
+import { HttpError } from "../../../@core/errors/httpError";
+import { ConnectionError } from "../../../@core/errors/connectionError";
 
 const ProfileFormScreen = (props: ProfileFromScreenProps) => {
   const { setUser, data: user } = useUserStore((state) => state);
   const scrollRef = useRef<ScrollView>(null);
-  const { data, handleChange, setError, validateField, setisSubmitting } =
+  const { data, handleChange, setError, validateField, onSubmit } =
     useForm<ProfileFormData>({
-      name: user.name ?? "",
-      phone: user.phone ?? "",
-      birthDate: user.birthDate ? dateToPTBR(new Date(user.birthDate)) : "",
-      gender: user.gender ?? null,
+      initialState: {
+        name: user.name ?? "",
+        phone: user.phone ?? "",
+        birthDate: user.birthDate ? dateToPTBR(new Date(user.birthDate)) : "",
+        gender: user.gender ?? null,
+      },
     });
 
   const { values, error, isSubmitting } = data;
+
+  function selectGender(value: GenderType) {
+    const newGender = value !== values.gender ? value : null;
+    handleChange("gender", newGender);
+    validateField("gender", newGender || "", validateGender);
+  }
 
   function formatDateToISO(date: string) {
     const [day, month, year] = date.split("/");
@@ -62,39 +72,28 @@ const ProfileFormScreen = (props: ProfileFromScreenProps) => {
     return true;
   }
 
-  async function submitProfile() {
-    if (isSubmitting) return;
+  async function handleSubmit() {
     if (!validateAllFields()) return;
 
-    setError({});
-    setisSubmitting(true);
+    const birthDateISO = formatDateToISO(values.birthDate);
+    const dataToSubmit = { ...values, birthDate: birthDateISO };
 
-    const formattedBirthDate = formatDateToISO(values.birthDate);
-    const dataSubmit = { ...values, birthDate: formattedBirthDate };
-    const result = await httpAuthService.updateProfile(dataSubmit as any);
+    const { data } = await httpAuthService.updateProfile(dataToSubmit as any);
+    setUser(data);
+    props.navigation.navigate("Onboarding/ProgressForm");
+  }
 
-    setisSubmitting(false);
-
-    if (!result.success) {
-      const field = result.error.field || undefined;
-      if (field === "connection") {
-        return props.navigation.navigate("ConnectionError");
-      }
-      if (!field) {
-        scrollRef.current?.scrollTo({ y: 0, animated: true });
-      }
-      setError({ message: result.error.message, field: field as any });
-    } else {
-      setUser(result.response as any);
-      props.navigation.navigate("Onboarding/ProgressForm");
+  async function handleError(error: Error) {
+    if (error instanceof HttpError) {
+      !error.field && scrollRef.current?.scrollTo({ y: 0, animated: true });
+      return setError({ field: error.field as any, message: error.message });
     }
+    if (error instanceof ConnectionError) {
+      return props.navigation.navigate("ConnectionError");
+    }
+    setError({ message: UNEXPECTED_ERROR_MESSAGE });
   }
 
-  function selectGender(value: GenderType) {
-    const newGender = value !== values.gender ? value : null;
-    handleChange("gender", newGender);
-    validateField("gender", newGender || "", validateGender);
-  }
   return (
     <ScreenWrapper ref={scrollRef} scrollable>
       <ScreenHeader
@@ -174,7 +173,7 @@ const ProfileFormScreen = (props: ProfileFromScreenProps) => {
       </View>
       <SubmitButton
         disabled={isSubmitting}
-        onPress={submitProfile}
+        onPress={onSubmit(handleSubmit, handleError)}
         style={styles.submitButton}
         title="Continuar"
         type="primary"

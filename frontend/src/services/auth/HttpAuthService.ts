@@ -1,36 +1,35 @@
-import { HttpResponse } from "../types";
 import {
-  HttpLoginDTO,
-  HttpCreateProgressDTO,
-  HttpUpdateProfileDTO,
-  HttpSignupDTO,
+  HttpLoginInputDTO,
+  HttpLoginOutputDTO,
+  HttpUpdateProfileInputDTO,
+  HttpUpdateProfileOutputDTO,
+  HttpSignupInputDTO,
+  HttpSignupOutputDTO,
 } from "./types";
 import { HttpService } from "../HttpService";
 import AsyncStorage from "@react-native-async-storage/async-storage";
+import { ProgressProps } from "../../@core/entities/progress/progress";
 
 export class HttpAuthService extends HttpService {
-  public async signup(data: HttpSignupDTO): Promise<HttpResponse> {
-    return await this.submit({
+  public async signup(data: HttpSignupInputDTO) {
+    return await this.submit<HttpSignupOutputDTO>({
       method: "POST",
       path: "/auth/signup",
       body: data,
     });
   }
 
-  public async login(data: HttpLoginDTO): Promise<HttpResponse> {
-    return await this.submit({
+  public async login(data: HttpLoginInputDTO) {
+    return await this.submit<HttpLoginOutputDTO>({
       method: "POST",
       path: "/auth/login",
       body: data,
     });
   }
 
-  public async updateProfile(
-    data: HttpUpdateProfileDTO
-  ): Promise<HttpResponse> {
+  public async updateProfile(data: HttpUpdateProfileInputDTO) {
     const token = await AsyncStorage.getItem("token");
-
-    return await this.submit({
+    return await this.submit<HttpUpdateProfileOutputDTO>({
       method: "PUT",
       path: "/user/profile",
       body: data,
@@ -40,12 +39,10 @@ export class HttpAuthService extends HttpService {
     });
   }
 
-  public async createProgress(
-    data: HttpCreateProgressDTO
-  ): Promise<HttpResponse> {
+  public async createProgress(data: ProgressProps) {
     const token = await AsyncStorage.getItem("token");
 
-    return await this.submit({
+    return await this.submit<ProgressProps>({
       method: "POST",
       path: "/progress",
       body: data,

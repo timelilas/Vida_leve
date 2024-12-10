@@ -1,4 +1,6 @@
 import axios, { AxiosRequestConfig, AxiosResponse } from "axios";
+import { HttpError } from "../../@core/errors/httpError";
+import { ConnectionError } from "../../@core/errors/connectionError";
 
 const api = axios.create({
   // baseURL: "http://192.168.0.120:3000",
@@ -7,12 +9,12 @@ const api = axios.create({
   timeout: 5000,
 });
 
-export const request = async (
+export const request = async <T>(
   method: string,
   endpoint: string,
   data?: object,
   headers?: AxiosRequestConfig["headers"]
-): Promise<AxiosResponse> => {
+): Promise<AxiosResponse<T>> => {
   try {
     const response = await api({
       method,
@@ -23,12 +25,20 @@ export const request = async (
         ...headers,
       },
     });
+
     return { ...response, data: response.data.data };
-  } catch (error) {
-    console.error(
-      `Erro ao fazer ${method.toUpperCase()} na rota ${endpoint}:`,
-      error
-    );
+  } catch (error: any) {
+    if (axios.isAxiosError(error)) {
+      if (error.response) {
+        const { field, message } = error.response.data.error;
+        throw new HttpError({ message, field, status: error.response.status });
+      }
+
+      throw new ConnectionError(
+        "Falha na conexão, tente novamente mais tarde."
+      );
+    }
+
     throw error;
   }
 };
