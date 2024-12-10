@@ -13,4 +13,9 @@ progressRouter.post('/',
    (req, res)=> progressController.post(req, res)
 );
 
+progressRouter.get('/',
+   authorizationMiddleware,
+   (req, res)=> progressController.get(req, res)
+);
+
 export default progressRouter;
