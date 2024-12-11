@@ -83,11 +83,11 @@ export default class ProgressController {
 
     return res.status(200).json({ 
       data: { 
-        BMR: `${bmr.toFixed(2)} kcal`, 
-        TDEE: `${tdee.toFixed(2)} kcal`,
-        LENTA: `${weightLossPlan.slow}, kcal/dia`,
-        MODERADA: `${weightLossPlan.moderate}, kcal/dia`,
-        RAPIDA: `${weightLossPlan.fast}, kcal/dia`,
+        BMR: bmr.toFixed(2), 
+        TDEE: tdee.toFixed(2),
+        LENTA: weightLossPlan.slow,
+        MODERADA: weightLossPlan.moderate,
+        RAPIDA: weightLossPlan.fast,
       } 
     });
   }

@@ -1,5 +1,5 @@
 import {
-  ADULT_MIN_IMX,
+  ADULT_MIN_IMC,
   ADULT_MAX_IMC,
   ELDERLY_MAX_IMC,
   ELDERLY_MIN_IMC,
@@ -21,7 +21,7 @@ export class ProgressHelper {
 
   private static getIMCRangeByAge(age: number): { min: number; max: number } {
     return {
-      min: age < 60 ? ADULT_MIN_IMX : ELDERLY_MIN_IMC,
+      min: age < 60 ? ADULT_MIN_IMC : ELDERLY_MIN_IMC,
       max: age < 60 ? ADULT_MAX_IMC : ELDERLY_MAX_IMC,
     };
   }

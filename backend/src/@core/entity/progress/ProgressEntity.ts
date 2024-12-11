@@ -8,7 +8,6 @@ export interface ProgressEntity {
   activityFrequency: activityFrequency;
 }
 
-
 export interface UserData {
   age: number;
   gender: Gender;
