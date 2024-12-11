@@ -1,5 +1,4 @@
 import { StyleSheet, View, Platform } from "react-native";
-import { useState } from "react";
 import { PlanType } from "./types";
 import { SubmitButton } from "../../../components/buttons/SubmitButton";
 import { ScreenWrapper } from "../../../components/ScreenWrapper";
@@ -8,17 +7,20 @@ import { ScreenHeader } from "../../../components/ScreenHeader";
 import { ScreenTitle } from "../../../components/ScreenTitle";
 import { Paragraph } from "../../../components/Paragraph";
 import { CaloriePlanButton } from "../../../components/buttons/CaloriePlanButton";
-import { caloriePlans } from "./utils";
+import { planUiDetails } from "./utils";
+import { useCaloriePlanStore } from "../../../store/caloriePlan";
 
 type PlanSelectionScreenProps = {
   navigation: NavigationProp<any>;
 };
 
 const PlanSelectionScreen = (props: PlanSelectionScreenProps) => {
-  const [selectedPlan, setSelectedPlan] = useState<PlanType | null>(null);
+  const caloriePlans = useCaloriePlanStore((state) => state.data);
+  const selectedPlan = useCaloriePlanStore((state) => state.selectedPlan);
+  const selectPlan = useCaloriePlanStore((state) => state.selectPlan);
 
-  function selectPlan(plan: PlanType) {
-    setSelectedPlan(plan === selectedPlan ? null : plan);
+  function handlePlanSelection(type: PlanType) {
+    selectPlan(type === selectedPlan ? null : type);
   }
 
   return (
@@ -34,17 +36,20 @@ const PlanSelectionScreen = (props: PlanSelectionScreenProps) => {
           text="Selecione entre 3 opções de planos para alcançar seus objetivos no seu próprio tempo. Seja qual for a sua escolha, estamos prontos para te ajudar a chegar lá!"
         />
         <View style={styles.plansWrapper}>
-          {caloriePlans.map((plan) => (
-            <CaloriePlanButton
-              onPress={() => selectPlan(plan.type as any)}
-              selected={plan.type === selectedPlan}
-              key={plan.type}
-              icon={<plan.icon />}
-              title={plan.title}
-              dailyCalories={plan.targetDailyCalories}
-              duration={plan.duration}
-            />
-          ))}
+          {caloriePlans.map((plan) => {
+            const icon = planUiDetails[plan.type].icon;
+            return (
+              <CaloriePlanButton
+                onPress={() => handlePlanSelection(plan.type)}
+                selected={plan.type === selectedPlan}
+                key={plan.type}
+                icon={icon({})}
+                title={planUiDetails[plan.type].title}
+                dailyCalories={plan.dailyCalorieIntake}
+                duration={Math.ceil(plan.durationInDays / 7)}
+              />
+            );
+          })}
         </View>
       </View>
       <SubmitButton

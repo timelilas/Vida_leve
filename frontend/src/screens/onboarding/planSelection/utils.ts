@@ -1,28 +1,26 @@
+import React, { ReactNode } from "react";
 import { LeafIcon } from "../../../components/icons/LeafIcon";
 import { LightningIcon } from "../../../components/icons/LightningIcon";
 import { WindIcon } from "../../../components/icons/WindIcon";
-import { CaloriePlanItem } from "./types";
+import { PlanType } from "./types";
+import { SvgProps } from "react-native-svg";
 
-export const caloriePlans: CaloriePlanItem[] = [
-  {
-    type: "gradual",
+interface PlanUiDetails {
+  title: string;
+  icon: (props: SvgProps) => JSX.Element;
+}
+
+export const planUiDetails: Record<PlanType, PlanUiDetails> = {
+  gradual: {
     title: "Progresso Gradual",
     icon: LeafIcon,
-    duration: 15,
-    targetDailyCalories: 1800,
   },
-  {
-    type: "moderado",
+  moderado: {
     title: "Progresso Moderado",
     icon: WindIcon,
-    duration: 11,
-    targetDailyCalories: 1600,
   },
-  {
-    type: "acelerado",
+  acelerado: {
     title: "Progresso Acelerado",
     icon: LightningIcon,
-    duration: 7,
-    targetDailyCalories: 1360,
   },
-];
+};

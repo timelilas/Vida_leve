@@ -23,9 +23,12 @@ import { calculateAge } from "../../../@core/entities/user/helpers";
 import { useRef } from "react";
 import { HttpError } from "../../../@core/errors/httpError";
 import { ConnectionError } from "../../../@core/errors/connectionError";
+import { buildCaloriePlan } from "../../../@core/entities/caloriePlan/helpers";
+import { useCaloriePlanStore } from "../../../store/caloriePlan";
 
 const ProgressFormScreen = (props: ProgressFormScreenProps) => {
   const setProgress = useProgressStore((state) => state.setProgress);
+  const setPlans = useCaloriePlanStore((state) => state.setPlans);
   const scrollRef = useRef<ScrollView>(null);
   const progress = useProgressStore((state) => state.data);
   const gender = useUserStore((state) => state.data.gender);
@@ -51,6 +54,22 @@ const ProgressFormScreen = (props: ProgressFormScreenProps) => {
       newFrequency || "",
       validateActitivyFrequency
     );
+  }
+
+  function generateWeightLossPlans() {
+    if (!birthDate || !gender || !activityFrequency) {
+      return [];
+    }
+
+    const age = calculateAge(new Date(birthDate as string));
+    const userData = { weight, height, gender, age };
+    const goalData = { dailyActivityLevel: activityFrequency, goalWeight };
+    const planTypes = ["gradual", "moderado", "acelerado"] as const;
+    const planList = planTypes.map((plan) =>
+      buildCaloriePlan({ ...userData, ...goalData, planType: plan })
+    );
+
+    return planList;
   }
 
   function handleGoalWeightValidation() {
@@ -99,7 +118,9 @@ const ProgressFormScreen = (props: ProgressFormScreenProps) => {
     if (!validateAllFields()) return;
 
     const { data } = await httpAuthService.createProgress(values as any);
+    const plans = generateWeightLossPlans();
     setProgress(data);
+    setPlans(plans);
     props.navigation.navigate("Onboarding/PlanSelection");
   }
 

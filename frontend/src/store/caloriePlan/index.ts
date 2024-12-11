@@ -1,5 +1,5 @@
 import { create } from "zustand";
-import { CaloriePlanStore, CaloriePlanStoreState } from "./types";
+import { CaloriePlanStoreState, CaloriePlanStore } from "./types";
 
 const initialState: CaloriePlanStoreState = {
   status: "idle",
@@ -9,6 +9,7 @@ const initialState: CaloriePlanStoreState = {
 
 export const useCaloriePlanStore = create<CaloriePlanStore>((set) => ({
   ...initialState,
-  setPlans: (plans) => set(() => ({ data: plans, status: "fulfilled" })),
   selectPlan: (type) => set(() => ({ selectedPlan: type })),
+  setPlans: (plans) =>
+    set(() => ({ data: plans, status: "fulfilled", selectedPlan: null })),
 }));
