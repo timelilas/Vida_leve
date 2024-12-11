@@ -1,8 +1,8 @@
-export type ActitivyFrequency = "pouca" | "leve" | "moderada" | "intensa";
+import { ActitivyFrequency } from "../@shared/activityFrequency";
 
 export interface ProgressProps {
-  height: number;
-  weight: number;
-  goalWeight: number;
+  height: number; // altura é metros
+  weight: number; // peso em quilogramas
+  goalWeight: number; // meta de peso em quilogramas
   activityFrequency: ActitivyFrequency;
 }

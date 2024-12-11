@@ -4,7 +4,7 @@ import { ScreenHeader } from "../../../components/ScreenHeader";
 import { Input } from "../../../components/inputs/Input";
 import { ActivityFrequencyButton } from "./components/ActivityFrequencyButton";
 import { ProgressFormData, ProgressFormScreenProps } from "./types";
-import { ActitivyFrequency } from "../../../@core/entities/progress/progress";
+import { ActitivyFrequency } from "../../../@core/entities/@shared/activityFrequency";
 import { SubmitButton } from "../../../components/buttons/SubmitButton";
 import { ScreenTitle } from "../../../components/ScreenTitle";
 import { Paragraph } from "../../../components/Paragraph";

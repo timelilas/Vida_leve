@@ -1,5 +1,5 @@
 import { NavigationProp } from "@react-navigation/native";
-import { GenderType } from "../../../@core/entities/user/user";
+import { GenderType } from "../../../@core/entities/@shared/gender";
 
 export type ProfileFromScreenProps = {
   navigation: NavigationProp<any>;

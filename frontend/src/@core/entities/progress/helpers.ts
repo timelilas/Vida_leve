@@ -1,3 +1,4 @@
+// calcula o intervalo de peso recomendável com base na idade e altura do usuário
 export function calculateWeightRangeByIMC(age: number, height: number) {
   const imcRange = getIMCRange(age);
   const minimumWeight = height ** 2 * imcRange.min;
