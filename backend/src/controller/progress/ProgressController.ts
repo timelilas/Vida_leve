@@ -22,6 +22,16 @@ export default class ProgressController {
         },
       });
     }
+
+    if (weight === goalWeight) {
+      return res.status(400).json({
+        error: {
+          field: "goalWeight",
+          message: "O peso desejado deve ser diferente do peso atual.",
+        },
+      });
+    }
+
     const age = UserHelper.calculateAge(userProfile.birthDate);
     const { min, max } = ProgressHelper.calculateHealthyWeightRange(
       age,
@@ -57,7 +67,9 @@ export default class ProgressController {
   async get(req: Request, res: Response): Promise<Response> {
     const { id: userId } = req.user;
 
-    const userProgress = await this._ProgressService.getIdealPlan(Number(userId));
+    const userProgress = await this._ProgressService.getIdealPlan(
+      Number(userId)
+    );
 
     if (!userProgress) {
       return res.status(404).json({
@@ -75,20 +87,29 @@ export default class ProgressController {
         },
       });
     }
-    const age = new Date().getFullYear() - new Date(userProgress.birthDate).getFullYear();
+    const age =
+      new Date().getFullYear() - new Date(userProgress.birthDate).getFullYear();
 
-    const bmr = ProgressHelper.calculateBMR(userProgress?.gender, userProgress?.weight, userProgress.height, age);
-    const tdee = ProgressHelper.calculateTDEE(bmr, userProgress?.activityFrequency);
+    const bmr = ProgressHelper.calculateBMR(
+      userProgress?.gender,
+      userProgress?.weight,
+      userProgress.height,
+      age
+    );
+    const tdee = ProgressHelper.calculateTDEE(
+      bmr,
+      userProgress?.activityFrequency
+    );
     const weightLossPlan = ProgressHelper.calculateWeightLossPlan(tdee);
 
-    return res.status(200).json({ 
-      data: { 
-        BMR: bmr.toFixed(2), 
+    return res.status(200).json({
+      data: {
+        BMR: bmr.toFixed(2),
         TDEE: tdee.toFixed(2),
         LENTA: weightLossPlan.slow,
         MODERADA: weightLossPlan.moderate,
         RAPIDA: weightLossPlan.fast,
-      } 
+      },
     });
   }
 }

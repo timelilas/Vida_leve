@@ -56,7 +56,7 @@ const ProgressFormScreen = (props: ProgressFormScreenProps) => {
     );
   }
 
-  function generateWeightLossPlans() {
+  function generateCaloriePlans() {
     if (!birthDate || !gender || !activityFrequency) {
       return [];
     }
@@ -86,6 +86,7 @@ const ProgressFormScreen = (props: ProgressFormScreenProps) => {
           gender,
           age: calculateAge(new Date(birthDate)),
           height,
+          weight,
           goalWeight,
         })
       );
@@ -98,10 +99,11 @@ const ProgressFormScreen = (props: ProgressFormScreenProps) => {
       return setError({ message: missingProfileFormField });
     }
     const age = calculateAge(new Date(birthDate));
+    const goalWeightParams = { height, weight, gender, goalWeight, age };
     const validationMap = {
       height: validateHeight(height),
       weight: validateWeight(weight),
-      goalWeight: validateGoalWeight({ height, gender, goalWeight, age }),
+      goalWeight: validateGoalWeight(goalWeightParams),
       activityFrequency: validateActitivyFrequency(activityFrequency || ""),
     };
 
@@ -118,7 +120,7 @@ const ProgressFormScreen = (props: ProgressFormScreenProps) => {
     if (!validateAllFields()) return;
 
     const { data } = await httpAuthService.createProgress(values as any);
-    const plans = generateWeightLossPlans();
+    const plans = generateCaloriePlans();
     setProgress(data);
     setPlans(plans);
     props.navigation.navigate("Onboarding/PlanSelection");
