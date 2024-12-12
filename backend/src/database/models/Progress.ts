@@ -8,6 +8,7 @@ import { ProgressEntity } from "../../@core/entity/progress/ProgressEntity";
 import { sequelize } from "../index";
 import User from "./User";
 import Sequelize from "sequelize";
+import { ActivityFrequency } from "../../@core/entity/@shared";
 
 class Progress
   extends Model<InferAttributes<Progress>, InferCreationAttributes<Progress>>
@@ -17,7 +18,7 @@ class Progress
   declare height: number;
   declare weight: number;
   declare goalWeight: number;
-  declare activityFrequency: ProgressEntity["activityFrequency"];
+  declare activityFrequency: ActivityFrequency;
   declare createdAt: CreationOptional<Date>;
   declare updatedAt: CreationOptional<Date>;
 
@@ -46,7 +47,12 @@ Progress.init(
       allowNull: false,
     },
     activityFrequency: {
-      type: Sequelize.ENUM("pouca", "leve", "moderada", "intensa"),
+      type: Sequelize.ENUM<ActivityFrequency>(
+        "pouca",
+        "leve",
+        "moderada",
+        "intensa"
+      ),
       allowNull: false,
     },
     userId: {
