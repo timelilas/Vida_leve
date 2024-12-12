@@ -6,16 +6,23 @@ export default class ProgressService {
   public upsert = async (params: UpsertProgressDTO) => {
     const { userId, weight, height, goalWeight, activityFrequency } = params;
 
-    await Progress.upsert({
-      userId,
-      weight,
-      height,
-      goalWeight,
-      activityFrequency,
-      updatedAt: new Date(),
-    });
+    await Progress.upsert(
+      {
+        userId,
+        weight,
+        height,
+        goalWeight,
+        activityFrequency,
+        updatedAt: new Date(),
+      },
+      { transaction: params.transaction }
+    );
 
-    const updatedProgress = await Progress.findOne({ where: { userId } });
+    const updatedProgress = await Progress.findOne({
+      where: { userId },
+      transaction: params.transaction,
+      attributes: { exclude: ["createdAt", "updatedAt"] },
+    });
     return (updatedProgress as Progress).toJSON();
   };
 
@@ -28,5 +35,5 @@ export default class ProgressService {
     }
 
     return { ...user.toJSON(), ...userProgress.dataValues };
-  }
+  };
 }

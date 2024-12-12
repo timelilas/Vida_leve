@@ -16,4 +16,8 @@ export const progressZodSchema = z
         "Frequência de atividade física permite apenas os seguintes valores: pouca, leve, moderada e intensa",
     }),
   })
-  .strict({ message: "Não é um campo válido" });
+  .strict({ message: "Não é um campo válido" })
+  .refine(({ goalWeight, weight }) => goalWeight !== weight, {
+    message: "O peso desejado deve ser diferente do peso atual.",
+    path: ["goalWeight"],
+  });

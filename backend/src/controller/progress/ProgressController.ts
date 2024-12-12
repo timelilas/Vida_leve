@@ -3,8 +3,12 @@ import ProgressService from "../../service/progress/ProgressService";
 import UserService from "../../service/user/UserService";
 import { ProgressHelper } from "../../@core/entity/progress/helpers";
 import { UserHelper } from "../../@core/entity/user/helpers";
+import { PlanType } from "../../@core/entity/@shared";
+import { sequelize } from "../../database";
+import { CaloriePlanService } from "../../service/caloriePlan/CaloriePlanService";
 
 export default class ProgressController {
+  private _CaloriePlanService = new CaloriePlanService();
   private _ProgressService = new ProgressService();
   private _UserService = new UserService();
 
@@ -18,21 +22,23 @@ export default class ProgressController {
       return res.status(400).json({
         error: {
           field: null,
-          message: "Data de nascimento inválida ou não cadastrada.",
+          message:
+            "É nescessário ter uma data de náscimento cadastrada para continuar.",
         },
       });
     }
 
-    if (weight === goalWeight) {
+    if (!userProfile.gender) {
       return res.status(400).json({
         error: {
-          field: "goalWeight",
-          message: "O peso desejado deve ser diferente do peso atual.",
+          field: null,
+          message: "É nescessáário ter um gênero cadastrado para continuar",
         },
       });
     }
 
-    const age = UserHelper.calculateAge(userProfile.birthDate);
+    const { birthDate, gender } = userProfile;
+    const age = UserHelper.calculateAge(birthDate);
     const { min, max } = ProgressHelper.calculateHealthyWeightRange(
       age,
       height
@@ -47,69 +53,91 @@ export default class ProgressController {
       });
     }
 
+    const transaction = await sequelize.transaction();
+
     try {
+      const bmrParams = { weight, height, gender, age };
+      const planTypes: PlanType[] = ["gradual", "moderado", "acelerado"];
+      const newCaloriePlans = planTypes.map((type) => {
+        return ProgressHelper.createCaloriePlan({
+          ...bmrParams,
+          type,
+          goalWeight,
+          activityFrequency,
+        });
+      });
+
       const createdProgress = await this._ProgressService.upsert({
         height,
         weight,
         goalWeight,
         activityFrequency,
-        userId: Number(userId),
+        userId,
       });
+
+      await this._CaloriePlanService.upsertPlans({
+        data: { userId, plans: newCaloriePlans },
+        transaction,
+      });
+
+      await transaction.commit();
       return res.status(200).json({ data: createdProgress });
     } catch (error) {
       console.error("Server internal error:", error);
+
+      await transaction.rollback();
       return res.status(500).json({
         error: { field: null, message: "Erro na criação do progresso." },
       });
     }
   }
 
-  async get(req: Request, res: Response): Promise<Response> {
-    const { id: userId } = req.user;
+  // async get(req: Request, res: Response): Promise<Response> {
+  //   const { id: userId } = req.user;
 
-    const userProgress = await this._ProgressService.getIdealPlan(
-      Number(userId)
-    );
+  //   const userProgress = await this._ProgressService.getIdealPlan(
+  //     Number(userId)
+  //   );
 
-    if (!userProgress) {
-      return res.status(404).json({
-        error: {
-          field: null,
-          message: "Progresso não encontrado.",
-        },
-      });
-    }
-    if (!userProgress?.birthDate) {
-      return res.status(400).json({
-        error: {
-          field: null,
-          message: "Data de nascimento inválida ou não cadastrada.",
-        },
-      });
-    }
-    const age =
-      new Date().getFullYear() - new Date(userProgress.birthDate).getFullYear();
+  //   if (!userProgress) {
+  //     return res.status(404).json({
+  //       error: {
+  //         field: null,
+  //         message: "Progresso não encontrado.",
+  //       },
+  //     });
+  //   }
+  //   if (!userProgress?.birthDate) {
+  //     return res.status(400).json({
+  //       error: {
+  //         field: null,
+  //         message: "Data de nascimento inválida ou não cadastrada.",
+  //       },
+  //     });
+  //   }
+  //   const age =
+  //     new Date().getFullYear() - new Date(userProgress.birthDate).getFullYear();
 
-    const bmr = ProgressHelper.calculateBMR(
-      userProgress?.gender,
-      userProgress?.weight,
-      userProgress.height,
-      age
-    );
-    const tdee = ProgressHelper.calculateTDEE(
-      bmr,
-      userProgress?.activityFrequency
-    );
-    const weightLossPlan = ProgressHelper.calculateWeightLossPlan(tdee);
+  //   const bmr = ProgressHelper.calculateBMR(
+  //     userProgress?.gender,
+  //     userProgress?.weight,
+  //     userProgress.height,
+  //     age
+  //   );
+  //   const tdee = ProgressHelper.calculateTDEE(
+  //     bmr,
+  //     userProgress?.activityFrequency
+  //   );
+  //   const weightLossPlan = ProgressHelper.calculateWeightLossPlan(tdee);
 
-    return res.status(200).json({
-      data: {
-        BMR: bmr.toFixed(2),
-        TDEE: tdee.toFixed(2),
-        LENTA: weightLossPlan.slow,
-        MODERADA: weightLossPlan.moderate,
-        RAPIDA: weightLossPlan.fast,
-      },
-    });
-  }
+  //   return res.status(200).json({
+  //     data: {
+  //       BMR: bmr.toFixed(2),
+  //       TDEE: tdee.toFixed(2),
+  //       LENTA: weightLossPlan.slow,
+  //       MODERADA: weightLossPlan.moderate,
+  //       RAPIDA: weightLossPlan.fast,
+  //     },
+  //   });
+  // }
 }
