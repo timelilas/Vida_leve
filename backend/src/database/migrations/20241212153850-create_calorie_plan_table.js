@@ -3,7 +3,7 @@
 /** @type {import('sequelize-cli').Migration} */
 module.exports = {
   async up(queryInterface, Sequelize) {
-    await queryInterface.createTable("progress", {
+    await queryInterface.createTable("caloriePlan", {
       userId: {
         type: Sequelize.INTEGER,
         primaryKey: true,
@@ -12,20 +12,17 @@ module.exports = {
         onDelete: "NO ACTION",
         references: { model: "user", key: "id" },
       },
-      height: {
-        type: Sequelize.DECIMAL(3, 2),
+      type: {
+        type: Sequelize.ENUM("gradual", "moderado", "acelerado"),
+        primaryKey: true,
         allowNull: false,
       },
-      weight: {
+      durationInDays: {
         type: Sequelize.SMALLINT,
         allowNull: false,
       },
-      goalWeight: {
+      dailyCalorieIntake: {
         type: Sequelize.SMALLINT,
-        allowNull: false,
-      },
-      activityFrequency: {
-        type: ENUM("pouca", "leve", "moderada", "intensa"),
         allowNull: false,
       },
       createdAt: {
@@ -42,6 +39,6 @@ module.exports = {
   },
 
   async down(queryInterface, Sequelize) {
-    await queryInterface.dropTable("progress");
+    await queryInterface.dropTable("caloriePlan");
   },
 };
