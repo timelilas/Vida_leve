@@ -1,10 +1,3 @@
-import {
-  ADULT_MIN_IMC,
-  ADULT_MAX_IMC,
-  ELDERLY_MAX_IMC,
-  ELDERLY_MIN_IMC,
-  ACTIVITY_MULTIPLIERS,
-} from "./constants";
 import { activityFrequency, Gender, WeightLossPlan } from "./ProgressEntity";
 
 export class ProgressHelper {
@@ -21,8 +14,8 @@ export class ProgressHelper {
 
   private static getIMCRangeByAge(age: number): { min: number; max: number } {
     return {
-      min: age < 60 ? ADULT_MIN_IMC : ELDERLY_MIN_IMC,
-      max: age < 60 ? ADULT_MAX_IMC : ELDERLY_MAX_IMC,
+      min: age < 60 ? 18.5 : 22,
+      max: age < 60 ? 24.9 : 27,
     };
   }
 
@@ -33,7 +26,13 @@ export class ProgressHelper {
   }
 
   public static calculateTDEE(bmr: number, activityFrequency: activityFrequency): number {
-    return bmr * ACTIVITY_MULTIPLIERS[activityFrequency];
+    const activityMultiplyers = {
+      pouca: 1.2,
+      leve: 1.375,
+      moderada: 1.55,
+      intensa: 1.725,
+    };
+    return bmr * activityMultiplyers[activityFrequency];
   }
 
   public static calculateWeightLossPlan(tdee: number): WeightLossPlan {

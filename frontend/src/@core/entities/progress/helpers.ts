@@ -1,3 +1,5 @@
+import * as CONSTANTS from "./constants";
+
 // calcula o intervalo de peso recomendável com base na idade e altura do usuário
 export function calculateWeightRangeByIMC(age: number, height: number) {
   const imcRange = getIMCRange(age);
@@ -12,7 +14,7 @@ export function calculateWeightRangeByIMC(age: number, height: number) {
 
 function getIMCRange(age: number) {
   return {
-    min: age < 60 ? 18.5 : 22,
-    max: age < 60 ? 24.9 : 27,
+    min: age < 60 ? CONSTANTS.ADULT_MIN_IMC : CONSTANTS.ELDERLY_MIN_IMC,
+    max: age < 60 ? CONSTANTS.ADULT_MAX_IMC : CONSTANTS.ELDERLY_MAX_IMC,
   };
 }
