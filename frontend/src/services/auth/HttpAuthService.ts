@@ -10,6 +10,7 @@ import {
 import { HttpService } from "../HttpService";
 import AsyncStorage from "@react-native-async-storage/async-storage";
 import { ProgressProps } from "../../@core/entities/progress/progress";
+import { PlanType } from "../../@core/entities/@shared/plantType";
 
 export class HttpAuthService extends HttpService {
   public async signup(data: HttpSignupInputDTO) {
@@ -47,6 +48,19 @@ export class HttpAuthService extends HttpService {
       method: "POST",
       path: "/progress",
       body: data,
+      headers: {
+        Authorization: `Bearer ${token}`,
+      },
+    });
+  }
+
+  public async setCaloriePlan(plan: PlanType) {
+    const token = await AsyncStorage.getItem("token");
+
+    return await this.submit<ProgressProps>({
+      method: "PATCH",
+      path: "/progress/plan",
+      body: { currentCaloriePlan: plan },
       headers: {
         Authorization: `Bearer ${token}`,
       },
