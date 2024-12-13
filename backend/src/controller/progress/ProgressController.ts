@@ -13,8 +13,8 @@ export default class ProgressController {
   private _UserService = new UserService();
 
   async post(req: Request, res: Response): Promise<Response> {
-    const { height, weight, goalWeight, activityFrequency } = req.body;
     const { id: userId } = req.user;
+    const { height, weight, goalWeight, activityFrequency } = req.body;
 
     const userProfile = await this._UserService.get(userId);
 
@@ -32,7 +32,7 @@ export default class ProgressController {
       return res.status(400).json({
         error: {
           field: null,
-          message: "É nescessáário ter um gênero cadastrado para continuar",
+          message: "É nescessáário ter um gênero cadastrado para continuar.",
         },
       });
     }
@@ -68,11 +68,8 @@ export default class ProgressController {
       });
 
       const createdProgress = await this._ProgressService.upsert({
-        height,
-        weight,
-        goalWeight,
-        activityFrequency,
-        userId,
+        data: { ...req.body, userId },
+        transaction,
       });
 
       await this._CaloriePlanService.upsertPlans({
@@ -102,7 +99,7 @@ export default class ProgressController {
         return res.status(404).json({
           error: {
             field: null,
-            message: "Este usuário não possui um progresso cadastrado",
+            message: "Este usuário não possui um progresso cadastrado.",
           },
         });
       }
@@ -113,7 +110,39 @@ export default class ProgressController {
       return res.status(500).json({
         error: {
           field: null,
-          message: "Erro na busca das informações de progresso",
+          message: "Erro na busca das informações de progresso.",
+        },
+      });
+    }
+  }
+
+  async setCaloriePlan(req: Request, res: Response): Promise<Response> {
+    const userId = req.user.id;
+    const { currentCaloriePlan } = req.body;
+
+    try {
+      const updatedProgress = await this._ProgressService.setCaloriePlan({
+        userId,
+        caloriePlan: currentCaloriePlan,
+      });
+
+      if (!updatedProgress) {
+        return res.status(404).json({
+          error: {
+            field: null,
+            message: "Este usuário não possui um progresso cadastrado.",
+          },
+        });
+      }
+
+      return res.status(200).json({ data: updatedProgress });
+    } catch (error) {
+      console.error("Server internal error:", error);
+
+      return res.status(500).json({
+        error: {
+          field: null,
+          message: "Erro ao atualizar o plano de execução.",
         },
       });
     }

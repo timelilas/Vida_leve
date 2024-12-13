@@ -4,7 +4,7 @@ import { PlanType } from "../@shared";
 import { CaloriePlanEntity } from "../caloriePlan/entity";
 import { ProgressEntity } from "./ProgressEntity";
 
-interface CaloriePlanParams extends ProgressEntity {
+interface CaloriePlanParams extends Omit<ProgressEntity, "currentCaloriePlan"> {
   type: PlanType;
   gender: Gender;
   age: number;

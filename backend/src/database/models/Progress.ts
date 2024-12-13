@@ -8,7 +8,7 @@ import { ProgressEntity } from "../../@core/entity/progress/ProgressEntity";
 import { sequelize } from "../index";
 import User from "./User";
 import Sequelize from "sequelize";
-import { ActivityFrequency } from "../../@core/entity/@shared";
+import { ActivityFrequency, PlanType } from "../../@core/entity/@shared";
 
 class Progress
   extends Model<InferAttributes<Progress>, InferCreationAttributes<Progress>>
@@ -19,12 +19,19 @@ class Progress
   declare weight: number;
   declare goalWeight: number;
   declare activityFrequency: ActivityFrequency;
+  declare currentCaloriePlan: PlanType | null;
   declare createdAt: CreationOptional<Date>;
   declare updatedAt: CreationOptional<Date>;
 
   public toJSON(): ProgressEntity {
-    const { height, activityFrequency, goalWeight, weight } = super.get();
-    return { height, activityFrequency, goalWeight, weight };
+    const props = super.get();
+    return {
+      height: props.height,
+      weight: props.weight,
+      goalWeight: props.goalWeight,
+      activityFrequency: props.activityFrequency,
+      currentCaloriePlan: props.currentCaloriePlan,
+    };
   }
 }
 
@@ -54,6 +61,10 @@ Progress.init(
         "intensa"
       ),
       allowNull: false,
+    },
+    currentCaloriePlan: {
+      type: Sequelize.ENUM<PlanType>("gradual", "moderado", "acelerado"),
+      allowNull: true,
     },
     userId: {
       type: Sequelize.INTEGER,

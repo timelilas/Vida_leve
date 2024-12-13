@@ -4,7 +4,7 @@ import { CaloriePlanService } from "../../service/caloriePlan/CaloriePlanService
 export class CaloriePlanController {
   private _CaloriePlanService = new CaloriePlanService();
 
-  async get(req: Request, res: Response) {
+  async get(req: Request, res: Response): Promise<Response> {
     const userId = req.user.id;
     try {
       const caloriePlans = await this._CaloriePlanService.getAll(userId);

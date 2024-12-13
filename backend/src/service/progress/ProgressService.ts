@@ -1,26 +1,20 @@
 import Progress from "../../database/models/Progress";
-import { UpsertProgressDTO } from "./types";
+import { SetCaloriePlanDTO, UpsertProgressDTO } from "./types";
 
 export default class ProgressService {
   public upsert = async (params: UpsertProgressDTO) => {
-    const { userId, weight, height, goalWeight, activityFrequency } = params;
+    const { data, transaction } = params;
+    data.currentCaloriePlan;
 
     await Progress.upsert(
-      {
-        userId,
-        weight,
-        height,
-        goalWeight,
-        activityFrequency,
-        updatedAt: new Date(),
-      },
+      { ...data, updatedAt: new Date() },
       { transaction: params.transaction }
     );
 
     const updatedProgress = await Progress.findOne({
-      where: { userId },
-      transaction: params.transaction,
+      where: { userId: data.userId },
       attributes: { exclude: ["createdAt", "updatedAt"] },
+      transaction,
     });
     return (updatedProgress as Progress).toJSON();
   };
@@ -36,7 +30,24 @@ export default class ProgressService {
     if (!userProgress) {
       return null;
     }
-
     return userProgress.toJSON();
+  };
+
+  public setCaloriePlan = async (params: SetCaloriePlanDTO) => {
+    const { userId, caloriePlan } = params;
+    const [updatedCount] = await Progress.update(
+      { currentCaloriePlan: caloriePlan, updatedAt: new Date() },
+      { where: { userId } }
+    );
+
+    if (updatedCount === 0) {
+      return null;
+    }
+
+    const updatedProgress = await Progress.findOne({
+      where: { userId },
+      attributes: { exclude: ["createdAt", "updatedAt"] },
+    });
+    return (updatedProgress as Progress).toJSON();
   };
 }

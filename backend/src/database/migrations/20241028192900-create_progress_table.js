@@ -28,6 +28,10 @@ module.exports = {
         type: ENUM("pouca", "leve", "moderada", "intensa"),
         allowNull: false,
       },
+      currentCaloriePlan: {
+        type: ENUM("gradual", "moderado", "acelerado"),
+        allowNull: true,
+      },
       createdAt: {
         type: Sequelize.DATE(),
         defaultValue: Sequelize.fn("CURRENT_TIMESTAMP", 3),
