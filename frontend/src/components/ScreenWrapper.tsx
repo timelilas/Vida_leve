@@ -1,11 +1,6 @@
 import { forwardRef, PropsWithChildren } from "react";
-import {
-  ScrollView,
-  StyleSheet,
-  View,
-  StatusBar,
-  ColorValue,
-} from "react-native";
+import { ScrollView, StyleSheet, View, ColorValue } from "react-native";
+import { SafeAreaView } from "react-native-safe-area-context";
 
 interface ScreenWrapper extends PropsWithChildren {
   scrollable?: boolean;
@@ -15,26 +10,23 @@ interface ScreenWrapper extends PropsWithChildren {
 export const ScreenWrapper = forwardRef<ScrollView, ScreenWrapper>(
   (props, ref) => {
     return (
-      <View style={styles.safeArea}>
-        <StatusBar
-          translucent={props.statusBarColor === "transparent"}
-          backgroundColor={props.statusBarColor || "#eff0f6"}
-          barStyle="dark-content"
-        />
+      <SafeAreaView style={styles.safeArea}>
         <View style={styles.container}>
-          {props.scrollable ? (
-            <ScrollView
-              ref={ref}
-              contentContainerStyle={styles.scrollView}
-              showsVerticalScrollIndicator={false}
-            >
-              {props.children}
-            </ScrollView>
-          ) : (
-            props.children
-          )}
+          <View style={styles.container}>
+            {props.scrollable ? (
+              <ScrollView
+                ref={ref}
+                contentContainerStyle={styles.scrollView}
+                showsVerticalScrollIndicator={false}
+              >
+                {props.children}
+              </ScrollView>
+            ) : (
+              props.children
+            )}
+          </View>
         </View>
-      </View>
+      </SafeAreaView>
     );
   }
 );
@@ -42,7 +34,6 @@ export const ScreenWrapper = forwardRef<ScrollView, ScreenWrapper>(
 const styles = StyleSheet.create({
   safeArea: {
     flex: 1,
-    backgroundColor: "#eff0f6",
   },
   container: {
     flex: 1,
@@ -51,7 +42,7 @@ const styles = StyleSheet.create({
   scrollView: {
     paddingHorizontal: 16,
     paddingBottom: 24,
-    flexGrow: 1,
     paddingTop: 24,
+    flexGrow: 1,
   },
 });

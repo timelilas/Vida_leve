@@ -20,6 +20,8 @@ const Navigation = () => {
           animation: "simple_push",
           animationDuration: 300,
           orientation: "all",
+          statusBarStyle: "dark",
+          statusBarColor: "#eff0f6",
         }}
       >
         <Stack.Screen
