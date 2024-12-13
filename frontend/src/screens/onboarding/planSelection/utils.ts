@@ -2,7 +2,7 @@ import React, { ReactNode } from "react";
 import { LeafIcon } from "../../../components/icons/LeafIcon";
 import { LightningIcon } from "../../../components/icons/LightningIcon";
 import { WindIcon } from "../../../components/icons/WindIcon";
-import { PlanType } from "./types";
+import { PlanType } from "../../../@core/entities/@shared/plantType";
 import { SvgProps } from "react-native-svg";
 
 interface PlanUiDetails {

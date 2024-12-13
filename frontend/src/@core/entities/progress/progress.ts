@@ -1,4 +1,4 @@
-import { PlanType } from "../../../screens/onboarding/planSelection/types";
+import { PlanType } from "../@shared/plantType";
 import { ActitivyFrequency } from "../@shared/activityFrequency";
 
 export interface ProgressProps {
