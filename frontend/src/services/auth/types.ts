@@ -1,3 +1,4 @@
+import { ProgressProps } from "../../@core/entities/progress/progress";
 import { UserProps } from "../../@core/entities/user/user";
 
 export type HttpSignupOutputDTO = Omit<UserProps, "password">;
@@ -26,4 +27,9 @@ export interface HttpUpdateProfileOutputDTO
 export type HttpUpdateProfileInputDTO = Pick<
   UserProps,
   "name" | "phone" | "birthDate" | "gender"
+>;
+
+export type HttpCreateProgressInputDTO = Omit<
+  ProgressProps,
+  "currentCaloriePlan"
 >;

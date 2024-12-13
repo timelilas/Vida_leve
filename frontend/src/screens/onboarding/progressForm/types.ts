@@ -6,6 +6,9 @@ export type ProgressFormScreenProps = {
   navigation: NavigationProp<any>;
 };
 
-export type ProgressFormData = Omit<ProgressProps, "activityFrequency"> & {
+export type ProgressFormData = Pick<
+  ProgressProps,
+  "weight" | "height" | "goalWeight"
+> & {
   activityFrequency: ActitivyFrequency | null;
 };

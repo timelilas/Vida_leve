@@ -5,6 +5,7 @@ import {
   HttpUpdateProfileOutputDTO,
   HttpSignupInputDTO,
   HttpSignupOutputDTO,
+  HttpCreateProgressInputDTO,
 } from "./types";
 import { HttpService } from "../HttpService";
 import AsyncStorage from "@react-native-async-storage/async-storage";
@@ -39,7 +40,7 @@ export class HttpAuthService extends HttpService {
     });
   }
 
-  public async createProgress(data: ProgressProps) {
+  public async createProgress(data: HttpCreateProgressInputDTO) {
     const token = await AsyncStorage.getItem("token");
 
     return await this.submit<ProgressProps>({
