@@ -7,6 +7,10 @@ import { createProgressSchema } from "../controller/progress/schemas";
 const progressRouter = Router();
 const progressController = new ProgressController();
 
+progressRouter.get("/", authorizationMiddleware, (req, res) =>
+  progressController.get(req, res)
+);
+
 progressRouter.post(
   "/",
   authorizationMiddleware,

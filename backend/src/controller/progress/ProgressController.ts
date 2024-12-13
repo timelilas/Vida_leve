@@ -92,6 +92,33 @@ export default class ProgressController {
     }
   }
 
+  async get(req: Request, res: Response): Promise<Response> {
+    const userId = req.user.id;
+
+    try {
+      const userProgress = await this._ProgressService.get(userId);
+
+      if (!userProgress) {
+        return res.status(404).json({
+          error: {
+            field: null,
+            message: "Este usuário não possui um progresso cadastrado",
+          },
+        });
+      }
+      return res.status(200).json({ data: userProgress });
+    } catch (error) {
+      console.error("Server internal error:", error);
+
+      return res.status(500).json({
+        error: {
+          field: null,
+          message: "Erro na busca das informações de progresso",
+        },
+      });
+    }
+  }
+
   // async get(req: Request, res: Response): Promise<Response> {
   //   const { id: userId } = req.user;
 

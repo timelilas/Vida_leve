@@ -1,5 +1,4 @@
 import Progress from "../../database/models/Progress";
-import User from "../../database/models/User";
 import { UpsertProgressDTO } from "./types";
 
 export default class ProgressService {
@@ -26,14 +25,18 @@ export default class ProgressService {
     return (updatedProgress as Progress).toJSON();
   };
 
-  public getIdealPlan = async (userId: number) => {
-    const user = await Progress.findOne({ where: { userId } });
-    const userProgress = await User.findOne({ where: { id: userId } });
+  public get = async (userId: number) => {
+    const userProgress = await Progress.findOne({
+      where: { userId },
+      attributes: {
+        exclude: ["createdAt", "updatedAt"],
+      },
+    });
 
-    if (!user || !userProgress) {
+    if (!userProgress) {
       return null;
     }
 
-    return { ...user.toJSON(), ...userProgress.dataValues };
+    return userProgress.toJSON();
   };
 }
