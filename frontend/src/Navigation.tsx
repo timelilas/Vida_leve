@@ -1,6 +1,5 @@
 import { NavigationContainer } from "@react-navigation/native";
 import { createNativeStackNavigator } from "@react-navigation/native-stack";
-import AuthHomeScreen from "./screens/auth/home/AuthHomeScreen";
 import LoginScreen from "./screens/auth/login/LoginScreen";
 import SignupScreen from "./screens/auth/signup/SignupScreen";
 import PlanSelectionScreen from "./screens/onboarding/planSelection/PlanSelectionScreen";
@@ -8,6 +7,7 @@ import GoalGuidanceScreen from "./screens/onboarding/goalGuidance/GoalGuidanceSc
 import ProgressFormScreen from "./screens/onboarding/progressForm/ProgressFormScreen";
 import ProfileFormScreen from "./screens/onboarding/profileForm/ProfileFormScreen";
 import ConnectionErrorScreen from "./screens/error/connectionError/ConnectionErrorScreen";
+import WelcomeScreen from "./screens/auth/welcome/WelcomeScreen";
 
 const Stack = createNativeStackNavigator();
 
@@ -15,7 +15,7 @@ const Navigation = () => {
   return (
     <NavigationContainer>
       <Stack.Navigator
-        initialRouteName="Auth/Home"
+        initialRouteName="Auth/Welcome"
         screenOptions={{
           animation: "simple_push",
           animationDuration: 300,
@@ -25,8 +25,8 @@ const Navigation = () => {
         }}
       >
         <Stack.Screen
-          name="Auth/Home"
-          component={AuthHomeScreen}
+          name="Auth/Welcome"
+          component={WelcomeScreen}
           options={{ headerShown: false }}
         />
         <Stack.Screen

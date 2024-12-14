@@ -5,11 +5,11 @@ import { SubmitButton } from "../../../components/buttons/SubmitButton";
 import { Image } from "react-native";
 import { BigLogoSVG } from "../../../components/logos/BigLogoSVG";
 
-type AuthHomeProps = {
+type WelcomeScreenProps = {
   navigation: NavigationProp<any>;
 };
 
-const AuthHomeScreen = ({ navigation }: AuthHomeProps) => {
+const WelcomeScreen = ({ navigation }: WelcomeScreenProps) => {
   return (
     <ScreenWrapper statusBarColor="transparent">
       <ScrollView
@@ -59,7 +59,7 @@ const AuthHomeScreen = ({ navigation }: AuthHomeProps) => {
   );
 };
 
-export default AuthHomeScreen;
+export default WelcomeScreen;
 
 const styles = StyleSheet.create({
   scrollView: {
