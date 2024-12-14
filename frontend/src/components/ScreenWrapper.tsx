@@ -4,7 +4,6 @@ import { SafeAreaView } from "react-native-safe-area-context";
 
 interface ScreenWrapper extends PropsWithChildren {
   scrollable?: boolean;
-  statusBarColor?: ColorValue;
 }
 
 export const ScreenWrapper = forwardRef<ScrollView, ScreenWrapper>(

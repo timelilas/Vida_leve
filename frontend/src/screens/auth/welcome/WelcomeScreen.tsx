@@ -11,7 +11,7 @@ type WelcomeScreenProps = {
 
 const WelcomeScreen = ({ navigation }: WelcomeScreenProps) => {
   return (
-    <ScreenWrapper statusBarColor="transparent">
+    <ScreenWrapper>
       <ScrollView
         contentContainerStyle={styles.scrollView}
         showsVerticalScrollIndicator={false}
