@@ -36,7 +36,7 @@ const HomeScreen = () => {
           />
           <ProgressStatistics
             overallCalorieGoal={dailyCalorieOffset * currentPlan.durationInDays}
-            calorieAccumulated={isCalorieDeficit ? -1400 : 14000} //dado mockada
+            calorieAccumulated={isCalorieDeficit ? -14000 : 14000} //dado mockado
           />
         </View>
       </View>
