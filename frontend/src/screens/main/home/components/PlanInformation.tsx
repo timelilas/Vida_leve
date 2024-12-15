@@ -1,4 +1,10 @@
-import { Platform, StyleSheet, Text, View } from "react-native";
+import {
+  Platform,
+  StyleSheet,
+  Text,
+  TouchableOpacity,
+  View,
+} from "react-native";
 import { PlanType } from "../../../../@core/entities/@shared/plantType";
 import { CaloriePlanProps } from "../../../../@core/entities/caloriePlan/caloriePlan";
 
@@ -15,8 +21,8 @@ export function PlanInformation(props: PlanInformation) {
   };
 
   return (
-    <View style={styles.container}>
-      <Text style={styles.planLabel}>
+    <View>
+      <Text style={styles.title}>
         {props.planType
           ? `A meta que será executada: ${planLabelMap[props.planType]}`
           : "Você não possui um plano de execução cadastrado"}
@@ -24,18 +30,20 @@ export function PlanInformation(props: PlanInformation) {
       <View style={styles.shadowBox}>
         <Text style={styles.targetCalorie}>{props.dailyCalorie} kcal/dia</Text>
       </View>
+      <TouchableOpacity style={styles.adjustGoalButton}>
+        <Text style={styles.adjustGoalText}>Alterar</Text>
+      </TouchableOpacity>
     </View>
   );
 }
 
 const styles = StyleSheet.create({
-  container: {
-    gap: 8,
-  },
-  planLabel: {
+  title: {
     fontSize: 16,
+    lineHeight: 16,
     fontFamily: "Roboto-300",
     color: "#4e4b66",
+    marginBottom: 8,
   },
   targetCalorie: {
     padding: 16,
@@ -62,8 +70,16 @@ const styles = StyleSheet.create({
     borderBottomLeftRadius: 24,
     borderBottomRightRadius: 24,
     overflow: Platform.OS === "android" ? "hidden" : "visible",
-    // backgroundColor: "red",
     paddingBottom: 6,
     paddingInline: 2,
+  },
+  adjustGoalButton: {
+    alignSelf: "flex-end",
+  },
+  adjustGoalText: {
+    textAlign: "auto",
+    fontSize: 14,
+    fontFamily: "Roboto-300",
+    color: "#0000FF",
   },
 });

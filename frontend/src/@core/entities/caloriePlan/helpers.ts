@@ -68,25 +68,27 @@ export function buildCaloriePlan(params: PlanParams): CaloriePlanProps {
   const BMRValue = calculateBMR({ age, weight, height, gender });
   const TDEEValue = calculateTDEE(BMRValue, params.dailyActivityLevel);
 
-  const calorieOffsetMap: Record<PlanType, number> = {
-    gradual: CONSTANTS.GRADUAL_DAILY_CALORIE_OFFSET,
-    moderado: CONSTANTS.MODERATE_DAILY_CALORIE_OFFSET,
-    acelerado: CONSTANTS.ACCELERATED_DAILY_CALORIE_OFFSET,
-  };
+  const calorieOffset = getDailyCalorieOffset(params.planType);
 
   const dailyCalorieIntake = Math.round(
-    goalWeight >= weight
-      ? TDEEValue + calorieOffsetMap[params.planType]
-      : TDEEValue - calorieOffsetMap[params.planType]
+    goalWeight >= weight ? TDEEValue + calorieOffset : TDEEValue - calorieOffset
   );
   const totalKcal = Math.abs(goalWeight - weight) * CONSTANTS.KG_IN_KCAL;
-  const durationInDays = Math.ceil(
-    totalKcal / calorieOffsetMap[params.planType]
-  );
+  const durationInDays = Math.ceil(totalKcal / calorieOffset);
 
   return {
     type: params.planType,
     dailyCalorieIntake,
     durationInDays,
   };
+}
+
+export function getDailyCalorieOffset(planType: PlanType) {
+  const calorieOffsetMap: Record<PlanType, number> = {
+    gradual: CONSTANTS.GRADUAL_DAILY_CALORIE_OFFSET,
+    moderado: CONSTANTS.MODERATE_DAILY_CALORIE_OFFSET,
+    acelerado: CONSTANTS.ACCELERATED_DAILY_CALORIE_OFFSET,
+  };
+
+  return calorieOffsetMap[planType] || 0;
 }
