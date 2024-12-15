@@ -18,7 +18,7 @@ export function PlanInformation(props: PlanInformation) {
     <View style={styles.container}>
       <Text style={styles.planLabel}>
         {props.planType
-          ? ` A meta que será executada: ${planLabelMap[props.planType]}`
+          ? `A meta que será executada: ${planLabelMap[props.planType]}`
           : "Você não possui um plano de execução cadastrado"}
       </Text>
       <View style={styles.shadowBox}>

@@ -8,6 +8,7 @@ import ProgressFormScreen from "./screens/onboarding/progressForm/ProgressFormSc
 import ProfileFormScreen from "./screens/onboarding/profileForm/ProfileFormScreen";
 import ConnectionErrorScreen from "./screens/error/connectionError/ConnectionErrorScreen";
 import WelcomeScreen from "./screens/auth/welcome/WelcomeScreen";
+import HomeScreen from "./screens/main/home/HomeScreen";
 
 const Stack = createNativeStackNavigator();
 
@@ -57,6 +58,11 @@ const Navigation = () => {
         <Stack.Screen
           name="Onboarding/GoalGuidance"
           component={GoalGuidanceScreen}
+          options={{ headerShown: false }}
+        />
+        <Stack.Screen
+          name="Main/Home"
+          component={HomeScreen}
           options={{ headerShown: false }}
         />
         <Stack.Screen

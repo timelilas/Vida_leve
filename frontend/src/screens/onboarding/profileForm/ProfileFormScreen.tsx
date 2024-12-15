@@ -175,7 +175,7 @@ const ProfileFormScreen = (props: ProfileFromScreenProps) => {
         disabled={isSubmitting}
         onPress={onSubmit(handleSubmit, handleError)}
         style={styles.submitButton}
-        title="Continuar"
+        title="Continuar cadastro"
         type="primary"
       />
     </ScreenWrapper>

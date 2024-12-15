@@ -3,9 +3,9 @@ import { HttpError } from "../../@core/errors/httpError";
 import { ConnectionError } from "../../@core/errors/connectionError";
 
 const api = axios.create({
-  baseURL: "http://192.168.0.117:3000",
+  // baseURL: "http://192.168.0.117:3000",
   // baseURL: "http://localhost:3000/",
-  // baseURL: "https://vida-leve-h7ug.onrender.com",
+  baseURL: "https://vida-leve-h7ug.onrender.com",
   timeout: 5000,
 });
 
