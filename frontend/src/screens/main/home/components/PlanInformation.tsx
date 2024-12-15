@@ -45,6 +45,9 @@ const styles = StyleSheet.create({
     color: "#4e4b66",
     marginBottom: 8,
   },
+  titleBold: {
+    fontFamily: "Roboto-500",
+  },
   targetCalorie: {
     padding: 16,
     borderRadius: 16,
@@ -62,7 +65,7 @@ const styles = StyleSheet.create({
       : {
           shadowOffset: { width: 0, height: 4 },
           shadowRadius: 4,
-          shadowOpacity: 0.4,
+          shadowOpacity: 0.25,
         }),
   },
   shadowBox: {
@@ -74,6 +77,7 @@ const styles = StyleSheet.create({
     paddingInline: 2,
   },
   adjustGoalButton: {
+    marginTop: 2,
     alignSelf: "flex-end",
   },
   adjustGoalText: {
