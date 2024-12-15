@@ -9,13 +9,16 @@ export function ProgressBar(props: ProgressBarProps) {
   const progressPercentage =
     Math.floor(Math.abs(props.achieved / props.total) * 1000) / 10;
 
+  const sanitizedPercentage =
+    progressPercentage > 100 ? 100 : progressPercentage;
+
   return (
     <View style={styles.progressBar}>
       <View style={styles.preventBarOverflow}>
         <View
           style={[
             styles.prgressBarColored,
-            { width: `${progressPercentage || 0}%` },
+            { width: `${sanitizedPercentage}%` },
           ]}
         >
           <Text numberOfLines={1} style={styles.innerBarText}>
@@ -49,7 +52,7 @@ const styles = StyleSheet.create({
     alignItems: "center",
   },
   innerBarText: {
-    textAlign: "auto",
+    textAlign: "center",
     fontSize: 14,
     lineHeight: 14,
     fontFamily: "Roboto-400",

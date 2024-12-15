@@ -4,12 +4,16 @@ import { GuidanceItem } from "./components/GuidanceItem";
 import { FoodTrayIcon } from "../../../components/icons/FoodTrayIcon";
 import { ClipboardIcon } from "../../../components/icons/ClipboardIcon";
 import { TargetIcon } from "../../../components/icons/TargetIcon";
-import { CommonActions, useNavigation } from "@react-navigation/native";
+import {
+  CommonActions,
+  NavigationProp,
+  useNavigation,
+} from "@react-navigation/native";
 import { ScreenTitle } from "../../../components/ScreenTitle";
 import { ScreenHeader } from "../../../components/ScreenHeader";
 
 const GoalGuidanceScreen = () => {
-  const navigation = useNavigation();
+  const navigation = useNavigation<NavigationProp<any>>();
 
   function resetNavigationToHome() {
     navigation.dispatch(

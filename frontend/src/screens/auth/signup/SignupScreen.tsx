@@ -10,13 +10,17 @@ import { ErrorMessage } from "../../../components/ErrorMessage";
 import { validateEmail } from "../../../utils/validations/email";
 import { validatePassword } from "../../../utils/validations/password";
 import { validatePasswordConfirmation } from "../../../utils/validations/passwordConfirmation";
-import { SignupFormData, SignupScreenProps } from "./types";
+import { SignupFormData } from "./types";
 import styles from "../styles";
 import { maskEmail } from "../../../utils/masks";
 import { HeaderNavigator } from "../../../components/HeaderNavigator";
 import { useForm } from "../../../hooks/useForm";
 import { httpAuthService } from "../../../services/auth";
-import { StackActions } from "@react-navigation/native";
+import {
+  NavigationProp,
+  StackActions,
+  useNavigation,
+} from "@react-navigation/native";
 import { ConnectionError } from "../../../@core/errors/connectionError";
 import { HttpError } from "../../../@core/errors/httpError";
 
@@ -26,7 +30,8 @@ const signupFormInitialState: SignupFormData = {
   passwordConfirmation: "",
 };
 
-const SignupScreen = (props: SignupScreenProps) => {
+const SignupScreen = () => {
+  const navigation = useNavigation<NavigationProp<any>>();
   const scrollRef = useRef<ScrollView>(null);
   const [passwordFocused, setPasswordFocused] = useState(false);
   const [isTypingPassword, setIsTypingPassword] = useState(false);
@@ -54,7 +59,7 @@ const SignupScreen = (props: SignupScreenProps) => {
   async function handleSubmit() {
     if (!validateAllFields()) return;
     await httpAuthService.signup(values);
-    return props.navigation.dispatch(StackActions.replace("Auth/Login"));
+    return navigation.dispatch(StackActions.replace("Auth/Login"));
   }
 
   function handleError(error: Error) {
@@ -63,7 +68,7 @@ const SignupScreen = (props: SignupScreenProps) => {
       return setError({ field: error.field as any, message: error.message });
     }
     if (error instanceof ConnectionError) {
-      return props.navigation.navigate("ConnectionError");
+      return navigation.navigate("ConnectionError");
     }
     setError({ message: UNEXPECTED_ERROR_MESSAGE });
   }
@@ -87,13 +92,14 @@ const SignupScreen = (props: SignupScreenProps) => {
     return true;
   }
 
+  function goBack() {
+    navigation.goBack();
+  }
+
   return (
     <ScreenWrapper scrollable ref={scrollRef}>
       <View style={styles.container}>
-        <HeaderNavigator
-          style={styles.headerNavigator}
-          onGoBack={() => props.navigation.goBack()}
-        />
+        <HeaderNavigator style={styles.headerNavigator} onGoBack={goBack} />
         <LogoSVG style={styles.logo} />
         {error.message && !error.field && (
           <ErrorMessage style={styles.error} message={error.message} />

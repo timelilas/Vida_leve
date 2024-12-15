@@ -3,7 +3,7 @@ import { ScreenWrapper } from "../../../components/ScreenWrapper";
 import { ScreenHeader } from "../../../components/ScreenHeader";
 import { Input } from "../../../components/inputs/Input";
 import { ActivityFrequencyButton } from "./components/ActivityFrequencyButton";
-import { ProgressFormData, ProgressFormScreenProps } from "./types";
+import { ProgressFormData } from "./types";
 import { ActitivyFrequency } from "../../../@core/entities/@shared/activityFrequency";
 import { SubmitButton } from "../../../components/buttons/SubmitButton";
 import { ScreenTitle } from "../../../components/ScreenTitle";
@@ -25,8 +25,10 @@ import { HttpError } from "../../../@core/errors/httpError";
 import { ConnectionError } from "../../../@core/errors/connectionError";
 import { buildCaloriePlan } from "../../../@core/entities/caloriePlan/helpers";
 import { useCaloriePlanStore } from "../../../store/caloriePlan";
+import { NavigationProp, useNavigation } from "@react-navigation/native";
 
-const ProgressFormScreen = (props: ProgressFormScreenProps) => {
+const ProgressFormScreen = () => {
+  const navigation = useNavigation<NavigationProp<any>>();
   const setProgress = useProgressStore((state) => state.setProgress);
   const setPlans = useCaloriePlanStore((state) => state.setPlans);
   const scrollRef = useRef<ScrollView>(null);
@@ -123,7 +125,7 @@ const ProgressFormScreen = (props: ProgressFormScreenProps) => {
     const plans = generateCaloriePlans();
     setProgress(data);
     setPlans(plans);
-    props.navigation.navigate("Onboarding/PlanSelection");
+    navigation.navigate("Onboarding/PlanSelection");
   }
 
   function handleError(error: Error) {
@@ -132,17 +134,18 @@ const ProgressFormScreen = (props: ProgressFormScreenProps) => {
       return setError({ field: error.field as any, message: error.message });
     }
     if (error instanceof ConnectionError) {
-      return props.navigation.navigate("ConnectionError");
+      return navigation.navigate("ConnectionError");
     }
     setError({ message: UNEXPECTED_ERROR_MESSAGE });
   }
 
+  function goBack() {
+    navigation.goBack();
+  }
+
   return (
     <ScreenWrapper ref={scrollRef} scrollable>
-      <ScreenHeader
-        style={styles.header}
-        onGoBack={() => props.navigation.goBack()}
-      />
+      <ScreenHeader style={styles.header} onGoBack={goBack} />
       {!error.field && error.message && (
         <ErrorMessage style={styles.error} message={error.message} />
       )}

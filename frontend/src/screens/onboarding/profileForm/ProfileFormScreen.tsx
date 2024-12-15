@@ -5,7 +5,7 @@ import { Input } from "../../../components/inputs/Input";
 import { SubmitButton } from "../../../components/buttons/SubmitButton";
 import { DateInput } from "../../../components/inputs/DateInput";
 import { ToggleButton } from "../../../components/buttons/ToggleButton";
-import { ProfileFormData, ProfileFromScreenProps } from "./types";
+import { ProfileFormData } from "./types";
 import { Paragraph } from "../../../components/Paragraph";
 import { ScreenTitle } from "../../../components/ScreenTitle";
 import { useForm } from "../../../hooks/useForm";
@@ -27,8 +27,10 @@ import { useUserStore } from "../../../store/user";
 import { dateToPTBR } from "../../../utils/helpers";
 import { HttpError } from "../../../@core/errors/httpError";
 import { ConnectionError } from "../../../@core/errors/connectionError";
+import { NavigationProp, useNavigation } from "@react-navigation/native";
 
-const ProfileFormScreen = (props: ProfileFromScreenProps) => {
+const ProfileFormScreen = () => {
+  const navigation = useNavigation<NavigationProp<any>>();
   const { setUser, data: user } = useUserStore((state) => state);
   const scrollRef = useRef<ScrollView>(null);
   const { data, handleChange, setError, validateField, onSubmit } =
@@ -80,7 +82,7 @@ const ProfileFormScreen = (props: ProfileFromScreenProps) => {
 
     const { data } = await httpAuthService.updateProfile(dataToSubmit as any);
     setUser(data);
-    props.navigation.navigate("Onboarding/ProgressForm");
+    navigation.navigate("Onboarding/ProgressForm");
   }
 
   async function handleError(error: Error) {
@@ -89,17 +91,18 @@ const ProfileFormScreen = (props: ProfileFromScreenProps) => {
       return setError({ field: error.field as any, message: error.message });
     }
     if (error instanceof ConnectionError) {
-      return props.navigation.navigate("ConnectionError");
+      return navigation.navigate("ConnectionError");
     }
     setError({ message: UNEXPECTED_ERROR_MESSAGE });
   }
 
+  function goBack() {
+    navigation.goBack();
+  }
+
   return (
     <ScreenWrapper ref={scrollRef} scrollable>
-      <ScreenHeader
-        style={styles.header}
-        onGoBack={() => props.navigation.goBack()}
-      />
+      <ScreenHeader style={styles.header} onGoBack={goBack} />
       {!error.field && error.message && (
         <ErrorMessage style={styles.error} message={error.message} />
       )}

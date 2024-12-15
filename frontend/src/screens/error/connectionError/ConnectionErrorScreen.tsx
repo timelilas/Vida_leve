@@ -1,4 +1,4 @@
-import { NavigationProp } from "@react-navigation/native";
+import { useNavigation } from "@react-navigation/native";
 import {
   StyleSheet,
   Text,
@@ -13,17 +13,15 @@ import { Paragraph } from "../../../components/Paragraph";
 import { SubmitButton } from "../../../components/buttons/SubmitButton";
 import { ReloadIcon } from "../../../components/icons/ReloadIcon";
 
-type ConnectionErrorProps = {
-  navigation: NavigationProp<any>;
-};
+const ConnectionErrorScreen = () => {
+  const navigation = useNavigation();
 
-const ConnectionErrorScreen = (props: ConnectionErrorProps) => {
+  function goBack() {
+    navigation.goBack();
+  }
+
   function closeApp() {
-    if (Platform.OS === "android") {
-      BackHandler.exitApp();
-    } else {
-      props.navigation.goBack();
-    }
+    return Platform.OS === "android" ? BackHandler.exitApp() : goBack();
   }
 
   return (
@@ -38,7 +36,7 @@ const ConnectionErrorScreen = (props: ConnectionErrorProps) => {
         </View>
         <View style={styles.buttonWrapper}>
           <SubmitButton
-            onPress={() => props.navigation.goBack()}
+            onPress={goBack}
             type="highlighted"
             title="Atualizar"
             icon={<ReloadIcon />}

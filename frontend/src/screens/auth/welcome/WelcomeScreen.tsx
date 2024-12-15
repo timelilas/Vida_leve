@@ -1,15 +1,21 @@
 import { View, StyleSheet, ScrollView, Text, Platform } from "react-native";
-import { NavigationProp } from "@react-navigation/native";
+import { NavigationProp, useNavigation } from "@react-navigation/native";
 import { ScreenWrapper } from "../../../components/ScreenWrapper";
 import { SubmitButton } from "../../../components/buttons/SubmitButton";
 import { Image } from "react-native";
 import { BigLogoSVG } from "../../../components/logos/BigLogoSVG";
 
-type WelcomeScreenProps = {
-  navigation: NavigationProp<any>;
-};
+const WelcomeScreen = () => {
+  const navigation = useNavigation<NavigationProp<any>>();
 
-const WelcomeScreen = ({ navigation }: WelcomeScreenProps) => {
+  function navigateToSignin() {
+    navigation.navigate("Auth/Login");
+  }
+
+  function navigateToSignup() {
+    navigation.navigate("Auth/Signup");
+  }
+
   return (
     <ScreenWrapper>
       <ScrollView
@@ -45,12 +51,12 @@ const WelcomeScreen = ({ navigation }: WelcomeScreenProps) => {
             <SubmitButton
               title="Começar agora"
               type="primary"
-              onPress={() => navigation.navigate("Auth/Signup")}
+              onPress={navigateToSignup}
             />
             <SubmitButton
               title="Já tenho uma conta"
               type="outlined"
-              onPress={() => navigation.navigate("Auth/Login")}
+              onPress={navigateToSignin}
             />
           </View>
         </View>

@@ -2,7 +2,7 @@ import { StyleSheet, View, Platform, ScrollView } from "react-native";
 import { PlanType } from "../../../@core/entities/@shared/plantType";
 import { SubmitButton } from "../../../components/buttons/SubmitButton";
 import { ScreenWrapper } from "../../../components/ScreenWrapper";
-import { NavigationProp } from "@react-navigation/native";
+import { NavigationProp, useNavigation } from "@react-navigation/native";
 import { ScreenHeader } from "../../../components/ScreenHeader";
 import { ScreenTitle } from "../../../components/ScreenTitle";
 import { Paragraph } from "../../../components/Paragraph";
@@ -17,20 +17,15 @@ import { ConnectionError } from "../../../@core/errors/connectionError";
 import { useProgressStore } from "../../../store/progress";
 import { ErrorMessage } from "../../../components/ErrorMessage";
 
-type PlanSelectionScreenProps = {
-  navigation: NavigationProp<any>;
-};
-
-const PlanSelectionScreen = (props: PlanSelectionScreenProps) => {
-  const currentPlan = useProgressStore(
-    (state) => state.data?.currentCaloriePlan
-  );
+const PlanSelectionScreen = () => {
+  const navigation = useNavigation<NavigationProp<any>>();
+  const planType = useProgressStore((state) => state.data?.currentCaloriePlan);
   const scrollRef = useRef<ScrollView>(null);
   const caloriePlans = useCaloriePlanStore((state) => state.data);
   const setProgress = useProgressStore((state) => state.setProgress);
   const { handleChange, setError, onSubmit, data } = useForm<{
-    plan: PlanType | null;
-  }>({ initialState: { plan: currentPlan ?? null } });
+    planType: PlanType | null;
+  }>({ initialState: { planType: planType ?? null } });
   const { error, isSubmitting, values } = data;
 
   function setPlanError() {
@@ -41,22 +36,22 @@ const PlanSelectionScreen = (props: PlanSelectionScreenProps) => {
   }
 
   function handlePlanSelection(planType: PlanType) {
-    if (planType === values.plan) {
-      handleChange("plan", null);
+    if (planType === values.planType) {
+      handleChange("planType", null);
       setPlanError();
     } else {
-      handleChange("plan", planType);
+      handleChange("planType", planType);
       setError({});
     }
   }
 
   async function handleSubmit() {
-    if (!values.plan) {
+    if (!values.planType) {
       return setPlanError();
     }
-    const { data } = await httpAuthService.setCaloriePlan(values.plan);
+    const { data } = await httpAuthService.setCaloriePlan(values.planType);
     setProgress(data);
-    props.navigation.navigate("Onboarding/GoalGuidance");
+    navigation.navigate("Onboarding/GoalGuidance");
   }
 
   async function handleError(error: Error) {
@@ -65,14 +60,18 @@ const PlanSelectionScreen = (props: PlanSelectionScreenProps) => {
       return setError({ field: error.field as any, message: error.message });
     }
     if (error instanceof ConnectionError) {
-      return props.navigation.navigate("ConnectionError");
+      return navigation.navigate("ConnectionError");
     }
     setError({ message: UNEXPECTED_ERROR_MESSAGE });
   }
 
+  function goBack() {
+    navigation.goBack();
+  }
+
   return (
     <ScreenWrapper ref={scrollRef} scrollable>
-      <ScreenHeader onGoBack={() => props.navigation.goBack()} />
+      <ScreenHeader onGoBack={goBack} />
       <View style={styles.contentContainer}>
         <ScreenTitle
           style={styles.title}
@@ -91,7 +90,7 @@ const PlanSelectionScreen = (props: PlanSelectionScreenProps) => {
             return (
               <CaloriePlanButton
                 onPress={() => handlePlanSelection(plan.type)}
-                selected={plan.type === values.plan}
+                selected={plan.type === values.planType}
                 key={plan.type}
                 icon={icon({})}
                 title={planUiDetails[plan.type].title}
