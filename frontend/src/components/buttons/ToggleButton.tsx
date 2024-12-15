@@ -40,15 +40,15 @@ const styles = StyleSheet.create({
     backgroundColor: "#ffae31",
     borderColor: "#ffae31",
     borderRadius: 10,
+    shadowColor: "#000000",
     ...(Platform.OS === "android"
       ? {
-          shadowColor: "#000000",
           elevation: 4,
         }
       : {
-          shadowColor: "#00000040",
           shadowOffset: { width: 0, height: 4 },
           shadowRadius: 4,
+          shadowOpacity: 0.4,
         }),
   },
   container: {
