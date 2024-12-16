@@ -10,7 +10,6 @@ import { ScreenTitle } from "../../../components/ScreenTitle";
 import { Paragraph } from "../../../components/Paragraph";
 import { useForm } from "../../../hooks/useForm";
 import { httpAuthService } from "../../../services/auth";
-import { maskHeight, onlyNumbers } from "../../../utils/masks";
 import { validateHeight } from "../../../utils/validations/height";
 import { validateWeight } from "../../../utils/validations/weight";
 import { validateActitivyFrequency } from "../../../utils/validations/activityFrequency";
@@ -26,11 +25,17 @@ import { ConnectionError } from "../../../@core/errors/connectionError";
 import { buildCaloriePlan } from "../../../@core/entities/caloriePlan/helpers";
 import { useCaloriePlanStore } from "../../../store/caloriePlan";
 import { NavigationProp, useNavigation } from "@react-navigation/native";
+import {
+  maskHeight,
+  heightToString,
+  onlyNumbers,
+  parseHeight,
+} from "../../../utils/masks";
 
 const ProgressFormScreen = () => {
-  const navigation = useNavigation<NavigationProp<any>>();
   const setProgress = useProgressStore((state) => state.setProgress);
   const setPlans = useCaloriePlanStore((state) => state.setPlans);
+  const navigation = useNavigation<NavigationProp<any>>();
   const scrollRef = useRef<ScrollView>(null);
   const progress = useProgressStore((state) => state.data);
   const gender = useUserStore((state) => state.data.gender);
@@ -39,7 +44,7 @@ const ProgressFormScreen = () => {
   const { data, handleChange, setError, validateField, onSubmit } =
     useForm<ProgressFormData>({
       initialState: {
-        height: Number(progress?.height),
+        height: progress?.height ? heightToString(progress?.height) : "",
         weight: progress?.weight ?? 0,
         goalWeight: progress?.goalWeight ?? 0,
         activityFrequency: progress?.activityFrequency ?? null,
@@ -64,7 +69,7 @@ const ProgressFormScreen = () => {
     }
 
     const age = calculateAge(new Date(birthDate as string));
-    const userData = { weight, height, gender, age };
+    const userData = { weight, height: parseHeight(height), gender, age };
     const goalData = { dailyActivityLevel: activityFrequency, goalWeight };
     const planTypes = ["gradual", "moderado", "acelerado"] as const;
     const planList = planTypes.map((plan) =>
@@ -80,14 +85,14 @@ const ProgressFormScreen = () => {
       return setError({ message: missingProfileFormField });
     }
     const { success: validWeight } = validateWeight(weight);
-    const { success: validHeight } = validateHeight(height);
+    const { success: validHeight } = validateHeight(parseHeight(height));
 
     if (validWeight && validHeight) {
       validateField("goalWeight", goalWeight, (goalWeight: number) =>
         validateGoalWeight({
           gender,
           age: calculateAge(new Date(birthDate)),
-          height,
+          height: parseHeight(height),
           weight,
           goalWeight,
         })
@@ -101,9 +106,17 @@ const ProgressFormScreen = () => {
       return setError({ message: missingProfileFormField });
     }
     const age = calculateAge(new Date(birthDate));
-    const goalWeightParams = { height, weight, gender, goalWeight, age };
+    const heightAsNumber = parseHeight(height);
+    const goalWeightParams = {
+      height: heightAsNumber,
+      weight,
+      gender,
+      goalWeight,
+      age,
+    };
+
     const validationMap = {
-      height: validateHeight(height),
+      height: validateHeight(heightAsNumber),
       weight: validateWeight(weight),
       goalWeight: validateGoalWeight(goalWeightParams),
       activityFrequency: validateActitivyFrequency(activityFrequency || ""),
@@ -121,8 +134,15 @@ const ProgressFormScreen = () => {
   async function handleSubmit() {
     if (!validateAllFields()) return;
 
-    const { data } = await httpAuthService.createProgress(values as any);
+    const { data } = await httpAuthService.createProgress({
+      weight,
+      goalWeight,
+      height: parseHeight(height),
+      activityFrequency: activityFrequency as ActitivyFrequency,
+    });
+
     const plans = generateCaloriePlans();
+
     setProgress(data);
     setPlans(plans);
     navigation.navigate("Onboarding/PlanSelection");
@@ -156,13 +176,13 @@ const ProgressFormScreen = () => {
       />
       <View style={styles.form}>
         <Input
-          onChange={(value) =>
-            handleChange("height", parseFloat(maskHeight(value)))
+          onChange={(value) => handleChange("height", maskHeight(value))}
+          onBlur={() =>
+            validateField("height", parseHeight(height), validateHeight)
           }
-          onBlur={() => validateField("height", height, validateHeight)}
           disabled={isSubmitting}
           error={error.field === "height"}
-          value={!isNaN(height) ? `${height}`.replace(".", ",") : ""}
+          value={`${height}`}
           errorMessage={error.field === "height" ? error.message : undefined}
           keyboardType="numeric"
           label="Altura"
