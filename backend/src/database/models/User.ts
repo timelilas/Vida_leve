@@ -7,6 +7,7 @@ import {
 import { sequelize } from "../index";
 import Sequelize from "sequelize";
 import { UserEntity } from "../../@core/entity/user/UserEntity";
+import { Gender } from "../../@core/entity/@shared";
 
 class User
   extends Model<InferAttributes<User>, InferCreationAttributes<User>>
@@ -18,7 +19,7 @@ class User
   declare name: string | null;
   declare phone: string | null;
   declare birthDate: Date | null;
-  declare gender: "masculino" | "feminino" | null;
+  declare gender: Gender | null;
   declare createdAt: CreationOptional<Date>;
   declare updatedAt: CreationOptional<Date>;
 
@@ -60,7 +61,7 @@ User.init(
       allowNull: true,
     },
     gender: {
-      type: Sequelize.ENUM("masculino", "feminino"),
+      type: Sequelize.ENUM<Gender>("masculino", "feminino"),
       allowNull: true,
     },
     birthDate: {

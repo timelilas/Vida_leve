@@ -13,6 +13,7 @@ export function Paragraph(props: ParagraphProps) {
 const styles = StyleSheet.create({
   text: {
     fontSize: 16,
+    lineHeight: 16,
     fontFamily: "Roboto-400",
     color: "#4E4B66",
   },

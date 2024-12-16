@@ -1,7 +1,7 @@
 import { create } from "zustand";
 import { UserStore, UserStoreState } from "./types";
 
-const userStoreInitialState: UserStoreState = {
+const initialState: UserStoreState = {
   isLogged: false,
   status: "idle",
   data: {
@@ -15,6 +15,6 @@ const userStoreInitialState: UserStoreState = {
 };
 
 export const useUserStore = create<UserStore>((set) => ({
-  ...userStoreInitialState,
+  ...initialState,
   setUser: (data) => set(() => ({ data, status: "fulfilled", isLogged: true })),
 }));

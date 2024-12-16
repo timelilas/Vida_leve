@@ -1,5 +1,5 @@
-import { calculateWeightRangeByIMC } from "../../../@core/progress/helpers";
-import { GenderType } from "../../../@core/user/user";
+import { calculateWeightRangeByIMC } from "../../../@core/entities/progress/helpers";
+import { GenderType } from "../../../@core/entities/@shared/gender";
 import { ValidationResult } from "../type";
 import { defaultMissingFieldMsg } from "../variables";
 
@@ -7,16 +7,24 @@ interface HealthMetrics {
   age: number;
   gender: GenderType;
   height: number;
+  weight: number;
   goalWeight: number;
 }
 
 export function validateGoalWeight(metrics: HealthMetrics): ValidationResult {
-  const { age, height, goalWeight } = metrics;
+  const { age, height, weight, goalWeight } = metrics;
   const genderLabel =
     metrics.gender === "masculino" ? "um homem" : "uma mulher";
 
   if (isNaN(goalWeight)) {
     return { success: false, error: defaultMissingFieldMsg };
+  }
+
+  if (goalWeight === weight) {
+    return {
+      success: false,
+      error: "O peso desejado deve ser diferente do peso atual.",
+    };
   }
 
   const healthyWeightRange = calculateWeightRangeByIMC(age, height);

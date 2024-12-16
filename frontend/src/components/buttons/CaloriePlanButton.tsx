@@ -13,7 +13,11 @@ export function CaloriePlanButton(props: CaloriePlanButtonProps) {
   const styles = useStyles();
 
   return (
-    <ToggleButton onPress={props.onPress} selected={props.selected}>
+    <ToggleButton
+      disabled={props.disabled}
+      onPress={props.onPress}
+      selected={props.selected}
+    >
       <View style={styles.contentContainer}>
         <View style={styles.titleContainer}>
           {props.icon}

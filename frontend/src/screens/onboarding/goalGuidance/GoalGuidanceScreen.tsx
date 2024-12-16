@@ -4,18 +4,29 @@ import { GuidanceItem } from "./components/GuidanceItem";
 import { FoodTrayIcon } from "../../../components/icons/FoodTrayIcon";
 import { ClipboardIcon } from "../../../components/icons/ClipboardIcon";
 import { TargetIcon } from "../../../components/icons/TargetIcon";
-import { NavigationProp } from "@react-navigation/native";
+import {
+  CommonActions,
+  NavigationProp,
+  useNavigation,
+} from "@react-navigation/native";
 import { ScreenTitle } from "../../../components/ScreenTitle";
 import { ScreenHeader } from "../../../components/ScreenHeader";
 
-type GoalGuidanceScreenProps = {
-  navigation: NavigationProp<any>;
-};
+const GoalGuidanceScreen = () => {
+  const navigation = useNavigation<NavigationProp<any>>();
 
-const GoalGuidanceScreen = (props: GoalGuidanceScreenProps) => {
+  function resetNavigationToHome() {
+    navigation.dispatch(
+      CommonActions.reset({
+        index: 0,
+        routes: [{ name: "Main/Home" }],
+      })
+    );
+  }
+
   return (
     <ScreenWrapper scrollable>
-      <ScreenHeader onClose={() => props.navigation.goBack()} />
+      <ScreenHeader onClose={resetNavigationToHome} />
       <View style={styles.contentContainer}>
         <ScreenTitle
           style={styles.title}

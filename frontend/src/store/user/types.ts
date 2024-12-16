@@ -1,4 +1,4 @@
-import { UserProps } from "../../@core/user/user";
+import { UserProps } from "../../@core/entities/user/user";
 
 export interface UserStoreState {
   isLogged: boolean;

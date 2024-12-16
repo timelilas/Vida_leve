@@ -1,32 +1,53 @@
 import Progress from "../../database/models/Progress";
-import User from "../../database/models/User";
-import { UpsertProgressDTO } from "./types";
+import { SetCaloriePlanDTO, UpsertProgressDTO } from "./types";
 
 export default class ProgressService {
   public upsert = async (params: UpsertProgressDTO) => {
-    const { userId, weight, height, goalWeight, activityFrequency } = params;
+    const { data, transaction } = params;
+    data.currentCaloriePlan;
 
-    await Progress.upsert({
-      userId,
-      weight,
-      height,
-      goalWeight,
-      activityFrequency,
-      updatedAt: new Date(),
+    await Progress.upsert(
+      { ...data, updatedAt: new Date() },
+      { transaction: params.transaction }
+    );
+
+    const updatedProgress = await Progress.findOne({
+      where: { userId: data.userId },
+      attributes: { exclude: ["createdAt", "updatedAt"] },
+      transaction,
     });
-
-    const updatedProgress = await Progress.findOne({ where: { userId } });
     return (updatedProgress as Progress).toJSON();
   };
 
-  public getIdealPlan = async (userId: number) => {
-    const user = await Progress.findOne({ where: { userId } });
-    const userProgress = await User.findOne({ where: { id: userId } });
+  public get = async (userId: number) => {
+    const userProgress = await Progress.findOne({
+      where: { userId },
+      attributes: {
+        exclude: ["createdAt", "updatedAt"],
+      },
+    });
 
-    if (!user || !userProgress) {
+    if (!userProgress) {
+      return null;
+    }
+    return userProgress.toJSON();
+  };
+
+  public setCaloriePlan = async (params: SetCaloriePlanDTO) => {
+    const { userId, caloriePlan } = params;
+    const [updatedCount] = await Progress.update(
+      { currentCaloriePlan: caloriePlan, updatedAt: new Date() },
+      { where: { userId } }
+    );
+
+    if (updatedCount === 0) {
       return null;
     }
 
-    return { ...user.toJSON(), ...userProgress.dataValues };
-  }
+    const updatedProgress = await Progress.findOne({
+      where: { userId },
+      attributes: { exclude: ["createdAt", "updatedAt"] },
+    });
+    return (updatedProgress as Progress).toJSON();
+  };
 }

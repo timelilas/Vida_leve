@@ -1,11 +1,14 @@
-import {
-  ADULT_MIN_IMC,
-  ADULT_MAX_IMC,
-  ELDERLY_MAX_IMC,
-  ELDERLY_MIN_IMC,
-  ACTIVITY_MULTIPLIERS,
-} from "./constants";
-import { activityFrequency, Gender, WeightLossPlan } from "./ProgressEntity";
+import { ActivityFrequency } from "../@shared";
+import { Gender } from "../@shared";
+import { PlanType } from "../@shared";
+import { CaloriePlanEntity } from "../caloriePlan/entity";
+import { ProgressEntity } from "./ProgressEntity";
+
+interface CaloriePlanParams extends Omit<ProgressEntity, "currentCaloriePlan"> {
+  type: PlanType;
+  gender: Gender;
+  age: number;
+}
 
 export class ProgressHelper {
   public static calculateHealthyWeightRange(age: number, height: number) {
@@ -19,28 +22,71 @@ export class ProgressHelper {
     };
   }
 
-  private static getIMCRangeByAge(age: number): { min: number; max: number } {
+  public static createCaloriePlan(
+    params: CaloriePlanParams
+  ): CaloriePlanEntity {
+    const { age, weight, height, gender, goalWeight, type } = params;
+
+    const BMR = ProgressHelper.calculateBMR(gender, weight, height, age);
+    const TDEE = ProgressHelper.calculateTDEE(BMR, params.activityFrequency);
+
+    const calorieOffset: Record<PlanType, number> = {
+      gradual: 400,
+      moderado: 625,
+      acelerado: 875,
+    };
+
+    const dailyCalorieIntake = Math.round(
+      goalWeight >= weight
+        ? TDEE + calorieOffset[type]
+        : TDEE - calorieOffset[type]
+    );
+    const totalKcal = Math.abs(goalWeight - weight) * 7700;
+    const durationInDays = Math.ceil(totalKcal / calorieOffset[type]);
+
     return {
-      min: age < 60 ? ADULT_MIN_IMC : ELDERLY_MIN_IMC,
-      max: age < 60 ? ADULT_MAX_IMC : ELDERLY_MAX_IMC,
+      type,
+      durationInDays,
+      dailyCalorieIntake,
     };
   }
 
-  public static calculateBMR(gender: Gender, weight: number, height: number, age: number): number {
+  public static calculateBMR(
+    gender: Gender,
+    weight: number,
+    height: number,
+    age: number
+  ): number {
     return gender === "masculino"
-      ? 88.36 + 13.4 * weight + 4.8 * height - 5.7 * age
+      ? 88.36 + 13.4 * weight + 4.8 * 100 * height - 5.7 * age
       : 447.6 + 9.2 * weight + 3.1 * height - 4.3 * age;
   }
 
-  public static calculateTDEE(bmr: number, activityFrequency: activityFrequency): number {
-    return bmr * ACTIVITY_MULTIPLIERS[activityFrequency];
+  public static calculateTDEE(
+    bmr: number,
+    activityFrequency: ActivityFrequency
+  ): number {
+    const activityMultiplyers = {
+      pouca: 1.2,
+      leve: 1.375,
+      moderada: 1.55,
+      intensa: 1.725,
+    };
+    return bmr * activityMultiplyers[activityFrequency];
   }
 
-  public static calculateWeightLossPlan(tdee: number): WeightLossPlan {
+  public static calculateWeightLossPlan(tdee: number) {
     return {
       slow: Math.round(tdee - 400),
       moderate: Math.round(tdee - 625),
       fast: Math.round(tdee - 875),
+    };
+  }
+
+  private static getIMCRangeByAge(age: number): { min: number; max: number } {
+    return {
+      min: age < 60 ? 18.5 : 22,
+      max: age < 60 ? 24.9 : 27,
     };
   }
 }

@@ -1,13 +1,14 @@
 import { NavigationContainer } from "@react-navigation/native";
 import { createNativeStackNavigator } from "@react-navigation/native-stack";
-import AuthHomeScreen from "./screens/auth/home/AuthHomeScreen";
 import LoginScreen from "./screens/auth/login/LoginScreen";
 import SignupScreen from "./screens/auth/signup/SignupScreen";
 import PlanSelectionScreen from "./screens/onboarding/planSelection/PlanSelectionScreen";
 import GoalGuidanceScreen from "./screens/onboarding/goalGuidance/GoalGuidanceScreen";
-import HealthFormScreen from "./screens/onboarding/healthForm/HealthFormScreen";
+import ProgressFormScreen from "./screens/onboarding/progressForm/ProgressFormScreen";
 import ProfileFormScreen from "./screens/onboarding/profileForm/ProfileFormScreen";
 import ConnectionErrorScreen from "./screens/error/connectionError/ConnectionErrorScreen";
+import WelcomeScreen from "./screens/auth/welcome/WelcomeScreen";
+import HomeScreen from "./screens/main/home/HomeScreen";
 
 const Stack = createNativeStackNavigator();
 
@@ -15,16 +16,18 @@ const Navigation = () => {
   return (
     <NavigationContainer>
       <Stack.Navigator
-        initialRouteName="Auth/Home"
+        initialRouteName="Auth/Welcome"
         screenOptions={{
           animation: "simple_push",
           animationDuration: 300,
           orientation: "all",
+          statusBarStyle: "dark",
+          statusBarColor: "#eff0f6",
         }}
       >
         <Stack.Screen
-          name="Auth/Home"
-          component={AuthHomeScreen}
+          name="Auth/Welcome"
+          component={WelcomeScreen}
           options={{ headerShown: false }}
         />
         <Stack.Screen
@@ -43,8 +46,8 @@ const Navigation = () => {
           options={{ headerShown: false }}
         />
         <Stack.Screen
-          name="Onboarding/HealthForm"
-          component={HealthFormScreen}
+          name="Onboarding/ProgressForm"
+          component={ProgressFormScreen}
           options={{ headerShown: false }}
         />
         <Stack.Screen
@@ -55,6 +58,11 @@ const Navigation = () => {
         <Stack.Screen
           name="Onboarding/GoalGuidance"
           component={GoalGuidanceScreen}
+          options={{ headerShown: false }}
+        />
+        <Stack.Screen
+          name="Main/Home"
+          component={HomeScreen}
           options={{ headerShown: false }}
         />
         <Stack.Screen
