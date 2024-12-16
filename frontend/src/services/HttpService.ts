@@ -1,22 +1,15 @@
-import { AxiosError } from "axios";
+import { AxiosError, AxiosResponse } from "axios";
 import { request } from "../libs/axios/Request";
-import { FailedHttpResponse, HttpRequest, HttpResponse } from "./types";
-import { failedConnectionError } from "./helpers";
+import { HttpRequest } from "./types";
 
 export abstract class HttpService {
-  protected async submit(req: HttpRequest): Promise<HttpResponse> {
-    try {
-      const res = await request(req.method, req.path, req.body, req.headers);
-      return { success: true, status: res.status, response: res.data };
-    } catch (error: any) {
-      const axiosError = error as AxiosError;
-      const data = axiosError.response?.data as FailedHttpResponse | undefined;
-
-      return {
-        success: false,
-        status: axiosError.status as number,
-        error: data ? data.error : failedConnectionError(),
-      };
-    }
+  protected async submit<T>(req: HttpRequest): Promise<AxiosResponse<T>> {
+    const response = await request<T>(
+      req.method,
+      req.path,
+      req.body,
+      req.headers
+    );
+    return response;
   }
 }

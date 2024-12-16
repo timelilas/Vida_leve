@@ -1,4 +1,4 @@
-import { ProgressProps } from "../../@core/progress/progress";
+import { ProgressProps } from "../../@core/entities/progress/progress";
 
 export interface ProgressStoreState {
   status: "idle" | "loading" | "fulfilled";

@@ -1,15 +1,15 @@
-import { Button, ScrollView, StyleSheet, Text, View } from "react-native";
+import { ScrollView, StyleSheet, Text, View } from "react-native";
 import { ScreenWrapper } from "../../../components/ScreenWrapper";
 import { ScreenHeader } from "../../../components/ScreenHeader";
 import { Input } from "../../../components/inputs/Input";
 import { SubmitButton } from "../../../components/buttons/SubmitButton";
 import { DateInput } from "../../../components/inputs/DateInput";
 import { ToggleButton } from "../../../components/buttons/ToggleButton";
-import { ProfileFormData, ProfileFromScreenProps } from "./types";
+import { ProfileFormData } from "./types";
 import { Paragraph } from "../../../components/Paragraph";
 import { ScreenTitle } from "../../../components/ScreenTitle";
 import { useForm } from "../../../hooks/useForm";
-import { GenderType } from "../../../@core/user/user";
+import { GenderType } from "../../../@core/entities/@shared/gender";
 import { httpAuthService } from "../../../services/auth";
 import { validatePhone } from "../../../utils/validations/phone";
 import { validateBirthDate } from "../../../utils/validations/date";
@@ -25,19 +25,31 @@ import {
 import { useRef } from "react";
 import { useUserStore } from "../../../store/user";
 import { dateToPTBR } from "../../../utils/helpers";
+import { HttpError } from "../../../@core/errors/httpError";
+import { ConnectionError } from "../../../@core/errors/connectionError";
+import { NavigationProp, useNavigation } from "@react-navigation/native";
 
-const ProfileFormScreen = (props: ProfileFromScreenProps) => {
+const ProfileFormScreen = () => {
+  const navigation = useNavigation<NavigationProp<any>>();
   const { setUser, data: user } = useUserStore((state) => state);
   const scrollRef = useRef<ScrollView>(null);
-  const { data, handleChange, setError, validateField, setisSubmitting } =
+  const { data, handleChange, setError, validateField, onSubmit } =
     useForm<ProfileFormData>({
-      name: user.name ?? "",
-      phone: user.phone ?? "",
-      birthDate: user.birthDate ? dateToPTBR(new Date(user.birthDate)) : "",
-      gender: user.gender ?? null,
+      initialState: {
+        name: user.name ?? "",
+        phone: user.phone ?? "",
+        birthDate: user.birthDate ? dateToPTBR(new Date(user.birthDate)) : "",
+        gender: user.gender ?? null,
+      },
     });
 
   const { values, error, isSubmitting } = data;
+
+  function selectGender(value: GenderType) {
+    const newGender = value !== values.gender ? value : null;
+    handleChange("gender", newGender);
+    validateField("gender", newGender || "", validateGender);
+  }
 
   function formatDateToISO(date: string) {
     const [day, month, year] = date.split("/");
@@ -62,45 +74,35 @@ const ProfileFormScreen = (props: ProfileFromScreenProps) => {
     return true;
   }
 
-  async function submitProfile() {
-    if (isSubmitting) return;
+  async function handleSubmit() {
     if (!validateAllFields()) return;
 
-    setError({});
-    setisSubmitting(true);
+    const birthDateISO = formatDateToISO(values.birthDate);
+    const dataToSubmit = { ...values, birthDate: birthDateISO };
 
-    const formattedBirthDate = formatDateToISO(values.birthDate);
-    const dataSubmit = { ...values, birthDate: formattedBirthDate };
-    const result = await httpAuthService.updateProfile(dataSubmit as any);
+    const { data } = await httpAuthService.updateProfile(dataToSubmit as any);
+    setUser(data);
+    navigation.navigate("Onboarding/ProgressForm");
+  }
 
-    setisSubmitting(false);
-
-    if (!result.success) {
-      const field = result.error.field || undefined;
-      if (field === "connection") {
-        return props.navigation.navigate("ConnectionError");
-      }
-      if (!field) {
-        scrollRef.current?.scrollTo({ y: 0, animated: true });
-      }
-      setError({ message: result.error.message, field: field as any });
-    } else {
-      setUser(result.response as any);
-      props.navigation.navigate("Onboarding/HealthForm");
+  async function handleError(error: Error) {
+    if (error instanceof HttpError) {
+      !error.field && scrollRef.current?.scrollTo({ y: 0, animated: true });
+      return setError({ field: error.field as any, message: error.message });
     }
+    if (error instanceof ConnectionError) {
+      return navigation.navigate("ConnectionError");
+    }
+    setError({ message: UNEXPECTED_ERROR_MESSAGE });
   }
 
-  function selectGender(value: GenderType) {
-    const newGender = value !== values.gender ? value : null;
-    handleChange("gender", newGender);
-    validateField("gender", newGender || "", validateGender);
+  function goBack() {
+    navigation.goBack();
   }
+
   return (
     <ScreenWrapper ref={scrollRef} scrollable>
-      <ScreenHeader
-        style={styles.header}
-        onGoBack={() => props.navigation.goBack()}
-      />
+      <ScreenHeader style={styles.header} onGoBack={goBack} />
       {!error.field && error.message && (
         <ErrorMessage style={styles.error} message={error.message} />
       )}
@@ -174,9 +176,9 @@ const ProfileFormScreen = (props: ProfileFromScreenProps) => {
       </View>
       <SubmitButton
         disabled={isSubmitting}
-        onPress={submitProfile}
+        onPress={onSubmit(handleSubmit, handleError)}
         style={styles.submitButton}
-        title="Continuar"
+        title="Continuar cadastro"
         type="primary"
       />
     </ScreenWrapper>

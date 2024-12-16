@@ -1,9 +1,4 @@
-import { NavigationProp } from "@react-navigation/native";
-import { GenderType } from "../../../@core/user/user";
-
-export type ProfileFromScreenProps = {
-  navigation: NavigationProp<any>;
-};
+import { GenderType } from "../../../@core/entities/@shared/gender";
 
 export interface ProfileFormData {
   name: string;

@@ -1,7 +1,11 @@
 import { useRef } from "react";
 import { View, ScrollView } from "react-native";
 import { LogoSVG } from "../../../components/logos/LogoSVG";
-import { CommonActions } from "@react-navigation/native";
+import {
+  CommonActions,
+  NavigationProp,
+  useNavigation,
+} from "@react-navigation/native";
 import { Input } from "../../../components/inputs/Input";
 import { PasswordInput } from "../../../components/inputs/PasswordInput";
 import { ScreenWrapper } from "../../../components/ScreenWrapper";
@@ -12,47 +16,46 @@ import { ErrorMessage } from "../../../components/ErrorMessage";
 import { useForm } from "../../../hooks/useForm";
 import { validateEmail } from "../../../utils/validations/email";
 import { validateEmptyField } from "../../../utils/validations/common";
-import { LoginFormData, LoginScreenProps } from "./types";
+import { LoginFormData } from "./types";
 import { maskEmail } from "../../../utils/masks";
 import { HeaderNavigator } from "../../../components/HeaderNavigator";
 import styles from "../styles";
 import AsyncStorage from "@react-native-async-storage/async-storage";
+import { HttpError } from "../../../@core/errors/httpError";
+import { ConnectionError } from "../../../@core/errors/connectionError";
 
 const loginInitialState: LoginFormData = {
   email: "",
   password: "",
 };
 
-const LoginScreen = (props: LoginScreenProps) => {
+const LoginScreen = () => {
+  const navigation = useNavigation<NavigationProp<any>>();
   const scrollRef = useRef<ScrollView | null>(null);
-  const { data, handleChange, setisSubmitting, setError, validateField } =
-    useForm(loginInitialState);
+  const { data, handleChange, setError, validateField, onSubmit } = useForm({
+    initialState: loginInitialState,
+  });
   const { values, error, isSubmitting } = data;
 
-  async function login() {
-    if (isSubmitting) return;
+  async function handleSubmit() {
     if (!validateAllFields()) return;
-    setError({});
-    setisSubmitting(true);
 
-    const result = await httpAuthService.login(values);
+    const { data } = await httpAuthService.login(values);
+    await AsyncStorage.setItem("token", data.token);
+    navigation.dispatch(
+      CommonActions.reset({ routes: [{ name: "Onboarding/ProfileForm" }] })
+    );
+  }
 
-    if (!result.success) {
-      const field = result.error.field || undefined;
-
-      setisSubmitting(false);
-      setError({ message: result.error.message, field: field as any });
-
-      if (field === "connection") {
-        return props.navigation.navigate("ConnectionError");
-      }
-      scrollRef.current?.scrollTo({ y: 0, animated: true });
-    } else {
-      await AsyncStorage.setItem("token", result.response.token);
-      props.navigation.dispatch(
-        CommonActions.reset({ routes: [{ name: "Onboarding/ProfileForm" }] })
-      );
+  function handleError(error: Error) {
+    if (error instanceof HttpError) {
+      error.field && scrollRef.current?.scrollTo({ y: 0, animated: true });
+      return setError({ field: "all", message: error.message });
     }
+    if (error instanceof ConnectionError) {
+      return navigation.navigate("ConnectionError");
+    }
+    setError({ message: UNEXPECTED_ERROR_MESSAGE });
   }
 
   function validateAllFields() {
@@ -70,15 +73,16 @@ const LoginScreen = (props: LoginScreenProps) => {
     return true;
   }
 
+  function goBack() {
+    navigation.goBack();
+  }
+
   return (
     <ScreenWrapper scrollable ref={scrollRef}>
       <View style={styles.container}>
-        <HeaderNavigator
-          onGoBack={() => props.navigation.goBack()}
-          style={styles.headerNavigator}
-        />
+        <HeaderNavigator onGoBack={goBack} style={styles.headerNavigator} />
         <LogoSVG style={styles.logo} />
-        {error.message && error.field !== "connection" && (
+        {error.message && (!error.field || error.field === "all") && (
           <ErrorMessage style={styles.error} message={error.message} />
         )}
         <ScreenTitle
@@ -94,9 +98,10 @@ const LoginScreen = (props: LoginScreenProps) => {
             label="E-mail"
             placeholder="Ex: joaodasilva@email.com"
             textContentType="emailAddress"
+            errorMessage={error.field === "email" ? error.message : undefined}
             value={values.email}
             disabled={isSubmitting}
-            error={error.field === "email" || error.field === "password"}
+            error={error.field === "email" || error.field === "all"}
           />
           <PasswordInput
             onChange={(data) => handleChange("password", data)}
@@ -107,8 +112,11 @@ const LoginScreen = (props: LoginScreenProps) => {
             label="Senha"
             placeholder="**********"
             value={values.password}
+            errorMessage={
+              error.field === "password" ? error.message : undefined
+            }
             disabled={isSubmitting}
-            error={error.field === "email" || error.field === "password"}
+            error={error.field === "password" || error.field === "all"}
           />
         </View>
         <SubmitButton
@@ -116,7 +124,7 @@ const LoginScreen = (props: LoginScreenProps) => {
           style={styles.button}
           title="Continuar"
           type="primary"
-          onPress={login}
+          onPress={onSubmit(handleSubmit, handleError)}
         />
       </View>
     </ScreenWrapper>

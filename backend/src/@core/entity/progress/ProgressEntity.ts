@@ -1,6 +1,9 @@
+import { ActivityFrequency, PlanType } from "../@shared";
+
 export interface ProgressEntity {
   height: number;
   weight: number;
   goalWeight: number;
-  activityFrequency: "pouca" | "leve" | "moderada" | "intensa";
+  activityFrequency: ActivityFrequency;
+  currentCaloriePlan: PlanType | null;
 }

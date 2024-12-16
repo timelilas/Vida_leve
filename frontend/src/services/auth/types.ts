@@ -1,18 +1,35 @@
-import { ProgressProps } from "../../@core/progress/progress";
-import { GenderType, UserProps } from "../../@core/user/user";
+import { ProgressProps } from "../../@core/entities/progress/progress";
+import { UserProps } from "../../@core/entities/user/user";
 
-export interface HttpSignupDTO extends Pick<UserProps, "email" | "password"> {
+export type HttpSignupOutputDTO = Omit<UserProps, "password">;
+
+export interface HttpSignupInputDTO
+  extends Pick<UserProps, "email" | "password"> {
   passwordConfirmation: string;
 }
 
-export interface HttpLoginDTO extends Pick<UserProps, "email" | "password"> {
+export interface HttpLoginInputDTO
+  extends Pick<UserProps, "email" | "password"> {
   email: string;
   password: string;
 }
 
-export type HttpUpdateProfileDTO = Pick<
+export interface HttpLoginOutputDTO {
+  id: number;
+  token: string;
+}
+
+export interface HttpUpdateProfileOutputDTO
+  extends Omit<UserProps, "password" | "birthDate"> {
+  birthDate: string;
+}
+
+export type HttpUpdateProfileInputDTO = Pick<
   UserProps,
   "name" | "phone" | "birthDate" | "gender"
 >;
 
-export type HttpCreateProgressDTO = Omit<ProgressProps, "id">;
+export type HttpCreateProgressInputDTO = Omit<
+  ProgressProps,
+  "currentCaloriePlan"
+>;

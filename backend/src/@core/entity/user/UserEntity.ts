@@ -1,3 +1,5 @@
+import { Gender } from "../@shared";
+
 export interface UserEntity {
   id: number;
   email: string;
@@ -5,5 +7,5 @@ export interface UserEntity {
   name: string | null;
   phone: string | null;
   birthDate: Date | null;
-  gender: "masculino" | "feminino" | null;
+  gender: Gender | null;
 }
