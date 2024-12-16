@@ -19,7 +19,7 @@ const HomeScreen = () => {
 
   const currentPlan = useCaloriePlanStore((state) =>
     state.data.find(({ type }) => type === planType)
-  )!;
+  );
 
   const isCalorieDeficit = goalWeight < weight;
 
@@ -35,7 +35,9 @@ const HomeScreen = () => {
             dailyCalorie={currentPlan?.dailyCalorieIntake!}
           />
           <ProgressStatistics
-            overallCalorieGoal={dailyCalorieOffset * currentPlan.durationInDays}
+            overallCalorieGoal={
+              dailyCalorieOffset * (currentPlan?.durationInDays || 0)
+            }
             calorieAccumulated={isCalorieDeficit ? -29000 : 29000} //dado mockado
           />
         </View>
