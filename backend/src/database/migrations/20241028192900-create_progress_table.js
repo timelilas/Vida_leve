@@ -25,11 +25,11 @@ module.exports = {
         allowNull: false,
       },
       activityFrequency: {
-        type: ENUM("pouca", "leve", "moderada", "intensa"),
+        type: Sequelize.ENUM("pouca", "leve", "moderada", "intensa"),
         allowNull: false,
       },
       currentCaloriePlan: {
-        type: ENUM("gradual", "moderado", "acelerado"),
+        type: Sequelize.ENUM("gradual", "moderado", "acelerado"),
         allowNull: true,
       },
       createdAt: {

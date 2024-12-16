@@ -34,7 +34,19 @@ export function maskEmail(email: string) {
 }
 
 export function maskHeight(value: string) {
-  const maskedNumbers = onlyNumbers(value).slice(0, 3);
-  const maskedHeight = maskedNumbers.replace(/(\d{1})(\d{1,2})/, "$1.$2");
+  const maskedNumbers = `${onlyNumbers(value)}`.slice(0, 3);
+  const maskedHeight = maskedNumbers.replace(/(\d{1})(\d{1,2})/, "$1,$2");
   return maskedHeight;
+}
+
+export function heightToString(height: number) {
+  if (isNaN(height)) {
+    return "";
+  }
+  const onlyNumberAsString = `${height.toFixed(2)}`.replace(".", ",");
+  return onlyNumberAsString;
+}
+
+export function parseHeight(value: string) {
+  return parseFloat(value.replace(",", "."));
 }
