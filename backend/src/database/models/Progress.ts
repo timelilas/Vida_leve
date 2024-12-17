@@ -8,7 +8,12 @@ import { ProgressEntity } from "../../@core/entity/progress/entity";
 import { sequelize } from "../index";
 import User from "./User";
 import Sequelize from "sequelize";
-import { ActivityFrequency, PlanType } from "../../@core/entity/@shared";
+import {
+  ActivityFrequency,
+  allowedActivityFrequencies,
+  allowedPlans,
+  PlanType,
+} from "../../@core/entity/@shared";
 
 class Progress
   extends Model<InferAttributes<Progress>, InferCreationAttributes<Progress>>
@@ -54,16 +59,11 @@ Progress.init(
       allowNull: false,
     },
     activityFrequency: {
-      type: Sequelize.ENUM<ActivityFrequency>(
-        "pouca",
-        "leve",
-        "moderada",
-        "intensa"
-      ),
+      type: Sequelize.ENUM<ActivityFrequency>(...allowedActivityFrequencies),
       allowNull: false,
     },
     currentCaloriePlan: {
-      type: Sequelize.ENUM<PlanType>("gradual", "moderado", "acelerado"),
+      type: Sequelize.ENUM<PlanType>(...allowedPlans),
       allowNull: true,
     },
     userId: {

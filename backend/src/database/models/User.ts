@@ -7,7 +7,7 @@ import {
 import { sequelize } from "../index";
 import Sequelize from "sequelize";
 import { UserEntity } from "../../@core/entity/user/entity";
-import { Gender } from "../../@core/entity/@shared";
+import { allowedGenders, Gender } from "../../@core/entity/@shared";
 
 class User
   extends Model<InferAttributes<User>, InferCreationAttributes<User>>
@@ -61,7 +61,7 @@ User.init(
       allowNull: true,
     },
     gender: {
-      type: Sequelize.ENUM<Gender>("masculino", "feminino"),
+      type: Sequelize.ENUM<Gender>(...allowedGenders),
       allowNull: true,
     },
     birthDate: {

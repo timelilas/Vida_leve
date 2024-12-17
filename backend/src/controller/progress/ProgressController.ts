@@ -3,7 +3,7 @@ import ProgressService from "../../service/progress/ProgressService";
 import UserService from "../../service/user/UserService";
 import { ProgressHelper } from "../../@core/entity/progress/helpers";
 import { UserHelper } from "../../@core/entity/user/helpers";
-import { PlanType } from "../../@core/entity/@shared";
+import { allowedPlans } from "../../@core/entity/@shared";
 import { sequelize } from "../../database";
 import { CaloriePlanService } from "../../service/caloriePlan/CaloriePlanService";
 
@@ -57,8 +57,7 @@ export default class ProgressController {
 
     try {
       const bmrParams = { weight, height, gender, age };
-      const planTypes: PlanType[] = ["gradual", "moderado", "acelerado"];
-      const newCaloriePlans = planTypes.map((type) => {
+      const newCaloriePlans = allowedPlans.map((type) => {
         return ProgressHelper.createCaloriePlan({
           ...bmrParams,
           type,

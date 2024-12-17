@@ -8,7 +8,7 @@ import { sequelize } from "../index";
 import User from "./User";
 import Sequelize from "sequelize";
 import { CaloriePlanEntity } from "../../@core/entity/caloriePlan/entity";
-import { PlanType } from "../../@core/entity/@shared";
+import { allowedPlans, PlanType } from "../../@core/entity/@shared";
 
 class CaloriePlan
   extends Model<
@@ -40,7 +40,7 @@ CaloriePlan.init(
       onDelete: "NO ACTION",
     },
     type: {
-      type: Sequelize.ENUM<PlanType>("gradual", "moderado", "acelerado"),
+      type: Sequelize.ENUM<PlanType>(...allowedPlans),
       primaryKey: true,
       allowNull: false,
     },
