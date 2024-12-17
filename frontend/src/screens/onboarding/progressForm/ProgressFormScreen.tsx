@@ -279,7 +279,6 @@ const styles = StyleSheet.create({
   wrapper: {
     gap: 8,
     paddingBottom: 16,
-    overflow: "hidden",
   },
   submitButton: {
     marginTop: "auto",

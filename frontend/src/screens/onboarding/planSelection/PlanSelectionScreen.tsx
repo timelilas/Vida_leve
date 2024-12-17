@@ -130,7 +130,6 @@ const styles = StyleSheet.create({
     marginBottom: 40,
   },
   plansWrapper: {
-    overflow: Platform.OS === "android" ? "hidden" : "visible",
     paddingBottom: 16,
     gap: 16,
     borderTopLeftRadius: 8,

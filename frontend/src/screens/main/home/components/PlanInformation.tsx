@@ -22,11 +22,18 @@ export function PlanInformation(props: PlanInformation) {
 
   return (
     <View>
-      <Text style={styles.title}>
-        {props.planType
-          ? `A meta que será executada: ${planLabelMap[props.planType]}`
-          : "Você não possui um plano de execução cadastrado"}
-      </Text>
+      {props.planType ? (
+        <Text style={styles.titleThin}>
+          A meta que será executada:{" "}
+          <Text style={styles.titleRegular}>
+            {planLabelMap[props.planType]}
+          </Text>
+        </Text>
+      ) : (
+        <Text style={styles.titleThin}>
+          Você não possui um plano de execução cadastrado
+        </Text>
+      )}
       <View style={styles.shadowBox}>
         <Text style={styles.targetCalorie}>{props.dailyCalorie} kcal/dia</Text>
       </View>
@@ -38,15 +45,15 @@ export function PlanInformation(props: PlanInformation) {
 }
 
 const styles = StyleSheet.create({
-  title: {
+  titleThin: {
     fontSize: 16,
     lineHeight: 16,
     fontFamily: "Roboto-300",
     color: "#4e4b66",
     marginBottom: 8,
   },
-  titleBold: {
-    fontFamily: "Roboto-500",
+  titleRegular: {
+    fontFamily: "Roboto-400",
   },
   targetCalorie: {
     padding: 16,
@@ -70,14 +77,13 @@ const styles = StyleSheet.create({
   },
   shadowBox: {
     borderRadius: 20,
-    borderBottomLeftRadius: 24,
-    borderBottomRightRadius: 24,
+    borderBottomLeftRadius: 22,
+    borderBottomRightRadius: 22,
     overflow: Platform.OS === "android" ? "hidden" : "visible",
-    paddingBottom: 6,
+    paddingBottom: 8,
     paddingInline: 2,
   },
   adjustGoalButton: {
-    marginTop: 2,
     alignSelf: "flex-end",
   },
   adjustGoalText: {
