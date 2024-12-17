@@ -6,7 +6,7 @@ import {
 } from "sequelize";
 import { sequelize } from "../index";
 import Sequelize from "sequelize";
-import { UserEntity } from "../../@core/entity/user/UserEntity";
+import { UserEntity } from "../../@core/entity/user/entity";
 import { Gender } from "../../@core/entity/@shared";
 
 class User

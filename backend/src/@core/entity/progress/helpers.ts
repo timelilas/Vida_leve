@@ -2,7 +2,7 @@ import { ActivityFrequency } from "../@shared";
 import { Gender } from "../@shared";
 import { PlanType } from "../@shared";
 import { CaloriePlanEntity } from "../caloriePlan/entity";
-import { ProgressEntity } from "./ProgressEntity";
+import { ProgressEntity } from "./entity";
 
 interface CaloriePlanParams extends Omit<ProgressEntity, "currentCaloriePlan"> {
   type: PlanType;

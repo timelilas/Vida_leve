@@ -14,18 +14,18 @@ progressRouter.get("/", authorizationMiddleware, (req, res) =>
   progressController.get(req, res)
 );
 
-progressRouter.patch(
-  "/plan",
-  authorizationMiddleware,
-  validationMiddleware(setCurrentCaloriePlanSchema),
-  (req, res) => progressController.setCaloriePlan(req, res)
-);
-
 progressRouter.post(
   "/",
   authorizationMiddleware,
   validationMiddleware(createProgressSchema),
   (req, res) => progressController.post(req, res)
+);
+
+progressRouter.patch(
+  "/plan",
+  authorizationMiddleware,
+  validationMiddleware(setCurrentCaloriePlanSchema),
+  (req, res) => progressController.setCaloriePlan(req, res)
 );
 
 // progressRouter.get('/',
