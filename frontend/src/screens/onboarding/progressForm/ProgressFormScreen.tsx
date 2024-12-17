@@ -31,6 +31,7 @@ import {
   onlyNumbers,
   parseHeight,
 } from "../../../utils/masks";
+import { validPlanTypes } from "../../../@core/entities/@shared/planType/constants";
 
 const ProgressFormScreen = () => {
   const setProgress = useProgressStore((state) => state.setProgress);
@@ -71,8 +72,7 @@ const ProgressFormScreen = () => {
     const age = calculateAge(new Date(birthDate as string));
     const userData = { weight, height: parseHeight(height), gender, age };
     const goalData = { dailyActivityLevel: activityFrequency, goalWeight };
-    const planTypes = ["gradual", "moderado", "acelerado"] as const;
-    const planList = planTypes.map((plan) =>
+    const planList = validPlanTypes.map((plan) =>
       buildCaloriePlan({ ...userData, ...goalData, planType: plan })
     );
 
