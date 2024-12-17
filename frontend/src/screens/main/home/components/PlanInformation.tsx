@@ -5,7 +5,7 @@ import {
   TouchableOpacity,
   View,
 } from "react-native";
-import { PlanType } from "../../../../@core/entities/@shared/plantType";
+import { PlanType } from "../../../../@core/entities/@shared/planType/type";
 import { CaloriePlanProps } from "../../../../@core/entities/caloriePlan/caloriePlan";
 
 interface PlanInformation {

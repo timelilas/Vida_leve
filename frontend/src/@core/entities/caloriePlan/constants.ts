@@ -16,10 +16,10 @@ export const LIGHT_ACTIVITY_LEVEL_MULTIPLIER = 1.375;
 export const MODERATE_ACTIVITY_LEVEL_MULTIPLIER = 1.55;
 export const INTENSE_ACTIVITY_LEVEL_MULTIPLIER = 1.725;
 
-//Deficits calóricos diários
+//Deficits ou superavits calóricos diários
 export const GRADUAL_DAILY_CALORIE_OFFSET = 400;
 export const MODERATE_DAILY_CALORIE_OFFSET = 625;
 export const ACCELERATED_DAILY_CALORIE_OFFSET = 875;
 
-//Total de calorias queimadas para perder 1kg de gordura
+//Total de calorias para perder 1kg de gordura
 export const KG_IN_KCAL = 7700;

@@ -10,7 +10,7 @@ import {
 import { HttpService } from "../HttpService";
 import AsyncStorage from "@react-native-async-storage/async-storage";
 import { ProgressProps } from "../../@core/entities/progress/progress";
-import { PlanType } from "../../@core/entities/@shared/plantType";
+import { PlanType } from "../../@core/entities/@shared/planType/type";
 
 export class HttpAuthService extends HttpService {
   public async signup(data: HttpSignupInputDTO) {

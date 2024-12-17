@@ -1,5 +1,5 @@
-import { PlanType } from "../@shared/plantType";
-import { ActitivyFrequency } from "../@shared/activityFrequency";
+import { PlanType } from "../@shared/planType/type";
+import { ActitivyFrequency } from "../@shared/activityFrequency/type";
 
 export interface ProgressProps {
   height: number; // altura é metros

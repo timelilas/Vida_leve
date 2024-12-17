@@ -1,5 +1,5 @@
 import { calculateWeightRangeByIMC } from "../../../@core/entities/progress/helpers";
-import { GenderType } from "../../../@core/entities/@shared/gender";
+import { GenderType } from "../../../@core/entities/@shared/gender/type";
 import { ValidationResult } from "../type";
 import { defaultMissingFieldMsg } from "../variables";
 

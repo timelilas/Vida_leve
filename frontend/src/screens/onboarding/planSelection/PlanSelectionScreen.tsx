@@ -1,5 +1,5 @@
 import { StyleSheet, View, Platform, ScrollView } from "react-native";
-import { PlanType } from "../../../@core/entities/@shared/plantType";
+import { PlanType } from "../../../@core/entities/@shared/planType/type";
 import { SubmitButton } from "../../../components/buttons/SubmitButton";
 import { ScreenWrapper } from "../../../components/ScreenWrapper";
 import { NavigationProp, useNavigation } from "@react-navigation/native";
