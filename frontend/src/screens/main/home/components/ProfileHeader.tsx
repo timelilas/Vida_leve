@@ -65,7 +65,7 @@ const styles = StyleSheet.create({
     marginLeft: "auto",
   },
   userInformation: {
-    gap: 8,
+    gap: 4,
     flexShrink: 1,
   },
   userName: {

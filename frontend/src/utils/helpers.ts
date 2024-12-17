@@ -19,3 +19,9 @@ export function dateToPTBR(date: Date) {
 export async function delay(time: number) {
   return new Promise((resolve) => setTimeout(resolve, time));
 }
+
+export function formatDateToISO(date: string) {
+  const [day, month, year] = date.split("/");
+  const sanitizedDay = day === "29" && month === "02" ? "28" : day;
+  return `${year}-${month}-${sanitizedDay}`;
+}

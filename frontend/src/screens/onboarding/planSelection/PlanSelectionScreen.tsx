@@ -1,4 +1,4 @@
-import { StyleSheet, View, Platform, ScrollView } from "react-native";
+import { StyleSheet, View, ScrollView } from "react-native";
 import { PlanType } from "../../../@core/entities/@shared/planType/type";
 import { SubmitButton } from "../../../components/buttons/SubmitButton";
 import { ScreenWrapper } from "../../../components/ScreenWrapper";
@@ -15,7 +15,6 @@ import { useForm } from "../../../hooks/useForm";
 import { HttpError } from "../../../@core/errors/httpError";
 import { ConnectionError } from "../../../@core/errors/connectionError";
 import { useProgressStore } from "../../../store/progress";
-import { ErrorMessage } from "../../../components/ErrorMessage";
 
 const PlanSelectionScreen = () => {
   const navigation = useNavigation<NavigationProp<any>>();
@@ -26,13 +25,18 @@ const PlanSelectionScreen = () => {
   const { handleChange, setError, onSubmit, data } = useForm<{
     planType: PlanType | null;
   }>({ initialState: { planType: planType ?? null } });
-  const { error, isSubmitting, values } = data;
+  const { error, isSubmitting, values, isFormDirty } = data;
+
+  function goBack() {
+    navigation.goBack();
+  }
+
+  function navigateToGuidance() {
+    navigation.navigate("Onboarding/GoalGuidance");
+  }
 
   function setPlanError() {
-    setError({
-      field: undefined,
-      message: "É necessário selecionar um plano para continuar.",
-    });
+    setError({ field: "planType" });
   }
 
   function handlePlanSelection(planType: PlanType) {
@@ -46,12 +50,12 @@ const PlanSelectionScreen = () => {
   }
 
   async function handleSubmit() {
-    if (!values.planType) {
-      return setPlanError();
-    }
+    if (!values.planType) return setPlanError();
+    if (!isFormDirty) return navigateToGuidance();
+
     const { data } = await httpAuthService.setCaloriePlan(values.planType);
     setProgress(data);
-    navigation.navigate("Onboarding/GoalGuidance");
+    navigateToGuidance();
   }
 
   async function handleError(error: Error) {
@@ -63,10 +67,6 @@ const PlanSelectionScreen = () => {
       return navigation.navigate("ConnectionError");
     }
     setError({ message: UNEXPECTED_ERROR_MESSAGE });
-  }
-
-  function goBack() {
-    navigation.goBack();
   }
 
   return (
@@ -81,18 +81,15 @@ const PlanSelectionScreen = () => {
           style={styles.text}
           text="Selecione entre 3 opções de planos para alcançar seus objetivos no seu próprio tempo. Seja qual for a sua escolha, estamos prontos para te ajudar a chegar lá!"
         />
-        {error.message && (
-          <ErrorMessage style={styles.error} message={error.message} />
-        )}
         <View style={styles.plansWrapper}>
           {caloriePlans.map((plan) => {
-            const icon = planUiDetails[plan.type].icon;
+            const Icon = planUiDetails[plan.type].icon;
             return (
               <CaloriePlanButton
                 onPress={() => handlePlanSelection(plan.type)}
                 selected={plan.type === values.planType}
                 key={plan.type}
-                icon={icon({})}
+                icon={<Icon />}
                 title={planUiDetails[plan.type].title}
                 dailyCalories={plan.dailyCalorieIntake}
                 duration={Math.ceil(plan.durationInDays / 7)}
@@ -102,7 +99,7 @@ const PlanSelectionScreen = () => {
         </View>
       </View>
       <SubmitButton
-        disabled={isSubmitting}
+        disabled={isSubmitting || error.field === "planType"}
         onPress={onSubmit(handleSubmit, handleError)}
         title="Salvar informações"
         type="primary"
@@ -117,9 +114,6 @@ export default PlanSelectionScreen;
 const styles = StyleSheet.create({
   title: {
     textAlign: "left",
-  },
-  error: {
-    marginBottom: 8,
   },
   text: {
     marginTop: 8,

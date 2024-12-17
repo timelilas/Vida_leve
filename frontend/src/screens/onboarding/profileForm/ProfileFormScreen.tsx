@@ -24,7 +24,7 @@ import {
 } from "../../../utils/masks";
 import { useRef } from "react";
 import { useUserStore } from "../../../store/user";
-import { dateToPTBR } from "../../../utils/helpers";
+import { dateToPTBR, formatDateToISO } from "../../../utils/helpers";
 import { HttpError } from "../../../@core/errors/httpError";
 import { ConnectionError } from "../../../@core/errors/connectionError";
 import { NavigationProp, useNavigation } from "@react-navigation/native";
@@ -43,18 +43,20 @@ const ProfileFormScreen = () => {
       },
     });
 
-  const { values, error, isSubmitting } = data;
+  const { values, error, isSubmitting, isFormDirty } = data;
+
+  function goBack() {
+    navigation.goBack();
+  }
+
+  function navigateToProgressForm() {
+    navigation.navigate("Onboarding/ProgressForm");
+  }
 
   function selectGender(value: GenderType) {
     const newGender = value !== values.gender ? value : null;
     handleChange("gender", newGender);
     validateField("gender", newGender || "", validateGender);
-  }
-
-  function formatDateToISO(date: string) {
-    const [day, month, year] = date.split("/");
-    const sanitizedDay = day === "29" && month === "02" ? "28" : day;
-    return `${year}-${month}-${sanitizedDay}`;
   }
 
   function validateAllFields() {
@@ -76,13 +78,14 @@ const ProfileFormScreen = () => {
 
   async function handleSubmit() {
     if (!validateAllFields()) return;
+    if (!isFormDirty) return navigateToProgressForm();
 
     const birthDateISO = formatDateToISO(values.birthDate);
     const dataToSubmit = { ...values, birthDate: birthDateISO };
-
     const { data } = await httpAuthService.updateProfile(dataToSubmit as any);
+
     setUser(data);
-    navigation.navigate("Onboarding/ProgressForm");
+    navigateToProgressForm();
   }
 
   async function handleError(error: Error) {
@@ -94,10 +97,6 @@ const ProfileFormScreen = () => {
       return navigation.navigate("ConnectionError");
     }
     setError({ message: UNEXPECTED_ERROR_MESSAGE });
-  }
-
-  function goBack() {
-    navigation.goBack();
   }
 
   return (

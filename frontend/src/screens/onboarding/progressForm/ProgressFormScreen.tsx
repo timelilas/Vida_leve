@@ -51,8 +51,16 @@ const ProgressFormScreen = () => {
         activityFrequency: progress?.activityFrequency ?? null,
       },
     });
-  const { values, error, isSubmitting } = data;
+  const { values, error, isSubmitting, isFormDirty } = data;
   const { height, weight, goalWeight, activityFrequency } = values;
+
+  function goBack() {
+    navigation.goBack();
+  }
+
+  function navigateToPlanSelection() {
+    navigation.navigate("Onboarding/PlanSelection");
+  }
 
   function selectActitivyFrequency(frequency: ActitivyFrequency) {
     const newFrequency = activityFrequency === frequency ? null : frequency;
@@ -133,6 +141,7 @@ const ProgressFormScreen = () => {
 
   async function handleSubmit() {
     if (!validateAllFields()) return;
+    if (!isFormDirty) return navigateToPlanSelection();
 
     const { data } = await httpAuthService.createProgress({
       weight,
@@ -145,7 +154,7 @@ const ProgressFormScreen = () => {
 
     setProgress(data);
     setPlans(plans);
-    navigation.navigate("Onboarding/PlanSelection");
+    navigateToPlanSelection();
   }
 
   function handleError(error: Error) {
@@ -157,10 +166,6 @@ const ProgressFormScreen = () => {
       return navigation.navigate("ConnectionError");
     }
     setError({ message: UNEXPECTED_ERROR_MESSAGE });
-  }
-
-  function goBack() {
-    navigation.goBack();
   }
 
   return (

@@ -7,12 +7,12 @@ import { SoupIcon } from "../../../../components/icons/SoupIcon";
 import { ProgressBar } from "../../../../components/ProgressBar";
 
 interface ProgressStatisticsProps {
-  overallCalorieGoal: number;
-  calorieAccumulated: number;
+  dailyCalorieTarget: number;
+  dailyConsumedCalories: number;
 }
 
 export function ProgressStatistics(props: ProgressStatisticsProps) {
-  const { calorieAccumulated, overallCalorieGoal } = props;
+  const { dailyCalorieTarget, dailyConsumedCalories } = props;
 
   return (
     <View style={styles.container}>
@@ -25,7 +25,10 @@ export function ProgressStatistics(props: ProgressStatisticsProps) {
           <CookieIcon />
           <SoupIcon />
         </View>
-        <ProgressBar total={overallCalorieGoal} achieved={calorieAccumulated} />
+        <ProgressBar
+          total={dailyCalorieTarget}
+          achieved={dailyConsumedCalories}
+        />
       </View>
       <View style={styles.buttonWrapper}>
         <TouchableOpacity>

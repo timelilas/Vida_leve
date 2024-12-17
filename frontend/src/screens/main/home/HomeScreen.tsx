@@ -7,21 +7,15 @@ import { useProgressStore } from "../../../store/progress";
 import { PlanInformation } from "./components/PlanInformation";
 import { useCaloriePlanStore } from "../../../store/caloriePlan";
 import { ProgressStatistics } from "./components/ProgressStatistics";
-import { getDailyCalorieOffset } from "../../../@core/entities/caloriePlan/helpers";
 
 const HomeScreen = () => {
   const email = useUserStore((state) => state.data.email);
   const firstname = useUserStore((state) => state.data.name)?.split(" ")[0];
-  const progressData = useProgressStore((state) => state.data)!;
-
-  const { currentCaloriePlan: planType, goalWeight, weight } = progressData;
-  const dailyCalorieOffset = getDailyCalorieOffset(planType);
+  const planType = useProgressStore((state) => state.data?.currentCaloriePlan);
 
   const currentPlan = useCaloriePlanStore((state) =>
     state.data.find(({ type }) => type === planType)
   );
-
-  const isCalorieDeficit = goalWeight < weight;
 
   return (
     <ScreenWrapper scrollable>
@@ -35,10 +29,8 @@ const HomeScreen = () => {
             dailyCalorie={currentPlan?.dailyCalorieIntake!}
           />
           <ProgressStatistics
-            overallCalorieGoal={
-              dailyCalorieOffset * (currentPlan?.durationInDays || 0)
-            }
-            calorieAccumulated={isCalorieDeficit ? -29000 : 29000} //dado mockado
+            dailyCalorieTarget={currentPlan?.dailyCalorieIntake || 0}
+            dailyConsumedCalories={1100} //dado mockado
           />
         </View>
       </View>

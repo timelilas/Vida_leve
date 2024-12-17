@@ -95,6 +95,8 @@ const styles = StyleSheet.create({
     overflow: "hidden",
     paddingBottom: 16,
     borderRadius: 16,
+    borderBottomLeftRadius: 28,
+    borderBottomRightRadius: 28,
     marginTop: 10,
   },
   guidanceWrapper: {
