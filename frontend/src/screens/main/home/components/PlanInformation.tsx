@@ -6,14 +6,15 @@ import {
   View,
 } from "react-native";
 import { PlanType } from "../../../../@core/entities/@shared/planType/type";
-import { CaloriePlanProps } from "../../../../@core/entities/caloriePlan/caloriePlan";
+import { useProgressStore } from "../../../../store/progress";
+import { useCaloriePlanStore } from "../../../../store/caloriePlan";
 
-interface PlanInformation {
-  planType?: PlanType;
-  dailyCalorie: CaloriePlanProps["dailyCalorieIntake"];
-}
+export function PlanInformation() {
+  const planType = useProgressStore((state) => state.data?.currentCaloriePlan);
+  const currentPlan = useCaloriePlanStore((state) =>
+    state.data.find(({ type }) => type === planType)
+  );
 
-export function PlanInformation(props: PlanInformation) {
   const planLabelMap: Record<PlanType, string> = {
     gradual: "Progresso gradual",
     moderado: "Progresso moderado",
@@ -22,12 +23,10 @@ export function PlanInformation(props: PlanInformation) {
 
   return (
     <View>
-      {props.planType ? (
+      {planType ? (
         <Text style={styles.titleThin}>
           A meta que será executada:{" "}
-          <Text style={styles.titleRegular}>
-            {planLabelMap[props.planType]}
-          </Text>
+          <Text style={styles.titleRegular}>{planLabelMap[planType]}</Text>
         </Text>
       ) : (
         <Text style={styles.titleThin}>
@@ -35,7 +34,9 @@ export function PlanInformation(props: PlanInformation) {
         </Text>
       )}
       <View style={styles.shadowBox}>
-        <Text style={styles.targetCalorie}>{props.dailyCalorie} kcal/dia</Text>
+        <Text style={styles.targetCalorie}>
+          {currentPlan?.dailyCalorieIntake || 0} kcal/dia
+        </Text>
       </View>
       <TouchableOpacity style={styles.adjustGoalButton}>
         <Text style={styles.adjustGoalText}>Alterar</Text>
