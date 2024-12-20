@@ -1,7 +1,7 @@
 import { PlanType } from "../@shared/planType/type";
 import { GenderType } from "../@shared/gender/type";
 import { ActitivyFrequency } from "../@shared/activityFrequency/type";
-import { CaloriePlanProps } from "./caloriePlan";
+import { CaloriePlanProps } from "./type";
 import * as CONSTANTS from "./constants";
 
 interface BMRParams {

@@ -1,5 +1,5 @@
-import { ProgressProps } from "../../@core/entities/progress/progress";
-import { UserProps } from "../../@core/entities/user/user";
+import { ProgressProps } from "../../@core/entities/progress/type";
+import { UserProps } from "../../@core/entities/user/type";
 
 export type HttpSignupOutputDTO = Omit<UserProps, "password">;
 
