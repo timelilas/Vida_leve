@@ -2,7 +2,6 @@ import { StyleSheet, View, ScrollView } from "react-native";
 import { PlanType } from "../../../@core/entities/@shared/planType/type";
 import { SubmitButton } from "../../../components/buttons/SubmitButton";
 import { ScreenWrapper } from "../../../components/ScreenWrapper";
-import { NavigationProp, useNavigation } from "@react-navigation/native";
 import { ScreenHeader } from "../../../components/ScreenHeader";
 import { ScreenTitle } from "../../../components/ScreenTitle";
 import { Paragraph } from "../../../components/Paragraph";
@@ -15,9 +14,11 @@ import { useForm } from "../../../hooks/useForm";
 import { HttpError } from "../../../@core/errors/httpError";
 import { ConnectionError } from "../../../@core/errors/connectionError";
 import { useProgressStore } from "../../../store/progress";
+import { useAppNavigation } from "../../../hooks/useAppNavigation";
+import { RouteConstants } from "../../../routes/types";
 
 const PlanSelectionScreen = () => {
-  const navigation = useNavigation<NavigationProp<any>>();
+  const navigation = useAppNavigation();
   const planType = useProgressStore((state) => state.data?.currentCaloriePlan);
   const scrollRef = useRef<ScrollView>(null);
   const caloriePlans = useCaloriePlanStore((state) => state.data);
@@ -32,7 +33,7 @@ const PlanSelectionScreen = () => {
   }
 
   function navigateToGuidance() {
-    navigation.navigate("Onboarding/GoalGuidance");
+    navigation.navigate(RouteConstants.GoalGuidance);
   }
 
   function setPlanError() {
@@ -64,7 +65,7 @@ const PlanSelectionScreen = () => {
       return setError({ field: error.field as any, message: error.message });
     }
     if (error instanceof ConnectionError) {
-      return navigation.navigate("ConnectionError");
+      return navigation.navigate(RouteConstants.ConnectionError);
     }
     setError({ message: UNEXPECTED_ERROR_MESSAGE });
   }

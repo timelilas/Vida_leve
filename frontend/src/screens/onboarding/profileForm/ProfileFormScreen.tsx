@@ -27,10 +27,11 @@ import { useUserStore } from "../../../store/user";
 import { dateToPTBR, formatDateToISO } from "../../../utils/helpers";
 import { HttpError } from "../../../@core/errors/httpError";
 import { ConnectionError } from "../../../@core/errors/connectionError";
-import { NavigationProp, useNavigation } from "@react-navigation/native";
+import { useAppNavigation } from "../../../hooks/useAppNavigation";
+import { RouteConstants } from "../../../routes/types";
 
 const ProfileFormScreen = () => {
-  const navigation = useNavigation<NavigationProp<any>>();
+  const navigation = useAppNavigation();
   const { setUser, data: user } = useUserStore((state) => state);
   const scrollRef = useRef<ScrollView>(null);
   const { data, handleChange, setError, validateField, onSubmit } =
@@ -50,7 +51,7 @@ const ProfileFormScreen = () => {
   }
 
   function navigateToProgressForm() {
-    navigation.navigate("Onboarding/ProgressForm");
+    navigation.navigate(RouteConstants.ProgressForm);
   }
 
   function selectGender(value: GenderType) {
@@ -94,7 +95,7 @@ const ProfileFormScreen = () => {
       return setError({ field: error.field as any, message: error.message });
     }
     if (error instanceof ConnectionError) {
-      return navigation.navigate("ConnectionError");
+      return navigation.navigate(RouteConstants.ConnectionError);
     }
     setError({ message: UNEXPECTED_ERROR_MESSAGE });
   }

@@ -16,13 +16,11 @@ import { maskEmail } from "../../../utils/masks";
 import { HeaderNavigator } from "../../../components/HeaderNavigator";
 import { useForm } from "../../../hooks/useForm";
 import { httpAuthService } from "../../../services/auth";
-import {
-  NavigationProp,
-  StackActions,
-  useNavigation,
-} from "@react-navigation/native";
+import { StackActions } from "@react-navigation/native";
 import { ConnectionError } from "../../../@core/errors/connectionError";
 import { HttpError } from "../../../@core/errors/httpError";
+import { useAppNavigation } from "../../../hooks/useAppNavigation";
+import { RouteConstants } from "../../../routes/types";
 
 const signupFormInitialState: SignupFormData = {
   email: "",
@@ -31,7 +29,7 @@ const signupFormInitialState: SignupFormData = {
 };
 
 const SignupScreen = () => {
-  const navigation = useNavigation<NavigationProp<any>>();
+  const navigation = useAppNavigation();
   const scrollRef = useRef<ScrollView>(null);
   const [passwordFocused, setPasswordFocused] = useState(false);
   const [isTypingPassword, setIsTypingPassword] = useState(false);
@@ -59,7 +57,7 @@ const SignupScreen = () => {
   async function handleSubmit() {
     if (!validateAllFields()) return;
     await httpAuthService.signup(values);
-    return navigation.dispatch(StackActions.replace("Auth/Login"));
+    return navigation.dispatch(StackActions.replace(RouteConstants.Login));
   }
 
   function handleError(error: Error) {
@@ -68,7 +66,7 @@ const SignupScreen = () => {
       return setError({ field: error.field as any, message: error.message });
     }
     if (error instanceof ConnectionError) {
-      return navigation.navigate("ConnectionError");
+      return navigation.navigate(RouteConstants.ConnectionError);
     }
     setError({ message: UNEXPECTED_ERROR_MESSAGE });
   }

@@ -1,5 +1,5 @@
 import React from "react";
-import Navigation from "./src/Navigation";
+import Navigation from "./src/routes/Navigation";
 import * as SplashScreen from "expo-splash-screen";
 import "@expo/metro-runtime";
 import { useAppFonts } from "./src/hooks/useAppFonts";

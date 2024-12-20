@@ -24,7 +24,6 @@ import { HttpError } from "../../../@core/errors/httpError";
 import { ConnectionError } from "../../../@core/errors/connectionError";
 import { buildCaloriePlan } from "../../../@core/entities/caloriePlan/helpers";
 import { useCaloriePlanStore } from "../../../store/caloriePlan";
-import { NavigationProp, useNavigation } from "@react-navigation/native";
 import {
   maskHeight,
   heightToString,
@@ -32,11 +31,13 @@ import {
   parseHeight,
 } from "../../../utils/masks";
 import { validPlanTypes } from "../../../@core/entities/@shared/planType/constants";
+import { useAppNavigation } from "../../../hooks/useAppNavigation";
+import { RouteConstants } from "../../../routes/types";
 
 const ProgressFormScreen = () => {
   const setProgress = useProgressStore((state) => state.setProgress);
   const setPlans = useCaloriePlanStore((state) => state.setPlans);
-  const navigation = useNavigation<NavigationProp<any>>();
+  const navigation = useAppNavigation();
   const scrollRef = useRef<ScrollView>(null);
   const progress = useProgressStore((state) => state.data);
   const gender = useUserStore((state) => state.data.gender);
@@ -59,7 +60,7 @@ const ProgressFormScreen = () => {
   }
 
   function navigateToPlanSelection() {
-    navigation.navigate("Onboarding/PlanSelection");
+    navigation.navigate(RouteConstants.PlanSelection);
   }
 
   function selectActitivyFrequency(frequency: ActitivyFrequency) {
@@ -163,7 +164,7 @@ const ProgressFormScreen = () => {
       return setError({ field: error.field as any, message: error.message });
     }
     if (error instanceof ConnectionError) {
-      return navigation.navigate("ConnectionError");
+      return navigation.navigate(RouteConstants.ConnectionError);
     }
     setError({ message: UNEXPECTED_ERROR_MESSAGE });
   }

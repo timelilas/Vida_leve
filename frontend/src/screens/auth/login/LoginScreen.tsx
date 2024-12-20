@@ -1,11 +1,7 @@
 import { useRef } from "react";
 import { View, ScrollView } from "react-native";
 import { LogoSVG } from "../../../components/logos/LogoSVG";
-import {
-  CommonActions,
-  NavigationProp,
-  useNavigation,
-} from "@react-navigation/native";
+import { CommonActions } from "@react-navigation/native";
 import { Input } from "../../../components/inputs/Input";
 import { PasswordInput } from "../../../components/inputs/PasswordInput";
 import { ScreenWrapper } from "../../../components/ScreenWrapper";
@@ -23,6 +19,8 @@ import styles from "../styles";
 import AsyncStorage from "@react-native-async-storage/async-storage";
 import { HttpError } from "../../../@core/errors/httpError";
 import { ConnectionError } from "../../../@core/errors/connectionError";
+import { useAppNavigation } from "../../../hooks/useAppNavigation";
+import { RouteConstants } from "../../../routes/types";
 
 const loginInitialState: LoginFormData = {
   email: "",
@@ -30,7 +28,7 @@ const loginInitialState: LoginFormData = {
 };
 
 const LoginScreen = () => {
-  const navigation = useNavigation<NavigationProp<any>>();
+  const navigation = useAppNavigation();
   const scrollRef = useRef<ScrollView | null>(null);
   const { data, handleChange, setError, validateField, onSubmit } = useForm({
     initialState: loginInitialState,
@@ -43,7 +41,7 @@ const LoginScreen = () => {
     const { data } = await httpAuthService.login(values);
     await AsyncStorage.setItem("token", data.token);
     navigation.dispatch(
-      CommonActions.reset({ routes: [{ name: "Onboarding/ProfileForm" }] })
+      CommonActions.reset({ routes: [{ name: RouteConstants.ProfileForm }] })
     );
   }
 
@@ -53,7 +51,7 @@ const LoginScreen = () => {
       return setError({ field: "all", message: error.message });
     }
     if (error instanceof ConnectionError) {
-      return navigation.navigate("ConnectionError");
+      return navigation.navigate(RouteConstants.ConnectionError);
     }
     setError({ message: UNEXPECTED_ERROR_MESSAGE });
   }

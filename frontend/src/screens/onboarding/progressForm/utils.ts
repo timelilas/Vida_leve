@@ -21,7 +21,8 @@ export const activityFrequencies: {
   {
     type: "moderada",
     title: "Atividade moderada",
-    description: "Quase sempre em pé. p. ex. professor(a)/ atendente",
+    description:
+      "Frequentemente em movimento, p. ex. garçom/garçonete ou estoquista",
   },
   {
     type: "intensa",

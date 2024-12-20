@@ -1,4 +1,3 @@
-import { useNavigation } from "@react-navigation/native";
 import {
   StyleSheet,
   Text,
@@ -12,9 +11,10 @@ import { ScreenTitle } from "../../../components/ScreenTitle";
 import { Paragraph } from "../../../components/Paragraph";
 import { SubmitButton } from "../../../components/buttons/SubmitButton";
 import { ReloadIcon } from "../../../components/icons/ReloadIcon";
+import { useAppNavigation } from "../../../hooks/useAppNavigation";
 
 const ConnectionErrorScreen = () => {
-  const navigation = useNavigation();
+  const navigation = useAppNavigation();
 
   function goBack() {
     navigation.goBack();
