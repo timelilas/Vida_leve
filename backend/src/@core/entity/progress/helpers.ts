@@ -51,7 +51,7 @@ export class ProgressHelper {
     };
   }
 
-  public static calculateBMR(
+  private static calculateBMR(
     gender: Gender,
     weight: number,
     height: number,
@@ -62,7 +62,7 @@ export class ProgressHelper {
       : 447.6 + 9.2 * weight + 3.1 * height - 4.3 * age;
   }
 
-  public static calculateTDEE(
+  private static calculateTDEE(
     bmr: number,
     activityFrequency: ActivityFrequency
   ): number {
@@ -73,14 +73,6 @@ export class ProgressHelper {
       intensa: 1.725,
     };
     return bmr * activityMultiplyers[activityFrequency];
-  }
-
-  public static calculateWeightLossPlan(tdee: number) {
-    return {
-      slow: Math.round(tdee - 400),
-      moderate: Math.round(tdee - 625),
-      fast: Math.round(tdee - 875),
-    };
   }
 
   private static getIMCRangeByAge(age: number): { min: number; max: number } {
