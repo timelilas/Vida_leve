@@ -5,9 +5,10 @@ import {
   CreationOptional,
 } from "sequelize";
 import { sequelize } from "../index";
-import Sequelize from "sequelize";
+import { TableNames } from "../constants";
 import { UserEntity } from "../../@core/entity/user/entity";
 import { allowedGenders, Gender } from "../../@core/entity/@shared";
+import Sequelize from "sequelize";
 
 class User
   extends Model<InferAttributes<User>, InferCreationAttributes<User>>
@@ -85,7 +86,7 @@ User.init(
   },
   {
     sequelize,
-    tableName: "user",
+    tableName: TableNames.User,
     timestamps: false,
     freezeTableName: true,
   }

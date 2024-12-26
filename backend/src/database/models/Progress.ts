@@ -14,6 +14,7 @@ import {
   allowedPlans,
   PlanType,
 } from "../../@core/entity/@shared";
+import { TableNames } from "../constants";
 
 class Progress
   extends Model<InferAttributes<Progress>, InferCreationAttributes<Progress>>
@@ -86,7 +87,7 @@ Progress.init(
   },
   {
     sequelize,
-    tableName: "progress",
+    tableName: TableNames.Progress,
     timestamps: false,
     freezeTableName: true,
   }

@@ -9,6 +9,7 @@ import User from "./User";
 import Sequelize from "sequelize";
 import { CaloriePlanEntity } from "../../@core/entity/caloriePlan/entity";
 import { allowedPlans, PlanType } from "../../@core/entity/@shared";
+import { TableNames } from "../constants";
 
 class CaloriePlan
   extends Model<
@@ -65,7 +66,7 @@ CaloriePlan.init(
   },
   {
     sequelize,
-    tableName: "caloriePlan",
+    tableName: TableNames.CaloriePlan,
     timestamps: false,
     freezeTableName: true,
   }

@@ -56,7 +56,7 @@ export class AuthController {
         throw new ConflictException(
           `Já existe um usuário cadastro com email: ${email}.`,
           AuthController.name,
-          "Email"
+          "email"
         );
       }
 
