@@ -1,5 +1,7 @@
 import { Request, Response } from "express";
 import UserService from "../../service/user/UserService";
+import { NotFoundException } from "../../@core/exception/http/NotFoundException";
+import { exceptionResponseAdapter } from "../../utils/express/helpers";
 
 export default class UserController {
   private _userService = new UserService();
@@ -8,10 +10,12 @@ export default class UserController {
     try {
       const profiles = await this._userService.getAll();
       return res.status(200).json({ data: profiles });
-    } catch (error) {
-      console.error("Server internal error:", error);
-      return res.status(500).json({
-        error: { field: null, message: "Erro ao obter a lista de usuários." },
+    } catch (error: any) {
+      return exceptionResponseAdapter({
+        req,
+        res,
+        exception: error,
+        alternativeMsg: "Erro ao obter a lista de usuários.",
       });
     }
   }
@@ -21,54 +25,49 @@ export default class UserController {
     const { id } = req.user;
 
     try {
-      const foundUser = await this._userService.update({
-        id,
-        name,
-        phone,
-        birthDate,
-        gender,
-      });
+      const updateUserParams = { id, name, phone, birthDate, gender };
+      const foundUser = await this._userService.update(updateUserParams);
 
       if (!foundUser) {
-        return res.status(404).json({
-          error: {
-            field: "id",
-            message: `Usuário com id ${id} não encontrado.`,
-          },
-        });
+        throw new NotFoundException(
+          `Usuário com id ${id} não encontrado.`,
+          UserController.name,
+          "id"
+        );
       }
 
       return res.status(200).json({ data: foundUser });
-    } catch (error) {
-      console.error("Server internal error:", error);
-      return res.status(500).json({
-        error: {
-          field: null,
-          message: "Erro ao atualizar os dados do usuário.",
-        },
+    } catch (error: any) {
+      return exceptionResponseAdapter({
+        req,
+        res,
+        exception: error,
+        alternativeMsg: "Erro ao atualizar os dados do usuário.",
       });
     }
   }
 
   async getById(req: Request, res: Response): Promise<Response> {
     const userId = req.user.id;
+
     try {
       const foundUser = await this._userService.get(req.user.id);
 
       if (!foundUser) {
-        return res.status(404).json({
-          error: {
-            field: "id",
-            message: `Usuário com id ${userId} não encontrado.`,
-          },
-        });
+        throw new NotFoundException(
+          `Usuário com id ${userId} não encontrado.`,
+          UserController.name,
+          "id"
+        );
       }
 
       return res.status(200).json({ data: foundUser });
-    } catch (error) {
-      console.error("Server internal error:", error);
-      return res.status(500).json({
-        error: { field: null, message: "Erro ao obter o perfil do usuário." },
+    } catch (error: any) {
+      return exceptionResponseAdapter({
+        req,
+        res,
+        exception: error,
+        alternativeMsg: "Erro ao obter o perfil do usuário.",
       });
     }
   }
@@ -80,18 +79,20 @@ export default class UserController {
       const deletedUser = await this._userService.delete(Number(id));
 
       if (!deletedUser) {
-        return res.status(404).json({
-          error: {
-            field: "id",
-            message: `Usuário com id ${id} não encontrado`,
-          },
-        });
+        throw new NotFoundException(
+          `Usuário com id ${id} não encontrado`,
+          UserController.name,
+          "id"
+        );
       }
-      return res.status(200).json({ data: "Usuário deletado com sucesso." });
-    } catch (error) {
-      console.error("Server internal error:", error);
-      return res.status(500).json({
-        error: { field: null, message: "Erro ao deletar o usuário." },
+
+      return res.status(200).json({ data: "Usuário exluído com sucesso." });
+    } catch (error: any) {
+      return exceptionResponseAdapter({
+        req,
+        res,
+        exception: error,
+        alternativeMsg: "Erro na tentativa de exluir o usuário.",
       });
     }
   }
