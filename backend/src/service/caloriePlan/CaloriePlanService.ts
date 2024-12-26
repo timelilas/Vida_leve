@@ -2,15 +2,24 @@ import { Transaction } from "sequelize";
 import { sequelize } from "../../database";
 import CaloriePlan from "../../database/models/CaloriePlan";
 import { UpsertPlansDTO } from "./types";
+import { DatabaseException } from "../../@core/exception/infrastructure/DatabaseException";
 
 export class CaloriePlanService {
   public async getAll(userId: number) {
-    const plans = await CaloriePlan.findAll({
-      where: { userId },
-      attributes: { exclude: ["createAt", "updatedAt"] },
-    });
+    try {
+      const plans = await CaloriePlan.findAll({
+        where: { userId },
+        attributes: { exclude: ["createAt", "updatedAt"] },
+      });
 
-    return plans.map((plan) => plan.toJSON());
+      return plans.map((plan) => plan.toJSON());
+    } catch (error: any) {
+      throw new DatabaseException(
+        `Erro na busca dos planos de calorias para o usuário com id: ${userId}`,
+        CaloriePlanService.name,
+        error.message
+      );
+    }
   }
 
   public async upsertPlans(params: UpsertPlansDTO) {
@@ -24,21 +33,29 @@ export class CaloriePlanService {
       },
     }));
 
-    if (transaction) {
-      await Promise.all(upsertQueries.map((query) => query.run(transaction)));
-      return;
-    }
-
-    const localTransaction = await sequelize.transaction();
-
     try {
-      await Promise.all(
-        upsertQueries.map((query) => query.run(localTransaction))
+      if (transaction) {
+        await Promise.all(upsertQueries.map((query) => query.run(transaction)));
+        return;
+      }
+
+      const localTransaction = await sequelize.transaction();
+
+      try {
+        await Promise.all(
+          upsertQueries.map((query) => query.run(localTransaction))
+        );
+        await localTransaction.commit();
+      } catch (error) {
+        await localTransaction.rollback();
+        throw error;
+      }
+    } catch (error: any) {
+      throw new DatabaseException(
+        `Erro na tentativa de atualizar os planos de caloria do usuário com id: ${userId}`,
+        CaloriePlanService.name,
+        error.message
       );
-      await localTransaction.commit();
-    } catch (error) {
-      await localTransaction.rollback();
-      throw error;
     }
   }
 }
