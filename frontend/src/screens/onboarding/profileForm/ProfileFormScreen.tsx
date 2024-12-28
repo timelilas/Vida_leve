@@ -32,8 +32,8 @@ import { RouteConstants } from "../../../routes/types";
 
 const ProfileFormScreen = () => {
   const navigation = useAppNavigation();
-  const { setUser, data: user } = useUserStore((state) => state);
   const scrollRef = useRef<ScrollView>(null);
+  const { setUser, data: user } = useUserStore((state) => state);
   const { data, handleChange, setError, validateField, onSubmit } =
     useForm<ProfileFormData>({
       initialState: {
@@ -125,12 +125,11 @@ const ProfileFormScreen = () => {
       <View style={styles.form}>
         <Input
           onBlur={() => validateField("name", values.name, validateName)}
-          onChange={(value) => handleChange("name", maskName(value))}
+          onChangeText={(value) => handleChange("name", maskName(value))}
           value={data.values.name}
           error={error.field === "name"}
           errorMessage={error.field === "name" ? error.message : undefined}
           disabled={isSubmitting}
-          name="name"
           label="Como você gostaria de ser chamado(a)?"
           placeholder="Ex.: Maria Silva"
           textContentType="name"
@@ -138,18 +137,21 @@ const ProfileFormScreen = () => {
         />
         <Input
           onBlur={() => validateField("phone", values.phone, validatePhone)}
-          onChange={(value) => handleChange("phone", onlyNumbers(value, 11))}
+          onChangeText={(value) =>
+            handleChange("phone", onlyNumbers(value, 11))
+          }
           value={maskPhone(data.values.phone)}
           error={error.field === "phone"}
           errorMessage={error.field === "phone" ? error.message : undefined}
           disabled={isSubmitting}
-          name="phone"
           label="Telefone"
           placeholder="(DDD) + número de telefone"
           textContentType="telephoneNumber"
         />
         <DateInput
-          onChange={(value) => handleChange("birthDate", maskDatePTBR(value))}
+          onChangeText={(value) =>
+            handleChange("birthDate", maskDatePTBR(value))
+          }
           onBlur={() =>
             validateField("birthDate", values.birthDate, validateBirthDate)
           }
@@ -160,7 +162,6 @@ const ProfileFormScreen = () => {
           textContentType="birthdate"
           label="Data de nascimento"
           placeholder="dd/mm/aaaa"
-          name="birthDate"
         />
         <View>
           <Text style={styles.genderLabel}>Gênero social</Text>

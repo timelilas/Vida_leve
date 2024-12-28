@@ -102,16 +102,16 @@ const styles = StyleSheet.create({
     padding: 8,
     borderRadius: 16,
     gap: 16,
+    shadowColor: "#000000",
     ...{
       ...(Platform.OS === "android"
         ? {
             elevation: 4,
-            shadowColor: "#000000",
           }
         : {
-            shadowColor: "#00000040",
             shadowOffset: { height: 4, width: 0 },
             shadowRadius: 4,
+            shadowOpacity: 0.25,
           }),
     },
   },

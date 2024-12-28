@@ -192,7 +192,7 @@ const ProgressFormScreen = () => {
       />
       <View style={styles.form}>
         <Input
-          onChange={(value) => handleChange("height", maskHeight(value))}
+          onChangeText={(value) => handleChange("height", maskHeight(value))}
           onBlur={() =>
             validateField("height", parseHeight(height), validateHeight)
           }
@@ -203,11 +203,10 @@ const ProgressFormScreen = () => {
           keyboardType="numeric"
           label="Altura"
           placeholder="Ex.: 1,60"
-          name="height"
           autoFocus
         />
         <Input
-          onChange={(value) =>
+          onChangeText={(value) =>
             handleChange("weight", parseInt(onlyNumbers(value, 3)))
           }
           error={error.field === "weight"}
@@ -218,11 +217,10 @@ const ProgressFormScreen = () => {
           errorMessage={error.field === "weight" ? error.message : undefined}
           label="Peso atual"
           keyboardType="numeric"
-          name="wight"
           placeholder="Ex.: 60 kg"
         />
         <Input
-          onChange={(value) =>
+          onChangeText={(value) =>
             handleChange("goalWeight", parseInt(onlyNumbers(value, 3)))
           }
           onBlur={handleGoalWeightValidation}
@@ -238,7 +236,6 @@ const ProgressFormScreen = () => {
           }
           label="Peso desejado"
           keyboardType="numeric"
-          name="goal"
           placeholder="Ex.: 55 kg"
         />
         <View style={styles.wrapper}>

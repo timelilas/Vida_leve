@@ -118,10 +118,9 @@ const SignupScreen = () => {
         <View style={styles.form}>
           <Input
             onBlur={() => validateField("email", values.email, validateEmail)}
-            onChange={(value) => handleChange("email", maskEmail(value))}
+            onChangeText={(value) => handleChange("email", maskEmail(value))}
             disabled={isSubmitting}
             autoFocus
-            name="email"
             label="E-mail"
             textContentType="emailAddress"
             placeholder="Ex.: joaodasilva@email.com"
@@ -130,12 +129,11 @@ const SignupScreen = () => {
             errorMessage={error.field === "email" ? error.message : undefined}
           />
           <PasswordInput
-            onChange={handlePasswordChange}
+            onChangeText={handlePasswordChange}
             onFocus={() => setPasswordFocused(true)}
             onBlur={() =>
               validateField("password", values.password, validatePassword)
             }
-            name="password"
             label="Senha"
             placeholder="**********"
             value={values.password}
@@ -145,9 +143,10 @@ const SignupScreen = () => {
             error={error.field === "password"}
           />
           <PasswordInput
-            onChange={(value) => handleChange("passwordConfirmation", value)}
+            onChangeText={(value) =>
+              handleChange("passwordConfirmation", value)
+            }
             onBlur={handlePasswordConfirmationValidation}
-            name="passwordConfirmation"
             label="Confirmar senha"
             placeholder="**********"
             value={values.passwordConfirmation}

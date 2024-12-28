@@ -103,10 +103,9 @@ const LoginScreen = () => {
         />
         <View style={styles.form}>
           <Input
-            onChange={(data) => handleChange("email", maskEmail(data))}
+            onChangeText={(data) => handleChange("email", maskEmail(data))}
             onBlur={() => validateField("email", values.email, validateEmail)}
             autoFocus
-            name="email"
             label="E-mail"
             placeholder="Ex: joaodasilva@email.com"
             textContentType="emailAddress"
@@ -116,11 +115,10 @@ const LoginScreen = () => {
             error={error.field === "email" || error.field === "all"}
           />
           <PasswordInput
-            onChange={(data) => handleChange("password", data)}
+            onChangeText={(data) => handleChange("password", data)}
             onBlur={() =>
               validateField("password", values.password, validateEmptyField)
             }
-            name="password"
             label="Senha"
             placeholder="**********"
             value={values.password}

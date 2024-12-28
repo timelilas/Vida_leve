@@ -6,7 +6,6 @@ import {
   TextInputProps,
   Pressable,
 } from "react-native";
-import { AlertIcon } from "../icons/AlertIcon";
 import { CalendarIcon } from "../icons/CalendarIcon";
 import { useRef, useState } from "react";
 import { Calendar } from "../calendar/Calendar";
@@ -16,26 +15,20 @@ import { useCalendar } from "../calendar/useCalendar";
 import { dateToPTBR } from "../../utils/helpers";
 import { defaultInputStyles } from "./styles";
 import { ErrorMessage } from "../ErrorMessage";
+import { RawInput } from "./RawInput";
 
 interface PasswordInputProps {
-  name: string;
-  value: string;
   disabled?: boolean;
-  onChange?: (text: string) => void;
-  onBlur?: () => void;
   label?: string;
-  autoFocus?: boolean;
-  placeholder?: string;
-  keyboardType?: TextInputProps["keyboardType"];
-  textContentType?: TextInputProps["textContentType"];
   error?: boolean;
   errorMessage?: string;
 }
 
-export function DateInput(props: PasswordInputProps) {
+export function DateInput(props: PasswordInputProps & TextInputProps) {
+  const { disabled, label, error, errorMessage, ...propsRest } = props;
   const [isCalendarVisible, setIsCalendarVisible] = useState<boolean>(false);
-  const [section, setSection] = useState<CalendarSection>("calendar");
   const [selectedDate, setSelectedDate] = useState<DateData>();
+  const [section, setSection] = useState<CalendarSection>("calendar");
   const inputRef = useRef<TextInput | null>(null);
   const {
     month,
@@ -52,85 +45,46 @@ export function DateInput(props: PasswordInputProps) {
     setSelectedDate(undefined);
     setMonth(new Date().getMonth() + 1);
     setYear(new Date().getFullYear());
-    if (props.onChange) {
-      props.onChange("");
+    if (props.onChangeText) {
+      props.onChangeText("");
     }
   }
 
   function confirmDate() {
-    if (selectedDate && props.onChange) {
-      props.onChange(dateToPTBR(new Date(selectedDate.timestamp)));
+    if (selectedDate && props.onChangeText) {
+      props.onChangeText(dateToPTBR(new Date(selectedDate.timestamp)));
       setIsCalendarVisible(false);
       inputRef.current?.focus();
     }
   }
 
-  function toggleCalendar() {
+  function toggleCalendarVisibility() {
     setIsCalendarVisible((prev) => !prev);
   }
 
   return (
     <View style={defaultInputStyles.inputField}>
-      {props.label ? (
-        <Text style={defaultInputStyles.label}>{props.label}</Text>
-      ) : null}
-      <View style={defaultInputStyles.wrapper}>
-        <View
-          style={[
-            defaultInputStyles.boxShadow,
-            styles.boxShadow,
-            props.value.length ? defaultInputStyles.boxShadowFilled : null,
-            props.value.length && props.disabled
-              ? defaultInputStyles.boxShadowDisabled
-              : null,
-            !props.value.length && props.disabled
-              ? defaultInputStyles.boxShadowEmpty
-              : null,
-            props.error ? defaultInputStyles.boxShadowError : null,
-          ]}
-        >
-          <View
+      {label ? <Text style={defaultInputStyles.label}>{label}</Text> : null}
+      <RawInput
+        placeholderTextColor={"#B7B7B7"}
+        value={props.value}
+        disabled={disabled}
+        error={error}
+        rightAdornment={
+          <Pressable
+            disabled={disabled}
+            onPress={toggleCalendarVisibility}
             style={[
-              defaultInputStyles.inputBox,
-              props.disabled ? defaultInputStyles.inputBoxDisabled : null,
+              styles.calendarButton,
+              disabled ? styles.calendarButtonDisabled : null,
             ]}
           >
-            <TextInput
-              ref={inputRef}
-              autoFocus={props.autoFocus}
-              textContentType={props.textContentType}
-              placeholderTextColor={"#B7B7B7"}
-              style={[
-                defaultInputStyles.input,
-                props.disabled ? defaultInputStyles.inputDisabled : null,
-              ]}
-              placeholder={props.placeholder}
-              value={props.value}
-              onChangeText={props.onChange}
-              onBlur={props.onBlur}
-              editable={!props.disabled}
-              contextMenuHidden={props.disabled}
-              selectTextOnFocus={props.disabled}
-            />
-            <Pressable
-              disabled={props.disabled}
-              onPress={toggleCalendar}
-              style={[
-                styles.button,
-                props.disabled ? styles.buttonDisabled : null,
-              ]}
-            >
-              <CalendarIcon />
-            </Pressable>
-          </View>
-        </View>
-        {props.error && (
-          <View style={defaultInputStyles.errorIcon}>
-            <AlertIcon />
-          </View>
-        )}
-      </View>
-      {props.errorMessage && <ErrorMessage message={props.errorMessage} />}
+            <CalendarIcon />
+          </Pressable>
+        }
+        {...propsRest}
+      />
+      {errorMessage && <ErrorMessage message={errorMessage} />}
       {isCalendarVisible && (
         <Calendar
           month={month}
@@ -155,16 +109,13 @@ export function DateInput(props: PasswordInputProps) {
 }
 
 const styles = StyleSheet.create({
-  button: {
+  calendarButton: {
     borderRadius: 24,
     backgroundColor: "#B7B7B7",
-    padding: 8,
+    padding: 6,
     marginRight: 3,
   },
-  boxShadow: {
-    height: 54,
-  },
-  buttonDisabled: {
+  calendarButtonDisabled: {
     opacity: 0.5,
   },
 });

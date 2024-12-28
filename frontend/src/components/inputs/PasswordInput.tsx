@@ -1,95 +1,75 @@
 import { useState } from "react";
-import { StyleSheet, Text, TextInput, View, Pressable } from "react-native";
+import {
+  StyleSheet,
+  Text,
+  View,
+  Pressable,
+  TextInputProps,
+} from "react-native";
 import { EyeOffIcon } from "../icons/EyeOffIcon";
 import { EyeOpenIcon } from "../icons/EyeOpenIcon";
-import { AlertIcon } from "../icons/AlertIcon";
 import { defaultInputStyles } from "./styles";
 import { PasswordValidationBoard } from "../validationBoard/PasswordValidationBoard";
 import { ErrorMessage } from "../ErrorMessage";
+import { RawInput } from "./RawInput";
 
 interface PasswordInputProps {
-  name: string;
-  value: string;
+  label?: string;
+  error?: boolean;
+  disabled?: boolean;
+  errorMessage?: string;
   withBoard?: boolean;
   enableBoard?: boolean;
-  disabled?: boolean;
-  label?: string;
-  autoFocus?: boolean;
-  placeholder?: string;
-  error?: boolean;
-  errorMessage?: string;
-  onFocus?: () => void;
-  onBlur?: () => void;
-  onChange?: (text: string) => void;
 }
 
-export function PasswordInput(props: PasswordInputProps) {
+export function PasswordInput(props: PasswordInputProps & TextInputProps) {
   const [isPasswordVisible, setIsPasswordVisible] = useState(false);
+
+  const {
+    withBoard,
+    disabled,
+    enableBoard,
+    label,
+    error,
+    errorMessage,
+    ...propsRest
+  } = props;
+
+  const passwordVisibilityButtonStyles = [
+    styles.visibilityButton,
+    disabled ? styles.visibilityButtonDisabled : null,
+  ];
+
+  function togglePasswordVisibility() {
+    setIsPasswordVisible((prev) => !prev);
+  }
 
   return (
     <View style={defaultInputStyles.inputField}>
-      <Text style={defaultInputStyles.label}>{props.label}</Text>
-      <View style={defaultInputStyles.wrapper}>
-        <View
-          style={[
-            defaultInputStyles.boxShadow,
-            props.value.length ? defaultInputStyles.boxShadowFilled : null,
-            props.value.length && props.disabled
-              ? defaultInputStyles.boxShadowDisabled
-              : null,
-            !props.value.length && props.disabled
-              ? defaultInputStyles.boxShadowEmpty
-              : null,
-            props.error ? defaultInputStyles.boxShadowError : null,
-          ]}
-        >
-          <View
-            style={[
-              defaultInputStyles.inputBox,
-              props.disabled ? defaultInputStyles.inputBoxDisabled : null,
-            ]}
+      <Text style={defaultInputStyles.label}>{label}</Text>
+      <RawInput
+        textContentType="password"
+        secureTextEntry={!isPasswordVisible}
+        placeholderTextColor={"#B7B7B7"}
+        disabled={disabled}
+        error={error}
+        rightAdornment={
+          <Pressable
+            disabled={disabled}
+            hitSlop={8}
+            onPress={togglePasswordVisibility}
+            style={passwordVisibilityButtonStyles}
           >
-            <TextInput
-              autoFocus={props.autoFocus}
-              textContentType="password"
-              secureTextEntry={!isPasswordVisible}
-              placeholderTextColor={"#B7B7B7"}
-              style={[
-                defaultInputStyles.input,
-                styles.input,
-                props.disabled ? defaultInputStyles.inputDisabled : null,
-              ]}
-              placeholder={props.placeholder}
-              value={props.value}
-              editable={!props.disabled}
-              contextMenuHidden={props.disabled}
-              selectTextOnFocus={props.disabled}
-              onBlur={props.onBlur}
-              onFocus={props.onFocus}
-              onChangeText={props.onChange}
-            />
-            <Pressable
-              disabled={props.disabled}
-              hitSlop={{ top: 14, bottom: 14 }}
-              onPress={() => setIsPasswordVisible((prev) => !prev)}
-              style={[
-                styles.visibilityButton,
-                props.disabled ? styles.visibilityButtonDisabled : null,
-              ]}
-            >
-              {isPasswordVisible ? <EyeOpenIcon /> : <EyeOffIcon />}
-            </Pressable>
-          </View>
-        </View>
-        {props.error ? (
-          <AlertIcon style={defaultInputStyles.errorIcon} />
-        ) : null}
-      </View>
-      {props.errorMessage && <ErrorMessage message={props.errorMessage} />}
-      {props.withBoard && (
+            {isPasswordVisible ? <EyeOpenIcon /> : <EyeOffIcon />}
+          </Pressable>
+        }
+        {...propsRest}
+      />
+      {errorMessage && <ErrorMessage message={errorMessage} />}
+      {withBoard && (
         <PasswordValidationBoard
-          enabled={!!props.enableBoard}
-          password={props.value}
+          enabled={!!enableBoard}
+          password={props.value || ""}
         />
       )}
     </View>
@@ -97,13 +77,8 @@ export function PasswordInput(props: PasswordInputProps) {
 }
 
 const styles = StyleSheet.create({
-  input: {
-    paddingRight: 0,
-  },
   visibilityButton: {
-    marginLeft: "auto",
-    paddingLeft: 16,
-    paddingRight: 15,
+    marginRight: 15,
     justifyContent: "center",
   },
   visibilityButtonDisabled: {
