@@ -54,6 +54,15 @@ const SignupScreen = () => {
     validateField("password", value, validatePassword);
   }
 
+  function scrollToTop() {
+    scrollRef.current?.scrollTo({ y: 0, animated: true });
+  }
+
+  function handleUnexpectedError() {
+    scrollToTop();
+    setError({ message: UNEXPECTED_ERROR_MESSAGE });
+  }
+
   async function handleSubmit() {
     if (!validateAllFields()) return;
     await httpAuthService.signup(values);
@@ -62,13 +71,13 @@ const SignupScreen = () => {
 
   function handleError(error: Error) {
     if (error instanceof HttpError) {
-      !error.field && scrollRef.current?.scrollTo({ y: 0, animated: true });
+      !error.field && scrollToTop();
       return setError({ field: error.field as any, message: error.message });
     }
     if (error instanceof ConnectionError) {
       return navigation.navigate(RouteConstants.ConnectionError);
     }
-    setError({ message: UNEXPECTED_ERROR_MESSAGE });
+    handleUnexpectedError();
   }
 
   function validateAllFields() {

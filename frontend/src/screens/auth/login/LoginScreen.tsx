@@ -21,6 +21,7 @@ import { HttpError } from "../../../@core/errors/httpError";
 import { ConnectionError } from "../../../@core/errors/connectionError";
 import { useAppNavigation } from "../../../hooks/useAppNavigation";
 import { RouteConstants } from "../../../routes/types";
+import { wrongCredentialsMessage } from "./utils";
 
 const loginInitialState: LoginFormData = {
   email: "",
@@ -35,6 +36,19 @@ const LoginScreen = () => {
   });
   const { values, error, isSubmitting } = data;
 
+  function goBack() {
+    navigation.goBack();
+  }
+
+  function scrollToTop() {
+    scrollRef.current?.scrollTo({ y: 0, animated: true });
+  }
+
+  function handleUnexpectedError() {
+    scrollToTop();
+    setError({ message: UNEXPECTED_ERROR_MESSAGE });
+  }
+
   async function handleSubmit() {
     if (!validateAllFields()) return;
 
@@ -46,14 +60,18 @@ const LoginScreen = () => {
   }
 
   function handleError(error: Error) {
-    if (error instanceof HttpError) {
-      error.field && scrollRef.current?.scrollTo({ y: 0, animated: true });
-      return setError({ field: "all", message: error.message });
-    }
     if (error instanceof ConnectionError) {
       return navigation.navigate(RouteConstants.ConnectionError);
     }
-    setError({ message: UNEXPECTED_ERROR_MESSAGE });
+    if (error instanceof HttpError) {
+      if (error.status === 401) {
+        scrollToTop();
+        return setError({ field: "all", message: wrongCredentialsMessage });
+      }
+      !error.field && scrollToTop();
+      return setError({ field: error.field as any, message: error.message });
+    }
+    handleUnexpectedError();
   }
 
   function validateAllFields() {
@@ -69,10 +87,6 @@ const LoginScreen = () => {
       }
     }
     return true;
-  }
-
-  function goBack() {
-    navigation.goBack();
   }
 
   return (

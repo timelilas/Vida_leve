@@ -10,7 +10,7 @@ export function useForm<T extends Record<string, any>>(
 ) {
   const [values, setValues] = useState(params.initialState);
   const [error, setError] = useState<ErrorState<keyof T | "all">>({});
-  const [isSubmitting, setisSubmitting] = useState(false);
+  const [isSubmitting, setIsSubmitting] = useState(false);
   const [isFormDirty, setIsFormDirty] = useState(false);
 
   function onSubmit(
@@ -20,7 +20,7 @@ export function useForm<T extends Record<string, any>>(
     return async () => {
       if (isSubmitting) return;
 
-      setisSubmitting(true);
+      setIsSubmitting(true);
       setError({});
 
       try {
@@ -29,7 +29,7 @@ export function useForm<T extends Record<string, any>>(
       } catch (error: any) {
         handleError(error);
       } finally {
-        setisSubmitting(false);
+        setIsSubmitting(false);
       }
     };
   }

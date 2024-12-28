@@ -47,7 +47,18 @@ const ProfileFormScreen = () => {
   const { values, error, isSubmitting, isFormDirty } = data;
 
   function goBack() {
-    navigation.goBack();
+    if (!isSubmitting) {
+      navigation.goBack();
+    }
+  }
+
+  function scrollToTop() {
+    scrollRef.current?.scrollTo({ y: 0, animated: true });
+  }
+
+  function handleUnexpectedError() {
+    scrollToTop();
+    setError({ message: UNEXPECTED_ERROR_MESSAGE });
   }
 
   function navigateToProgressForm() {
@@ -91,13 +102,13 @@ const ProfileFormScreen = () => {
 
   async function handleError(error: Error) {
     if (error instanceof HttpError) {
-      !error.field && scrollRef.current?.scrollTo({ y: 0, animated: true });
+      !error.field && scrollToTop();
       return setError({ field: error.field as any, message: error.message });
     }
     if (error instanceof ConnectionError) {
       return navigation.navigate(RouteConstants.ConnectionError);
     }
-    setError({ message: UNEXPECTED_ERROR_MESSAGE });
+    handleUnexpectedError();
   }
 
   return (

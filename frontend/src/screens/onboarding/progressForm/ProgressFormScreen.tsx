@@ -56,7 +56,18 @@ const ProgressFormScreen = () => {
   const { height, weight, goalWeight, activityFrequency } = values;
 
   function goBack() {
-    navigation.goBack();
+    if (!isSubmitting) {
+      navigation.goBack();
+    }
+  }
+
+  function scrollToTop() {
+    scrollRef.current?.scrollTo({ y: 0, animated: true });
+  }
+
+  function handleUnexpectedError() {
+    scrollToTop();
+    setError({ message: UNEXPECTED_ERROR_MESSAGE });
   }
 
   function navigateToPlanSelection() {
@@ -90,7 +101,7 @@ const ProgressFormScreen = () => {
 
   function handleGoalWeightValidation() {
     if (!birthDate || !gender) {
-      scrollRef.current?.scrollTo({ y: 0, animated: true });
+      scrollToTop();
       return setError({ message: missingProfileFormField });
     }
     const { success: validWeight } = validateWeight(weight);
@@ -111,7 +122,7 @@ const ProgressFormScreen = () => {
 
   function validateAllFields() {
     if (!birthDate || !gender) {
-      scrollRef.current?.scrollTo({ y: 0, animated: true });
+      scrollToTop();
       return setError({ message: missingProfileFormField });
     }
     const age = calculateAge(new Date(birthDate));
@@ -152,7 +163,6 @@ const ProgressFormScreen = () => {
     });
 
     const plans = generateCaloriePlans();
-
     setProgress(data);
     setPlans(plans);
     navigateToPlanSelection();
@@ -160,13 +170,13 @@ const ProgressFormScreen = () => {
 
   function handleError(error: Error) {
     if (error instanceof HttpError) {
-      !error.field && scrollRef.current?.scrollTo({ y: 0, animated: true });
+      !error.field && scrollToTop();
       return setError({ field: error.field as any, message: error.message });
     }
     if (error instanceof ConnectionError) {
       return navigation.navigate(RouteConstants.ConnectionError);
     }
-    setError({ message: UNEXPECTED_ERROR_MESSAGE });
+    handleUnexpectedError();
   }
 
   return (
