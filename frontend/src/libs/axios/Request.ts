@@ -30,8 +30,15 @@ export const request = async <T>(
   } catch (error: any) {
     if (axios.isAxiosError(error)) {
       if (error.response) {
-        const { field, message } = error.response.data.error;
-        throw new HttpError({ message, field, status: error.response.status });
+        const errorParams = error.response.data;
+
+        throw new HttpError({
+          field: errorParams.field,
+          path: errorParams.path,
+          timestamp: new Date(errorParams.timestamp),
+          message: errorParams.error,
+          status: error.response.status,
+        });
       }
 
       throw new ConnectionError(

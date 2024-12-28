@@ -21,6 +21,8 @@ export function exceptionResponseAdapter({
   console.log(exception);
 
   return res.status(exception.status).json({
+    timestamp: exception.timestamp,
+    path: exception.path,
     error: exception.status >= 500 ? alternativeMsg : exception.message,
     field: exception instanceof HttpException ? exception.field || null : null,
   });
