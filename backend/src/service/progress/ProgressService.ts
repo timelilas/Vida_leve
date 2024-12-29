@@ -5,17 +5,13 @@ import { SetCaloriePlanDTO, UpsertProgressDTO } from "./types";
 export default class ProgressService {
   public upsert = async (params: UpsertProgressDTO) => {
     const { data, transaction } = params;
+
     try {
-      await Progress.upsert(
+      const [updatedProgress] = await Progress.upsert(
         { ...data, updatedAt: new Date() },
-        { transaction: params.transaction }
+        { transaction: transaction, returning: true }
       );
 
-      const updatedProgress = await Progress.findOne({
-        where: { userId: data.userId },
-        attributes: { exclude: ["createdAt", "updatedAt"] },
-        transaction,
-      });
       return (updatedProgress as Progress).toJSON();
     } catch (error: any) {
       throw new DatabaseException(
@@ -50,20 +46,16 @@ export default class ProgressService {
     const { userId, caloriePlan } = params;
 
     try {
-      const [updatedCount] = await Progress.update(
+      const [updatedCount, updatedProgress] = await Progress.update(
         { currentCaloriePlan: caloriePlan, updatedAt: new Date() },
-        { where: { userId } }
+        { where: { userId }, returning: true }
       );
 
       if (updatedCount === 0) {
         return null;
       }
 
-      const updatedProgress = await Progress.findOne({
-        where: { userId },
-        attributes: { exclude: ["createdAt", "updatedAt"] },
-      });
-      return (updatedProgress as Progress).toJSON();
+      return (updatedProgress[0] as Progress).toJSON();
     } catch (error: any) {
       throw new DatabaseException(
         `Erro na seleção do plano de calorias para o usuário com id: ${userId}`,

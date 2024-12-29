@@ -72,25 +72,16 @@ export default class UserService {
     const { id, name, phone, birthDate, gender } = params;
 
     try {
-      const foundUser = await User.findOne({
-        where: { id },
-        attributes: ["id"],
-      });
+      const [updatedCount, updatedUser] = await User.update(
+        { name, phone, birthDate, gender, updatedAt: new Date() },
+        { where: { id }, returning: true }
+      );
 
-      if (!foundUser) {
+      if (updatedCount < 1) {
         return null;
       }
 
-      await User.update(
-        { name, phone, birthDate, gender, updatedAt: new Date() },
-        { where: { id } }
-      );
-
-      const updatedUser = await User.findOne({
-        where: { id },
-        attributes: { exclude: ["senha", "createdAt", "updatedAt"] },
-      });
-      return (updatedUser as User).getProfile();
+      return (updatedUser[0] as User).getProfile();
     } catch (error: any) {
       throw new DatabaseException(
         `Erro na tentativa de atualizar o perfil do usuário com id: ${id}`,
