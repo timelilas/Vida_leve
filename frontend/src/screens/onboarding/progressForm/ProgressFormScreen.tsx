@@ -9,7 +9,6 @@ import { SubmitButton } from "../../../components/buttons/SubmitButton";
 import { ScreenTitle } from "../../../components/ScreenTitle";
 import { Paragraph } from "../../../components/Paragraph";
 import { useForm } from "../../../hooks/useForm";
-import { httpAuthService } from "../../../services/auth";
 import { validateHeight } from "../../../utils/validations/height";
 import { validateWeight } from "../../../utils/validations/weight";
 import { validateActitivyFrequency } from "../../../utils/validations/activityFrequency";
@@ -34,6 +33,7 @@ import { validPlanTypes } from "../../../@core/entities/@shared/planType/constan
 import { useAppNavigation } from "../../../hooks/useAppNavigation";
 import { RouteConstants } from "../../../routes/types";
 import { httpProgressService } from "../../../services/progress";
+import { UNEXPECTED_ERROR_MESSAGE } from "../../../constants/errorMessages";
 
 const ProgressFormScreen = () => {
   const setProgress = useProgressStore((state) => state.setProgress);

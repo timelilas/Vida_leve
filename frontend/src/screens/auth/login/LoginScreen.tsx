@@ -15,13 +15,15 @@ import { validateEmptyField } from "../../../utils/validations/common";
 import { LoginFormData } from "./types";
 import { maskEmail } from "../../../utils/masks";
 import { HeaderNavigator } from "../../../components/HeaderNavigator";
-import styles from "../styles";
-import AsyncStorage from "@react-native-async-storage/async-storage";
 import { HttpError } from "../../../@core/errors/httpError";
 import { ConnectionError } from "../../../@core/errors/connectionError";
 import { useAppNavigation } from "../../../hooks/useAppNavigation";
 import { RouteConstants } from "../../../routes/types";
 import { wrongCredentialsMessage } from "./utils";
+import { SecureStorage } from "../../../services/secureStorage/SecureStorage";
+import styles from "../styles";
+import { STORAGE_ACCESS_TOKEN } from "../../../constants/localStorageConstants";
+import { UNEXPECTED_ERROR_MESSAGE } from "../../../constants/errorMessages";
 
 const loginInitialState: LoginFormData = {
   email: "",
@@ -53,7 +55,9 @@ const LoginScreen = () => {
     if (!validateAllFields()) return;
 
     const { data } = await httpAuthService.login(values);
-    await AsyncStorage.setItem("token", data.token);
+
+    await SecureStorage.setItem(STORAGE_ACCESS_TOKEN, data.token);
+
     navigation.dispatch(
       CommonActions.reset({ routes: [{ name: RouteConstants.ProfileForm }] })
     );
@@ -71,6 +75,7 @@ const LoginScreen = () => {
       !error.field && scrollToTop();
       return setError({ field: error.field as any, message: error.message });
     }
+
     handleUnexpectedError();
   }
 

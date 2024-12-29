@@ -11,7 +11,6 @@ import { validateEmail } from "../../../utils/validations/email";
 import { validatePassword } from "../../../utils/validations/password";
 import { validatePasswordConfirmation } from "../../../utils/validations/passwordConfirmation";
 import { SignupFormData } from "./types";
-import styles from "../styles";
 import { maskEmail } from "../../../utils/masks";
 import { HeaderNavigator } from "../../../components/HeaderNavigator";
 import { useForm } from "../../../hooks/useForm";
@@ -21,6 +20,8 @@ import { ConnectionError } from "../../../@core/errors/connectionError";
 import { HttpError } from "../../../@core/errors/httpError";
 import { useAppNavigation } from "../../../hooks/useAppNavigation";
 import { RouteConstants } from "../../../routes/types";
+import styles from "../styles";
+import { UNEXPECTED_ERROR_MESSAGE } from "../../../constants/errorMessages";
 
 const signupFormInitialState: SignupFormData = {
   email: "",

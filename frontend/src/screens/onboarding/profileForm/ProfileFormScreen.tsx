@@ -10,7 +10,6 @@ import { Paragraph } from "../../../components/Paragraph";
 import { ScreenTitle } from "../../../components/ScreenTitle";
 import { useForm } from "../../../hooks/useForm";
 import { GenderType } from "../../../@core/entities/@shared/gender/type";
-import { httpAuthService } from "../../../services/auth";
 import { validatePhone } from "../../../utils/validations/phone";
 import { validateBirthDate } from "../../../utils/validations/date";
 import { validateName } from "../../../utils/validations/name";
@@ -30,6 +29,7 @@ import { ConnectionError } from "../../../@core/errors/connectionError";
 import { useAppNavigation } from "../../../hooks/useAppNavigation";
 import { RouteConstants } from "../../../routes/types";
 import { httpUserService } from "../../../services/user";
+import { UNEXPECTED_ERROR_MESSAGE } from "../../../constants/errorMessages";
 
 const ProfileFormScreen = () => {
   const navigation = useAppNavigation();

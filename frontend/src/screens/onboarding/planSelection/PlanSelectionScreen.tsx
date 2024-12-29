@@ -9,7 +9,6 @@ import { CaloriePlanButton } from "../../../components/buttons/CaloriePlanButton
 import { planUiDetails } from "./utils";
 import { useCaloriePlanStore } from "../../../store/caloriePlan";
 import { useRef } from "react";
-import { httpAuthService } from "../../../services/auth";
 import { useForm } from "../../../hooks/useForm";
 import { HttpError } from "../../../@core/errors/httpError";
 import { ConnectionError } from "../../../@core/errors/connectionError";
@@ -17,17 +16,17 @@ import { useProgressStore } from "../../../store/progress";
 import { useAppNavigation } from "../../../hooks/useAppNavigation";
 import { RouteConstants } from "../../../routes/types";
 import { httpProgressService } from "../../../services/progress";
+import { UNEXPECTED_ERROR_MESSAGE } from "../../../constants/errorMessages";
 
 const PlanSelectionScreen = () => {
   const navigation = useAppNavigation();
   const planType = useProgressStore((state) => state.data?.currentCaloriePlan);
-  const scrollRef = useRef<ScrollView>(null);
   const caloriePlans = useCaloriePlanStore((state) => state.data);
   const setProgress = useProgressStore((state) => state.setProgress);
   const { handleChange, setError, onSubmit, data } = useForm<{
     planType: PlanType | null;
   }>({ initialState: { planType: planType ?? null } });
-  const { error, isSubmitting, values, isFormDirty } = data;
+  const { isSubmitting, values, isFormDirty } = data;
 
   function goBack() {
     if (!isSubmitting) {
@@ -35,12 +34,7 @@ const PlanSelectionScreen = () => {
     }
   }
 
-  function scrollToTop() {
-    scrollRef.current?.scrollTo({ y: 0, animated: true });
-  }
-
   function handleUnexpectedError() {
-    scrollToTop();
     setError({ message: UNEXPECTED_ERROR_MESSAGE });
   }
 
@@ -48,22 +42,16 @@ const PlanSelectionScreen = () => {
     navigation.navigate(RouteConstants.GoalGuidance);
   }
 
-  function setPlanError() {
-    setError({ field: "planType" });
-  }
-
   function handlePlanSelection(planType: PlanType) {
     if (planType === values.planType) {
       handleChange("planType", null);
-      setPlanError();
     } else {
       handleChange("planType", planType);
-      setError({});
     }
   }
 
   async function handleSubmit() {
-    if (!values.planType) return setPlanError();
+    if (!values.planType) return;
     if (!isFormDirty) return navigateToGuidance();
 
     const { data } = await httpProgressService.setCaloriePlan(values.planType);
@@ -73,7 +61,6 @@ const PlanSelectionScreen = () => {
 
   async function handleError(error: Error) {
     if (error instanceof HttpError) {
-      !error.field && scrollToTop();
       return setError({ field: error.field as any, message: error.message });
     }
     if (error instanceof ConnectionError) {
@@ -83,7 +70,7 @@ const PlanSelectionScreen = () => {
   }
 
   return (
-    <ScreenWrapper ref={scrollRef} scrollable>
+    <ScreenWrapper scrollable>
       <ScreenHeader onGoBack={goBack} />
       <View style={styles.contentContainer}>
         <ScreenTitle
@@ -112,7 +99,7 @@ const PlanSelectionScreen = () => {
         </View>
       </View>
       <SubmitButton
-        disabled={isSubmitting || error.field === "planType"}
+        disabled={isSubmitting || !values.planType}
         onPress={onSubmit(handleSubmit, handleError)}
         title="Salvar informações"
         type="primary"
