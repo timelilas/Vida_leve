@@ -33,6 +33,7 @@ import {
 import { validPlanTypes } from "../../../@core/entities/@shared/planType/constants";
 import { useAppNavigation } from "../../../hooks/useAppNavigation";
 import { RouteConstants } from "../../../routes/types";
+import { httpProgressService } from "../../../services/progress";
 
 const ProgressFormScreen = () => {
   const setProgress = useProgressStore((state) => state.setProgress);
@@ -155,7 +156,7 @@ const ProgressFormScreen = () => {
     if (!validateAllFields()) return;
     if (!isFormDirty) return navigateToPlanSelection();
 
-    const { data } = await httpAuthService.createProgress({
+    const { data } = await httpProgressService.createProgress({
       weight,
       goalWeight,
       height: parseHeight(height),

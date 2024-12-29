@@ -29,6 +29,7 @@ import { HttpError } from "../../../@core/errors/httpError";
 import { ConnectionError } from "../../../@core/errors/connectionError";
 import { useAppNavigation } from "../../../hooks/useAppNavigation";
 import { RouteConstants } from "../../../routes/types";
+import { httpUserService } from "../../../services/user";
 
 const ProfileFormScreen = () => {
   const navigation = useAppNavigation();
@@ -94,7 +95,7 @@ const ProfileFormScreen = () => {
 
     const birthDateISO = formatDateToISO(values.birthDate);
     const dataToSubmit = { ...values, birthDate: birthDateISO };
-    const { data } = await httpAuthService.updateProfile(dataToSubmit as any);
+    const { data } = await httpUserService.updateProfile(dataToSubmit as any);
 
     setUser(data);
     navigateToProgressForm();

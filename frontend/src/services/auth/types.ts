@@ -1,12 +1,11 @@
-import { ProgressProps } from "../../@core/entities/progress/type";
 import { UserProps } from "../../@core/entities/user/type";
-
-export type HttpSignupOutputDTO = Omit<UserProps, "password">;
 
 export interface HttpSignupInputDTO
   extends Pick<UserProps, "email" | "password"> {
   passwordConfirmation: string;
 }
+
+export type HttpSignupOutputDTO = Omit<UserProps, "password">;
 
 export interface HttpLoginInputDTO
   extends Pick<UserProps, "email" | "password"> {
@@ -18,18 +17,3 @@ export interface HttpLoginOutputDTO {
   id: number;
   token: string;
 }
-
-export interface HttpUpdateProfileOutputDTO
-  extends Omit<UserProps, "password" | "birthDate"> {
-  birthDate: string;
-}
-
-export type HttpUpdateProfileInputDTO = Pick<
-  UserProps,
-  "name" | "phone" | "birthDate" | "gender"
->;
-
-export type HttpCreateProgressInputDTO = Omit<
-  ProgressProps,
-  "currentCaloriePlan"
->;

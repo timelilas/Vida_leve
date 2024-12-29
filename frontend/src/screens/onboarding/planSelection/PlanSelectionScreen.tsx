@@ -16,6 +16,7 @@ import { ConnectionError } from "../../../@core/errors/connectionError";
 import { useProgressStore } from "../../../store/progress";
 import { useAppNavigation } from "../../../hooks/useAppNavigation";
 import { RouteConstants } from "../../../routes/types";
+import { httpProgressService } from "../../../services/progress";
 
 const PlanSelectionScreen = () => {
   const navigation = useAppNavigation();
@@ -65,7 +66,7 @@ const PlanSelectionScreen = () => {
     if (!values.planType) return setPlanError();
     if (!isFormDirty) return navigateToGuidance();
 
-    const { data } = await httpAuthService.setCaloriePlan(values.planType);
+    const { data } = await httpProgressService.setCaloriePlan(values.planType);
     setProgress(data);
     navigateToGuidance();
   }
