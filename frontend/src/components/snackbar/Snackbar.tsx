@@ -1,5 +1,5 @@
 import { useEffect, useLayoutEffect, useRef, useState } from "react";
-import { Animated, StyleSheet, Text, View } from "react-native";
+import { Animated, Text, View } from "react-native";
 import { styles, neutralStyles, errorStyles, successStyles } from "./styles";
 
 export type SnackbarVariant = "success" | "error" | "neutral";

@@ -1,12 +1,11 @@
-import React, { useRef, useState } from "react";
-import { ScrollView, View } from "react-native";
+import React, { useState } from "react";
+import { View } from "react-native";
 import { LogoSVG } from "../../../components/logos/LogoSVG";
 import { ScreenWrapper } from "../../../components/ScreenWrapper";
 import { Input } from "../../../components/inputs/Input";
 import { PasswordInput } from "../../../components/inputs/PasswordInput";
 import { SubmitButton } from "../../../components/buttons/SubmitButton";
 import { ScreenTitle } from "../../../components/ScreenTitle";
-import { ErrorMessage } from "../../../components/ErrorMessage";
 import { validateEmail } from "../../../utils/validations/email";
 import { validatePassword } from "../../../utils/validations/password";
 import { validatePasswordConfirmation } from "../../../utils/validations/passwordConfirmation";
@@ -21,7 +20,7 @@ import { HttpError } from "../../../@core/errors/httpError";
 import { useAppNavigation } from "../../../hooks/useAppNavigation";
 import { RouteConstants } from "../../../routes/types";
 import styles from "../styles";
-import { UNEXPECTED_ERROR_MESSAGE } from "../../../constants/errorMessages";
+import { useSnackbar } from "../../../hooks/useSnackbar";
 
 const signupFormInitialState: SignupFormData = {
   email: "",
@@ -30,8 +29,8 @@ const signupFormInitialState: SignupFormData = {
 };
 
 const SignupScreen = () => {
+  const { Snackbar, showSnackbar } = useSnackbar();
   const navigation = useAppNavigation();
-  const scrollRef = useRef<ScrollView>(null);
   const [passwordFocused, setPasswordFocused] = useState(false);
   const [isTypingPassword, setIsTypingPassword] = useState(false);
   const { data, handleChange, setError, validateField, onSubmit } = useForm({
@@ -55,15 +54,6 @@ const SignupScreen = () => {
     validateField("password", value, validatePassword);
   }
 
-  function scrollToTop() {
-    scrollRef.current?.scrollTo({ y: 0, animated: true });
-  }
-
-  function handleUnexpectedError() {
-    scrollToTop();
-    setError({ message: UNEXPECTED_ERROR_MESSAGE });
-  }
-
   async function handleSubmit() {
     if (!validateAllFields()) return;
     await httpAuthService.signup(values);
@@ -71,14 +61,19 @@ const SignupScreen = () => {
   }
 
   function handleError(error: Error) {
-    if (error instanceof HttpError) {
-      !error.field && scrollToTop();
-      return setError({ field: error.field as any, message: error.message });
-    }
     if (error instanceof ConnectionError) {
       return navigation.navigate(RouteConstants.ConnectionError);
     }
-    handleUnexpectedError();
+    if (error instanceof HttpError) {
+      setError({ field: error.field as any, message: error.message });
+    }
+    if (!(error as any).field) {
+      showSnackbar({
+        duration: 4000,
+        message: error.message,
+        variant: "error",
+      });
+    }
   }
 
   function validateAllFields() {
@@ -105,13 +100,10 @@ const SignupScreen = () => {
   }
 
   return (
-    <ScreenWrapper scrollable ref={scrollRef}>
+    <ScreenWrapper snackbar={<Snackbar />}>
       <View style={styles.container}>
         <HeaderNavigator style={styles.headerNavigator} onGoBack={goBack} />
         <LogoSVG style={styles.logo} />
-        {error.message && !error.field && (
-          <ErrorMessage style={styles.error} message={error.message} />
-        )}
         <ScreenTitle
           style={styles.title}
           title={`Boas vindas!\nCadastre-se para continuar`}

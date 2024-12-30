@@ -1,4 +1,4 @@
-import { ScrollView, StyleSheet, View } from "react-native";
+import { StyleSheet, View } from "react-native";
 import { ScreenWrapper } from "../../../components/ScreenWrapper";
 import { ScreenHeader } from "../../../components/ScreenHeader";
 import { Input } from "../../../components/inputs/Input";
@@ -18,7 +18,6 @@ import { validateGoalWeight } from "../../../utils/validations/goalWeight";
 import { useUserStore } from "../../../store/user";
 import { useProgressStore } from "../../../store/progress";
 import { calculateAge } from "../../../@core/entities/user/helpers";
-import { useRef } from "react";
 import { HttpError } from "../../../@core/errors/httpError";
 import { ConnectionError } from "../../../@core/errors/connectionError";
 import { buildCaloriePlan } from "../../../@core/entities/caloriePlan/helpers";
@@ -33,13 +32,13 @@ import { validPlanTypes } from "../../../@core/entities/@shared/planType/constan
 import { useAppNavigation } from "../../../hooks/useAppNavigation";
 import { RouteConstants } from "../../../routes/types";
 import { httpProgressService } from "../../../services/progress";
-import { UNEXPECTED_ERROR_MESSAGE } from "../../../constants/errorMessages";
+import { useSnackbar } from "../../../hooks/useSnackbar";
 
 const ProgressFormScreen = () => {
+  const { Snackbar, showSnackbar } = useSnackbar();
   const setProgress = useProgressStore((state) => state.setProgress);
   const setPlans = useCaloriePlanStore((state) => state.setPlans);
   const navigation = useAppNavigation();
-  const scrollRef = useRef<ScrollView>(null);
   const progress = useProgressStore((state) => state.data);
   const gender = useUserStore((state) => state.data.gender);
   const birthDate = useUserStore((state) => state.data.birthDate);
@@ -62,13 +61,8 @@ const ProgressFormScreen = () => {
     }
   }
 
-  function scrollToTop() {
-    scrollRef.current?.scrollTo({ y: 0, animated: true });
-  }
-
-  function handleUnexpectedError() {
-    scrollToTop();
-    setError({ message: UNEXPECTED_ERROR_MESSAGE });
+  function showErrorSnackbar(message: string) {
+    showSnackbar({ duration: 4000, message: message, variant: "error" });
   }
 
   function navigateToPlanSelection() {
@@ -102,9 +96,9 @@ const ProgressFormScreen = () => {
 
   function handleGoalWeightValidation() {
     if (!birthDate || !gender) {
-      scrollToTop();
-      return setError({ message: missingProfileFormField });
+      return showErrorSnackbar(missingProfileFormField);
     }
+
     const { success: validWeight } = validateWeight(weight);
     const { success: validHeight } = validateHeight(parseHeight(height));
 
@@ -123,9 +117,9 @@ const ProgressFormScreen = () => {
 
   function validateAllFields() {
     if (!birthDate || !gender) {
-      scrollToTop();
-      return setError({ message: missingProfileFormField });
+      return showErrorSnackbar(missingProfileFormField);
     }
+
     const age = calculateAge(new Date(birthDate));
     const heightAsNumber = parseHeight(height);
     const goalWeightParams = {
@@ -170,23 +164,21 @@ const ProgressFormScreen = () => {
   }
 
   function handleError(error: Error) {
-    if (error instanceof HttpError) {
-      !error.field && scrollToTop();
-      return setError({ field: error.field as any, message: error.message });
-    }
     if (error instanceof ConnectionError) {
       return navigation.navigate(RouteConstants.ConnectionError);
     }
-    handleUnexpectedError();
+    if (error instanceof HttpError) {
+      setError({ field: error.field as any, message: error.message });
+    }
+    if (!(error as any).field) {
+      showErrorSnackbar(error.message);
+    }
   }
 
   return (
-    <ScreenWrapper ref={scrollRef} scrollable>
+    <ScreenWrapper scrollable snackbar={<Snackbar />}>
       <ScreenHeader style={styles.header} onGoBack={goBack} />
-      {!error.field && error.message && (
-        <ErrorMessage style={styles.error} message={error.message} />
-      )}
-      <ScreenTitle title="Nos conte mais sobre você!" />
+      <ScreenTitle style={styles.title} title="Nos conte mais sobre você!" />
       <Paragraph
         text="Precisamos da sua altura, peso atual, meta de peso e frequência de atividade física para personalizar sua jornada."
         style={styles.description}
@@ -276,7 +268,7 @@ const styles = StyleSheet.create({
   header: {
     marginBottom: 40,
   },
-  error: {
+  title: {
     marginBottom: 8,
   },
   description: {

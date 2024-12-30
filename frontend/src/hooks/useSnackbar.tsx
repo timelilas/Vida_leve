@@ -1,12 +1,10 @@
-import { useState } from "react";
+import { useCallback, useState } from "react";
 import { Snackbar, SnackbarVariant } from "../components/snackbar/Snackbar";
-import { Text } from "react-native";
 
 interface SnackbarState {
   id: number | string;
-  duration: number;
   message: string;
-  visible: boolean;
+  duration: number;
   variant: SnackbarVariant;
 }
 
@@ -17,17 +15,14 @@ export function useSnackbar() {
     id: 0,
     duration: 0,
     message: "",
-    visible: false,
     variant: "neutral",
   });
 
-  function showSnackbar(options: SnackbarOptions) {
-    setSnackbarState({ visible: true, id: Date.now(), ...options });
-  }
+  const showSnackbar = useCallback((options: SnackbarOptions) => {
+    setSnackbarState({ id: Date.now(), ...options });
+  }, []);
 
-  function renderSnackbar() {
-    if (!snackbarState.visible) return null;
-
+  const renderSnackbar = useCallback(() => {
     return (
       <Snackbar
         key={snackbarState.id}
@@ -36,7 +31,12 @@ export function useSnackbar() {
         variant={snackbarState.variant}
       />
     );
-  }
+  }, [
+    snackbarState.id,
+    snackbarState.duration,
+    snackbarState.message,
+    snackbarState.variant,
+  ]);
 
   return {
     showSnackbar,

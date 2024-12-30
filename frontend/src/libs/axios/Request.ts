@@ -1,6 +1,10 @@
 import axios, { AxiosRequestConfig, AxiosResponse } from "axios";
 import { HttpError } from "../../@core/errors/httpError";
 import { ConnectionError } from "../../@core/errors/connectionError";
+import {
+  INTERNAL_SERVER_ERROR,
+  UNEXPECTED_ERROR_MESSAGE,
+} from "../../constants/errorMessages";
 
 const api = axios.create({
   // baseURL: "http://192.168.0.117:3000",
@@ -32,11 +36,16 @@ export const request = async <T>(
       if (error.response) {
         const errorParams = error.response.data;
 
+        const errorMessage =
+          error.status && error.status >= 500
+            ? INTERNAL_SERVER_ERROR
+            : errorParams.error;
+
         throw new HttpError({
           field: errorParams.field,
           path: errorParams.path,
           timestamp: new Date(errorParams.timestamp),
-          message: errorParams.error,
+          message: errorMessage,
           status: error.response.status,
         });
       }
@@ -46,6 +55,10 @@ export const request = async <T>(
       );
     }
 
-    throw error;
+    const unexpectedError = error;
+    unexpectedError.details = error.message;
+    unexpectedError.message = UNEXPECTED_ERROR_MESSAGE;
+
+    throw unexpectedError;
   }
 };

@@ -21,9 +21,9 @@ import { useAppNavigation } from "../../../hooks/useAppNavigation";
 import { RouteConstants } from "../../../routes/types";
 import { wrongCredentialsMessage } from "./utils";
 import { SecureStorage } from "../../../services/secureStorage/SecureStorage";
+import { useSnackbar } from "../../../hooks/useSnackbar";
 import styles from "../styles";
 import { STORAGE_ACCESS_TOKEN } from "../../../constants/localStorageConstants";
-import { UNEXPECTED_ERROR_MESSAGE } from "../../../constants/errorMessages";
 
 const loginInitialState: LoginFormData = {
   email: "",
@@ -31,6 +31,7 @@ const loginInitialState: LoginFormData = {
 };
 
 const LoginScreen = () => {
+  const { Snackbar, showSnackbar } = useSnackbar();
   const navigation = useAppNavigation();
   const scrollRef = useRef<ScrollView | null>(null);
   const { data, handleChange, setError, validateField, onSubmit } = useForm({
@@ -46,16 +47,10 @@ const LoginScreen = () => {
     scrollRef.current?.scrollTo({ y: 0, animated: true });
   }
 
-  function handleUnexpectedError() {
-    scrollToTop();
-    setError({ message: UNEXPECTED_ERROR_MESSAGE });
-  }
-
   async function handleSubmit() {
     if (!validateAllFields()) return;
 
     const { data } = await httpAuthService.login(values);
-
     await SecureStorage.setItem(STORAGE_ACCESS_TOKEN, data.token);
 
     navigation.dispatch(
@@ -68,15 +63,20 @@ const LoginScreen = () => {
       return navigation.navigate(RouteConstants.ConnectionError);
     }
     if (error instanceof HttpError) {
-      if (error.status === 401) {
-        scrollToTop();
-        return setError({ field: "all", message: wrongCredentialsMessage });
-      }
-      !error.field && scrollToTop();
-      return setError({ field: error.field as any, message: error.message });
+      if (error.status === 401) scrollToTop();
+      setError(
+        error.status === 401
+          ? { field: "all", message: wrongCredentialsMessage }
+          : { field: error.field as any, message: error.message }
+      );
     }
-
-    handleUnexpectedError();
+    if (!(error as any).field) {
+      showSnackbar({
+        duration: 4000,
+        message: error.message,
+        variant: "error",
+      });
+    }
   }
 
   function validateAllFields() {
@@ -95,7 +95,7 @@ const LoginScreen = () => {
   }
 
   return (
-    <ScreenWrapper scrollable ref={scrollRef}>
+    <ScreenWrapper scrollable ref={scrollRef} snackbar={<Snackbar />}>
       <View style={styles.container}>
         <HeaderNavigator onGoBack={goBack} style={styles.headerNavigator} />
         <LogoSVG style={styles.logo} />

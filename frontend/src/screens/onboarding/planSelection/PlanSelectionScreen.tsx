@@ -1,4 +1,4 @@
-import { StyleSheet, View, ScrollView } from "react-native";
+import { StyleSheet, View } from "react-native";
 import { PlanType } from "../../../@core/entities/@shared/planType/type";
 import { SubmitButton } from "../../../components/buttons/SubmitButton";
 import { ScreenWrapper } from "../../../components/ScreenWrapper";
@@ -8,22 +8,21 @@ import { Paragraph } from "../../../components/Paragraph";
 import { CaloriePlanButton } from "../../../components/buttons/CaloriePlanButton";
 import { planUiDetails } from "./utils";
 import { useCaloriePlanStore } from "../../../store/caloriePlan";
-import { useRef } from "react";
 import { useForm } from "../../../hooks/useForm";
-import { HttpError } from "../../../@core/errors/httpError";
 import { ConnectionError } from "../../../@core/errors/connectionError";
 import { useProgressStore } from "../../../store/progress";
 import { useAppNavigation } from "../../../hooks/useAppNavigation";
 import { RouteConstants } from "../../../routes/types";
 import { httpProgressService } from "../../../services/progress";
-import { UNEXPECTED_ERROR_MESSAGE } from "../../../constants/errorMessages";
+import { useSnackbar } from "../../../hooks/useSnackbar";
 
 const PlanSelectionScreen = () => {
+  const { Snackbar, showSnackbar } = useSnackbar();
   const navigation = useAppNavigation();
   const planType = useProgressStore((state) => state.data?.currentCaloriePlan);
   const caloriePlans = useCaloriePlanStore((state) => state.data);
   const setProgress = useProgressStore((state) => state.setProgress);
-  const { handleChange, setError, onSubmit, data } = useForm<{
+  const { handleChange, onSubmit, data } = useForm<{
     planType: PlanType | null;
   }>({ initialState: { planType: planType ?? null } });
   const { isSubmitting, values, isFormDirty } = data;
@@ -32,10 +31,6 @@ const PlanSelectionScreen = () => {
     if (!isSubmitting) {
       navigation.goBack();
     }
-  }
-
-  function handleUnexpectedError() {
-    setError({ message: UNEXPECTED_ERROR_MESSAGE });
   }
 
   function navigateToGuidance() {
@@ -60,17 +55,19 @@ const PlanSelectionScreen = () => {
   }
 
   async function handleError(error: Error) {
-    if (error instanceof HttpError) {
-      return setError({ field: error.field as any, message: error.message });
-    }
     if (error instanceof ConnectionError) {
       return navigation.navigate(RouteConstants.ConnectionError);
     }
-    handleUnexpectedError();
+
+    return showSnackbar({
+      duration: 4000,
+      message: error.message,
+      variant: "error",
+    });
   }
 
   return (
-    <ScreenWrapper scrollable>
+    <ScreenWrapper scrollable snackbar={<Snackbar />}>
       <ScreenHeader onGoBack={goBack} />
       <View style={styles.contentContainer}>
         <ScreenTitle

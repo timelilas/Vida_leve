@@ -30,8 +30,7 @@ export const authorizationMiddleware = async (
     if (!foundUser) {
       throw new UnauthorizedException(
         `Usuário com id: ${tokenPayload.userId} não encontrado.`,
-        resource,
-        "id"
+        resource
       );
     }
 

@@ -1,4 +1,4 @@
-import { ScrollView, StyleSheet, Text, View } from "react-native";
+import { StyleSheet, Text, View } from "react-native";
 import { ScreenWrapper } from "../../../components/ScreenWrapper";
 import { ScreenHeader } from "../../../components/ScreenHeader";
 import { Input } from "../../../components/inputs/Input";
@@ -21,7 +21,6 @@ import {
   onlyNumbers,
   maskName,
 } from "../../../utils/masks";
-import { useRef } from "react";
 import { useUserStore } from "../../../store/user";
 import { dateToPTBR, formatDateToISO } from "../../../utils/helpers";
 import { HttpError } from "../../../@core/errors/httpError";
@@ -29,11 +28,11 @@ import { ConnectionError } from "../../../@core/errors/connectionError";
 import { useAppNavigation } from "../../../hooks/useAppNavigation";
 import { RouteConstants } from "../../../routes/types";
 import { httpUserService } from "../../../services/user";
-import { UNEXPECTED_ERROR_MESSAGE } from "../../../constants/errorMessages";
+import { useSnackbar } from "../../../hooks/useSnackbar";
 
 const ProfileFormScreen = () => {
+  const { Snackbar, showSnackbar } = useSnackbar();
   const navigation = useAppNavigation();
-  const scrollRef = useRef<ScrollView>(null);
   const { setUser, data: user } = useUserStore((state) => state);
   const { data, handleChange, setError, validateField, onSubmit } =
     useForm<ProfileFormData>({
@@ -51,15 +50,6 @@ const ProfileFormScreen = () => {
     if (!isSubmitting) {
       navigation.goBack();
     }
-  }
-
-  function scrollToTop() {
-    scrollRef.current?.scrollTo({ y: 0, animated: true });
-  }
-
-  function handleUnexpectedError() {
-    scrollToTop();
-    setError({ message: UNEXPECTED_ERROR_MESSAGE });
   }
 
   function navigateToProgressForm() {
@@ -102,23 +92,25 @@ const ProfileFormScreen = () => {
   }
 
   async function handleError(error: Error) {
-    if (error instanceof HttpError) {
-      !error.field && scrollToTop();
-      return setError({ field: error.field as any, message: error.message });
-    }
     if (error instanceof ConnectionError) {
       return navigation.navigate(RouteConstants.ConnectionError);
     }
-    handleUnexpectedError();
+    if (error instanceof HttpError) {
+      setError({ field: error.field as any, message: error.message });
+    }
+    if (!(error as any).field) {
+      showSnackbar({
+        duration: 4000,
+        message: error.message,
+        variant: "error",
+      });
+    }
   }
 
   return (
-    <ScreenWrapper ref={scrollRef} scrollable>
+    <ScreenWrapper scrollable snackbar={<Snackbar />}>
       <ScreenHeader style={styles.header} onGoBack={goBack} />
-      {!error.field && error.message && (
-        <ErrorMessage style={styles.error} message={error.message} />
-      )}
-      <ScreenTitle title="Queremos ter conhecer melhor" />
+      <ScreenTitle style={styles.title} title="Queremos ter conhecer melhor" />
       <Paragraph
         style={styles.text}
         text="Complete seu cadastro para tornarmos sua experiência mais personalizada"
@@ -204,7 +196,7 @@ const styles = StyleSheet.create({
   header: {
     marginBottom: 40,
   },
-  error: {
+  title: {
     marginBottom: 8,
   },
   text: {
