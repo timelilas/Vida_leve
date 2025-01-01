@@ -5,7 +5,7 @@ import { exceptionResponseAdapter } from "../../utils/express/helpers";
 export class CaloriePlanController {
   private _CaloriePlanService = new CaloriePlanService();
 
-  async get(req: Request, res: Response): Promise<Response> {
+  async getPlans(req: Request, res: Response): Promise<Response> {
     const userId = req.user.id;
     try {
       const caloriePlans = await this._CaloriePlanService.getAll(userId);

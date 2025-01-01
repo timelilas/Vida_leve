@@ -15,7 +15,7 @@ export default class ProgressController {
   private _ProgressService = new ProgressService();
   private _UserService = new UserService();
 
-  async post(req: Request, res: Response): Promise<Response> {
+  async upsert(req: Request, res: Response): Promise<Response> {
     const { id: userId } = req.user;
     const { height, weight, goalWeight, activityFrequency } = req.body;
 
@@ -88,7 +88,7 @@ export default class ProgressController {
     }
   }
 
-  async get(req: Request, res: Response): Promise<Response> {
+  async getProgress(req: Request, res: Response): Promise<Response> {
     const userId = req.user.id;
 
     try {
@@ -138,53 +138,4 @@ export default class ProgressController {
       });
     }
   }
-
-  // async get(req: Request, res: Response): Promise<Response> {
-  //   const { id: userId } = req.user;
-
-  //   const userProgress = await this._ProgressService.getIdealPlan(
-  //     Number(userId)
-  //   );
-
-  //   if (!userProgress) {
-  //     return res.status(404).json({
-  //       error: {
-  //         field: null,
-  //         message: "Progresso não encontrado.",
-  //       },
-  //     });
-  //   }
-  //   if (!userProgress?.birthDate) {
-  //     return res.status(400).json({
-  //       error: {
-  //         field: null,
-  //         message: "Data de nascimento inválida ou não cadastrada.",
-  //       },
-  //     });
-  //   }
-  //   const age =
-  //     new Date().getFullYear() - new Date(userProgress.birthDate).getFullYear();
-
-  //   const bmr = ProgressHelper.calculateBMR(
-  //     userProgress?.gender,
-  //     userProgress?.weight,
-  //     userProgress.height,
-  //     age
-  //   );
-  //   const tdee = ProgressHelper.calculateTDEE(
-  //     bmr,
-  //     userProgress?.activityFrequency
-  //   );
-  //   const weightLossPlan = ProgressHelper.calculateWeightLossPlan(tdee);
-
-  //   return res.status(200).json({
-  //     data: {
-  //       BMR: bmr.toFixed(2),
-  //       TDEE: tdee.toFixed(2),
-  //       LENTA: weightLossPlan.slow,
-  //       MODERADA: weightLossPlan.moderate,
-  //       RAPIDA: weightLossPlan.fast,
-  //     },
-  //   });
-  // }
 }

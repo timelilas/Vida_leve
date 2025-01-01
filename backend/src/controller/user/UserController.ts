@@ -20,7 +20,7 @@ export default class UserController {
     }
   }
 
-  async put(req: Request, res: Response): Promise<Response> {
+  async update(req: Request, res: Response): Promise<Response> {
     const { name, phone, birthDate, gender } = req.body;
     const { id } = req.user;
 
@@ -31,8 +31,7 @@ export default class UserController {
       if (!foundUser) {
         throw new NotFoundException(
           `Usuário com id ${id} não encontrado.`,
-          UserController.name,
-          "id"
+          UserController.name
         );
       }
 

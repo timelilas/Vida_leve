@@ -17,7 +17,7 @@ userRouter.put(
   "/profile/",
   authorizationMiddleware,
   validationMiddleware(updateUserSchema),
-  (req, res) => userController.put(req, res)
+  (req, res) => userController.update(req, res)
 );
 
 //Rotas utilizada em desenvolvimento apenas. Não requerem autorização
