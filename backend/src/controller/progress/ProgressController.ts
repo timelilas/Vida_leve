@@ -24,16 +24,14 @@ export default class ProgressController {
     if (!userProfile?.birthDate) {
       throw new BadRequestException(
         "É necessário ter uma data de nascimento cadastrada para continuar.",
-        ProgressController.name,
-        "birthDate"
+        ProgressController.name
       );
     }
 
     if (!userProfile.gender) {
       throw new BadRequestException(
         "É necessário ter um gênero cadastrado para continuar.",
-        ProgressController.name,
-        "gender"
+        ProgressController.name
       );
     }
 

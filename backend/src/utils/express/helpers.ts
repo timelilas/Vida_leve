@@ -1,6 +1,7 @@
 import { Request, Response } from "express";
 import { Exception } from "../../@core/exception/@shared/Exception";
 import { HttpException } from "../../@core/exception/http/HttpException";
+import { InternalServerException } from "../../@core/exception/http/InternalServerException";
 
 interface ExceptionHandlerParams {
   req: Request;
@@ -18,12 +19,18 @@ export function exceptionResponseAdapter({
   exception.path = req.originalUrl;
 
   //substituir por um serviço de logging futuramente
-  console.log(exception);
+  console.error(exception);
+
+  const internalServerError =
+    exception instanceof InternalServerException
+      ? exception.message
+      : alternativeMsg;
 
   return res.status(exception.status).json({
     timestamp: exception.timestamp,
     path: exception.path,
-    error: exception.status >= 500 ? alternativeMsg : exception.message,
-    field: exception instanceof HttpException ? exception.field || null : null,
+    satus: exception.status,
+    error: exception.status >= 500 ? internalServerError : exception.message,
+    field: exception instanceof HttpException ? exception.field : undefined,
   });
 }
