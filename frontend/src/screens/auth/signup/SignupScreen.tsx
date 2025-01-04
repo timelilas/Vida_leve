@@ -100,7 +100,7 @@ const SignupScreen = () => {
   }
 
   return (
-    <ScreenWrapper snackbar={<Snackbar />}>
+    <ScreenWrapper scrollable snackbar={<Snackbar />}>
       <View style={styles.container}>
         <HeaderNavigator style={styles.headerNavigator} onGoBack={goBack} />
         <LogoSVG style={styles.logo} />
