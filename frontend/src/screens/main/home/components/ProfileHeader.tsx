@@ -23,7 +23,7 @@ export function ProileHeader() {
       </View>
       <View style={styles.userInformation}>
         <ScreenTitle title={firstname || ""} />
-        <Paragraph text={email} />
+        <Paragraph>{email}</Paragraph>
       </View>
       <TouchableOpacity style={styles.updateProfileButton}>
         <PencilIcon />

@@ -29,10 +29,10 @@ const ConnectionErrorScreen = () => {
       <View style={styles.container}>
         <View style={styles.containerContainer}>
           <ScreenTitle title="Ocorreu um erro" />
-          <Paragraph
-            text="Não foi possível carregar as informações. Verifique sua conexão e tente
-        novamente."
-          />
+          <Paragraph>
+            Não foi possível carregar as informações. Verifique sua conexão e
+            tente novamente.
+          </Paragraph>
         </View>
         <View style={styles.buttonWrapper}>
           <SubmitButton

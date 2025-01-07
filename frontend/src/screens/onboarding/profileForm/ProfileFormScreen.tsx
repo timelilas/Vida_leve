@@ -111,10 +111,9 @@ const ProfileFormScreen = () => {
     <ScreenWrapper scrollable snackbar={<Snackbar />}>
       <ScreenHeader style={styles.header} onGoBack={goBack} />
       <ScreenTitle style={styles.title} title="Queremos ter conhecer melhor" />
-      <Paragraph
-        style={styles.text}
-        text="Complete seu cadastro para tornarmos sua experiência mais personalizada"
-      />
+      <Paragraph style={styles.text}>
+        Complete seu cadastro para tornarmos sua experiência mais personalizada.
+      </Paragraph>
       <View style={styles.form}>
         <Input
           onBlur={() => validateField("name", values.name, validateName)}

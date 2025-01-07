@@ -179,10 +179,10 @@ const ProgressFormScreen = () => {
     <ScreenWrapper scrollable snackbar={<Snackbar />}>
       <ScreenHeader style={styles.header} onGoBack={goBack} />
       <ScreenTitle style={styles.title} title="Nos conte mais sobre você!" />
-      <Paragraph
-        text="Precisamos da sua altura, peso atual, meta de peso e frequência de atividade física para personalizar sua jornada."
-        style={styles.description}
-      />
+      <Paragraph style={styles.description}>
+        Precisamos da sua altura, peso atual, meta de peso e frequência de
+        atividade física para personalizar sua jornada.
+      </Paragraph>
       <View style={styles.form}>
         <Input
           onChangeText={(value) => handleChange("height", maskHeight(value))}
@@ -232,10 +232,9 @@ const ProgressFormScreen = () => {
           placeholder="Ex.: 55 kg"
         />
         <View style={styles.wrapper}>
-          <Paragraph
-            style={styles.label}
-            text="Qual é o seu nível de atividade física diária?"
-          />
+          <Paragraph style={styles.label}>
+            Qual é o seu nível de atividade física diária?
+          </Paragraph>
           {activityFrequencies.map(({ type, title, description }) => (
             <ActivityFrequencyButton
               key={type}

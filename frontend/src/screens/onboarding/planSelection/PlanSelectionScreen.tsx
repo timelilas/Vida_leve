@@ -74,10 +74,11 @@ const PlanSelectionScreen = () => {
           style={styles.title}
           title="Escolha o plano ideal para você!"
         />
-        <Paragraph
-          style={styles.text}
-          text="Selecione entre 3 opções de planos para alcançar seus objetivos no seu próprio tempo. Seja qual for a sua escolha, estamos prontos para te ajudar a chegar lá!"
-        />
+        <Paragraph style={styles.text}>
+          Selecione entre 3 opções de planos para alcançar seus objetivos no seu
+          próprio tempo. Seja qual for a sua escolha, estamos prontos para te
+          ajudar a chegar lá!
+        </Paragraph>
         <View style={styles.plansWrapper}>
           {caloriePlans.map((plan) => {
             const Icon = planUiDetails[plan.type].icon;
