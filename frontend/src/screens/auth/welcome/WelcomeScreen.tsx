@@ -5,6 +5,7 @@ import { Image } from "react-native";
 import { BigLogoSVG } from "../../../components/logos/BigLogoSVG";
 import { useAppNavigation } from "../../../hooks/useAppNavigation";
 import { RouteConstants } from "../../../routes/types";
+import { SafeAreaView } from "react-native-safe-area-context";
 
 const WelcomeScreen = () => {
   const navigation = useAppNavigation();
@@ -18,7 +19,7 @@ const WelcomeScreen = () => {
   }
 
   return (
-    <ScreenWrapper>
+    <SafeAreaView style={styles.safeAreaView}>
       <ScrollView
         contentContainerStyle={styles.scrollView}
         showsVerticalScrollIndicator={false}
@@ -62,13 +63,16 @@ const WelcomeScreen = () => {
           </View>
         </View>
       </ScrollView>
-    </ScreenWrapper>
+    </SafeAreaView>
   );
 };
 
 export default WelcomeScreen;
 
 const styles = StyleSheet.create({
+  safeAreaView: {
+    flex: 1,
+  },
   scrollView: {
     flexGrow: 1,
     gap: 56,

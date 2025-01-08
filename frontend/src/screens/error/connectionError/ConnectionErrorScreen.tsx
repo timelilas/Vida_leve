@@ -25,7 +25,7 @@ const ConnectionErrorScreen = () => {
   }
 
   return (
-    <ScreenWrapper scrollable>
+    <ScreenWrapper>
       <View style={styles.container}>
         <View style={styles.containerContainer}>
           <ScreenTitle title="Ocorreu um erro" />

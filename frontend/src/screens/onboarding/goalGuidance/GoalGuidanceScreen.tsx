@@ -23,7 +23,7 @@ const GoalGuidanceScreen = () => {
   }
 
   return (
-    <ScreenWrapper scrollable>
+    <ScreenWrapper>
       <ScreenHeader onClose={resetNavigationToHome} />
       <View style={styles.contentContainer}>
         <ScreenTitle
