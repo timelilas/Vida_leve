@@ -7,7 +7,7 @@ import { ProgressStatistics } from "./components/ProgressStatistics";
 
 const HomeScreen = () => {
   return (
-    <ScreenWrapper scrollable>
+    <ScreenWrapper>
       <ScreenHeader />
       <View style={styles.body}>
         <ProileHeader />

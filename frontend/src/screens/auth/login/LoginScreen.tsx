@@ -95,7 +95,7 @@ const LoginScreen = () => {
   }
 
   return (
-    <ScreenWrapper scrollable ref={scrollRef} snackbar={<Snackbar />}>
+    <ScreenWrapper ref={scrollRef} snackbar={<Snackbar />}>
       <View style={styles.container}>
         <HeaderNavigator onGoBack={goBack} style={styles.headerNavigator} />
         <LogoSVG style={styles.logo} />
