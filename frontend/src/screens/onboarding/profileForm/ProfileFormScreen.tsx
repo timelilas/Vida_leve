@@ -108,7 +108,7 @@ const ProfileFormScreen = () => {
   }
 
   return (
-    <ScreenWrapper scrollable snackbar={<Snackbar />}>
+    <ScreenWrapper snackbar={<Snackbar />}>
       <ScreenHeader style={styles.header} onGoBack={goBack} />
       <ScreenTitle style={styles.title} title="Queremos ter conhecer melhor" />
       <Paragraph style={styles.text}>

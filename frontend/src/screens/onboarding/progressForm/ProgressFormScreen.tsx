@@ -176,7 +176,7 @@ const ProgressFormScreen = () => {
   }
 
   return (
-    <ScreenWrapper scrollable snackbar={<Snackbar />}>
+    <ScreenWrapper snackbar={<Snackbar />}>
       <ScreenHeader style={styles.header} onGoBack={goBack} />
       <ScreenTitle style={styles.title} title="Nos conte mais sobre você!" />
       <Paragraph style={styles.description}>

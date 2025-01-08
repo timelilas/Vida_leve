@@ -67,7 +67,7 @@ const PlanSelectionScreen = () => {
   }
 
   return (
-    <ScreenWrapper scrollable snackbar={<Snackbar />}>
+    <ScreenWrapper snackbar={<Snackbar />}>
       <ScreenHeader onGoBack={goBack} />
       <View style={styles.contentContainer}>
         <ScreenTitle

@@ -1,9 +1,8 @@
 import { forwardRef, PropsWithChildren, ReactNode } from "react";
-import { ScrollView, StyleSheet, View } from "react-native";
+import { ScrollView, ScrollViewProps, StyleSheet, View } from "react-native";
 import { SafeAreaView } from "react-native-safe-area-context";
 
-interface ScreenWrapper extends PropsWithChildren {
-  scrollable?: boolean;
+interface ScreenWrapper extends ScrollViewProps {
   snackbar?: ReactNode;
 }
 
@@ -12,18 +11,14 @@ export const ScreenWrapper = forwardRef<ScrollView, ScreenWrapper>(
     return (
       <SafeAreaView style={styles.safeArea}>
         <View style={styles.container}>
-          {props.scrollable ? (
-            <ScrollView
-              ref={ref}
-              contentContainerStyle={styles.scrollView}
-              showsVerticalScrollIndicator={false}
-            >
-              {props.children}
-            </ScrollView>
-          ) : (
-            props.children
-          )}
-          {props.snackbar}
+          <ScrollView
+            ref={ref}
+            contentContainerStyle={styles.scrollView}
+            showsVerticalScrollIndicator={false}
+            scrollEnabled={props.scrollEnabled}
+          >
+            {props.children}
+          </ScrollView>
         </View>
       </SafeAreaView>
     );
