@@ -1,4 +1,12 @@
-import { StyleSheet, Text, View } from "react-native";
+import { useEffect } from "react";
+import {
+  Animated,
+  Easing,
+  StyleSheet,
+  Text,
+  useAnimatedValue,
+  View,
+} from "react-native";
 
 interface ProgressBarProps {
   total: number;
@@ -6,25 +14,35 @@ interface ProgressBarProps {
 }
 
 export function ProgressBar(props: ProgressBarProps) {
-  const progressPercentage =
-    Math.floor(Math.abs(props.achieved / props.total) * 1000) / 10;
+  const absoluteFraction = Math.abs(props.achieved / props.total);
+  const roundedFraction = Math.floor(absoluteFraction * 1000) / 1000;
+  const normalizedFraction = roundedFraction >= 1 ? 1 : roundedFraction;
 
-  const sanitizedPercentage =
-    progressPercentage > 100 ? 100 : progressPercentage;
+  const widthAsFraction = useAnimatedValue(0, { useNativeDriver: false });
+  const progressPercentage = widthAsFraction.interpolate({
+    inputRange: [0.0, 1.0],
+    outputRange: ["0%", "100%"],
+  });
+
+  useEffect(() => {
+    Animated.timing(widthAsFraction, {
+      toValue: normalizedFraction,
+      useNativeDriver: false,
+      easing: Easing.out(Easing.ease),
+      duration: 1000,
+    }).start();
+  }, [widthAsFraction, normalizedFraction]);
 
   return (
     <View style={styles.progressBar}>
       <View style={styles.preventBarOverflow}>
-        <View
-          style={[
-            styles.prgressBarColored,
-            { width: `${sanitizedPercentage}%` },
-          ]}
+        <Animated.View
+          style={[styles.prgressBarColored, { width: progressPercentage }]}
         >
           <Text numberOfLines={1} style={styles.innerBarText}>
             {props.achieved} kcal
           </Text>
-        </View>
+        </Animated.View>
       </View>
     </View>
   );

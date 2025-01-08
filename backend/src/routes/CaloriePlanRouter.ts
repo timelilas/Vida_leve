@@ -6,7 +6,7 @@ const caloriePlanRouter = Router();
 const caloriePlanController = new CaloriePlanController();
 
 caloriePlanRouter.get("/", authorizationMiddleware, (req, res) =>
-  caloriePlanController.get(req, res)
+  caloriePlanController.getPlans(req, res)
 );
 
 export default caloriePlanRouter;

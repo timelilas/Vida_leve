@@ -1,14 +1,15 @@
 import express, { Application, Request, Response } from "express";
+import cors from "cors";
 import userRouter from "./routes/UserRouter";
 import progressRouter from "./routes/ProgressRouter";
 import authRouter from "./routes/AuthRouter";
 import caloriePlanRouter from "./routes/CaloriePlanRouter";
+import helmet from "helmet";
 
 class App {
-  public app: Application;
+  public app: Application = express();
 
   constructor() {
-    this.app = express();
     this.config();
     this.routes();
     this.app.get("/", (req: Request, res: Response) =>
@@ -17,23 +18,16 @@ class App {
   }
 
   private config(): void {
-    const accessControl: express.RequestHandler = (req, res, next) => {
-      res.header("Access-Control-Allow-Origin", "*");
-      res.header(
-        "Access-Control-Allow-Methods",
-        "GET,POST,DELETE,OPTIONS,PUT,PATCH"
-      );
-      res.header("Access-Control-Allow-Headers", "*");
-
-      if (req.method === "OPTIONS") {
-        return res.end();
-      }
-
-      return next();
+    const corsOptions: cors.CorsOptions = {
+      methods: ["GET", "POST", "PATCH", "DELETE", "OPTIONS", "PUT"],
+      allowedHeaders: ["Content-Type", "Authorization"],
+      credentials: false,
+      origin: process.env.WEB_ORIGIN,
     };
 
     this.app.use(express.json());
-    this.app.use(accessControl);
+    this.app.use(helmet());
+    this.app.use(cors(corsOptions));
   }
 
   private routes(): void {

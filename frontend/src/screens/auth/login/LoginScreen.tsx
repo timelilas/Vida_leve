@@ -1,11 +1,7 @@
 import { useRef } from "react";
 import { View, ScrollView } from "react-native";
 import { LogoSVG } from "../../../components/logos/LogoSVG";
-import {
-  CommonActions,
-  NavigationProp,
-  useNavigation,
-} from "@react-navigation/native";
+import { CommonActions } from "@react-navigation/native";
 import { Input } from "../../../components/inputs/Input";
 import { PasswordInput } from "../../../components/inputs/PasswordInput";
 import { ScreenWrapper } from "../../../components/ScreenWrapper";
@@ -19,10 +15,15 @@ import { validateEmptyField } from "../../../utils/validations/common";
 import { LoginFormData } from "./types";
 import { maskEmail } from "../../../utils/masks";
 import { HeaderNavigator } from "../../../components/HeaderNavigator";
-import styles from "../styles";
-import AsyncStorage from "@react-native-async-storage/async-storage";
 import { HttpError } from "../../../@core/errors/httpError";
 import { ConnectionError } from "../../../@core/errors/connectionError";
+import { useAppNavigation } from "../../../hooks/useAppNavigation";
+import { RouteConstants } from "../../../routes/types";
+import { wrongCredentialsMessage } from "./utils";
+import { SecureStorage } from "../../../services/secureStorage/SecureStorage";
+import { useSnackbar } from "../../../hooks/useSnackbar";
+import styles from "../styles";
+import { STORAGE_ACCESS_TOKEN } from "../../../constants/localStorageConstants";
 
 const loginInitialState: LoginFormData = {
   email: "",
@@ -30,32 +31,52 @@ const loginInitialState: LoginFormData = {
 };
 
 const LoginScreen = () => {
-  const navigation = useNavigation<NavigationProp<any>>();
+  const { Snackbar, showSnackbar } = useSnackbar();
+  const navigation = useAppNavigation();
   const scrollRef = useRef<ScrollView | null>(null);
   const { data, handleChange, setError, validateField, onSubmit } = useForm({
     initialState: loginInitialState,
   });
   const { values, error, isSubmitting } = data;
 
+  function goBack() {
+    navigation.goBack();
+  }
+
+  function scrollToTop() {
+    scrollRef.current?.scrollTo({ y: 0, animated: true });
+  }
+
   async function handleSubmit() {
     if (!validateAllFields()) return;
 
     const { data } = await httpAuthService.login(values);
-    await AsyncStorage.setItem("token", data.token);
+    await SecureStorage.setItem(STORAGE_ACCESS_TOKEN, data.token);
+
     navigation.dispatch(
-      CommonActions.reset({ routes: [{ name: "Onboarding/ProfileForm" }] })
+      CommonActions.reset({ routes: [{ name: RouteConstants.ProfileForm }] })
     );
   }
 
   function handleError(error: Error) {
-    if (error instanceof HttpError) {
-      error.field && scrollRef.current?.scrollTo({ y: 0, animated: true });
-      return setError({ field: "all", message: error.message });
-    }
     if (error instanceof ConnectionError) {
-      return navigation.navigate("ConnectionError");
+      return navigation.navigate(RouteConstants.ConnectionError);
     }
-    setError({ message: UNEXPECTED_ERROR_MESSAGE });
+    if (error instanceof HttpError) {
+      if (error.status === 401) scrollToTop();
+      setError(
+        error.status === 401
+          ? { field: "all", message: wrongCredentialsMessage }
+          : { field: error.field as any, message: error.message }
+      );
+    }
+    if (!(error as any).field) {
+      showSnackbar({
+        duration: 4000,
+        message: error.message,
+        variant: "error",
+      });
+    }
   }
 
   function validateAllFields() {
@@ -73,12 +94,8 @@ const LoginScreen = () => {
     return true;
   }
 
-  function goBack() {
-    navigation.goBack();
-  }
-
   return (
-    <ScreenWrapper scrollable ref={scrollRef}>
+    <ScreenWrapper scrollable ref={scrollRef} snackbar={<Snackbar />}>
       <View style={styles.container}>
         <HeaderNavigator onGoBack={goBack} style={styles.headerNavigator} />
         <LogoSVG style={styles.logo} />
@@ -91,10 +108,9 @@ const LoginScreen = () => {
         />
         <View style={styles.form}>
           <Input
-            onChange={(data) => handleChange("email", maskEmail(data))}
+            onChangeText={(data) => handleChange("email", maskEmail(data))}
             onBlur={() => validateField("email", values.email, validateEmail)}
             autoFocus
-            name="email"
             label="E-mail"
             placeholder="Ex: joaodasilva@email.com"
             textContentType="emailAddress"
@@ -104,11 +120,10 @@ const LoginScreen = () => {
             error={error.field === "email" || error.field === "all"}
           />
           <PasswordInput
-            onChange={(data) => handleChange("password", data)}
+            onChangeText={(data) => handleChange("password", data)}
             onBlur={() =>
               validateField("password", values.password, validateEmptyField)
             }
-            name="password"
             label="Senha"
             placeholder="**********"
             value={values.password}

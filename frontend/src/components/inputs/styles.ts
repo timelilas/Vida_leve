@@ -52,7 +52,6 @@ export const defaultInputStyles = StyleSheet.create({
   },
   input: {
     fontFamily: "Roboto-400",
-    lineHeight: 16,
     fontSize: 16,
     color: "#242424",
     paddingHorizontal: 16,

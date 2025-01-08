@@ -1,10 +1,4 @@
-import {
-  StyleSheet,
-  View,
-  FlatList,
-  Text,
-  TouchableOpacity,
-} from "react-native";
+import { StyleSheet, View, FlatList } from "react-native";
 import { mockedMonths, mockedYears } from "./data";
 import { numberToMonth, toCapitalized } from "../../utils/helpers";
 import { CalendarMenuItem } from "./CalendarMenuItem";
@@ -98,7 +92,7 @@ const styles = StyleSheet.create({
     borderWidth: 1,
   },
   header: {
-    paddingVertical: 12,
+    paddingVertical: 8,
     paddingHorizontal: 52,
     flexDirection: "row",
     justifyContent: "space-between",
@@ -106,8 +100,7 @@ const styles = StyleSheet.create({
     borderBottomWidth: 1,
   },
   listContainer: {
-    paddingTop: 16,
-    maxHeight: 300,
+    maxHeight: 272.5,
   },
   sectionButton: {
     paddingVertical: 10,
@@ -124,7 +117,7 @@ const styles = StyleSheet.create({
   },
   footer: {
     paddingHorizontal: 16,
-    paddingBottom: 12,
+    paddingBottom: 16,
     alignItems: "flex-end",
   },
 });

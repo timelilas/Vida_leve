@@ -5,15 +5,16 @@ import {
   TouchableOpacity,
   View,
 } from "react-native";
-import { PlanType } from "../../../../@core/entities/@shared/plantType";
-import { CaloriePlanProps } from "../../../../@core/entities/caloriePlan/caloriePlan";
+import { PlanType } from "../../../../@core/entities/@shared/planType/type";
+import { useProgressStore } from "../../../../store/progress";
+import { useCaloriePlanStore } from "../../../../store/caloriePlan";
 
-interface PlanInformation {
-  planType?: PlanType;
-  dailyCalorie: CaloriePlanProps["dailyCalorieIntake"];
-}
+export function PlanInformation() {
+  const planType = useProgressStore((state) => state.data?.currentCaloriePlan);
+  const currentPlan = useCaloriePlanStore((state) =>
+    state.data.find(({ type }) => type === planType)
+  );
 
-export function PlanInformation(props: PlanInformation) {
   const planLabelMap: Record<PlanType, string> = {
     gradual: "Progresso gradual",
     moderado: "Progresso moderado",
@@ -22,13 +23,20 @@ export function PlanInformation(props: PlanInformation) {
 
   return (
     <View>
-      <Text style={styles.title}>
-        {props.planType
-          ? `A meta que será executada: ${planLabelMap[props.planType]}`
-          : "Você não possui um plano de execução cadastrado"}
-      </Text>
+      {planType ? (
+        <Text style={styles.titleThin}>
+          A meta que será executada:{" "}
+          <Text style={styles.titleRegular}>{planLabelMap[planType]}</Text>
+        </Text>
+      ) : (
+        <Text style={styles.titleThin}>
+          Você não possui um plano de execução cadastrado
+        </Text>
+      )}
       <View style={styles.shadowBox}>
-        <Text style={styles.targetCalorie}>{props.dailyCalorie} kcal/dia</Text>
+        <Text style={styles.targetCalorie}>
+          {currentPlan?.dailyCalorieIntake || 0} kcal/dia
+        </Text>
       </View>
       <TouchableOpacity style={styles.adjustGoalButton}>
         <Text style={styles.adjustGoalText}>Alterar</Text>
@@ -38,15 +46,15 @@ export function PlanInformation(props: PlanInformation) {
 }
 
 const styles = StyleSheet.create({
-  title: {
+  titleThin: {
     fontSize: 16,
     lineHeight: 16,
     fontFamily: "Roboto-300",
     color: "#4e4b66",
     marginBottom: 8,
   },
-  titleBold: {
-    fontFamily: "Roboto-500",
+  titleRegular: {
+    fontFamily: "Roboto-400",
   },
   targetCalorie: {
     padding: 16,
@@ -70,14 +78,13 @@ const styles = StyleSheet.create({
   },
   shadowBox: {
     borderRadius: 20,
-    borderBottomLeftRadius: 24,
-    borderBottomRightRadius: 24,
+    borderBottomLeftRadius: 22,
+    borderBottomRightRadius: 22,
     overflow: Platform.OS === "android" ? "hidden" : "visible",
-    paddingBottom: 6,
+    paddingBottom: 8,
     paddingInline: 2,
   },
   adjustGoalButton: {
-    marginTop: 2,
     alignSelf: "flex-end",
   },
   adjustGoalText: {

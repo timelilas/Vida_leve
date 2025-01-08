@@ -1,5 +1,5 @@
 import { Transaction } from "sequelize";
-import { ProgressEntity } from "../../@core/entity/progress/ProgressEntity";
+import { ProgressEntity } from "../../@core/entity/progress/entity";
 import { Optional, PlanType } from "../../@core/entity/@shared";
 
 export interface UpsertProgressDTO {

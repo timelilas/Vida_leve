@@ -2,6 +2,9 @@ import { Request, Response } from "express";
 import UserService from "../../service/user/UserService";
 import { compareHash, hashString } from "../../utils/bcrypt/helpers";
 import { generateToken } from "../../utils/jwt/helpers";
+import { UnauthorizedException } from "../../@core/exception/http/UnauthorizedException";
+import { ConflictException } from "../../@core/exception/http/ConflictException";
+import { exceptionResponseAdapter } from "../../utils/express/helpers";
 
 export class AuthController {
   private _userService = new UserService();
@@ -11,52 +14,50 @@ export class AuthController {
 
     try {
       const foundUser = await this._userService.getUserByEmail(email);
+      const notFoundMessage = "Email ou senha incorretos.";
+
       if (!foundUser) {
-        return res.status(401).json({
-          error: {
-            field: "password",
-            message:
-              "Ops! Parece que o e-mail ou a senha estão incorretos. Confira os dados e tente novamente.",
-          },
-        });
+        throw new UnauthorizedException(
+          notFoundMessage,
+          AuthController.name,
+          "password"
+        );
       }
 
       const isPasswordCorrect = await compareHash(password, foundUser.password);
       if (!isPasswordCorrect) {
-        return res.status(401).json({
-          error: {
-            field: "password",
-            message:
-              "Ops! Parece que o e-mail ou a senha estão incorretos. Confira os dados e tente novamente.",
-          },
-        });
+        throw new UnauthorizedException(
+          notFoundMessage,
+          AuthController.name,
+          "password"
+        );
       }
 
-      const accessToken = generateToken({
-        userId: foundUser.id,
-        email: foundUser.email,
-      });
+      const tokenPayload = { userId: foundUser.id, email: foundUser.email };
+      const accessToken = generateToken(tokenPayload);
       const response = { id: foundUser.id, token: accessToken };
       return res.status(200).json({ data: response });
-    } catch (error) {
-      console.error("Server internal error:", error);
-      return res.status(500).json({
-        error: { field: null, message: "Erro durante o processo de login." },
+    } catch (error: any) {
+      return exceptionResponseAdapter({
+        req,
+        res,
+        exception: error,
+        alternativeMsg: "Erro durante o processo de login.",
       });
     }
   }
 
   async signup(req: Request, res: Response): Promise<Response> {
     const { email, password } = req.body;
+
     try {
       const foundUser = await this._userService.getUserByEmail(email);
       if (foundUser) {
-        return res.status(409).json({
-          error: {
-            field: "email",
-            message: `Já existe um usuário cadastro com email: ${email}.`,
-          },
-        });
+        throw new ConflictException(
+          `Já existe um usuário cadastro com email: ${email}.`,
+          AuthController.name,
+          "email"
+        );
       }
 
       const hashedPassword = await hashString(password);
@@ -65,14 +66,13 @@ export class AuthController {
         password: hashedPassword,
       });
 
-      return res.status(200).json({ data: createdUser });
-    } catch (error) {
-      console.error("Server internal error:", error);
-      return res.status(500).json({
-        error: {
-          field: null,
-          message: "Erro na tentativa de criar um usuário.",
-        },
+      return res.status(201).json({ data: createdUser });
+    } catch (error: any) {
+      return exceptionResponseAdapter({
+        req,
+        res,
+        exception: error,
+        alternativeMsg: "Erro durante o processo de cadastro de usuário.",
       });
     }
   }

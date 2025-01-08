@@ -12,7 +12,10 @@
     },
     "newArchEnabled": true,
     "ios": {
-      "supportsTablet": true
+      "supportsTablet": true,
+      "config": {
+        "usesNonExemptEncryption": false
+      }
     },
     "plugins": [
       [
@@ -27,7 +30,8 @@
             "./src/assets/fonts/Ruda-Bold.ttf"
           ]
         }
-      ]
+      ],
+      "expo-secure-store"
     ],
     "android": {
       "adaptiveIcon": {

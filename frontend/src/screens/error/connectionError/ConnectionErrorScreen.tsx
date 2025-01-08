@@ -1,4 +1,3 @@
-import { useNavigation } from "@react-navigation/native";
 import {
   StyleSheet,
   Text,
@@ -12,9 +11,10 @@ import { ScreenTitle } from "../../../components/ScreenTitle";
 import { Paragraph } from "../../../components/Paragraph";
 import { SubmitButton } from "../../../components/buttons/SubmitButton";
 import { ReloadIcon } from "../../../components/icons/ReloadIcon";
+import { useAppNavigation } from "../../../hooks/useAppNavigation";
 
 const ConnectionErrorScreen = () => {
-  const navigation = useNavigation();
+  const navigation = useAppNavigation();
 
   function goBack() {
     navigation.goBack();
@@ -25,14 +25,14 @@ const ConnectionErrorScreen = () => {
   }
 
   return (
-    <ScreenWrapper scrollable>
+    <ScreenWrapper>
       <View style={styles.container}>
         <View style={styles.containerContainer}>
           <ScreenTitle title="Ocorreu um erro" />
-          <Paragraph
-            text="Não foi possível carregar as informações. Verifique sua conexão e tente
-        novamente."
-          />
+          <Paragraph>
+            Não foi possível carregar as informações. Verifique sua conexão e
+            tente novamente.
+          </Paragraph>
         </View>
         <View style={styles.buttonWrapper}>
           <SubmitButton

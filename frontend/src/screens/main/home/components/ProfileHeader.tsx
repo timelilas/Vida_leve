@@ -4,27 +4,26 @@ import { CameraIcon } from "../../../../components/icons/CameraIcon";
 import { ScreenTitle } from "../../../../components/ScreenTitle";
 import { Paragraph } from "../../../../components/Paragraph";
 import { PencilIcon } from "../../../../components/icons/PencilIcon";
+import { useUserStore } from "../../../../store/user";
 
-interface ProfileHeaderProps {
-  name: string;
-  email: string;
-  imgUrl?: string;
-}
+export function ProileHeader() {
+  const email = useUserStore((state) => state.data.email);
+  const firstname = useUserStore((state) => state.data.name)?.split(" ")[0];
+  const profileImage = null;
 
-export function ProileHeader(props: ProfileHeaderProps) {
   return (
     <View style={styles.container}>
       <View style={styles.avatar}>
         <View style={styles.profilImageContainer}>
-          {props.imgUrl ? <Image /> : <ProfileIcon />}
+          {profileImage ? <Image /> : <ProfileIcon />}
         </View>
         <TouchableOpacity style={styles.updateImageButton}>
           <CameraIcon />
         </TouchableOpacity>
       </View>
       <View style={styles.userInformation}>
-        <ScreenTitle title={props.name} />
-        <Paragraph text={props.email} />
+        <ScreenTitle title={firstname || ""} />
+        <Paragraph>{email}</Paragraph>
       </View>
       <TouchableOpacity style={styles.updateProfileButton}>
         <PencilIcon />
@@ -65,7 +64,7 @@ const styles = StyleSheet.create({
     marginLeft: "auto",
   },
   userInformation: {
-    gap: 8,
+    gap: 4,
     flexShrink: 1,
   },
   userName: {
