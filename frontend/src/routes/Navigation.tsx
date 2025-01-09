@@ -10,6 +10,7 @@ import ProfileFormScreen from "../screens/onboarding/profileForm/ProfileFormScre
 import ConnectionErrorScreen from "../screens/error/connectionError/ConnectionErrorScreen";
 import WelcomeScreen from "../screens/auth/welcome/WelcomeScreen";
 import HomeScreen from "../screens/main/home/HomeScreen";
+import GoalSettingsScreen from "../screens/main/goalSettings/GoalSettingsScreen";
 
 const Stack = createNativeStackNavigator<RouteParamsList>();
 
@@ -64,6 +65,11 @@ const Navigation = () => {
         <Stack.Screen
           name={RouteConstants.Home}
           component={HomeScreen}
+          options={{ headerShown: false }}
+        />
+        <Stack.Screen
+          name={RouteConstants.GoalSettings}
+          component={GoalSettingsScreen}
           options={{ headerShown: false }}
         />
         <Stack.Screen

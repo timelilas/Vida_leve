@@ -7,6 +7,7 @@ export enum RouteConstants {
   ProgressForm = "SCREEN_Onboarding_ProgressForm",
   GoalGuidance = "SCREEN_Onboarding_GoalGuidance",
   Home = "SCREEN_Main_Home",
+  GoalSettings = "SCREEN_Main_GoalSettings",
   ConnectionError = "SCREEN_Error_ConnectionError",
 }
 
@@ -19,5 +20,6 @@ export type RouteParamsList = {
   [RouteConstants.ProgressForm]: undefined;
   [RouteConstants.GoalGuidance]: undefined;
   [RouteConstants.Home]: undefined;
+  [RouteConstants.GoalSettings]: undefined;
   [RouteConstants.ConnectionError]: undefined;
 };
