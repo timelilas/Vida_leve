@@ -8,8 +8,11 @@ import {
 import { PlanType } from "../../../../@core/entities/@shared/planType/type";
 import { useProgressStore } from "../../../../store/progress";
 import { useCaloriePlanStore } from "../../../../store/caloriePlan";
+import { useAppNavigation } from "../../../../hooks/useAppNavigation";
+import { RouteConstants } from "../../../../routes/types";
 
 export function PlanInformation() {
+  const navigation = useAppNavigation();
   const planType = useProgressStore((state) => state.data?.currentCaloriePlan);
   const currentPlan = useCaloriePlanStore((state) =>
     state.data.find(({ type }) => type === planType)
@@ -20,6 +23,10 @@ export function PlanInformation() {
     moderado: "Progresso moderado",
     acelerado: "Progresso acelerado",
   };
+
+  function navitateToGoalSettings() {
+    navigation.navigate(RouteConstants.GoalSettings);
+  }
 
   return (
     <View>
@@ -38,7 +45,10 @@ export function PlanInformation() {
           {currentPlan?.dailyCalorieIntake || 0} kcal/dia
         </Text>
       </View>
-      <TouchableOpacity style={styles.adjustGoalButton}>
+      <TouchableOpacity
+        onPress={navitateToGoalSettings}
+        style={styles.adjustGoalButton}
+      >
         <Text style={styles.adjustGoalText}>Alterar</Text>
       </TouchableOpacity>
     </View>

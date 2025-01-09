@@ -38,7 +38,6 @@ const ProgressFormScreen = () => {
   const { Snackbar, showSnackbar } = useSnackbar();
   const setProgress = useProgressStore((state) => state.setProgress);
   const setPlans = useCaloriePlanStore((state) => state.setPlans);
-  const navigation = useAppNavigation();
   const progress = useProgressStore((state) => state.data);
   const gender = useUserStore((state) => state.data.gender);
   const birthDate = useUserStore((state) => state.data.birthDate);
@@ -54,11 +53,10 @@ const ProgressFormScreen = () => {
     });
   const { values, error, isSubmitting, isFormDirty } = data;
   const { height, weight, goalWeight, activityFrequency } = values;
+  const navigation = useAppNavigation({ preventGoBack: isSubmitting });
 
   function goBack() {
-    if (!isSubmitting) {
-      navigation.goBack();
-    }
+    navigation.goBack();
   }
 
   function showErrorSnackbar(message: string) {
@@ -66,7 +64,9 @@ const ProgressFormScreen = () => {
   }
 
   function navigateToPlanSelection() {
-    navigation.navigate(RouteConstants.PlanSelection);
+    navigation.navigate(RouteConstants.PlanSelection, {
+      nextRoute: RouteConstants.GoalGuidance,
+    });
   }
 
   function selectActitivyFrequency(frequency: ActitivyFrequency) {
