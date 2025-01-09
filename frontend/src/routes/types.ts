@@ -12,7 +12,7 @@ export enum RouteConstants {
 }
 
 export type RouteParamsList = {
-  [RouteConstants.PlanSelection]: { nextRoute: string };
+  [RouteConstants.PlanSelection]: { nextRoute: string; withModal?: boolean };
   [RouteConstants.Welcome]: undefined;
   [RouteConstants.Login]: undefined;
   [RouteConstants.Signup]: undefined;

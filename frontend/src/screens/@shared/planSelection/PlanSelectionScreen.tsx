@@ -15,6 +15,8 @@ import {
   PlanSelectionForm,
 } from "./components/planSelectionForm/PlanSelectionForm";
 import { RouteProp } from "@react-navigation/native";
+import { SuccessModal } from "../../../components/successModal/SuccessModal";
+import { useState } from "react";
 
 type PlanSelectionScreenlRouteProp = RouteProp<
   RouteParamsList,
@@ -31,9 +33,17 @@ const PlanSelectionScreen = ({ route }: PlanSelectionScreenProps) => {
   const navigation = useAppNavigation();
   const caloriePlans = useCaloriePlanStore((state) => state.data);
   const planType = useProgressStore((state) => state.data?.currentCaloriePlan);
+  const [isModalVisible, setIsModalVisible] = useState(false);
 
   function goBack() {
     navigation.goBack();
+  }
+
+  function closeModalAndNavigate() {
+    setIsModalVisible(false);
+    setTimeout(() => {
+      navigation.navigate(route.params.nextRoute as any);
+    }, 300);
   }
 
   function navigateAfterSubmit() {
@@ -47,7 +57,12 @@ const PlanSelectionScreen = ({ route }: PlanSelectionScreenProps) => {
     const { data } = await httpProgressService.setCaloriePlan(selectedPlan);
 
     setProgress(data);
-    navigateAfterSubmit();
+
+    if (route.params.withModal) {
+      setIsModalVisible(true);
+    } else {
+      navigateAfterSubmit();
+    }
   }
 
   async function handleError(error: Error) {
@@ -82,6 +97,13 @@ const PlanSelectionScreen = ({ route }: PlanSelectionScreenProps) => {
         onSubmit={handleSubmit}
         onError={handleError}
       />
+      {route.params.withModal && (
+        <SuccessModal
+          isVisible={isModalVisible}
+          onClose={closeModalAndNavigate}
+          message="Suas informações foram atualizadas com sucesso!"
+        />
+      )}
     </ScreenWrapper>
   );
 };

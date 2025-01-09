@@ -27,6 +27,7 @@ const GoalSettingsScreen = () => {
   function navigateToPlanSelection() {
     navigation.navigate(RouteConstants.PlanSelection, {
       nextRoute: RouteConstants.Home,
+      withModal: true,
     });
   }
 
