@@ -29,7 +29,7 @@ export function ProgressBar(props: ProgressBarProps) {
       toValue: normalizedFraction,
       useNativeDriver: false,
       easing: Easing.out(Easing.ease),
-      duration: 1000,
+      duration: 800,
     }).start();
   }, [widthAsFraction, normalizedFraction]);
 
