@@ -4,29 +4,28 @@ import { GuidanceItem } from "./components/GuidanceItem";
 import { FoodTrayIcon } from "../../../components/icons/FoodTrayIcon";
 import { ClipboardIcon } from "../../../components/icons/ClipboardIcon";
 import { TargetIcon } from "../../../components/icons/TargetIcon";
-import {
-  CommonActions,
-  NavigationProp,
-  useNavigation,
-} from "@react-navigation/native";
+import { CommonActions } from "@react-navigation/native";
 import { ScreenTitle } from "../../../components/ScreenTitle";
 import { ScreenHeader } from "../../../components/ScreenHeader";
+import { useAppNavigation } from "../../../hooks/useAppNavigation";
+import { RouteConstants } from "../../../routes/types";
+import { SubmitButton } from "../../../components/buttons/SubmitButton";
 
 const GoalGuidanceScreen = () => {
-  const navigation = useNavigation<NavigationProp<any>>();
+  const navigation = useAppNavigation();
 
   function resetNavigationToHome() {
     navigation.dispatch(
       CommonActions.reset({
         index: 0,
-        routes: [{ name: "Main/Home" }],
+        routes: [{ name: RouteConstants.Home }],
       })
     );
   }
 
   return (
-    <ScreenWrapper scrollable>
-      <ScreenHeader onClose={resetNavigationToHome} />
+    <ScreenWrapper>
+      <ScreenHeader />
       <View style={styles.contentContainer}>
         <ScreenTitle
           style={styles.title}
@@ -73,6 +72,12 @@ const GoalGuidanceScreen = () => {
             nutricionista.
           </Text>
         </View>
+        <SubmitButton
+          style={styles.resetToHomeButton}
+          type="highlighted"
+          title="Ir para Home"
+          onPress={resetNavigationToHome}
+        />
       </View>
     </ScreenWrapper>
   );
@@ -82,6 +87,7 @@ export default GoalGuidanceScreen;
 
 const styles = StyleSheet.create({
   contentContainer: {
+    flex: 1,
     marginTop: 64,
   },
   separator: {
@@ -95,6 +101,8 @@ const styles = StyleSheet.create({
     overflow: "hidden",
     paddingBottom: 16,
     borderRadius: 16,
+    borderBottomLeftRadius: 28,
+    borderBottomRightRadius: 28,
     marginTop: 10,
   },
   guidanceWrapper: {
@@ -102,16 +110,16 @@ const styles = StyleSheet.create({
     padding: 8,
     borderRadius: 16,
     gap: 16,
+    shadowColor: "#000000",
     ...{
       ...(Platform.OS === "android"
         ? {
             elevation: 4,
-            shadowColor: "#000000",
           }
         : {
-            shadowColor: "#00000040",
             shadowOffset: { height: 4, width: 0 },
             shadowRadius: 4,
+            shadowOpacity: 0.25,
           }),
     },
   },
@@ -140,5 +148,9 @@ const styles = StyleSheet.create({
     fontSize: 14,
     color: "#242424",
     textAlign: "center",
+    marginBottom: 36,
+  },
+  resetToHomeButton: {
+    marginTop: "auto",
   },
 });

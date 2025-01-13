@@ -5,9 +5,10 @@ import {
   CreationOptional,
 } from "sequelize";
 import { sequelize } from "../index";
+import { TableNames } from "../constants";
+import { UserEntity } from "../../@core/entity/user/entity";
+import { allowedGenders, Gender } from "../../@core/entity/@shared";
 import Sequelize from "sequelize";
-import { UserEntity } from "../../@core/entity/user/UserEntity";
-import { Gender } from "../../@core/entity/@shared";
 
 class User
   extends Model<InferAttributes<User>, InferCreationAttributes<User>>
@@ -61,7 +62,7 @@ User.init(
       allowNull: true,
     },
     gender: {
-      type: Sequelize.ENUM<Gender>("masculino", "feminino"),
+      type: Sequelize.ENUM<Gender>(...allowedGenders),
       allowNull: true,
     },
     birthDate: {
@@ -85,7 +86,7 @@ User.init(
   },
   {
     sequelize,
-    tableName: "user",
+    tableName: TableNames.User,
     timestamps: false,
     freezeTableName: true,
   }

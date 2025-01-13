@@ -1,4 +1,4 @@
-import { GenderType } from "../../../@core/entities/@shared/gender";
+import { GenderType } from "../../../@core/entities/@shared/gender/type";
 
 export interface ProfileFormData {
   name: string;

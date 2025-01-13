@@ -1,19 +1,14 @@
-import { StyleSheet, TextStyle } from "react-native";
-import { StyleProp, Text } from "react-native";
+import { StyleSheet } from "react-native";
+import { Text, TextProps } from "react-native";
 
-interface ParagraphProps {
-  text: string;
-  style?: StyleProp<TextStyle>;
-}
-
-export function Paragraph(props: ParagraphProps) {
-  return <Text style={[styles.text, props.style]}>{props.text}</Text>;
+export function Paragraph(props: TextProps) {
+  const { style, ...propsRest } = props;
+  return <Text style={[styles.text, style]} {...propsRest} />;
 }
 
 const styles = StyleSheet.create({
   text: {
     fontSize: 16,
-    lineHeight: 16,
     fontFamily: "Roboto-400",
     color: "#4E4B66",
   },

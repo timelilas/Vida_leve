@@ -1,6 +1,7 @@
 import z from "zod";
 import { ZodHelper } from "../helpers";
 import { UserHelper } from "../../../@core/entity/user/helpers";
+import { allowedGenders } from "../../../@core/entity/@shared";
 
 export const userZodSchema = z
   .object({
@@ -20,7 +21,7 @@ export const userZodSchema = z
         }
       ),
     gender: z
-      .enum(["masculino", "feminino"], {
+      .enum(allowedGenders, {
         required_error: "Gênero social é um campo obrigatório",
         message:
           "Gênero social permite apenas os valores: masculino e feminino",

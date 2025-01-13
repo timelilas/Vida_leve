@@ -1,7 +1,7 @@
-import { PlanType } from "../@shared/plantType";
-import { GenderType } from "../@shared/gender";
-import { ActitivyFrequency } from "../@shared/activityFrequency";
-import { CaloriePlanProps } from "./caloriePlan";
+import { PlanType } from "../@shared/planType/type";
+import { GenderType } from "../@shared/gender/type";
+import { ActitivyFrequency } from "../@shared/activityFrequency/type";
+import { CaloriePlanProps } from "./type";
 import * as CONSTANTS from "./constants";
 
 interface BMRParams {
@@ -17,7 +17,7 @@ interface PlanParams extends BMRParams {
   dailyActivityLevel: ActitivyFrequency;
 }
 
-//Calcula a taxa metabólica basal (BMR) do usuário
+//Calcula a taxa metabólica basal (BMR) do usuário em kcal/dia
 function calculateBMR(params: BMRParams) {
   const { weight, height, gender, age } = params;
   const BMRConstantsMap = {

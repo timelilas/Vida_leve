@@ -1,23 +1,25 @@
 import { View, StyleSheet, ScrollView, Text, Platform } from "react-native";
-import { NavigationProp, useNavigation } from "@react-navigation/native";
 import { ScreenWrapper } from "../../../components/ScreenWrapper";
 import { SubmitButton } from "../../../components/buttons/SubmitButton";
 import { Image } from "react-native";
 import { BigLogoSVG } from "../../../components/logos/BigLogoSVG";
+import { useAppNavigation } from "../../../hooks/useAppNavigation";
+import { RouteConstants } from "../../../routes/types";
+import { SafeAreaView } from "react-native-safe-area-context";
 
 const WelcomeScreen = () => {
-  const navigation = useNavigation<NavigationProp<any>>();
+  const navigation = useAppNavigation();
 
   function navigateToSignin() {
-    navigation.navigate("Auth/Login");
+    navigation.navigate(RouteConstants.Login);
   }
 
   function navigateToSignup() {
-    navigation.navigate("Auth/Signup");
+    navigation.navigate(RouteConstants.Signup);
   }
 
   return (
-    <ScreenWrapper>
+    <SafeAreaView style={styles.safeAreaView}>
       <ScrollView
         contentContainerStyle={styles.scrollView}
         showsVerticalScrollIndicator={false}
@@ -61,13 +63,16 @@ const WelcomeScreen = () => {
           </View>
         </View>
       </ScrollView>
-    </ScreenWrapper>
+    </SafeAreaView>
   );
 };
 
 export default WelcomeScreen;
 
 const styles = StyleSheet.create({
+  safeAreaView: {
+    flex: 1,
+  },
   scrollView: {
     flexGrow: 1,
     gap: 56,

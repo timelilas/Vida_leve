@@ -11,6 +11,7 @@ const sequelizeOptions: Options = {
   password: process.env.DATABASE_PASSWORD,
   dialect: "postgres", // Certifique-se de especificar o dialecto
   dialectOptions: {
+    pgbouncer: true,
     ssl: {
       require: true, // Habilita SSL
       rejectUnauthorized: false, // Pode ser necessário dependendo do ambiente

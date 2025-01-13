@@ -1,5 +1,4 @@
-import { PlanType } from "../../@core/entities/@shared/plantType";
-import { CaloriePlanProps } from "../../@core/entities/caloriePlan/caloriePlan";
+import { CaloriePlanProps } from "../../@core/entities/caloriePlan/type";
 
 export interface CaloriePlanStoreState {
   status: "idle" | "loading" | "fulfilled";

@@ -1,11 +1,12 @@
 import React from "react";
-import Navigation from "./src/Navigation";
+import Navigation from "./src/routes/Navigation";
 import * as SplashScreen from "expo-splash-screen";
 import "@expo/metro-runtime";
 import { useAppFonts } from "./src/hooks/useAppFonts";
 import { LogBox } from "react-native";
 import { SafeAreaProvider } from "react-native-safe-area-context";
 
+SplashScreen.setOptions({ fade: true, duration: 250 });
 SplashScreen.preventAutoHideAsync();
 LogBox.ignoreAllLogs(true);
 

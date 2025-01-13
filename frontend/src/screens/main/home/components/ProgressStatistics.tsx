@@ -5,14 +5,14 @@ import { FreshFruitsIcon } from "../../../../components/icons/FreshFruitsIcon";
 import { CookieIcon } from "../../../../components/icons/CookieIcon";
 import { SoupIcon } from "../../../../components/icons/SoupIcon";
 import { ProgressBar } from "../../../../components/ProgressBar";
+import { useProgressStore } from "../../../../store/progress";
+import { useCaloriePlanStore } from "../../../../store/caloriePlan";
 
-interface ProgressStatisticsProps {
-  overallCalorieGoal: number;
-  calorieAccumulated: number;
-}
-
-export function ProgressStatistics(props: ProgressStatisticsProps) {
-  const { calorieAccumulated, overallCalorieGoal } = props;
+export function ProgressStatistics() {
+  const planType = useProgressStore((state) => state.data?.currentCaloriePlan);
+  const currentPlan = useCaloriePlanStore((state) =>
+    state.data.find(({ type }) => type === planType)
+  );
 
   return (
     <View style={styles.container}>
@@ -25,7 +25,10 @@ export function ProgressStatistics(props: ProgressStatisticsProps) {
           <CookieIcon />
           <SoupIcon />
         </View>
-        <ProgressBar total={overallCalorieGoal} achieved={calorieAccumulated} />
+        <ProgressBar
+          total={currentPlan?.dailyCalorieIntake || 0}
+          achieved={850} //Dado mockado
+        />
       </View>
       <View style={styles.buttonWrapper}>
         <TouchableOpacity>

@@ -6,13 +6,13 @@
     "orientation": "default",
     "icon": "./src/assets/images/icon.png",
     "userInterfaceStyle": "light",
-    "splash": {
-      "resizeMode": "contain",
-      "backgroundColor": "#ffffff"
-    },
     "newArchEnabled": true,
     "ios": {
-      "supportsTablet": true
+      "supportsTablet": true,
+      "config": {
+        "usesNonExemptEncryption": false
+      },
+      "bundleIdentifier": "vida-leve.app"
     },
     "plugins": [
       [
@@ -27,7 +27,16 @@
             "./src/assets/fonts/Ruda-Bold.ttf"
           ]
         }
-      ]
+      ],
+      [
+        "expo-splash-screen",
+        {
+          "image": "./src/assets/splash.png",
+          "backgroundColor": "#ffffff",
+          "imageWidth": 500
+        }
+      ],
+      "expo-secure-store"
     ],
     "android": {
       "adaptiveIcon": {

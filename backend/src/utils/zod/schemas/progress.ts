@@ -1,5 +1,9 @@
 import z from "zod";
 import { ZodHelper } from "../helpers";
+import {
+  allowedActivityFrequencies,
+  allowedPlans,
+} from "../../../@core/entity/@shared";
 
 export const progressZodSchema = z
   .object({
@@ -10,12 +14,12 @@ export const progressZodSchema = z
     goalWeight: ZodHelper.number("Peso desejado", 30, 150).int(
       "Peso desejado deve ser um número inteiro"
     ),
-    activityFrequency: z.enum(["pouca", "leve", "moderada", "intensa"], {
+    activityFrequency: z.enum(allowedActivityFrequencies, {
       required_error: "Frequência de atividade física é um campo obrigatório",
       message:
         "Frequência de atividade física permite apenas os seguintes valores: pouca, leve, moderada e intensa",
     }),
-    currentCaloriePlan: z.enum(["gradual", "moderado", "acelerado"], {
+    currentCaloriePlan: z.enum(allowedPlans, {
       message:
         "Plano de execução permite apenas os seguintes valores: gradual, moderado e acelerado",
     }),

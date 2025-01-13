@@ -1,8 +1,5 @@
+import { validActivityFrequencies } from "../../../@core/entities/@shared/activityFrequency/constants";
 import { ValidationResult } from "../type";
-import {
-  allowedActivityFrequencies,
-  invalidActivityFrequencyMsg,
-} from "./variables";
 
 export function validateActitivyFrequency(value: string): ValidationResult {
   if (!value.length) {
@@ -12,8 +9,11 @@ export function validateActitivyFrequency(value: string): ValidationResult {
     };
   }
 
-  if (!allowedActivityFrequencies.includes(value)) {
-    return { success: false, error: invalidActivityFrequencyMsg };
+  if (!validActivityFrequencies.includes(value as any)) {
+    return {
+      success: false,
+      error: "Apenas os níveis de atividade acima são permitidos",
+    };
   }
 
   return { success: true };

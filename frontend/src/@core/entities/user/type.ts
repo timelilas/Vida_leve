@@ -1,4 +1,4 @@
-import { GenderType } from "../@shared/gender";
+import { GenderType } from "../@shared/gender/type";
 
 export interface UserProps {
   id: number;

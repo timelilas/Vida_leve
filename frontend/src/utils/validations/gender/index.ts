@@ -1,5 +1,5 @@
+import { validGenders } from "../../../@core/entities/@shared/gender/constants";
 import { ValidationResult } from "../type";
-import { allowedGenders } from "./variables";
 
 export function validateGender(gender: string): ValidationResult {
   if (!gender.length) {
@@ -9,7 +9,7 @@ export function validateGender(gender: string): ValidationResult {
     };
   }
 
-  if (!allowedGenders.includes(gender)) {
+  if (!validGenders.includes(gender as any)) {
     return {
       success: false,
       error: "Apenas os gêneros masculino e feminino são permitidos.",

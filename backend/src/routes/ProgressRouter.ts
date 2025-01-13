@@ -11,7 +11,14 @@ const progressRouter = Router();
 const progressController = new ProgressController();
 
 progressRouter.get("/", authorizationMiddleware, (req, res) =>
-  progressController.get(req, res)
+  progressController.getProgress(req, res)
+);
+
+progressRouter.post(
+  "/",
+  authorizationMiddleware,
+  validationMiddleware(createProgressSchema),
+  (req, res) => progressController.upsert(req, res)
 );
 
 progressRouter.patch(
@@ -20,17 +27,5 @@ progressRouter.patch(
   validationMiddleware(setCurrentCaloriePlanSchema),
   (req, res) => progressController.setCaloriePlan(req, res)
 );
-
-progressRouter.post(
-  "/",
-  authorizationMiddleware,
-  validationMiddleware(createProgressSchema),
-  (req, res) => progressController.post(req, res)
-);
-
-// progressRouter.get('/',
-//    authorizationMiddleware,
-//    (req, res)=> progressController.get(req, res)
-// );
 
 export default progressRouter;

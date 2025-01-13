@@ -1,4 +1,4 @@
-import { ActitivyFrequency } from "../../../@core/entities/@shared/activityFrequency";
+import { ActitivyFrequency } from "../../../@core/entities/@shared/activityFrequency/type";
 
 export const missingProfileFormField =
   "Opps! Algo inesperado aconteceu, por favor, verifique se as informações do formulário anterior foram preenchidas.";
@@ -21,7 +21,8 @@ export const activityFrequencies: {
   {
     type: "moderada",
     title: "Atividade moderada",
-    description: "Quase sempre em pé. p. ex. professor(a)/ atendente",
+    description:
+      "Frequentemente em movimento, p. ex. garçom/garçonete ou estoquista",
   },
   {
     type: "intensa",

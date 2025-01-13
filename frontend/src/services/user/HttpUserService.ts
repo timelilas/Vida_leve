@@ -1,0 +1,19 @@
+import { HttpUpdateProfileInputDTO, HttpUpdateProfileOutputDTO } from "./types";
+import { HttpService } from "../HttpService";
+import { STORAGE_ACCESS_TOKEN } from "../../constants/localStorageConstants";
+import { SecureStorage } from "../secureStorage/SecureStorage";
+
+export class HttpUserService extends HttpService {
+  public async updateProfile(data: HttpUpdateProfileInputDTO) {
+    const accessToken = await SecureStorage.getItem(STORAGE_ACCESS_TOKEN);
+
+    return await this.submit<HttpUpdateProfileOutputDTO>({
+      method: "PUT",
+      path: "/user/profile",
+      body: data,
+      headers: {
+        Authorization: `Bearer ${accessToken}`,
+      },
+    });
+  }
+}
