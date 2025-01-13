@@ -1,29 +1,33 @@
 import { PropsWithChildren } from "react";
-import { StyleProp, StyleSheet, ViewStyle } from "react-native";
-import { Pressable } from "react-native";
-import { View } from "react-native";
-import { Platform } from "react-native";
+import {
+  StyleSheet,
+  PressableProps,
+  Platform,
+  Pressable,
+  View,
+} from "react-native";
 
 export interface ToggleButtonProps extends PropsWithChildren {
   selected?: boolean;
-  disabled?: boolean;
-  onPress?: () => void;
-  style?: StyleProp<ViewStyle>;
+  rounded?: boolean;
 }
 
-export function ToggleButton(props: ToggleButtonProps) {
+export function ToggleButton(props: ToggleButtonProps & PressableProps) {
+  const { selected, rounded, ...propsRest } = props;
+
   return (
     <Pressable
-      disabled={props.disabled}
-      onPress={props.onPress}
       style={[
         styles.button,
-        props.style,
-        props.selected && styles.buttonSelected,
+        selected && styles.buttonSelected,
         props.disabled && styles.disabled,
+        rounded && styles.buttonRounded,
       ]}
+      {...propsRest}
     >
-      <View style={styles.container}>{props.children}</View>
+      <View style={[styles.container, rounded && styles.containerRounded, ,]}>
+        {props.children}
+      </View>
     </Pressable>
   );
 }
@@ -35,6 +39,9 @@ const styles = StyleSheet.create({
     borderWidth: 1,
     borderColor: "#4e4b66",
     backgroundColor: "#f7f7fc",
+  },
+  buttonRounded: {
+    borderRadius: 18,
   },
   buttonSelected: {
     backgroundColor: "#ffae31",
@@ -54,6 +61,9 @@ const styles = StyleSheet.create({
   container: {
     backgroundColor: "#f7f7fc",
     borderRadius: 8,
+  },
+  containerRounded: {
+    borderRadius: 16,
   },
   disabled: {
     opacity: 0.6,

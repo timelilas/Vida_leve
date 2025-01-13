@@ -1,15 +1,23 @@
-import { Text, View, StyleSheet, useWindowDimensions } from "react-native";
+import {
+  Text,
+  View,
+  StyleSheet,
+  useWindowDimensions,
+  PressableProps,
+} from "react-native";
 import { ToggleButton, ToggleButtonProps } from "./ToggleButton";
 import { ReactNode } from "react";
 
-interface CaloriePlanButtonProps extends Omit<ToggleButtonProps, "children"> {
+interface CaloriePlanButtonProps extends Omit<ToggleButtonProps, "rounded"> {
   title: string;
   icon: ReactNode;
   duration: number;
   dailyCalories: number;
 }
 
-export function CaloriePlanButton(props: CaloriePlanButtonProps) {
+export function CaloriePlanButton(
+  props: CaloriePlanButtonProps & PressableProps
+) {
   const styles = useStyles();
 
   return (

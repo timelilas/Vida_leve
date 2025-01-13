@@ -9,6 +9,7 @@ import { ScreenTitle } from "../../../components/ScreenTitle";
 import { ScreenHeader } from "../../../components/ScreenHeader";
 import { useAppNavigation } from "../../../hooks/useAppNavigation";
 import { RouteConstants } from "../../../routes/types";
+import { SubmitButton } from "../../../components/buttons/SubmitButton";
 
 const GoalGuidanceScreen = () => {
   const navigation = useAppNavigation();
@@ -24,7 +25,7 @@ const GoalGuidanceScreen = () => {
 
   return (
     <ScreenWrapper>
-      <ScreenHeader onClose={resetNavigationToHome} />
+      <ScreenHeader />
       <View style={styles.contentContainer}>
         <ScreenTitle
           style={styles.title}
@@ -71,6 +72,12 @@ const GoalGuidanceScreen = () => {
             nutricionista.
           </Text>
         </View>
+        <SubmitButton
+          style={styles.resetToHomeButton}
+          type="highlighted"
+          title="Ir para Home"
+          onPress={resetNavigationToHome}
+        />
       </View>
     </ScreenWrapper>
   );
@@ -80,6 +87,7 @@ export default GoalGuidanceScreen;
 
 const styles = StyleSheet.create({
   contentContainer: {
+    flex: 1,
     marginTop: 64,
   },
   separator: {
@@ -140,5 +148,9 @@ const styles = StyleSheet.create({
     fontSize: 14,
     color: "#242424",
     textAlign: "center",
+    marginBottom: 36,
+  },
+  resetToHomeButton: {
+    marginTop: "auto",
   },
 });

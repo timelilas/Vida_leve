@@ -1,17 +1,18 @@
+import { RouteConstants, RouteParamsList } from "./types";
 import { NavigationContainer } from "@react-navigation/native";
 import { createNativeStackNavigator } from "@react-navigation/native-stack";
 import LoginScreen from "../screens/auth/login/LoginScreen";
 import SignupScreen from "../screens/auth/signup/SignupScreen";
-import PlanSelectionScreen from "../screens/onboarding/planSelection/PlanSelectionScreen";
+import PlanSelectionScreen from "../screens/@shared/planSelection/PlanSelectionScreen";
 import GoalGuidanceScreen from "../screens/onboarding/goalGuidance/GoalGuidanceScreen";
 import ProgressFormScreen from "../screens/onboarding/progressForm/ProgressFormScreen";
 import ProfileFormScreen from "../screens/onboarding/profileForm/ProfileFormScreen";
 import ConnectionErrorScreen from "../screens/error/connectionError/ConnectionErrorScreen";
 import WelcomeScreen from "../screens/auth/welcome/WelcomeScreen";
 import HomeScreen from "../screens/main/home/HomeScreen";
-import { RouteConstants } from "./types";
+import GoalSettingsScreen from "../screens/main/goalSettings/GoalSettingsScreen";
 
-const Stack = createNativeStackNavigator();
+const Stack = createNativeStackNavigator<RouteParamsList>();
 
 const Navigation = () => {
   return (
@@ -64,6 +65,11 @@ const Navigation = () => {
         <Stack.Screen
           name={RouteConstants.Home}
           component={HomeScreen}
+          options={{ headerShown: false }}
+        />
+        <Stack.Screen
+          name={RouteConstants.GoalSettings}
+          component={GoalSettingsScreen}
           options={{ headerShown: false }}
         />
         <Stack.Screen

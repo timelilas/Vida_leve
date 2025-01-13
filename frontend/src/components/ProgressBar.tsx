@@ -1,12 +1,5 @@
-import { useEffect } from "react";
-import {
-  Animated,
-  Easing,
-  StyleSheet,
-  Text,
-  useAnimatedValue,
-  View,
-} from "react-native";
+import { useEffect, useRef } from "react";
+import { Animated, Easing, StyleSheet, Text, View } from "react-native";
 
 interface ProgressBarProps {
   total: number;
@@ -18,7 +11,7 @@ export function ProgressBar(props: ProgressBarProps) {
   const roundedFraction = Math.floor(absoluteFraction * 1000) / 1000;
   const normalizedFraction = roundedFraction >= 1 ? 1 : roundedFraction;
 
-  const widthAsFraction = useAnimatedValue(0, { useNativeDriver: false });
+  const widthAsFraction = useRef(new Animated.Value(0)).current;
   const progressPercentage = widthAsFraction.interpolate({
     inputRange: [0.0, 1.0],
     outputRange: ["0%", "100%"],
@@ -29,9 +22,9 @@ export function ProgressBar(props: ProgressBarProps) {
       toValue: normalizedFraction,
       useNativeDriver: false,
       easing: Easing.out(Easing.ease),
-      duration: 1000,
+      duration: 800,
     }).start();
-  }, [widthAsFraction, normalizedFraction]);
+  }, [normalizedFraction]);
 
   return (
     <View style={styles.progressBar}>

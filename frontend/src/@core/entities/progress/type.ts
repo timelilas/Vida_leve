@@ -6,5 +6,5 @@ export interface ProgressProps {
   weight: number; // peso em quilogramas
   goalWeight: number; // meta de peso em quilogramas
   activityFrequency: ActitivyFrequency;
-  currentCaloriePlan: PlanType;
+  currentCaloriePlan: PlanType | null;
 }
