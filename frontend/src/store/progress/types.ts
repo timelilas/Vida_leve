@@ -6,7 +6,7 @@ export interface ProgressStoreState {
 }
 
 export interface ProgressStoreActions {
-  setProgress(data: ProgressProps): void;
+  setProgress(data: ProgressProps | null): void;
 }
 
 export type ProgressStore = ProgressStoreState & ProgressStoreActions;
