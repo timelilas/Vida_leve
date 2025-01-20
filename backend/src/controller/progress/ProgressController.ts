@@ -92,12 +92,6 @@ export default class ProgressController {
     try {
       const userProgress = await this._ProgressService.get(userId);
 
-      if (!userProgress) {
-        throw new NotFoundException(
-          "Este usuário não possui um progresso cadastrado.",
-          ProgressController.name
-        );
-      }
       return res.status(200).json({ data: userProgress });
     } catch (error: any) {
       return exceptionResponseAdapter({
