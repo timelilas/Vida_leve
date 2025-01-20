@@ -1,7 +1,6 @@
 import { useRef } from "react";
 import { View, ScrollView } from "react-native";
 import { LogoSVG } from "../../../components/logos/LogoSVG";
-import { CommonActions } from "@react-navigation/native";
 import { Input } from "../../../components/inputs/Input";
 import { PasswordInput } from "../../../components/inputs/PasswordInput";
 import { ScreenWrapper } from "../../../components/ScreenWrapper";
@@ -22,15 +21,30 @@ import { RouteConstants } from "../../../routes/types";
 import { wrongCredentialsMessage } from "./utils";
 import { SecureStorage } from "../../../services/secureStorage/SecureStorage";
 import { useSnackbar } from "../../../hooks/useSnackbar";
-import styles from "../styles";
 import { STORAGE_ACCESS_TOKEN } from "../../../constants/localStorageConstants";
+import { httpUserService } from "../../../services/user";
+import { httpProgressService } from "../../../services/progress";
+import { httpCaloriePlanService } from "../../../services/caloriePlan";
+import { useProgressStore } from "../../../store/progress";
+import { useUserStore } from "../../../store/user";
+import { useCaloriePlanStore } from "../../../store/caloriePlan";
+import { useNavigationAfterLogin } from "./hooks/useNavigationAfterLogin";
+import styles from "../styles";
 
-const loginInitialState: LoginFormData = {
-  email: "",
-  password: "",
-};
+const loginInitialState: LoginFormData = { email: "", password: "" };
 
 const LoginScreen = () => {
+  const setUser = useUserStore((state) => state.setUser);
+  const setPlans = useCaloriePlanStore((state) => state.setPlans);
+  const setProgress = useProgressStore((state) => state.setProgress);
+
+  const {
+    naivgateToHome,
+    navigateToProfileForm,
+    navigateToProgressForm,
+    navigateToPlanSelection,
+  } = useNavigationAfterLogin();
+
   const { Snackbar, showSnackbar } = useSnackbar();
   const navigation = useAppNavigation();
   const scrollRef = useRef<ScrollView | null>(null);
@@ -47,15 +61,29 @@ const LoginScreen = () => {
     scrollRef.current?.scrollTo({ y: 0, animated: true });
   }
 
+  function validateAllFields() {
+    const validationMap = {
+      email: validateEmail(values.email),
+      password: validateEmptyField(values.password),
+    };
+
+    for (const [field, validation] of Object.entries(validationMap)) {
+      if (!validation.success) {
+        setError({ field: field as any, message: validation.error });
+        return false;
+      }
+    }
+    return true;
+  }
+
   async function handleSubmit() {
     if (!validateAllFields()) return;
 
     const { data } = await httpAuthService.login(values);
+
     await SecureStorage.setItem(STORAGE_ACCESS_TOKEN, data.token);
 
-    navigation.dispatch(
-      CommonActions.reset({ routes: [{ name: RouteConstants.ProfileForm }] })
-    );
+    await handleNavigationAfterLogin();
   }
 
   function handleError(error: Error) {
@@ -79,19 +107,35 @@ const LoginScreen = () => {
     }
   }
 
-  function validateAllFields() {
-    const validationMap = {
-      email: validateEmail(values.email),
-      password: validateEmptyField(values.password),
-    };
+  async function handleNavigationAfterLogin() {
+    const { user, progress, plans } = await getOnboardingData();
 
-    for (const [field, validation] of Object.entries(validationMap)) {
-      if (!validation.success) {
-        setError({ field: field as any, message: validation.error });
-        return false;
-      }
+    if (!user.birthDate || !user.gender || !user.phone || !user.name) {
+      return navigateToProfileForm();
     }
-    return true;
+    if (!progress || !plans.length) {
+      return navigateToProgressForm();
+    }
+    if (!progress.currentCaloriePlan) {
+      return navigateToPlanSelection();
+    }
+
+    return naivgateToHome();
+  }
+
+  async function getOnboardingData() {
+    const [{ data: user }, { data: progress }, { data: plans }] =
+      await Promise.all([
+        httpUserService.getProfile(),
+        httpProgressService.getProgress(),
+        httpCaloriePlanService.getPlans(),
+      ]);
+
+    setUser(user);
+    setPlans(plans);
+    setProgress(progress);
+
+    return { user, progress, plans };
   }
 
   return (
