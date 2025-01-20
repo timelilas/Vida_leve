@@ -18,6 +18,7 @@ export class HttpProgressService extends HttpService {
       },
     });
   }
+
   public async setCaloriePlan(plan: PlanType) {
     const accessToken = await SecureStorage.getItem(STORAGE_ACCESS_TOKEN);
 
@@ -25,6 +26,18 @@ export class HttpProgressService extends HttpService {
       method: "PATCH",
       path: "/progress/plan",
       body: { currentCaloriePlan: plan },
+      headers: {
+        Authorization: `Bearer ${accessToken}`,
+      },
+    });
+  }
+
+  public async getProgress() {
+    const accessToken = await SecureStorage.getItem(STORAGE_ACCESS_TOKEN);
+
+    return await this.submit<ProgressProps | null>({
+      method: "GET",
+      path: "/progress",
       headers: {
         Authorization: `Bearer ${accessToken}`,
       },
