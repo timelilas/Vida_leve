@@ -14,13 +14,14 @@ export function SuccessModal(props: SuccessModalProps) {
 
   return (
     <Modal
-      animationInTiming={400}
+      animationInTiming={300}
       animationOutTiming={500}
-      animationIn="bounceIn"
+      animationIn="zoomIn"
       animationOut="fadeOutUpBig"
       backdropColor="#000000"
       backdropOpacity={0.2}
       isVisible={isVisible}
+      style={styles.container}
     >
       <View style={styles.modal}>
         <SuccessCheckIcon style={styles.checkIcon} />
@@ -34,6 +35,9 @@ export function SuccessModal(props: SuccessModalProps) {
 }
 
 const styles = StyleSheet.create({
+  container: {
+    alignItems: "center",
+  },
   modal: {
     position: "relative",
     width: "100%",

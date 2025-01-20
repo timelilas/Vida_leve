@@ -1,9 +1,12 @@
 import { UserProps } from "../../@core/entities/user/type";
 
-export interface HttpUpdateProfileOutputDTO
-  extends Omit<UserProps, "password" | "birthDate"> {
-  birthDate: string;
+interface UserProfileData extends Omit<UserProps, "password" | "birthDate"> {
+  birthDate: string | null;
 }
+
+export type HttpGetProfileOutputDTO = UserProfileData;
+
+export type HttpUpdateProfileOutputDTO = UserProfileData;
 
 export type HttpUpdateProfileInputDTO = Pick<
   UserProps,
