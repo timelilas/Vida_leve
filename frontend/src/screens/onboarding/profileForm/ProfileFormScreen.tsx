@@ -29,10 +29,12 @@ import { useAppNavigation } from "../../../hooks/useAppNavigation";
 import { RouteConstants } from "../../../routes/types";
 import { httpUserService } from "../../../services/user";
 import { useSnackbar } from "../../../hooks/useSnackbar";
+import { SecureStorage } from "../../../services/secureStorage/SecureStorage";
+import { STORAGE_ACCESS_TOKEN } from "../../../constants/localStorageConstants";
+import { CommonActions } from "@react-navigation/native";
 
 const ProfileFormScreen = () => {
   const { Snackbar, showSnackbar } = useSnackbar();
-  const navigation = useAppNavigation();
   const { setUser, data: user } = useUserStore((state) => state);
   const { data, handleChange, setError, validateField, onSubmit } =
     useForm<ProfileFormData>({
@@ -45,11 +47,19 @@ const ProfileFormScreen = () => {
     });
 
   const { values, error, isSubmitting, isFormDirty } = data;
+  const navigation = useAppNavigation({ preventGoBack: isSubmitting });
 
   function goBack() {
-    if (!isSubmitting) {
-      navigation.goBack();
-    }
+    SecureStorage.removeItem(STORAGE_ACCESS_TOKEN);
+    navigation.dispatch(
+      CommonActions.reset({
+        index: 1,
+        routes: [
+          { name: RouteConstants.Welcome },
+          { name: RouteConstants.Login },
+        ],
+      })
+    );
   }
 
   function navigateToProgressForm() {
