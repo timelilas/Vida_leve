@@ -148,7 +148,6 @@ const ProgressFormScreen = () => {
 
   async function handleSubmit() {
     if (!validateAllFields()) return;
-    if (!isFormDirty) return navigateToPlanSelection();
 
     const { data } = await httpProgressService.createProgress({
       weight,
