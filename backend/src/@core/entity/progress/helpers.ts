@@ -59,7 +59,7 @@ export class ProgressHelper {
   ): number {
     return gender === "masculino"
       ? 88.36 + 13.4 * weight + 4.8 * 100 * height - 5.7 * age
-      : 447.6 + 9.2 * weight + 3.1 * height - 4.3 * age;
+      : 447.6 + 9.2 * weight + 3.1 * 100 * height - 4.3 * age;
   }
 
   private static calculateTDEE(
