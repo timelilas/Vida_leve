@@ -12,12 +12,9 @@ import { defaultInputStyles } from "./styles";
 import { PasswordValidationBoard } from "../validationBoard/PasswordValidationBoard";
 import { ErrorMessage } from "../ErrorMessage";
 import { RawInput } from "./RawInput";
+import { InputProps } from "./Input";
 
-interface PasswordInputProps {
-  label?: string;
-  error?: boolean;
-  disabled?: boolean;
-  errorMessage?: string;
+interface PasswordInputProps extends InputProps {
   withBoard?: boolean;
   enableBoard?: boolean;
 }
