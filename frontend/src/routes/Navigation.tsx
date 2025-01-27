@@ -11,6 +11,7 @@ import ConnectionErrorScreen from "../screens/error/connectionError/ConnectionEr
 import WelcomeScreen from "../screens/auth/welcome/WelcomeScreen";
 import HomeScreen from "../screens/main/home/HomeScreen";
 import GoalSettingsScreen from "../screens/main/goalSettings/GoalSettingsScreen";
+import ProgessSettingsScreen from "../screens/main/progressSettings/ProgessSettingsScreen";
 
 const Stack = createNativeStackNavigator<RouteParamsList>();
 
@@ -70,6 +71,11 @@ const Navigation = () => {
         <Stack.Screen
           name={RouteConstants.GoalSettings}
           component={GoalSettingsScreen}
+          options={{ headerShown: false }}
+        />
+        <Stack.Screen
+          name={RouteConstants.ProgressSettings}
+          component={ProgessSettingsScreen}
           options={{ headerShown: false }}
         />
         <Stack.Screen

@@ -31,6 +31,10 @@ const GoalSettingsScreen = () => {
     });
   }
 
+  function navigateToProgressSettings() {
+    navigation.navigate(RouteConstants.ProgressSettings);
+  }
+
   return (
     <ScreenWrapper scrollEnabled={selectedRoute === null}>
       <View style={styles.body}>
@@ -45,7 +49,7 @@ const GoalSettingsScreen = () => {
         <View style={styles.buttonWrapper}>
           <ToggleButton
             rounded
-            onPress={() => {}}
+            onPress={navigateToProgressSettings}
             selected={selectedRoute === "progress"}
             onTouchStart={() => selectRoute("progress")}
             onTouchEnd={() => selectRoute(null)}
