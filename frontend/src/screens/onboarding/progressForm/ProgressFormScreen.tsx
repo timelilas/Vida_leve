@@ -2,7 +2,6 @@ import { StyleSheet, View } from "react-native";
 import { ScreenWrapper } from "../../../components/ScreenWrapper";
 import { ScreenHeader } from "../../../components/ScreenHeader";
 import { Input } from "../../../components/inputs/Input";
-import { ActivityFrequencyButton } from "./components/ActivityFrequencyButton";
 import { ProgressFormData } from "./types";
 import { ActitivyFrequency } from "../../../@core/entities/@shared/activityFrequency/type";
 import { SubmitButton } from "../../../components/buttons/SubmitButton";
@@ -12,8 +11,7 @@ import { useForm } from "../../../hooks/useForm";
 import { validateHeight } from "../../../utils/validations/height";
 import { validateWeight } from "../../../utils/validations/weight";
 import { validateActitivyFrequency } from "../../../utils/validations/activityFrequency";
-import { ErrorMessage } from "../../../components/ErrorMessage";
-import { activityFrequencies, missingProfileFormField } from "./utils";
+import { missingProfileFormField } from "./utils";
 import { validateGoalWeight } from "../../../utils/validations/goalWeight";
 import { useUserStore } from "../../../store/user";
 import { useProgressStore } from "../../../store/progress";
@@ -33,6 +31,7 @@ import { useAppNavigation } from "../../../hooks/useAppNavigation";
 import { RouteConstants } from "../../../routes/types";
 import { httpProgressService } from "../../../services/progress";
 import { useSnackbar } from "../../../hooks/useSnackbar";
+import { ActivityFrequencySelection } from "../../../components/acitivityFrequencySelection/ActivityFrequencySelection";
 
 const ProgressFormScreen = () => {
   const { Snackbar, showSnackbar } = useSnackbar();
@@ -51,7 +50,7 @@ const ProgressFormScreen = () => {
         activityFrequency: progress?.activityFrequency ?? null,
       },
     });
-  const { values, error, isSubmitting, isFormDirty } = data;
+  const { values, error, isSubmitting } = data;
   const { height, weight, goalWeight, activityFrequency } = values;
   const navigation = useAppNavigation({ preventGoBack: isSubmitting });
 
@@ -230,24 +229,14 @@ const ProgressFormScreen = () => {
           keyboardType="numeric"
           placeholder="Ex.: 55 kg"
         />
-        <View style={styles.wrapper}>
-          <Paragraph style={styles.label}>
-            Qual é o seu nível de atividade física diária?
-          </Paragraph>
-          {activityFrequencies.map(({ type, title, description }) => (
-            <ActivityFrequencyButton
-              key={type}
-              disabled={isSubmitting}
-              selected={activityFrequency === type}
-              onPress={() => selectActitivyFrequency(type)}
-              title={title}
-              description={description}
-            />
-          ))}
-          {error.field === "activityFrequency" && error.message && (
-            <ErrorMessage message={error.message} />
-          )}
-        </View>
+        <ActivityFrequencySelection
+          onSelect={selectActitivyFrequency}
+          selectedFrequency={activityFrequency}
+          disabled={isSubmitting}
+          errorMessage={
+            error.field === "activityFrequency" ? error.message : undefined
+          }
+        />
       </View>
       <SubmitButton
         disabled={isSubmitting}
