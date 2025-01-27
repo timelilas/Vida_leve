@@ -32,6 +32,7 @@ import { RouteConstants } from "../../../routes/types";
 import { httpProgressService } from "../../../services/progress";
 import { useSnackbar } from "../../../hooks/useSnackbar";
 import { ActivityFrequencySelection } from "../../../components/acitivityFrequencySelection/ActivityFrequencySelection";
+import { WeightInput } from "../../../components/inputs/WeightInput";
 
 const ProgressFormScreen = () => {
   const { Snackbar, showSnackbar } = useSnackbar();
@@ -182,54 +183,50 @@ const ProgressFormScreen = () => {
         atividade física para personalizar sua jornada.
       </Paragraph>
       <View style={styles.form}>
-        <Input
-          onChangeText={(value) => handleChange("height", maskHeight(value))}
-          onBlur={() =>
-            validateField("height", parseHeight(height), validateHeight)
-          }
-          disabled={isSubmitting}
-          error={error.field === "height"}
-          value={`${height}`}
-          errorMessage={error.field === "height" ? error.message : undefined}
-          keyboardType="numeric"
-          label="Altura"
-          placeholder="Ex.: 1,60"
-          autoFocus
-        />
-        <Input
-          onChangeText={(value) =>
-            handleChange("weight", parseInt(onlyNumbers(value, 3)))
-          }
-          error={error.field === "weight"}
-          onBlur={() => validateField("weight", weight, validateWeight)}
-          disabled={isSubmitting}
-          value={weight ? `${weight}`.concat(" kg") : ""}
-          selection={{ start: `${weight}`.length, end: `${weight}`.length }}
-          errorMessage={error.field === "weight" ? error.message : undefined}
-          label="Peso atual"
-          keyboardType="numeric"
-          placeholder="Ex.: 60 kg"
-        />
-        <Input
-          onChangeText={(value) =>
-            handleChange("goalWeight", parseInt(onlyNumbers(value, 3)))
-          }
-          onBlur={handleGoalWeightValidation}
-          disabled={isSubmitting}
-          error={error.field === "goalWeight"}
-          value={goalWeight ? `${goalWeight}`.concat(" kg") : ""}
-          selection={{
-            start: `${goalWeight}`.length,
-            end: `${goalWeight}`.length,
-          }}
-          errorMessage={
-            error.field === "goalWeight" ? error.message : undefined
-          }
-          label="Peso desejado"
-          keyboardType="numeric"
-          placeholder="Ex.: 55 kg"
-        />
+        <View style={styles.inputWrapper}>
+          <Input
+            onChangeText={(value) => handleChange("height", maskHeight(value))}
+            onBlur={() =>
+              validateField("height", parseHeight(height), validateHeight)
+            }
+            disabled={isSubmitting}
+            error={error.field === "height"}
+            value={`${height}`}
+            errorMessage={error.field === "height" ? error.message : undefined}
+            keyboardType="numeric"
+            label="Altura"
+            placeholder="Ex.: 1,60"
+            autoFocus
+          />
+          <WeightInput
+            label="Peso atual"
+            value={`${weight || ""}`}
+            disabled={isSubmitting}
+            placeholder="Ex.: 60 kg"
+            error={error.field === "weight"}
+            errorMessage={error.field === "weight" ? error.message : undefined}
+            onBlur={() => validateField("weight", weight, validateWeight)}
+            onChangeText={(value) =>
+              handleChange("weight", parseInt(onlyNumbers(value, 3)))
+            }
+          />
+          <WeightInput
+            label="Peso desejado"
+            value={`${goalWeight || ""}`}
+            disabled={isSubmitting}
+            placeholder="Ex.: 55 kg"
+            error={error.field === "goalWeight"}
+            errorMessage={
+              error.field === "goalWeight" ? error.message : undefined
+            }
+            onBlur={handleGoalWeightValidation}
+            onChangeText={(value) =>
+              handleChange("goalWeight", parseInt(onlyNumbers(value, 3)))
+            }
+          />
+        </View>
         <ActivityFrequencySelection
+          style={styles.planSelection}
           onSelect={selectActitivyFrequency}
           selectedFrequency={activityFrequency}
           disabled={isSubmitting}
@@ -265,9 +262,14 @@ const styles = StyleSheet.create({
     lineHeight: 16,
   },
   form: {
-    gap: 16,
     marginTop: 24,
     marginBottom: 40,
+  },
+  inputWrapper: {
+    gap: 16,
+  },
+  planSelection: {
+    marginTop: 32,
   },
   wrapper: {
     gap: 8,
