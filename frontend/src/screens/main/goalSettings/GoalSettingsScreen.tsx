@@ -31,8 +31,8 @@ const GoalSettingsScreen = () => {
     });
   }
 
-  function navigateToProgressSettings() {
-    navigation.navigate(RouteConstants.ProgressSettings);
+  function navigateToUpdateProgress() {
+    navigation.navigate(RouteConstants.UpdateProgress);
   }
 
   return (
@@ -49,7 +49,7 @@ const GoalSettingsScreen = () => {
         <View style={styles.buttonWrapper}>
           <ToggleButton
             rounded
-            onPress={navigateToProgressSettings}
+            onPress={navigateToUpdateProgress}
             selected={selectedRoute === "progress"}
             onTouchStart={() => selectRoute("progress")}
             onTouchEnd={() => selectRoute(null)}

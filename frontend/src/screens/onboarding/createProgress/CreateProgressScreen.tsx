@@ -14,15 +14,18 @@ import { httpProgressService } from "../../../services/progress";
 import { useSnackbar } from "../../../hooks/useSnackbar";
 import { ProgressForm } from "../../../components/progressForm/ProgressForm";
 import { OnProgressSubmitData } from "../../../components/progressForm/types";
+import { useState } from "react";
+import { delay } from "../../../utils/helpers";
 
-const ProgressFormScreen = () => {
+const CreateProgressScreen = () => {
   const { Snackbar, showSnackbar } = useSnackbar();
   const setProgress = useProgressStore((state) => state.setProgress);
   const setPlans = useCaloriePlanStore((state) => state.setPlans);
   const progress = useProgressStore((state) => state.data);
   const gender = useUserStore((state) => state.data.gender);
   const birthDate = useUserStore((state) => state.data.birthDate);
-  const navigation = useAppNavigation();
+  const [isSubmitting, setIsSubmitting] = useState(false);
+  const navigation = useAppNavigation({ preventGoBack: isSubmitting });
 
   const initialFormData = {
     height: progress?.height ? heightToString(progress?.height) : "",
@@ -44,6 +47,7 @@ const ProgressFormScreen = () => {
   }
 
   async function onSubmit(data: OnProgressSubmitData) {
+    setIsSubmitting(true);
     const { formData, newCaloriePlans } = data;
     const { data: responseData } = await httpProgressService.createProgress(
       formData
@@ -51,6 +55,7 @@ const ProgressFormScreen = () => {
 
     setProgress(responseData);
     setPlans(newCaloriePlans);
+    setIsSubmitting(false);
     navigateToPlanSelection();
   }
 
@@ -65,6 +70,7 @@ const ProgressFormScreen = () => {
         variant: "error",
       });
     }
+    setIsSubmitting(false);
   }
 
   return (
@@ -85,7 +91,7 @@ const ProgressFormScreen = () => {
   );
 };
 
-export default ProgressFormScreen;
+export default CreateProgressScreen;
 
 const styles = StyleSheet.create({
   header: {

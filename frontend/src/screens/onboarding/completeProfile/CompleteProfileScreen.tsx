@@ -33,7 +33,7 @@ import { SecureStorage } from "../../../services/secureStorage/SecureStorage";
 import { STORAGE_ACCESS_TOKEN } from "../../../constants/localStorageConstants";
 import { CommonActions } from "@react-navigation/native";
 
-const ProfileFormScreen = () => {
+const CompleteProfileScreen = () => {
   const { Snackbar, showSnackbar } = useSnackbar();
   const { setUser, data: user } = useUserStore((state) => state);
   const { data, handleChange, setError, validateField, onSubmit } =
@@ -63,7 +63,7 @@ const ProfileFormScreen = () => {
   }
 
   function navigateToProgressForm() {
-    navigation.navigate(RouteConstants.ProgressForm);
+    navigation.navigate(RouteConstants.CreateProgress);
   }
 
   function selectGender(value: GenderType) {
@@ -199,7 +199,7 @@ const ProfileFormScreen = () => {
   );
 };
 
-export default ProfileFormScreen;
+export default CompleteProfileScreen;
 
 const styles = StyleSheet.create({
   header: {

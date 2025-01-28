@@ -5,13 +5,13 @@ import LoginScreen from "../screens/auth/login/LoginScreen";
 import SignupScreen from "../screens/auth/signup/SignupScreen";
 import PlanSelectionScreen from "../screens/@shared/planSelection/PlanSelectionScreen";
 import GoalGuidanceScreen from "../screens/onboarding/goalGuidance/GoalGuidanceScreen";
-import ProgressFormScreen from "../screens/onboarding/progressForm/ProgressFormScreen";
-import ProfileFormScreen from "../screens/onboarding/profileForm/ProfileFormScreen";
+import CreateProgressScreen from "../screens/onboarding/createProgress/CreateProgressScreen";
+import CompleteProfileScreen from "../screens/onboarding/completeProfile/CompleteProfileScreen";
 import ConnectionErrorScreen from "../screens/error/connectionError/ConnectionErrorScreen";
 import WelcomeScreen from "../screens/auth/welcome/WelcomeScreen";
 import HomeScreen from "../screens/main/home/HomeScreen";
 import GoalSettingsScreen from "../screens/main/goalSettings/GoalSettingsScreen";
-import ProgessSettingsScreen from "../screens/main/progressSettings/ProgessSettingsScreen";
+import UpdateProgressScreen from "../screens/main/updateProgress/UpdateProgressScreen";
 
 const Stack = createNativeStackNavigator<RouteParamsList>();
 
@@ -44,13 +44,13 @@ const Navigation = () => {
           options={{ headerShown: false }}
         />
         <Stack.Screen
-          name={RouteConstants.ProfileForm}
-          component={ProfileFormScreen}
+          name={RouteConstants.CompleteProfile}
+          component={CompleteProfileScreen}
           options={{ headerShown: false }}
         />
         <Stack.Screen
-          name={RouteConstants.ProgressForm}
-          component={ProgressFormScreen}
+          name={RouteConstants.CreateProgress}
+          component={CreateProgressScreen}
           options={{ headerShown: false }}
         />
         <Stack.Screen
@@ -74,8 +74,8 @@ const Navigation = () => {
           options={{ headerShown: false }}
         />
         <Stack.Screen
-          name={RouteConstants.ProgressSettings}
-          component={ProgessSettingsScreen}
+          name={RouteConstants.UpdateProgress}
+          component={UpdateProgressScreen}
           options={{ headerShown: false }}
         />
         <Stack.Screen

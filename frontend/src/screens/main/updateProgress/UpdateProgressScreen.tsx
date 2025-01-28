@@ -1,4 +1,4 @@
-import { StyleSheet, View } from "react-native";
+import { StyleSheet } from "react-native";
 import { ScreenWrapper } from "../../../components/ScreenWrapper";
 import { ScreenHeader } from "../../../components/ScreenHeader";
 import { ScreenTitle } from "../../../components/ScreenTitle";
@@ -13,7 +13,7 @@ import { useSnackbar } from "../../../hooks/useSnackbar";
 import { ProgressForm } from "../../../components/progressForm/ProgressForm";
 import { OnProgressSubmitData } from "../../../components/progressForm/types";
 
-const ProgessSettingsScreen = () => {
+const UpdateProgressScreen = () => {
   const { Snackbar, showSnackbar } = useSnackbar();
   const progress = useProgressStore((state) => state.data);
   const gender = useUserStore((state) => state.data.gender);
@@ -79,7 +79,7 @@ const ProgessSettingsScreen = () => {
   );
 };
 
-export default ProgessSettingsScreen;
+export default UpdateProgressScreen;
 
 const styles = StyleSheet.create({
   header: {
