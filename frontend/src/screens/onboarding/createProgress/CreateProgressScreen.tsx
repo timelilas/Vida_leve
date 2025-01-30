@@ -15,7 +15,6 @@ import { useSnackbar } from "../../../hooks/useSnackbar";
 import { ProgressForm } from "../../../components/progressForm/ProgressForm";
 import { OnProgressSubmitData } from "../../../components/progressForm/types";
 import { useState } from "react";
-import { delay } from "../../../utils/helpers";
 
 const CreateProgressScreen = () => {
   const { Snackbar, showSnackbar } = useSnackbar();
@@ -40,12 +39,6 @@ const CreateProgressScreen = () => {
     navigation.goBack();
   }
 
-  function navigateToPlanSelection() {
-    navigation.navigate(RouteConstants.PlanSelection, {
-      nextRoute: RouteConstants.GoalGuidance,
-    });
-  }
-
   async function onSubmit(data: OnProgressSubmitData) {
     setIsSubmitting(true);
     const { formData, newCaloriePlans } = data;
@@ -56,7 +49,11 @@ const CreateProgressScreen = () => {
     setProgress(responseData);
     setPlans(newCaloriePlans);
     setIsSubmitting(false);
-    navigateToPlanSelection();
+
+    navigation.navigate(RouteConstants.PlanSelection, {
+      nextRoute: RouteConstants.GoalGuidance,
+      plans: newCaloriePlans
+    });
   }
 
   function onError(error: Error) {

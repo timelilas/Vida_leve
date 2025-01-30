@@ -1,3 +1,5 @@
+import { CaloriePlanProps } from "../@core/entities/caloriePlan/type";
+
 export enum RouteConstants {
   PlanSelection = "SCREEN_Shared_PlanSelection",
   Welcome = "SCREEN_Auth_Welcome",
@@ -13,7 +15,7 @@ export enum RouteConstants {
 }
 
 export type RouteParamsList = {
-  [RouteConstants.PlanSelection]: { nextRoute: string; withModal?: boolean };
+  [RouteConstants.PlanSelection]: { nextRoute: string; withModal?: boolean, plans: CaloriePlanProps[] };
   [RouteConstants.Welcome]: undefined;
   [RouteConstants.Login]: undefined;
   [RouteConstants.Signup]: undefined;

@@ -37,16 +37,13 @@ const UpdateProgressScreen = () => {
     showSnackbar({ duration: 4000, message: message, variant: "error" });
   }
 
-  function navigateToPlanSelection() {
+  async function onSubmit(data: OnProgressSubmitData) {
+    const { formData, newCaloriePlans } = data;
     navigation.navigate(RouteConstants.PlanSelection, {
       nextRoute: RouteConstants.Home,
       withModal: true,
+      plans: newCaloriePlans
     });
-  }
-
-  async function onSubmit(data: OnProgressSubmitData) {
-    const { formData, newCaloriePlans } = data;
-    navigateToPlanSelection();
   }
 
   function onError(error: Error) {
