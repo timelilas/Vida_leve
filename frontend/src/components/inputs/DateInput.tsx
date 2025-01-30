@@ -16,15 +16,9 @@ import { dateToPTBR } from "../../utils/helpers";
 import { defaultInputStyles } from "./styles";
 import { ErrorMessage } from "../ErrorMessage";
 import { RawInput } from "./RawInput";
+import { InputProps } from "./Input";
 
-interface PasswordInputProps {
-  disabled?: boolean;
-  label?: string;
-  error?: boolean;
-  errorMessage?: string;
-}
-
-export function DateInput(props: PasswordInputProps & TextInputProps) {
+export function DateInput(props: InputProps & TextInputProps) {
   const { disabled, label, error, errorMessage, ...propsRest } = props;
   const [isCalendarVisible, setIsCalendarVisible] = useState<boolean>(false);
   const [selectedDate, setSelectedDate] = useState<DateData>();

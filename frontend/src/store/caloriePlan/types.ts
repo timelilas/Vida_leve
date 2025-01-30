@@ -1,7 +1,6 @@
 import { CaloriePlanProps } from "../../@core/entities/caloriePlan/type";
 
 export interface CaloriePlanStoreState {
-  status: "idle" | "loading" | "fulfilled";
   data: CaloriePlanProps[];
 }
 

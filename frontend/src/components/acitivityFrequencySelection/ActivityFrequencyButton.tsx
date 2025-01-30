@@ -1,5 +1,5 @@
 import { View, Text, StyleSheet } from "react-native";
-import { ToggleButton } from "../../../../components/buttons/ToggleButton";
+import { ToggleButton } from "../buttons/ToggleButton";
 
 interface ActivityFrequencyButtonProps {
   title: string;

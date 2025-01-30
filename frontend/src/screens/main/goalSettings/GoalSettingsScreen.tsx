@@ -7,11 +7,13 @@ import { Paragraph } from "../../../components/Paragraph";
 import { ToggleButton } from "../../../components/buttons/ToggleButton";
 import { useState } from "react";
 import { RouteConstants } from "../../../routes/types";
+import { useCaloriePlanStore } from "../../../store/caloriePlan";
 
 type SelectedRoute = "progress" | "plan";
 
 const GoalSettingsScreen = () => {
   const navigation = useAppNavigation();
+  const currentCaloriePlans = useCaloriePlanStore((state) => state.data)
   const [selectedRoute, setSelectedRoute] = useState<SelectedRoute | null>(
     null
   );
@@ -28,7 +30,12 @@ const GoalSettingsScreen = () => {
     navigation.navigate(RouteConstants.PlanSelection, {
       nextRoute: RouteConstants.Home,
       withModal: true,
+      plans: currentCaloriePlans
     });
+  }
+
+  function navigateToUpdateProgress() {
+    navigation.navigate(RouteConstants.UpdateProgress);
   }
 
   return (
@@ -45,7 +52,7 @@ const GoalSettingsScreen = () => {
         <View style={styles.buttonWrapper}>
           <ToggleButton
             rounded
-            onPress={() => {}}
+            onPress={navigateToUpdateProgress}
             selected={selectedRoute === "progress"}
             onTouchStart={() => selectRoute("progress")}
             onTouchEnd={() => selectRoute(null)}

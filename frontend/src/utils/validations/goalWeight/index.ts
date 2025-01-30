@@ -3,7 +3,7 @@ import { GenderType } from "../../../@core/entities/@shared/gender/type";
 import { ValidationResult } from "../type";
 import { defaultMissingFieldMsg } from "../variables";
 
-interface HealthMetrics {
+interface GoalWeightParams {
   age: number;
   gender: GenderType;
   height: number;
@@ -11,7 +11,9 @@ interface HealthMetrics {
   goalWeight: number;
 }
 
-export function validateGoalWeight(metrics: HealthMetrics): ValidationResult {
+export function validateGoalWeight(
+  metrics: GoalWeightParams
+): ValidationResult {
   const { age, height, weight, goalWeight } = metrics;
   const genderLabel =
     metrics.gender === "masculino" ? "um homem" : "uma mulher";

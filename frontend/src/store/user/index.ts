@@ -3,7 +3,6 @@ import { UserStore, UserStoreState } from "./types";
 
 const initialState: UserStoreState = {
   isLogged: false,
-  status: "idle",
   data: {
     id: 0,
     email: "",
@@ -16,5 +15,5 @@ const initialState: UserStoreState = {
 
 export const useUserStore = create<UserStore>((set) => ({
   ...initialState,
-  setUser: (data) => set(() => ({ data, status: "fulfilled", isLogged: true })),
+  setUser: (data) => set(() => ({ data, isLogged: true })),
 }));
