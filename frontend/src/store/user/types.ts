@@ -2,7 +2,6 @@ import { UserProps } from "../../@core/entities/user/type";
 
 export interface UserStoreState {
   isLogged: boolean;
-  status: "idle" | "loading" | "fulfilled";
   data: Omit<UserProps, "password" | "birthDate"> & {
     birthDate: string | null;
   };

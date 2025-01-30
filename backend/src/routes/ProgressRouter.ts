@@ -3,7 +3,7 @@ import ProgressController from "../controller/progress/ProgressController";
 import { authorizationMiddleware } from "../middleware/authorization/authorizationMiddleware";
 import { validationMiddleware } from "../middleware/validation/validationMiddleware";
 import {
-  createProgressSchema,
+  upsertProgressSchema,
   setCurrentCaloriePlanSchema,
 } from "../controller/progress/schemas";
 
@@ -17,7 +17,7 @@ progressRouter.get("/", authorizationMiddleware, (req, res) =>
 progressRouter.post(
   "/",
   authorizationMiddleware,
-  validationMiddleware(createProgressSchema),
+  validationMiddleware(upsertProgressSchema),
   (req, res) => progressController.upsert(req, res)
 );
 

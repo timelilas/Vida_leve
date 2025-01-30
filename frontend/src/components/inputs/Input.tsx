@@ -3,7 +3,7 @@ import { defaultInputStyles } from "./styles";
 import { ErrorMessage } from "../ErrorMessage";
 import { RawInput } from "./RawInput";
 
-interface InputProps {
+export interface InputProps {
   error?: boolean;
   label?: string;
   errorMessage?: string;

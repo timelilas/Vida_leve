@@ -6,8 +6,8 @@ export function useNavigationAfterLogin() {
   const navigation = useAppNavigation();
 
   const homeRoute = { name: RouteConstants.Home };
-  const profileFormRoute = { name: RouteConstants.ProfileForm };
-  const progressFormRoute = { name: RouteConstants.ProgressForm };
+  const completeProfileRoute = { name: RouteConstants.CompleteProfile };
+  const createProgressRoute = { name: RouteConstants.CreateProgress };
   const planSelectionRoute = {
     name: RouteConstants.PlanSelection,
     params: { nextRoute: RouteConstants.GoalGuidance },
@@ -15,7 +15,7 @@ export function useNavigationAfterLogin() {
 
   function navigateToProfileForm() {
     return navigation.dispatch(
-      CommonActions.reset({ routes: [profileFormRoute] })
+      CommonActions.reset({ routes: [completeProfileRoute] })
     );
   }
 
@@ -23,7 +23,7 @@ export function useNavigationAfterLogin() {
     return navigation.dispatch(
       CommonActions.reset({
         index: 1,
-        routes: [profileFormRoute, progressFormRoute],
+        routes: [completeProfileRoute, createProgressRoute],
       })
     );
   }
@@ -32,7 +32,7 @@ export function useNavigationAfterLogin() {
     return navigation.dispatch(
       CommonActions.reset({
         index: 2,
-        routes: [profileFormRoute, progressFormRoute, planSelectionRoute],
+        routes: [completeProfileRoute, createProgressRoute, planSelectionRoute],
       })
     );
   }

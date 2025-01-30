@@ -3,7 +3,6 @@ import { ScreenWrapper } from "../../../components/ScreenWrapper";
 import { ScreenHeader } from "../../../components/ScreenHeader";
 import { ScreenTitle } from "../../../components/ScreenTitle";
 import { Paragraph } from "../../../components/Paragraph";
-import { useCaloriePlanStore } from "../../../store/caloriePlan";
 import { ConnectionError } from "../../../@core/errors/connectionError";
 import { useProgressStore } from "../../../store/progress";
 import { useAppNavigation } from "../../../hooks/useAppNavigation";
@@ -31,8 +30,8 @@ const PlanSelectionScreen = ({ route }: PlanSelectionScreenProps) => {
   const { Snackbar, showSnackbar } = useSnackbar();
   const setProgress = useProgressStore((state) => state.setProgress);
   const navigation = useAppNavigation();
-  const caloriePlans = useCaloriePlanStore((state) => state.data);
-  const planType = useProgressStore((state) => state.data?.currentCaloriePlan);
+  const caloriePlans = route.params.plans
+  const currentPlan = useProgressStore((state) => state.data?.currentCaloriePlan);
   const [isModalVisible, setIsModalVisible] = useState(false);
 
   function goBack() {
@@ -93,7 +92,7 @@ const PlanSelectionScreen = ({ route }: PlanSelectionScreenProps) => {
       </View>
       <PlanSelectionForm
         plans={caloriePlans}
-        currentPlan={planType || null}
+        currentPlan={currentPlan || null}
         onSubmit={handleSubmit}
         onError={handleError}
       />

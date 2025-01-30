@@ -1,9 +1,16 @@
 import { z } from "zod";
 import { progressZodSchema } from "../../utils/zod/schemas/progress";
 
-export const createProgressSchema = progressZodSchema._def.schema.omit({
-  currentCaloriePlan: true,
-});
+export const upsertProgressSchema = progressZodSchema._def.schema
+  .omit({
+    currentCaloriePlan: true,
+  })
+  .merge(
+    z.object({
+      currentCaloriePlan:
+        progressZodSchema._def.schema.shape.currentCaloriePlan.optional(),
+    })
+  ).strict()
 
 export const setCurrentCaloriePlanSchema = z
   .object({
