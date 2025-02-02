@@ -1,3 +1,4 @@
+import { PlanType } from "../@core/entities/@shared/planType/type";
 import { CaloriePlanProps } from "../@core/entities/caloriePlan/type";
 
 export enum RouteConstants {
@@ -15,7 +16,12 @@ export enum RouteConstants {
 }
 
 export type RouteParamsList = {
-  [RouteConstants.PlanSelection]: { nextRoute: string; withModal?: boolean, plans: CaloriePlanProps[] };
+  [RouteConstants.PlanSelection]: {
+    nextRoute: string;
+    withModal?: boolean;
+    plans: CaloriePlanProps[];
+    curentPlan: PlanType | null;
+  };
   [RouteConstants.Welcome]: undefined;
   [RouteConstants.Login]: undefined;
   [RouteConstants.Signup]: undefined;

@@ -30,8 +30,7 @@ const PlanSelectionScreen = ({ route }: PlanSelectionScreenProps) => {
   const { Snackbar, showSnackbar } = useSnackbar();
   const setProgress = useProgressStore((state) => state.setProgress);
   const navigation = useAppNavigation();
-  const caloriePlans = route.params.plans
-  const currentPlan = useProgressStore((state) => state.data?.currentCaloriePlan);
+  const { curentPlan, plans } = route.params;
   const [isModalVisible, setIsModalVisible] = useState(false);
 
   function goBack() {
@@ -50,8 +49,7 @@ const PlanSelectionScreen = ({ route }: PlanSelectionScreenProps) => {
   }
 
   async function handleSubmit(formState: FormState) {
-    const { isFormDirty, selectedPlan } = formState;
-    if (!isFormDirty) return navigateAfterSubmit();
+    const { selectedPlan } = formState;
 
     const { data } = await httpProgressService.setCaloriePlan(selectedPlan);
 
@@ -91,8 +89,8 @@ const PlanSelectionScreen = ({ route }: PlanSelectionScreenProps) => {
         </Paragraph>
       </View>
       <PlanSelectionForm
-        plans={caloriePlans}
-        currentPlan={currentPlan || null}
+        plans={plans}
+        currentPlan={curentPlan}
         onSubmit={handleSubmit}
         onError={handleError}
       />

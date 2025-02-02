@@ -52,7 +52,8 @@ const CreateProgressScreen = () => {
 
     navigation.navigate(RouteConstants.PlanSelection, {
       nextRoute: RouteConstants.GoalGuidance,
-      plans: newCaloriePlans
+      plans: newCaloriePlans,
+      curentPlan: responseData.currentCaloriePlan,
     });
   }
 

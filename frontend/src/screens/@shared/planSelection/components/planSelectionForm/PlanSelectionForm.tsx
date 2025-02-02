@@ -8,7 +8,6 @@ import { SubmitButton } from "../../../../../components/buttons/SubmitButton";
 import { useAppNavigation } from "../../../../../hooks/useAppNavigation";
 
 export interface FormState {
-  isFormDirty: boolean;
   selectedPlan: PlanType;
 }
 
@@ -40,11 +39,10 @@ export function PlanSelectionForm(props: PlanSelectionFormProps) {
   }
 
   async function handleSubmit() {
-    const isFormDirty = data.isFormDirty;
     const selectedPlan = data.values.planType;
 
     if (selectedPlan) {
-      await onSubmit({ isFormDirty, selectedPlan });
+      await onSubmit({ selectedPlan });
     }
   }
 
