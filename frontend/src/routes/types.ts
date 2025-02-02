@@ -1,5 +1,6 @@
 import { PlanType } from "../@core/entities/@shared/planType/type";
 import { CaloriePlanProps } from "../@core/entities/caloriePlan/type";
+import { ProgressProps } from "../@core/entities/progress/type";
 
 export enum RouteConstants {
   PlanSelection = "SCREEN_Shared_PlanSelection",
@@ -18,9 +19,10 @@ export enum RouteConstants {
 export type RouteParamsList = {
   [RouteConstants.PlanSelection]: {
     nextRoute: string;
-    withModal?: boolean;
     plans: CaloriePlanProps[];
     curentPlan: PlanType | null;
+    withModal?: boolean;
+    progressData?: Omit<ProgressProps, "currentCaloriePlan">;
   };
   [RouteConstants.Welcome]: undefined;
   [RouteConstants.Login]: undefined;

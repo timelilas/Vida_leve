@@ -1,12 +1,12 @@
 import { PlanType } from "../../@core/entities/@shared/planType/type";
 import { HttpService } from "../HttpService";
 import { ProgressProps } from "../../@core/entities/progress/type";
-import { HttpCreateProgressInputDTO } from "./types";
+import { HttpUpsertProgressInputDTO } from "./types";
 import { STORAGE_ACCESS_TOKEN } from "../../constants/localStorageConstants";
 import { SecureStorage } from "../secureStorage/SecureStorage";
 
 export class HttpProgressService extends HttpService {
-  public async createProgress(data: HttpCreateProgressInputDTO) {
+  public async upsertProgress(data: HttpUpsertProgressInputDTO) {
     const accessToken = await SecureStorage.getItem(STORAGE_ACCESS_TOKEN);
 
     return await this.submit<ProgressProps>({

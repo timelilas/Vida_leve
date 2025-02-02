@@ -44,6 +44,7 @@ const UpdateProgressScreen = () => {
       withModal: true,
       plans: newCaloriePlans,
       curentPlan: null,
+      progressData: formData,
     });
   }
 

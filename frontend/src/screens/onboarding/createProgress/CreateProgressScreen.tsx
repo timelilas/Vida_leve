@@ -42,7 +42,7 @@ const CreateProgressScreen = () => {
   async function onSubmit(data: OnProgressSubmitData) {
     setIsSubmitting(true);
     const { formData, newCaloriePlans } = data;
-    const { data: responseData } = await httpProgressService.createProgress(
+    const { data: responseData } = await httpProgressService.upsertProgress(
       formData
     );
 
