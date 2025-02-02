@@ -16,6 +16,7 @@ import {
 import { RouteProp } from "@react-navigation/native";
 import { SuccessModal } from "../../../components/successModal/SuccessModal";
 import { useState } from "react";
+import { useCaloriePlanStore } from "../../../store/caloriePlan";
 
 type PlanSelectionScreenlRouteProp = RouteProp<
   RouteParamsList,
@@ -29,9 +30,10 @@ interface PlanSelectionScreenProps {
 const PlanSelectionScreen = ({ route }: PlanSelectionScreenProps) => {
   const { Snackbar, showSnackbar } = useSnackbar();
   const setProgress = useProgressStore((state) => state.setProgress);
+  const setPlans = useCaloriePlanStore((state) => state.setPlans);
   const navigation = useAppNavigation();
-  const caloriePlans = route.params.plans
-  const currentPlan = useProgressStore((state) => state.data?.currentCaloriePlan);
+  const { progressData, plans, curentPlan, nextRoute, withModal } =
+    route.params;
   const [isModalVisible, setIsModalVisible] = useState(false);
 
   function goBack() {
@@ -41,23 +43,31 @@ const PlanSelectionScreen = ({ route }: PlanSelectionScreenProps) => {
   function closeModalAndNavigate() {
     setIsModalVisible(false);
     setTimeout(() => {
-      navigation.navigate(route.params.nextRoute as any);
+      navigation.navigate(nextRoute as any);
     }, 300);
   }
 
   function navigateAfterSubmit() {
-    navigation.navigate(route.params.nextRoute as any);
+    navigation.navigate(nextRoute as any);
   }
 
   async function handleSubmit(formState: FormState) {
-    const { isFormDirty, selectedPlan } = formState;
-    if (!isFormDirty) return navigateAfterSubmit();
+    const { selectedPlan } = formState;
+    let apiResponse;
 
-    const { data } = await httpProgressService.setCaloriePlan(selectedPlan);
+    if (progressData) {
+      apiResponse = await httpProgressService.upsertProgress({
+        ...progressData,
+        currentCaloriePlan: selectedPlan,
+      });
+      setPlans(plans);
+    } else {
+      apiResponse = await httpProgressService.setCaloriePlan(selectedPlan);
+    }
 
-    setProgress(data);
+    setProgress(apiResponse.data);
 
-    if (route.params.withModal) {
+    if (withModal) {
       setIsModalVisible(true);
     } else {
       navigateAfterSubmit();
@@ -91,8 +101,8 @@ const PlanSelectionScreen = ({ route }: PlanSelectionScreenProps) => {
         </Paragraph>
       </View>
       <PlanSelectionForm
-        plans={caloriePlans}
-        currentPlan={currentPlan || null}
+        plans={plans}
+        currentPlan={curentPlan}
         onSubmit={handleSubmit}
         onError={handleError}
       />

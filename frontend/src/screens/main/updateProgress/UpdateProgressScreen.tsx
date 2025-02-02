@@ -42,7 +42,9 @@ const UpdateProgressScreen = () => {
     navigation.navigate(RouteConstants.PlanSelection, {
       nextRoute: RouteConstants.Home,
       withModal: true,
-      plans: newCaloriePlans
+      plans: newCaloriePlans,
+      curentPlan: null,
+      progressData: formData,
     });
   }
 
