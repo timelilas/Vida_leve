@@ -4,17 +4,12 @@ const styles = StyleSheet.create({
   container: {
     flex: 1,
   },
-  headerNavigator: {
-    position: "absolute",
-    top: 0,
-    left: 0,
-  },
   title: {
     marginTop: 8,
   },
   logo: {
     alignSelf: "center",
-    marginTop: 40,
+    marginTop: 8,
   },
   form: {
     width: "100%",

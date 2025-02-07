@@ -13,7 +13,6 @@ import { validateEmail } from "../../../utils/validations/email";
 import { validateEmptyField } from "../../../utils/validations/common";
 import { LoginFormData } from "./types";
 import { maskEmail } from "../../../utils/masks";
-import { HeaderNavigator } from "../../../components/HeaderNavigator";
 import { HttpError } from "../../../@core/errors/httpError";
 import { ConnectionError } from "../../../@core/errors/connectionError";
 import { useAppNavigation } from "../../../hooks/useAppNavigation";
@@ -30,6 +29,7 @@ import { useUserStore } from "../../../store/user";
 import { useCaloriePlanStore } from "../../../store/caloriePlan";
 import { useNavigationAfterLogin } from "./hooks/useNavigationAfterLogin";
 import styles from "../styles";
+import { NavigationHeader } from "../../../components/navigationHeader/NavigationHeader";
 
 const loginInitialState: LoginFormData = { email: "", password: "" };
 
@@ -140,52 +140,48 @@ const LoginScreen = () => {
 
   return (
     <ScreenWrapper ref={scrollRef} snackbar={<Snackbar />}>
-      <View style={styles.container}>
-        <HeaderNavigator onGoBack={goBack} style={styles.headerNavigator} />
-        <LogoSVG style={styles.logo} />
-        {error.message && (!error.field || error.field === "all") && (
-          <ErrorMessage style={styles.error} message={error.message} />
-        )}
-        <ScreenTitle
-          style={styles.title}
-          title={`Boas vindas!\nEntre em sua conta para continuar`}
-        />
-        <View style={styles.form}>
-          <Input
-            onChangeText={(data) => handleChange("email", maskEmail(data))}
-            onBlur={() => validateField("email", values.email, validateEmail)}
-            autoFocus
-            label="E-mail"
-            placeholder="Ex: joaodasilva@email.com"
-            textContentType="emailAddress"
-            errorMessage={error.field === "email" ? error.message : undefined}
-            value={values.email}
-            disabled={isSubmitting}
-            error={error.field === "email" || error.field === "all"}
-          />
-          <PasswordInput
-            onChangeText={(data) => handleChange("password", data)}
-            onBlur={() =>
-              validateField("password", values.password, validateEmptyField)
-            }
-            label="Senha"
-            placeholder="**********"
-            value={values.password}
-            errorMessage={
-              error.field === "password" ? error.message : undefined
-            }
-            disabled={isSubmitting}
-            error={error.field === "password" || error.field === "all"}
-          />
-        </View>
-        <SubmitButton
+      <NavigationHeader variant="default" onBack={goBack} />
+      <LogoSVG style={styles.logo} />
+      {error.message && (!error.field || error.field === "all") && (
+        <ErrorMessage style={styles.error} message={error.message} />
+      )}
+      <ScreenTitle
+        style={styles.title}
+        title={`Boas vindas!\nEntre em sua conta para continuar`}
+      />
+      <View style={styles.form}>
+        <Input
+          onChangeText={(data) => handleChange("email", maskEmail(data))}
+          onBlur={() => validateField("email", values.email, validateEmail)}
+          autoFocus
+          label="E-mail"
+          placeholder="Ex: joaodasilva@email.com"
+          textContentType="emailAddress"
+          errorMessage={error.field === "email" ? error.message : undefined}
+          value={values.email}
           disabled={isSubmitting}
-          style={styles.button}
-          title="Continuar"
-          type="primary"
-          onPress={onSubmit(handleSubmit, handleError)}
+          error={error.field === "email" || error.field === "all"}
+        />
+        <PasswordInput
+          onChangeText={(data) => handleChange("password", data)}
+          onBlur={() =>
+            validateField("password", values.password, validateEmptyField)
+          }
+          label="Senha"
+          placeholder="**********"
+          value={values.password}
+          errorMessage={error.field === "password" ? error.message : undefined}
+          disabled={isSubmitting}
+          error={error.field === "password" || error.field === "all"}
         />
       </View>
+      <SubmitButton
+        disabled={isSubmitting}
+        style={styles.button}
+        title="Continuar"
+        type="primary"
+        onPress={onSubmit(handleSubmit, handleError)}
+      />
     </ScreenWrapper>
   );
 };

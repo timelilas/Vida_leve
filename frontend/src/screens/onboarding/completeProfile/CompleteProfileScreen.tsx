@@ -1,6 +1,5 @@
 import { StyleSheet, Text, View } from "react-native";
 import { ScreenWrapper } from "../../../components/ScreenWrapper";
-import { ScreenHeader } from "../../../components/ScreenHeader";
 import { Input } from "../../../components/inputs/Input";
 import { SubmitButton } from "../../../components/buttons/SubmitButton";
 import { DateInput } from "../../../components/inputs/DateInput";
@@ -32,6 +31,7 @@ import { useSnackbar } from "../../../hooks/useSnackbar";
 import { SecureStorage } from "../../../services/secureStorage/SecureStorage";
 import { STORAGE_ACCESS_TOKEN } from "../../../constants/localStorageConstants";
 import { CommonActions } from "@react-navigation/native";
+import { NavigationHeader } from "../../../components/navigationHeader/NavigationHeader";
 
 const CompleteProfileScreen = () => {
   const { Snackbar, showSnackbar } = useSnackbar();
@@ -119,7 +119,7 @@ const CompleteProfileScreen = () => {
 
   return (
     <ScreenWrapper snackbar={<Snackbar />}>
-      <ScreenHeader style={styles.header} onGoBack={goBack} />
+      <NavigationHeader variant="branded" onBack={goBack} />
       <ScreenTitle style={styles.title} title="Queremos ter conhecer melhor" />
       <Paragraph style={styles.text}>
         Complete seu cadastro para tornarmos sua experiência mais personalizada.
@@ -206,7 +206,7 @@ const styles = StyleSheet.create({
     marginBottom: 40,
   },
   title: {
-    marginBottom: 8,
+    marginTop: 40,
   },
   text: {
     marginTop: 8,

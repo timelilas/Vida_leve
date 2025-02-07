@@ -84,7 +84,6 @@ const styles = StyleSheet.create({
     flex: 1,
   },
   plansWrapper: {
-    paddingBottom: 16,
     gap: 16,
     marginBottom: 40,
   },

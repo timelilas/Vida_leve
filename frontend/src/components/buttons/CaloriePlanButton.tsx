@@ -5,13 +5,14 @@ import {
   useWindowDimensions,
   PressableProps,
 } from "react-native";
-import { ToggleButton, ToggleButtonProps } from "./ToggleButton";
+import { ToggleButton } from "./ToggleButton";
 import { ReactNode } from "react";
 
-interface CaloriePlanButtonProps extends Omit<ToggleButtonProps, "rounded"> {
+interface CaloriePlanButtonProps {
   title: string;
   icon: ReactNode;
   duration: number;
+  selected: boolean;
   dailyCalories: number;
 }
 

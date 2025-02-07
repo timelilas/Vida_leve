@@ -1,6 +1,6 @@
 import { StyleSheet, View } from "react-native";
 import { ScreenWrapper } from "../../../components/ScreenWrapper";
-import { ScreenHeader } from "../../../components/ScreenHeader";
+import { NavigationHeader } from "../../../components/navigationHeader/NavigationHeader";
 import { ScreenTitle } from "../../../components/ScreenTitle";
 import { Paragraph } from "../../../components/Paragraph";
 import { ConnectionError } from "../../../@core/errors/connectionError";
@@ -88,7 +88,7 @@ const PlanSelectionScreen = ({ route }: PlanSelectionScreenProps) => {
 
   return (
     <ScreenWrapper snackbar={<Snackbar />}>
-      <ScreenHeader onGoBack={goBack} />
+      <NavigationHeader variant="branded" onBack={goBack} />
       <View style={styles.contentContainer}>
         <ScreenTitle
           style={styles.title}
@@ -120,21 +120,15 @@ const PlanSelectionScreen = ({ route }: PlanSelectionScreenProps) => {
 export default PlanSelectionScreen;
 
 const styles = StyleSheet.create({
+  contentContainer: {
+    marginTop: 16,
+  },
   title: {
     textAlign: "left",
   },
   text: {
     marginTop: 8,
-    marginBottom: 24,
-  },
-  contentContainer: {
-    marginTop: 16,
-  },
-  plansWrapper: {
-    paddingBottom: 16,
-    gap: 16,
-    borderTopLeftRadius: 8,
-    borderTopRightRadius: 8,
+    marginBottom: 40,
   },
   submitButton: {
     marginTop: "auto",

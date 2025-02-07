@@ -5,7 +5,6 @@ export const styles = StyleSheet.create({
     flex: 1,
   },
   form: {
-    marginTop: 24,
     marginBottom: 40,
   },
   inputWrapper: {
