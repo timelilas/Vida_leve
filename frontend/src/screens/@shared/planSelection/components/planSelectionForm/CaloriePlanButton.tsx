@@ -5,7 +5,7 @@ import {
   useWindowDimensions,
   PressableProps,
 } from "react-native";
-import { ToggleButton } from "./ToggleButton";
+import { ToggleButton } from "../../../../../components/buttons/ToggleButton";
 import { ReactNode } from "react";
 
 interface CaloriePlanButtonProps {
@@ -27,7 +27,9 @@ export function CaloriePlanButton(
       onPress={props.onPress}
       selected={props.selected}
     >
-      <View style={styles.contentContainer}>
+      <View
+        style={[styles.contentContainer, props.disabled && styles.disabled]}
+      >
         <View style={styles.titleContainer}>
           {props.icon}
           <View>
@@ -87,6 +89,9 @@ function useStyles() {
       fontFamily: "Roboto-300",
       color: "#242424",
       textAlign: "center",
+    },
+    disabled: {
+      opacity: 0.5,
     },
   });
 }
