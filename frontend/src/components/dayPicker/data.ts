@@ -10,6 +10,6 @@ export const mockedDays: DateData[] = new Array(3650)
     const year = date.getFullYear();
     const id = `${day}-${month}-${year}`;
 
-    const dayData = { id, day, weekDay, month, year };
-    return dayData;
+    const dateData = { id, day, weekDay, month, year };
+    return dateData;
   });

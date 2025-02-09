@@ -27,8 +27,10 @@ export const styles = StyleSheet.create({
     fontFamily: "Roboto-300",
   },
   brand: {
-    marginTop: -8,
     marginHorizontal: "auto",
+  },
+  brandNegativeMargin: {
+    marginTop: -12,
   },
   closeButton: {
     marginLeft: "auto",

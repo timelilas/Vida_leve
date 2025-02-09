@@ -54,7 +54,12 @@ export function NavigationHeader(props: NavigationHeaderProps) {
         )}
       </View>
       {variant === "branded" && (
-        <View style={styles.brand}>
+        <View
+          style={[
+            styles.brand,
+            (onBack || onClose) && styles.brandNegativeMargin,
+          ]}
+        >
           <HorizontalLogoSVG />
         </View>
       )}

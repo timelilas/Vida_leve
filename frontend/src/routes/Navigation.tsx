@@ -12,6 +12,7 @@ import WelcomeScreen from "../screens/auth/welcome/WelcomeScreen";
 import HomeScreen from "../screens/main/home/HomeScreen";
 import GoalSettingsScreen from "../screens/main/goalSettings/GoalSettingsScreen";
 import UpdateProgressScreen from "../screens/main/updateProgress/UpdateProgressScreen";
+import CreateMealScreen from "../screens/main/createMeal/CreateMealScreen";
 
 const Stack = createNativeStackNavigator<RouteParamsList>();
 
@@ -76,6 +77,11 @@ const Navigation = () => {
         <Stack.Screen
           name={RouteConstants.UpdateProgress}
           component={UpdateProgressScreen}
+          options={{ headerShown: false }}
+        />
+        <Stack.Screen
+          name={RouteConstants.CreateMeal}
+          component={CreateMealScreen}
           options={{ headerShown: false }}
         />
         <Stack.Screen
