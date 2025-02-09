@@ -15,7 +15,7 @@ export class CaloriePlanService {
       return plans.map((plan) => plan.toJSON());
     } catch (error: any) {
       throw new DatabaseException(
-        `Erro na busca dos planos de calorias para o usuário com id: ${userId}`,
+        `Erro na busca dos planos de calorias para o usuário com id: ${userId}.`,
         CaloriePlanService.name,
         error.message
       );
@@ -52,7 +52,7 @@ export class CaloriePlanService {
       }
     } catch (error: any) {
       throw new DatabaseException(
-        `Erro na tentativa de atualizar os planos de caloria do usuário com id: ${userId}`,
+        `Erro na tentativa de atualizar os planos de caloria do usuário com id: ${userId}.`,
         CaloriePlanService.name,
         error.message
       );

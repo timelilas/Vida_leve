@@ -8,13 +8,13 @@ const userRouter = Router();
 const userController = new UserController();
 
 userRouter.get(
-  "/profile/",
+  "/profile",
   authorizationMiddleware,
   (req: Request, res: Response) => userController.getById(req, res)
 );
 
 userRouter.put(
-  "/profile/",
+  "/profile",
   authorizationMiddleware,
   validationMiddleware(updateUserSchema),
   (req, res) => userController.update(req, res)

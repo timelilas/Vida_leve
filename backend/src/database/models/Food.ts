@@ -52,7 +52,7 @@ Food.init(
       allowNull: false,
     },
     calories: {
-      type: Sequelize.INTEGER({ unsigned: true }),
+      type: Sequelize.INTEGER(),
       allowNull: false,
     },
     createdAt: {

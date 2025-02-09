@@ -5,6 +5,7 @@ import progressRouter from "./routes/ProgressRouter";
 import authRouter from "./routes/AuthRouter";
 import caloriePlanRouter from "./routes/CaloriePlanRouter";
 import helmet from "helmet";
+import foodRouter from "./routes/FoodRouter";
 
 class App {
   public app: Application = express();
@@ -35,6 +36,7 @@ class App {
     this.app.use("/user", userRouter);
     this.app.use("/progress", progressRouter);
     this.app.use("/plans", caloriePlanRouter);
+    this.app.use("/foods", foodRouter);
   }
 
   public start(PORT: string | number): void {
