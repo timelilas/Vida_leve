@@ -1,5 +1,11 @@
+import { DateData } from "../components/dayPicker/types";
+
 export function toCapitalized(input: string): string {
-  return `${input[0].toUpperCase()}${input.slice(1).toLocaleLowerCase()}`;
+  const words = input.split("-");
+  const capitalizedWords = words.map((word) => {
+    return `${word[0].toUpperCase()}${word.slice(1).toLocaleLowerCase()}`;
+  }, "");
+  return capitalizedWords.join("-");
 }
 
 export function numberToMonth(number: number): string {
@@ -24,4 +30,55 @@ export function formatDateToISO(date: string) {
   const [day, month, year] = date.split("/");
   const sanitizedDay = day === "29" && month === "02" ? "28" : day;
   return `${year}-${month}-${sanitizedDay}`;
+}
+
+export function getMonthNameFromIndex(index: number) {
+  if (index < 0) {
+    return "";
+  }
+
+  const monthNames = [
+    "janeiro",
+    "fevereiro",
+    "março",
+    "abril",
+    "maio",
+    "junho",
+    "julho",
+    "agosto",
+    "setembro",
+    "outubro",
+    "novembro",
+    "dezembro",
+  ];
+
+  return monthNames[index] || "";
+}
+
+export function getWeekdayFromIndex(index: number) {
+  if (index < 0) {
+    return "";
+  }
+
+  const weekdays = [
+    "segunda-feira",
+    "terça-feira",
+    "quarta-feira",
+    "quinta-feira",
+    "sexta-feira",
+    "sábado",
+    "domingo",
+  ];
+
+  return weekdays[index] || "";
+}
+
+export function convertDateToDateData(date: Date): DateData {
+  return {
+    id: `${date.getDate()}-${date.getMonth()}-${date.getFullYear()}`,
+    day: date.getDate(),
+    month: date.getMonth(),
+    year: date.getFullYear(),
+    weekDay: date.getDay(),
+  };
 }
