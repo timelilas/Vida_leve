@@ -7,9 +7,11 @@
     "build": "tsc",
     "start": "node dist/server.js",
     "dev": "ts-node-dev src/server.ts",
-    "db:migrate": "npx sequelize-cli db:migrate",
-    "db:setup": "npx sequelize-cli db:create && npx sequelize-cli db:migrate && npx sequelize-cli db:seed:all",
-    "db:reset": "npx sequelize-cli db:drop && npm run build && npx sequelize-cli db:create && npx sequelize-cli db:migrate && npx sequelize-cli db:seed:all"
+    "migration:run": "npx sequelize-cli db:migrate",
+    "migration:revert": "npx sequelize-cli db:migrate:undo",
+    "migration:seed": "npx sequelize-cli db:seed:all",
+    "db:create": "npx sequelize-cli db:create",
+    "db:setup": "npm run db:create && npm run migration:run && npm run migration:seed"
   },
   "keywords": [],
   "author": "",
