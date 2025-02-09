@@ -1,0 +1,5960 @@
+[
+  {
+    "name": "Caldo de galinha em tablete - Knorr",
+    "slug": "caldo-de-galinha-em-tablete-knorr",
+    "measurementUnit": "1 unidade - (9,5 g)",
+    "calories": 20
+  },
+  {
+    "name": "Chester assado",
+    "slug": "chester-assado",
+    "measurementUnit": "1 fatia fina - (20 g)",
+    "calories": 41
+  },
+  {
+    "name": "Coxa de frango assada com pele",
+    "slug": "coxa-de-frango-assada-com-pele",
+    "measurementUnit": "1 unidade - (46 g)",
+    "calories": 99
+  },
+  {
+    "name": "Coxa de frango cozida sem pele",
+    "slug": "coxa-de-frango-cozida-sem-pele",
+    "measurementUnit": "1 unidade - (46 g)",
+    "calories": 77
+  },
+  {
+    "name": "Espetinho de coração de frango na brasa",
+    "slug": "espetinho-de-coracao-de-frango-na-brasa",
+    "measurementUnit": "1 unidade - (50 g)",
+    "calories": 104
+  },
+  {
+    "name": "Espetinho de frango na brasa",
+    "slug": "espetinho-de-frango-na-brasa",
+    "measurementUnit": "1 unidade - (50 g)",
+    "calories": 80
+  },
+  {
+    "name": "Fígado de galinha cozido",
+    "slug": "figado-de-galinha-cozido",
+    "measurementUnit": "1 col. sopa - (25 g)",
+    "calories": 35
+  },
+  {
+    "name": "Filé de frango à milanesa",
+    "slug": "file-de-frango-a-milanesa",
+    "measurementUnit": "1 filé médio - (140 g)",
+    "calories": 435
+  },
+  {
+    "name": "Filé de frango à parmegiana - Sadia",
+    "slug": "file-de-frango-a-parmegiana-sadia",
+    "measurementUnit": "1 filé médio - (275 g)",
+    "calories": 335
+  },
+  {
+    "name": "Filé de frango grelhado",
+    "slug": "file-de-frango-grelhado",
+    "measurementUnit": "1 unidade média - (125 g)",
+    "calories": 199
+  },
+  {
+    "name": "Frango ensopado",
+    "slug": "frango-ensopado",
+    "measurementUnit": "1 peito médio - (180 g)",
+    "calories": 229
+  },
+  {
+    "name": "Hamburguer de frango grelhado",
+    "slug": "hamburguer-de-frango-grelhado",
+    "measurementUnit": "1 unidade - (85 g)",
+    "calories": 164
+  },
+  {
+    "name": "Hamburguer de peru grelhado",
+    "slug": "hamburguer-de-peru-grelhado",
+    "measurementUnit": "1 e 1/2 unidade - (80 g)",
+    "calories": 166
+  },
+  {
+    "name": "Miúdos de galinha",
+    "slug": "miudos-de-galinha",
+    "measurementUnit": "1 moela média - (18 g)",
+    "calories": 29
+  },
+  {
+    "name": "Nuggets de frango",
+    "slug": "nuggets-de-frango",
+    "measurementUnit": "5 unidades - (130 g)",
+    "calories": 326
+  },
+  {
+    "name": "Peru assado",
+    "slug": "peru-assado",
+    "measurementUnit": "1 fatia média - (32 g)",
+    "calories": 52
+  },
+  {
+    "name": "Sobrecoxa de frango assada com pele",
+    "slug": "sobrecoxa-de-frango-assada-com-pele",
+    "measurementUnit": "1 unidade - (65 g)",
+    "calories": 169
+  },
+  {
+    "name": "Sobrecoxa de frango assada sem pele",
+    "slug": "sobrecoxa-de-frango-assada-sem-pele",
+    "measurementUnit": "1 unidade - (65 g)",
+    "calories": 151
+  },
+  {
+    "name": "Aguardente",
+    "slug": "aguardente",
+    "measurementUnit": "1 dose - (50 ml)",
+    "calories": 115
+  },
+  {
+    "name": "Batida de frutas com leite condensado",
+    "slug": "batida-de-frutas-com-leite-condensado",
+    "measurementUnit": "1 copo - (200 ml)",
+    "calories": 504
+  },
+  {
+    "name": "Caipirinha de limão com açúcar",
+    "slug": "caipirinha-de-limao-com-acucar",
+    "measurementUnit": "1 copo - (200 ml)",
+    "calories": 300
+  },
+  {
+    "name": "Caipirinha de limão com adoçante",
+    "slug": "caipirinha-de-limao-com-adocante",
+    "measurementUnit": "1 copo - (200 ml)",
+    "calories": 240
+  },
+  {
+    "name": "Caipirinha de morango com açúcar",
+    "slug": "caipirinha-de-morango-com-acucar",
+    "measurementUnit": "1 copo - (200 ml)",
+    "calories": 340
+  },
+  {
+    "name": "Cerveja",
+    "slug": "cerveja",
+    "measurementUnit": "1 lata - (350 ml)",
+    "calories": 151
+  },
+  {
+    "name": "Cerveja Malzbier - Brahma",
+    "slug": "cerveja-malzbier-brahma",
+    "measurementUnit": "1 long neck - (355 ml)",
+    "calories": 199
+  },
+  {
+    "name": "Cerveja sem álcool",
+    "slug": "cerveja-sem-alcool",
+    "measurementUnit": "1 long neck - (355 ml)",
+    "calories": 89
+  },
+  {
+    "name": "Champanhe",
+    "slug": "champanhe",
+    "measurementUnit": "1 taça - (125 ml)",
+    "calories": 110
+  },
+  {
+    "name": "Chope",
+    "slug": "chope",
+    "measurementUnit": "1 tulipa - (300 ml)",
+    "calories": 180
+  },
+  {
+    "name": "Conhaque",
+    "slug": "conhaque",
+    "measurementUnit": "1 dose - (50 ml)",
+    "calories": 125
+  },
+  {
+    "name": "Cuba Libre",
+    "slug": "cuba-libre",
+    "measurementUnit": "1 copo - (250 ml)",
+    "calories": 170
+  },
+  {
+    "name": "Gim",
+    "slug": "gim",
+    "measurementUnit": "1 dose - (30 ml)",
+    "calories": 60
+  },
+  {
+    "name": "Margarita",
+    "slug": "margarita",
+    "measurementUnit": "1 copo - (150 ml)",
+    "calories": 131
+  },
+  {
+    "name": "Mojito",
+    "slug": "mojito",
+    "measurementUnit": "1 copo - (200 ml)",
+    "calories": 250
+  },
+  {
+    "name": "Quentão",
+    "slug": "quentao",
+    "measurementUnit": " - (100 ml)",
+    "calories": 294
+  },
+  {
+    "name": "Prosecco",
+    "slug": "prosecco",
+    "measurementUnit": "1 taça - (125 ml)",
+    "calories": 106
+  },
+  {
+    "name": "Rum",
+    "slug": "rum",
+    "measurementUnit": "1 dose - (50 ml)",
+    "calories": 110
+  },
+  {
+    "name": "Saquê",
+    "slug": "saque",
+    "measurementUnit": "1 cálice - (35 ml)",
+    "calories": 50
+  },
+  {
+    "name": "Smirnoff Ice",
+    "slug": "smirnoff-ice",
+    "measurementUnit": "1 long neck - (275 ml)",
+    "calories": 240
+  },
+  {
+    "name": "Tequila",
+    "slug": "tequila",
+    "measurementUnit": "1 dose - (50 ml)",
+    "calories": 110
+  },
+  {
+    "name": "Uísque",
+    "slug": "uisque",
+    "measurementUnit": "1 dose - (50 ml)",
+    "calories": 120
+  },
+  {
+    "name": "Vinho branco doce",
+    "slug": "vinho-branco-doce",
+    "measurementUnit": "1 taça - (125 ml)",
+    "calories": 173
+  },
+  {
+    "name": "Vinho branco seco",
+    "slug": "vinho-branco-seco",
+    "measurementUnit": "1 taça - (125 ml)",
+    "calories": 107
+  },
+  {
+    "name": "Vinho quente",
+    "slug": "vinho-quente",
+    "measurementUnit": " - (100 ml)",
+    "calories": 120
+  },
+  {
+    "name": "Vinho tinto",
+    "slug": "vinho-tinto",
+    "measurementUnit": "1 taça - (125 ml)",
+    "calories": 107
+  },
+  {
+    "name": "Vodka",
+    "slug": "vodka",
+    "measurementUnit": "1 dose - (50 ml)",
+    "calories": 120
+  },
+  {
+    "name": "Água tônica - Antartica",
+    "slug": "agua-tonica-antartica",
+    "measurementUnit": "1 lata - (350 ml)",
+    "calories": 105
+  },
+  {
+    "name": "Água tônica diet - Antartica",
+    "slug": "agua-tonica-diet-antartica",
+    "measurementUnit": "1 lata - (350 ml)",
+    "calories": 0
+  },
+  {
+    "name": "Água-de-coco - Kerococo",
+    "slug": "agua-de-coco-kerococo",
+    "measurementUnit": "1 copo - (200 ml)",
+    "calories": 45
+  },
+  {
+    "name": "Bebida à base de soja sabor abacaxi - Sollys",
+    "slug": "bebida-a-base-de-soja-sabor-abacaxi-sollys",
+    "measurementUnit": "1 copo - (200 ml)",
+    "calories": 78
+  },
+  {
+    "name": "Bebida à base de soja sabor maçã - Ades",
+    "slug": "bebida-a-base-de-soja-sabor-maca-ades",
+    "measurementUnit": "1 copo - (200 ml)",
+    "calories": 71
+  },
+  {
+    "name": "Bebida à base de soja sabor maçã light - Ades",
+    "slug": "bebida-a-base-de-soja-sabor-maca-light-ades",
+    "measurementUnit": "1 copo - (200 ml)",
+    "calories": 43
+  },
+  {
+    "name": "Bebida à base de soja sabor original - Ades",
+    "slug": "bebida-a-base-de-soja-sabor-original-ades",
+    "measurementUnit": "1 copo - (200 ml)",
+    "calories": 78
+  },
+  {
+    "name": "Bebida à base de soja sabor pera - Shefa",
+    "slug": "bebida-a-base-de-soja-sabor-pera-shefa",
+    "measurementUnit": "1 copo - (200 ml)",
+    "calories": 90
+  },
+  {
+    "name": "Bebida energética - Red Bull",
+    "slug": "bebida-energetica-red-bull",
+    "measurementUnit": "1 lata - (250 ml)",
+    "calories": 110
+  },
+  {
+    "name": "Bebida energética sugar free - Red Bull ",
+    "slug": "bebida-energetica-sugar-free-red-bull",
+    "measurementUnit": "1 lata - (250 ml)",
+    "calories": 10
+  },
+  {
+    "name": "Café com açúcar",
+    "slug": "cafe-com-acucar",
+    "measurementUnit": "1 xíc. café - (50 ml)",
+    "calories": 26
+  },
+  {
+    "name": "Café com adoçante",
+    "slug": "cafe-com-adocante",
+    "measurementUnit": "1 xícara - (50 ml)",
+    "calories": 2
+  },
+  {
+    "name": "Café com leite integral",
+    "slug": "cafe-com-leite-integral",
+    "measurementUnit": "1 xícara - (100 ml)",
+    "calories": 45
+  },
+  {
+    "name": "Café com leite integral e açúcar",
+    "slug": "cafe-com-leite-integral-e-acucar",
+    "measurementUnit": "1 xícara - (100 ml)",
+    "calories": 69
+  },
+  {
+    "name": "Café com leite desnatado",
+    "slug": "cafe-com-leite-desnatado",
+    "measurementUnit": "1 xícara - (100 ml)",
+    "calories": 28
+  },
+  {
+    "name": "Café com leite desnatado e açúcar",
+    "slug": "cafe-com-leite-desnatado-e-acucar",
+    "measurementUnit": "1 xícara - (100 ml)",
+    "calories": 52
+  },
+  {
+    "name": "Café sem açúcar",
+    "slug": "cafe-sem-acucar",
+    "measurementUnit": "1 xíc. café - (50 ml)",
+    "calories": 2
+  },
+  {
+    "name": "Café Mocha com leite integral e chantili - Starbucks",
+    "slug": "cafe-mocha-com-leite-integral-e-chantili-starbucks",
+    "measurementUnit": "1 copo - (300 ml)",
+    "calories": 360
+  },
+  {
+    "name": "Café Mocha com leite destanatado - Starbucks",
+    "slug": "cafe-mocha-com-leite-destanatado-starbucks",
+    "measurementUnit": "1 copo - (300 ml)",
+    "calories": 220
+  },
+  {
+    "name": "Cappuccino tradicional puro",
+    "slug": "cappuccino-tradicional-puro",
+    "measurementUnit": "1 xícara - (100 ml)",
+    "calories": 65
+  },
+  {
+    "name": "Cappuccino tradicional com açúcar",
+    "slug": "cappuccino-tradicional-com-acucar",
+    "measurementUnit": "1 xícara - (100 ml)",
+    "calories": 89
+  },
+  {
+    "name": "Cappuccino com leite desnatado e adoçante",
+    "slug": "cappuccino-com-leite-desnatado-e-adocante",
+    "measurementUnit": "1 xícara - (100 ml)",
+    "calories": 48
+  },
+  {
+    "name": "Caldo de cana",
+    "slug": "caldo-de-cana",
+    "measurementUnit": "1 copo - (200 ml)",
+    "calories": 138
+  },
+  {
+    "name": "Chá branco - Feel Good",
+    "slug": "cha-branco-feel-good",
+    "measurementUnit": "1 copo - (200 ml)",
+    "calories": 0
+  },
+  {
+    "name": "Chá mate natural - Matte Leão",
+    "slug": "cha-mate-natural-matte-leao",
+    "measurementUnit": "1 copo - (200 ml)",
+    "calories": 74
+  },
+  {
+    "name": "Chá mate natural diet - Matte Leão",
+    "slug": "cha-mate-natural-diet-matte-leao",
+    "measurementUnit": "1 copo - (200 ml)",
+    "calories": 5
+  },
+  {
+    "name": "Chá preto com limão - Lipton",
+    "slug": "cha-preto-com-limao-lipton",
+    "measurementUnit": "1 lata - (340 ml)",
+    "calories": 122
+  },
+  {
+    "name": "Chá preto com limão light - Lipton",
+    "slug": "cha-preto-com-limao-light-lipton",
+    "measurementUnit": "1 lata - (340 ml)",
+    "calories": 0
+  },
+  {
+    "name": "Chá preto sabor pêssego - Nestea",
+    "slug": "cha-preto-sabor-pessego-nestea",
+    "measurementUnit": "1 lata - (340 ml)",
+    "calories": 118
+  },
+  {
+    "name": "Chá verde sabor laranja com gengibre - Feel Good",
+    "slug": "cha-verde-sabor-laranja-com-gengibre-feel-good",
+    "measurementUnit": "1 copo - (200 ml)",
+    "calories": 0
+  },
+  {
+    "name": "Isotônico sabor açaí-guaraná - Gatorade",
+    "slug": "isotonico-sabor-acai-guarana-gatorade",
+    "measurementUnit": "1 copo - (200 ml)",
+    "calories": 48
+  },
+  {
+    "name": "Isotônico sabor tangerina - Gatorade",
+    "slug": "isotonico-sabor-tangerina-gatorade",
+    "measurementUnit": "1 copo - (200 ml)",
+    "calories": 48
+  },
+  {
+    "name": "Refresco em pó sabor manga - Mid",
+    "slug": "refresco-em-po-sabor-manga-mid",
+    "measurementUnit": "1 copo - (200 ml)",
+    "calories": 26
+  },
+  {
+    "name": "Refresco em pó sabor uva - Tang",
+    "slug": "refresco-em-po-sabor-uva-tang",
+    "measurementUnit": "1 copo - (200 ml)",
+    "calories": 26
+  },
+  {
+    "name": "Refresco em pós sabor morango silvestre - Clight",
+    "slug": "refresco-em-pos-sabor-morango-silvestre-clight",
+    "measurementUnit": "1 copo - (200 ml)",
+    "calories": 6
+  },
+  {
+    "name": "Refrigerante - Pepsi Twist",
+    "slug": "refrigerante-pepsi-twist",
+    "measurementUnit": "1 copo - (200 ml)",
+    "calories": 94
+  },
+  {
+    "name": "Refrigerante light - Pepsi Twist",
+    "slug": "refrigerante-pepsi-light-twist",
+    "measurementUnit": "1 copo - (200 ml)",
+    "calories": 0
+  },
+  {
+    "name": "Refrigerante - Sprite zero",
+    "slug": "refrigerante-sprite-zero",
+    "measurementUnit": "1 copo - (200 ml)",
+    "calories": 0
+  },
+  {
+    "name": "Refrigerante - Coca Cola",
+    "slug": "refrigerante-coca-cola",
+    "measurementUnit": "1 copo - (200 ml)",
+    "calories": 85
+  },
+  {
+    "name": "Refrigerante - Coca Cola light",
+    "slug": "refrigerante-coca-cola-light",
+    "measurementUnit": "1 copo - (200 ml)",
+    "calories": 0
+  },
+  {
+    "name": "Refrigerante - Coca Cola zero",
+    "slug": "refrigerante-coca-cola-zero",
+    "measurementUnit": "1 copo - (200 ml)",
+    "calories": 0
+  },
+  {
+    "name": "Refrigerante de limão - H2O",
+    "slug": "refrigerante-de-limao-h2o",
+    "measurementUnit": "1 copo - (200 ml)",
+    "calories": 0
+  },
+  {
+    "name": "Refrigerante guaraná - Antartica",
+    "slug": "refrigerante-guarana-antartica",
+    "measurementUnit": "1 copo - (200 ml)",
+    "calories": 80
+  },
+  {
+    "name": "Refrigerante guaraná diet - Antartica",
+    "slug": "refrigerante-guarana-diet-antartica",
+    "measurementUnit": "1 copo - (200 ml)",
+    "calories": 0
+  },
+  {
+    "name": "Refrigerante sabor laranja - Fanta",
+    "slug": "refrigerante-sabor-laranja-fanta",
+    "measurementUnit": "1 copo - (200 ml)",
+    "calories": 90
+  },
+  {
+    "name": "Refrigerante sabor laranja light - Fanta",
+    "slug": "refrigerante-sabor-laranja-light-fanta",
+    "measurementUnit": "1 copo - (200 ml)",
+    "calories": 8
+  },
+  {
+    "name": "Refrigerante sabor uva - Fanta",
+    "slug": "refrigerante-sabor-uva-fanta",
+    "measurementUnit": "1 copo - (200 ml)",
+    "calories": 104
+  },
+  {
+    "name": "Refrigerante sabor uva light - Fanta",
+    "slug": "refrigerante-sabor-uva-light-fanta",
+    "measurementUnit": "1 copo - (200 ml)",
+    "calories": 12
+  },
+  {
+    "name": "Refrigerante soda limonada - Antartica",
+    "slug": "refrigerante-soda-limonada-antartica",
+    "measurementUnit": "1 copo - (200 ml)",
+    "calories": 92
+  },
+  {
+    "name": "Suco africano de lichia - Ceres",
+    "slug": "suco-africano-de-lichia-ceres",
+    "measurementUnit": "1 copo - (200 ml)",
+    "calories": 105
+  },
+  {
+    "name": "Suco africano de uva vermelha - Ceres",
+    "slug": "suco-africano-de-uva-vermelha-ceres",
+    "measurementUnit": "1 copo - (200 ml)",
+    "calories": 116
+  },
+  {
+    "name": "Suco concentrado sabor maracujá - Maguary",
+    "slug": "suco-concentrado-sabor-maracuja-maguary",
+    "measurementUnit": "1 porção p/ misturar - (22 ml)",
+    "calories": 13
+  },
+  {
+    "name": "Suco de abacaxi caseiro",
+    "slug": "suco-de-abacaxi-caseiro",
+    "measurementUnit": "1 copo - (200 ml)",
+    "calories": 86
+  },
+  {
+    "name": "Suco de cranberry - Juxx",
+    "slug": "suco-de-cranberry-juxx",
+    "measurementUnit": "1 copo - (200 ml)",
+    "calories": 110
+  },
+  {
+    "name": "Suco de laranja - Mais",
+    "slug": "suco-de-laranja-mais",
+    "measurementUnit": "1 copo - (200 ml)",
+    "calories": 127
+  },
+  {
+    "name": "Suco de laranja caseiro",
+    "slug": "suco-de-laranja-caseiro",
+    "measurementUnit": "1 copo - (200 ml)",
+    "calories": 116
+  },
+  {
+    "name": "Suco de limão caseiro",
+    "slug": "suco-de-limao-caseiro",
+    "measurementUnit": "1 copo - (200 ml)",
+    "calories": 10
+  },
+  {
+    "name": "Suco de maçã - Del Valle",
+    "slug": "suco-de-maca-del-valle",
+    "measurementUnit": "1 copo - (200 ml)",
+    "calories": 92
+  },
+  {
+    "name": "Suco de maçã - Yakult",
+    "slug": "suco-de-maca-yakult",
+    "measurementUnit": "1 copo - (200 ml)",
+    "calories": 80
+  },
+  {
+    "name": "Suco de maçã light - Del Valle",
+    "slug": "suco-de-maca-light-del-valle",
+    "measurementUnit": "1 copo - (200 ml)",
+    "calories": 35
+  },
+  {
+    "name": "Suco de manga - Fruthos",
+    "slug": "suco-de-manga-fruthos",
+    "measurementUnit": "1 copo - (200 ml)",
+    "calories": 99
+  },
+  {
+    "name": "Suco de manga caseiro",
+    "slug": "suco-de-manga-caseiro",
+    "measurementUnit": "1 copo - (200 ml)",
+    "calories": 86
+  },
+  {
+    "name": "Suco de manga light - Fruthos",
+    "slug": "suco-de-manga-light-fruthos",
+    "measurementUnit": "1 copo - (200 ml)",
+    "calories": 87
+  },
+  {
+    "name": "Suco de maracujá caseiro",
+    "slug": "suco-de-maracuja-caseiro",
+    "measurementUnit": "1 copo - (200 ml)",
+    "calories": 20
+  },
+  {
+    "name": "Suco de melão caseiro",
+    "slug": "suco-de-melao-caseiro",
+    "measurementUnit": "1 copo - (200 ml)",
+    "calories": 60
+  },
+  {
+    "name": "Suco de milho verde",
+    "slug": "suco-de-milho-verde",
+    "measurementUnit": "1 copo - (200 ml)",
+    "calories": 271
+  },
+  {
+    "name": "Suco de morango caseiro",
+    "slug": "suco-de-morango-caseiro",
+    "measurementUnit": "1 copo - (200 ml)",
+    "calories": 70
+  },
+  {
+    "name": "Suco de pêssego - Sufresh",
+    "slug": "suco-de-pessego-sufresh",
+    "measurementUnit": "1 copo - (200 ml)",
+    "calories": 74
+  },
+  {
+    "name": "Suco de tomate temperado - Superbom",
+    "slug": "suco-de-tomate-temperado-superbom",
+    "measurementUnit": "1 copo - (200 ml)",
+    "calories": 30
+  },
+  {
+    "name": "Suco de uva - Del Valle",
+    "slug": "suco-de-uva-del-valle",
+    "measurementUnit": "1 copo - (200 ml)",
+    "calories": 126
+  },
+  {
+    "name": "Suco de uva diet - Del Valle",
+    "slug": "suco-de-uva-diet-del-valle",
+    "measurementUnit": "1 copo - (200 ml)",
+    "calories": 35
+  },
+  {
+    "name": "Suplemento de vitaminas - Taff Man-e",
+    "slug": "suplemento-de-vitaminas-taff-man-e",
+    "measurementUnit": "1 vidro - (110 ml)",
+    "calories": 70
+  },
+  {
+    "name": "Biscoito - Club social",
+    "slug": "biscoito-club-social",
+    "measurementUnit": "1 pacote - (26 g)",
+    "calories": 121
+  },
+  {
+    "name": "Biscoito água e gergelim - Piraquê",
+    "slug": "biscoito-agua-e-gergelim-piraque",
+    "measurementUnit": "4 unidades - (30 g)",
+    "calories": 135
+  },
+  {
+    "name": "Biscoito aveia e mel - Nestlé",
+    "slug": "biscoito-aveia-e-mel-nestle",
+    "measurementUnit": "5 unidades - (30 g)",
+    "calories": 134
+  },
+  {
+    "name": "Biscoito de água light - Piraquê",
+    "slug": "biscoito-de-agua-light-piraque",
+    "measurementUnit": "16 unidades - (40 g)",
+    "calories": 170
+  },
+  {
+    "name": "Biscoito de leite passatempo - Nestlé",
+    "slug": "biscoito-de-leite-passatempo-nestle",
+    "measurementUnit": "5 unidades - (30 g)",
+    "calories": 134
+  },
+  {
+    "name": "Biscoito de fibra",
+    "slug": "biscoito-de-fibra",
+    "measurementUnit": " - ()",
+    "calories": 135
+  },
+  {
+    "name": "Biscoito de polvilho doce - Cassini",
+    "slug": "biscoito-de-polvilho-doce-cassini",
+    "measurementUnit": "25 unidades - (30 g)",
+    "calories": 141
+  },
+  {
+    "name": "Biscoito de polvilho salgado - Cassini",
+    "slug": "biscoito-de-polvilho-salgado-cassini",
+    "measurementUnit": "25 unidades - (30 g)",
+    "calories": 138
+  },
+  {
+    "name": "Biscoito de presunto - Piraquê",
+    "slug": "biscoito-de-presunto-piraque",
+    "measurementUnit": "65 unidades - (30 g)",
+    "calories": 151
+  },
+  {
+    "name": "Biscoito de queijo - Piraquê",
+    "slug": "biscoito-de-queijo-piraque",
+    "measurementUnit": "65 unidades - (30 g)",
+    "calories": 105
+  },
+  {
+    "name": "Biscoito integral - Club social",
+    "slug": "biscoito-integral-club-social",
+    "measurementUnit": "1 pacote - (26 g)",
+    "calories": 118
+  },
+  {
+    "name": "Biscoito magic toast - Marilan",
+    "slug": "biscoito-magic-toast-marilan",
+    "measurementUnit": "7 unidades - (25 g)",
+    "calories": 94
+  },
+  {
+    "name": "Biscoito magic toast integral - Marilan",
+    "slug": "biscoito-magic-toast-integral-marilan",
+    "measurementUnit": "7 unidades - (28 g)",
+    "calories": 103
+  },
+  {
+    "name": "Biscoito recheado de chocolate diet - Doce vita",
+    "slug": "biscoito-recheado-de-chocolate-diet-doce-vita",
+    "measurementUnit": "3 unidades - (30 g)",
+    "calories": 120
+  },
+  {
+    "name": "Biscoito recheado galak - Nestlé",
+    "slug": "biscoito-recheado-galak-nestle",
+    "measurementUnit": "2 e 1/2 unidades - (30 g)",
+    "calories": 146
+  },
+  {
+    "name": "Biscoito recheado passatempo - Nestlé",
+    "slug": "biscoito-recheado-passatempo-nestle",
+    "measurementUnit": "2 e 1/2 unidades - (30 g)",
+    "calories": 145
+  },
+  {
+    "name": "Biscoito recheado sabor tomate - Club social",
+    "slug": "biscoito-recheado-sabor-tomate-club-social",
+    "measurementUnit": "1 pacote - (28 g)",
+    "calories": 139
+  },
+  {
+    "name": "Biscoito roladinho de goiaba - Piraquê",
+    "slug": "biscoito-roladinho-de-goiaba-piraque",
+    "measurementUnit": "3 unidades - (30 g)",
+    "calories": 136
+  },
+  {
+    "name": "Biscoito tortine de coco - Triunfo",
+    "slug": "biscoito-tortine-de-coco-triunfo",
+    "measurementUnit": "5 unidades - (30 g)",
+    "calories": 150
+  },
+  {
+    "name": "Biscoito tortinhas de chocolate com avelã - Adria",
+    "slug": "biscoito-tortinhas-de-chocolate-com-avela-adria",
+    "measurementUnit": "4 unidades - (30 g)",
+    "calories": 148
+  },
+  {
+    "name": "Biscoito tortinhas de limão - Adria",
+    "slug": "biscoito-tortinhas-de-limao-adria",
+    "measurementUnit": "4 unidades - (30 g)",
+    "calories": 146
+  },
+  {
+    "name": "Biscoito wafer de chocolate - Bauducco",
+    "slug": "biscoito-wafer-de-chocolate-bauducco",
+    "measurementUnit": "3 e 1/2 unidades - (30 g)",
+    "calories": 156
+  },
+  {
+    "name": "Biscoito wafer de chocolate light - Bauducco",
+    "slug": "biscoito-wafer-de-chocolate-light-bauducco",
+    "measurementUnit": "3 e 1/2 unidades - (30 g)",
+    "calories": 170
+  },
+  {
+    "name": "Biscoito wafer de morango - Nestlé",
+    "slug": "biscoito-wafer-de-morango-nestle",
+    "measurementUnit": "4 e 1/2 unidades - (30 g)",
+    "calories": 161
+  },
+  {
+    "name": "Bolacha água e sal - Tostines",
+    "slug": "bolacha-agua-e-sal-tostines",
+    "measurementUnit": "6 unidades - (30 g)",
+    "calories": 130
+  },
+  {
+    "name": "Bolacha champanhe - Bauducco",
+    "slug": "bolacha-champanhe-bauducco",
+    "measurementUnit": "3 e 1/2 unidades - (30 g)",
+    "calories": 119
+  },
+  {
+    "name": "Bolacha cream craker - Bauducco",
+    "slug": "bolacha-cream-craker-bauducco",
+    "measurementUnit": "6 e 1/2 unidades - (30 g)",
+    "calories": 130
+  },
+  {
+    "name": "Bolacha cream craker integral - Bauducco",
+    "slug": "bolacha-cream-craker-integral-bauducco",
+    "measurementUnit": "6 e 1/2 unidades - (30 g)",
+    "calories": 130
+  },
+  {
+    "name": "Bolacha cream craker light - Bauducco",
+    "slug": "bolacha-cream-craker-light-bauducco",
+    "measurementUnit": "6 e 1/2 unidades - (30 g)",
+    "calories": 106
+  },
+  {
+    "name": "Bolacha de banana e canela - Bauducco",
+    "slug": "bolacha-de-banana-e-canela-bauducco",
+    "measurementUnit": "6 unidades - (30 g)",
+    "calories": 149
+  },
+  {
+    "name": "Bolacha de coco - Bauducco",
+    "slug": "bolacha-de-coco-bauducco",
+    "measurementUnit": "6 unidades - (30 g)",
+    "calories": 149
+  },
+  {
+    "name": "Bolacha de leite - Bauducco",
+    "slug": "bolacha-de-leite-bauducco",
+    "measurementUnit": "6 unidades - (30 g)",
+    "calories": 146
+  },
+  {
+    "name": "Bolacha maisena - Adria",
+    "slug": "bolacha-maisena-adria",
+    "measurementUnit": "6 unidades - (30 g)",
+    "calories": 134
+  },
+  {
+    "name": "Bolacha mariapiraquê",
+    "slug": "bolacha-mariapiraque",
+    "measurementUnit": "8 unidades - (40 g)",
+    "calories": 170
+  },
+  {
+    "name": "Bolacha recheada de chocolate - Bono",
+    "slug": "bolacha-recheada-de-chocolate-bono",
+    "measurementUnit": "3 unidades - (30 g)",
+    "calories": 142
+  },
+  {
+    "name": "Bolacha recheada de doce de leite - Bono",
+    "slug": "bolacha-recheada-de-doce-de-leite-bono",
+    "measurementUnit": "3 unidades - (30 g)",
+    "calories": 147
+  },
+  {
+    "name": "Bolacha recheada de morango - Adria",
+    "slug": "bolacha-recheada-de-morango-adria",
+    "measurementUnit": "3 unidades - (30 g)",
+    "calories": 148
+  },
+  {
+    "name": "Bolacha recheada negresco - Nestlé",
+    "slug": "bolacha-recheada-negresco-nestle",
+    "measurementUnit": "3 unidades - (30 g)",
+    "calories": 141
+  },
+  {
+    "name": "Cookie com gotas de chocolate - Nabisco",
+    "slug": "cookie-com-gotas-de-chocolate-nabisco",
+    "measurementUnit": "2 unidades - (30 g)",
+    "calories": 148
+  },
+  {
+    "name": "Cookie integral de frutas cítricas - Jasmine",
+    "slug": "cookie-integral-de-frutas-citricas-jasmine",
+    "measurementUnit": "5 unidades - (30 g)",
+    "calories": 127
+  },
+  {
+    "name": "Cookie integral diet de cappuccino e avelã - Jasmine",
+    "slug": "cookie-integral-diet-de-cappuccino-e-avela-jasmine",
+    "measurementUnit": "8 unidades - (30 g)",
+    "calories": 119
+  },
+  {
+    "name": "flocos de arroz caramelizado - Okoshi",
+    "slug": "flocos-de-arroz-caramelizado-okoshi",
+    "measurementUnit": "2 unidades - (30 g)",
+    "calories": 107
+  },
+  {
+    "name": "mini biscoito de pizza - Club social",
+    "slug": "mini-biscoito-de-pizza-club-social",
+    "measurementUnit": "50 unidades - (50 g)",
+    "calories": 224
+  },
+  {
+    "name": "rosquinha de leite - Mabel",
+    "slug": "rosquinha-de-leite-mabel",
+    "measurementUnit": "6 unidades - (30 g)",
+    "calories": 129
+  },
+  {
+    "name": "Açúcar mascavo",
+    "slug": "acucar-mascavo",
+    "measurementUnit": "1 col. sopa rasa - (15 g)",
+    "calories": 54
+  },
+  {
+    "name": "Açúcar refinado",
+    "slug": "acucar-refinado",
+    "measurementUnit": "1 col. sopa rasa - (15 g)",
+    "calories": 60
+  },
+  {
+    "name": "Algodão doce",
+    "slug": "algodao-doce",
+    "measurementUnit": "1 unidade - (30 g)",
+    "calories": 100
+  },
+  {
+    "name": "Ambrosia",
+    "slug": "ambrosia",
+    "measurementUnit": "1 col. sopa - (20 g)",
+    "calories": 52
+  },
+  {
+    "name": "Ameixa em calda - Cepêra",
+    "slug": "ameixa-em-calda-cepera",
+    "measurementUnit": "3 unidades - (20 g)",
+    "calories": 44
+  },
+  {
+    "name": "Amendoa confeitada - Estrela do Oriente",
+    "slug": "amendoa-confeitada-estrela-do-oriente",
+    "measurementUnit": "1 col. sopa - (12 g)",
+    "calories": 56
+  },
+  {
+    "name": "Arroz-doce",
+    "slug": "arroz-doce",
+    "measurementUnit": "1 col. sopa - (40 g)",
+    "calories": 66
+  },
+  {
+    "name": "Baba de moça",
+    "slug": "baba-de-moca",
+    "measurementUnit": "1 col. sopa - (12 g)",
+    "calories": 60
+  },
+  {
+    "name": "Bananada - Fazendinha",
+    "slug": "bananada-fazendinha",
+    "measurementUnit": "1 unidade - (36 g)",
+    "calories": 112
+  },
+  {
+    "name": "Barra de biscoito com recheio de banana - Bauducco",
+    "slug": "barra-de-biscoito-com-recheio-de-banana-bauducco",
+    "measurementUnit": "1 unidade - (25 g)",
+    "calories": 95
+  },
+  {
+    "name": "Barra de biscoito com recheio de chocolate - Bauducco",
+    "slug": "barra-de-biscoito-com-recheio-de-chocolate-bauducco",
+    "measurementUnit": "1 unidade - (25 g)",
+    "calories": 90
+  },
+  {
+    "name": "Barra de biscoito com recheio de goiaba - Bauducco",
+    "slug": "barra-de-biscoito-com-recheio-de-goiaba-bauducco",
+    "measurementUnit": "1 unidade - (25 g)",
+    "calories": 90
+  },
+  {
+    "name": "Beijinho - Nestlé",
+    "slug": "beijinho-nestle",
+    "measurementUnit": "1 col. sopa - (20 g)",
+    "calories": 64
+  },
+  {
+    "name": "Bolacha de chocolate",
+    "slug": "bolacha-de-chocolate",
+    "measurementUnit": "1 unidade - (10 g)",
+    "calories": 52
+  },
+  {
+    "name": "Bolacha recheada",
+    "slug": "bolacha-recheada",
+    "measurementUnit": "1 unidade - (12 g)",
+    "calories": 80
+  },
+  {
+    "name": "Bolo de aipim com coco",
+    "slug": "bolo-de-aipim-com-coco",
+    "measurementUnit": "1 fatia média - (80 g)",
+    "calories": 243
+  },
+  {
+    "name": "Bolo de cenoura sem cobertura",
+    "slug": "bolo-de-cenoura-sem-cobertura",
+    "measurementUnit": "1 fatia média - (60 g)",
+    "calories": 227
+  },
+  {
+    "name": "Bolo de chocolate - Pullman",
+    "slug": "bolo-de-chocolate-pullman",
+    "measurementUnit": "1 fatia (porção) - (60 g)",
+    "calories": 189
+  },
+  {
+    "name": "Bolo de chocolate com recheio e calda de chocolate",
+    "slug": "bolo-de-chocolate-com-recheio-e-calda-de-chocolate",
+    "measurementUnit": "1 fatia média - (140 g)",
+    "calories": 540
+  },
+  {
+    "name": "Bolo de coco Nutrella",
+    "slug": "bolo-de-coco-nutrella",
+    "measurementUnit": "1 fatia (porção) - (60 g)",
+    "calories": 215
+  },
+  {
+    "name": "Bolo de fubá Nutrella",
+    "slug": "bolo-de-fuba-nutrella",
+    "measurementUnit": "1 fatia (porção) - (60 g)",
+    "calories": 207
+  },
+  {
+    "name": "Bolo de milho",
+    "slug": "bolo-de-milho",
+    "measurementUnit": "1 fatia - (100 g)",
+    "calories": 290
+  },
+  {
+    "name": "Bomba com recheio de creme",
+    "slug": "bomba-com-recheio-de-creme",
+    "measurementUnit": "1 unidade - (120 g)",
+    "calories": 500
+  },
+  {
+    "name": "Bomba de chocolate",
+    "slug": "bomba-de-chocolate",
+    "measurementUnit": "1 unidade média - (50 g)",
+    "calories": 97
+  },
+  {
+    "name": "Brigadeirão",
+    "slug": "brigadeirao",
+    "measurementUnit": "1 fatia - (50 g)",
+    "calories": 195
+  },
+  {
+    "name": "Brigadeiro",
+    "slug": "brigadeiro",
+    "measurementUnit": "1 unidade - (20 g)",
+    "calories": 100
+  },
+  {
+    "name": "Brigadeiro - Nestlé",
+    "slug": "brigadeiro-nestle",
+    "measurementUnit": "1 col. sopa - (20 g)",
+    "calories": 61
+  },
+  {
+    "name": "Brownie - Helô Doces",
+    "slug": "brownie-helo-doces",
+    "measurementUnit": "1 fatia (porção) - (40 g)",
+    "calories": 172
+  },
+  {
+    "name": "Cacau em pó - Garoto",
+    "slug": "cacau-em-po-garoto",
+    "measurementUnit": "2 col. sopa - (20 g)",
+    "calories": 81
+  },
+  {
+    "name": "Cajuzinho - Nestlé",
+    "slug": "cajuzinho-nestle",
+    "measurementUnit": "1 col. sopa - (20 g)",
+    "calories": 69
+  },
+  {
+    "name": "Calda de caramelo - Ingredient",
+    "slug": "calda-de-caramelo-ingredient",
+    "measurementUnit": "1 e 1/2 col. sopa - (20 g)",
+    "calories": 61
+  },
+  {
+    "name": "Calda de chocolate - Bazzar",
+    "slug": "calda-de-chocolate-bazzar",
+    "measurementUnit": "1 e 1/2 col. sopa - (20 g)",
+    "calories": 61
+  },
+  {
+    "name": "Calda de morango - Ingredient",
+    "slug": "calda-de-morango-ingredient",
+    "measurementUnit": "1 e 1/2 col. sopa - (20 g)",
+    "calories": 59
+  },
+  {
+    "name": "Canjica",
+    "slug": "canjica",
+    "measurementUnit": "1 xíc. chá - (150 g)",
+    "calories": 205
+  },
+  {
+    "name": "Cereja em calda - Qualitá",
+    "slug": "cereja-em-calda-qualita",
+    "measurementUnit": "1 col. sopa - (30 g)",
+    "calories": 76
+  },
+  {
+    "name": "Chantilly caseiro",
+    "slug": "chantilly-caseiro",
+    "measurementUnit": "1 col. sopa - (20 g)",
+    "calories": 89
+  },
+  {
+    "name": "Chantily - Vigor",
+    "slug": "chantily-vigor",
+    "measurementUnit": "1 col. sopa - (20 g)",
+    "calories": 56
+  },
+  {
+    "name": "Chocotone",
+    "slug": "chocotone",
+    "measurementUnit": "1 fatia grande - (80 g)",
+    "calories": 322
+  },
+  {
+    "name": "Chocottone - Baducco",
+    "slug": "chocottone-baducco",
+    "measurementUnit": "1 fatia grande - (80g)",
+    "calories": 354
+  },
+  {
+    "name": "Chocotone Classic - Nestlé",
+    "slug": "chocotone-classic-nestle",
+    "measurementUnit": "1 fatia grande - (80g)",
+    "calories": 326
+  },
+  {
+    "name": "Chocotone Exagero de Chocolate - Village",
+    "slug": "chocotone-exagero-de-chocolate-village",
+    "measurementUnit": "1 fatia grande - (80g)",
+    "calories": 314
+  },
+  {
+    "name": "Chocotone Top Chocolate - Visconti",
+    "slug": "chocotone-top-chocolate-visconti",
+    "measurementUnit": "1 fatia grande - (80g)",
+    "calories": 364
+  },
+  {
+    "name": "Churros de doce de leite",
+    "slug": "churros-de-doce-de-leite",
+    "measurementUnit": "1 unidade - (100 g)",
+    "calories": 570
+  },
+  {
+    "name": "Cocada",
+    "slug": "cocada",
+    "measurementUnit": "1 unidade média - (70 g)",
+    "calories": 405
+  },
+  {
+    "name": "Creme de abacate",
+    "slug": "creme-de-abacate",
+    "measurementUnit": "1 taça - (90 g)",
+    "calories": 156
+  },
+  {
+    "name": "Creme de amendoim - Amendocrem",
+    "slug": "creme-de-amendoim-amendocrem",
+    "measurementUnit": "1 col. sopa - (20 g)",
+    "calories": 121
+  },
+  {
+    "name": "Creme de avelã - Nutella",
+    "slug": "creme-de-avela-nutella",
+    "measurementUnit": "1 col. sopa - (20 g)",
+    "calories": 105
+  },
+  {
+    "name": "Curau - Yoki",
+    "slug": "curau-yoki",
+    "measurementUnit": "1 xic. chá - (80 g)",
+    "calories": 304
+  },
+  {
+    "name": "Doce de abóbora - Nhá Tuca",
+    "slug": "doce-de-abobora-nha-tuca",
+    "measurementUnit": "1 pedaço médio - (70 g)",
+    "calories": 172
+  },
+  {
+    "name": "Doce de leite caseiro",
+    "slug": "doce-de-leite-caseiro",
+    "measurementUnit": "1 col. sopa - (50 g)",
+    "calories": 145
+  },
+  {
+    "name": "Donuts de doce de leite - Melhor Bocado",
+    "slug": "donuts-de-doce-de-leite-melhor-bocado",
+    "measurementUnit": "1 unidade - (70 g)",
+    "calories": 131
+  },
+  {
+    "name": "Farofa doce",
+    "slug": "farofa-doce",
+    "measurementUnit": "1/2 col. sopa - (20 g)",
+    "calories": 99
+  },
+  {
+    "name": "Figo em calda - Helomar",
+    "slug": "figo-em-calda-helomar",
+    "measurementUnit": "4 unidades - (80 g)",
+    "calories": 151
+  },
+  {
+    "name": "Fios de ovos Prazeres do açúcar",
+    "slug": "fios-de-ovos-prazeres-do-acucar",
+    "measurementUnit": "2 col. sopa - (27 g)",
+    "calories": 100
+  },
+  {
+    "name": "Flan de baunilha - Oetker",
+    "slug": "flan-de-baunilha-oetker",
+    "measurementUnit": "1 taça (porção) - (120 g)",
+    "calories": 51
+  },
+  {
+    "name": "Fondue de chocolate - La Table D'or",
+    "slug": "fondue-de-chocolate-la-table-d'or",
+    "measurementUnit": "1 col. sopa - (20 g)",
+    "calories": 55
+  },
+  {
+    "name": "Gelatina de morango - Oetker",
+    "slug": "gelatina-de-morango-oetker",
+    "measurementUnit": "1 taça (porção) - (120 g)",
+    "calories": 39
+  },
+  {
+    "name": "Geléia de morango - Ritter",
+    "slug": "geleia-de-morango-ritter",
+    "measurementUnit": "1 col. sopa - (20 g)",
+    "calories": 49
+  },
+  {
+    "name": "Geléia de morango diet - Queensberry",
+    "slug": "geleia-de-morango-diet-queensberry",
+    "measurementUnit": "1 col. sopa - (20 g)",
+    "calories": 22
+  },
+  {
+    "name": "Goiabada cascão",
+    "slug": "goiabada-cascao",
+    "measurementUnit": "1 fatia - (40 g)",
+    "calories": 132
+  },
+  {
+    "name": "Leite condensado - Nestlé",
+    "slug": "leite-condensado-nestle",
+    "measurementUnit": "1 col. sopa - (20 g)",
+    "calories": 65
+  },
+  {
+    "name": "Maçã do amor",
+    "slug": "maca-do-amor",
+    "measurementUnit": "1 unidade - (150 g)",
+    "calories": 462
+  },
+  {
+    "name": "Manjar de coco c/ calda de ameixa - Ducoco",
+    "slug": "manjar-de-coco-c/-calda-de-ameixa-ducoco",
+    "measurementUnit": "1 fatia - (50 g)",
+    "calories": 178
+  },
+  {
+    "name": "Maria-mole - Oetker",
+    "slug": "maria-mole-oetker",
+    "measurementUnit": "1 pedaço (porção) - (120 g)",
+    "calories": 55
+  },
+  {
+    "name": "Marrom glacê - Fugini",
+    "slug": "marrom-glace-fugini",
+    "measurementUnit": "1 fatia - (40 g)",
+    "calories": 104
+  },
+  {
+    "name": "Marshmellow - Ingredient",
+    "slug": "marshmellow-ingredient",
+    "measurementUnit": "1/2 col. sopa - (20 g)",
+    "calories": 57
+  },
+  {
+    "name": "Marzipã Zentis",
+    "slug": "marzipa-zentis",
+    "measurementUnit": "1 unidade peq. - (25 g)",
+    "calories": 109
+  },
+  {
+    "name": "Mel de abelhas",
+    "slug": "mel-de-abelhas",
+    "measurementUnit": "1 col. sopa - (20 g)",
+    "calories": 64
+  },
+  {
+    "name": "Merengue de limão",
+    "slug": "merengue-de-limao",
+    "measurementUnit": "1 fatia fina - (100 g)",
+    "calories": 255
+  },
+  {
+    "name": "Mil-folhas",
+    "slug": "mil-folhas",
+    "measurementUnit": "1 fatia - (100 g)",
+    "calories": 117
+  },
+  {
+    "name": "Mousse chocolate",
+    "slug": "mousse-chocolate",
+    "measurementUnit": "1 taça - (150 g)",
+    "calories": 300
+  },
+  {
+    "name": "Mousse de maracujá",
+    "slug": "mousse-de-maracuja",
+    "measurementUnit": "1 col. sopa - (30 g)",
+    "calories": 71
+  },
+  {
+    "name": "Muffin - Oetker",
+    "slug": "muffin-oetker",
+    "measurementUnit": "1 unidade - (30 g)",
+    "calories": 74
+  },
+  {
+    "name": "Olho-de-sogra",
+    "slug": "olho-de-sogra",
+    "measurementUnit": "1 unidade - (20 g)",
+    "calories": 60
+  },
+  {
+    "name": "Ovos nevados",
+    "slug": "ovos-nevados",
+    "measurementUnit": "2 col. sopa - (100 g)",
+    "calories": 245
+  },
+  {
+    "name": "Paçoca (de rolha) - Yoki",
+    "slug": "pacoca-(de-rolha)-yoki",
+    "measurementUnit": "1 unidade - (22 g)",
+    "calories": 107
+  },
+  {
+    "name": "Pamonha",
+    "slug": "pamonha",
+    "measurementUnit": "1 unidade - (160 g)",
+    "calories": 413
+  },
+  {
+    "name": "Panetone",
+    "slug": "panetone",
+    "measurementUnit": "1 fatia grande - (80 g)",
+    "calories": 302
+  },
+  {
+    "name": "Panettone Alpino - Nestle",
+    "slug": "panettone-alpino-nestle",
+    "measurementUnit": "1 fatia grande - (80 g)",
+    "calories": 334
+  },
+  {
+    "name": "Panettone com Damasco e Uva Passa - Village",
+    "slug": "panettone-com-damasco-e-uva-passa-village",
+    "measurementUnit": "1 fatia grande - (80 g)",
+    "calories": 292
+  },
+  {
+    "name": "Panettone com Frutas Bauducco",
+    "slug": "panettone-com-frutas-bauducco",
+    "measurementUnit": "1 fatia grande - (80 g)",
+    "calories": 280
+  },
+  {
+    "name": "Panettone com Frutas Light Bauducco",
+    "slug": "panettone-com-frutas-light-bauducco",
+    "measurementUnit": "1 fatia grande - (80 g)",
+    "calories": 231
+  },
+  {
+    "name": "Panettone com Frutas - Nestle",
+    "slug": "panettone-com-frutas-nestle",
+    "measurementUnit": "1 fatia grande - (80 g)",
+    "calories": 284
+  },
+  {
+    "name": "Panettone com Frutas - Pullman",
+    "slug": "panettone-com-frutas-pullman",
+    "measurementUnit": "1 fatia grande - (80 g)",
+    "calories": 287
+  },
+  {
+    "name": "Panettone com Frutas - Village",
+    "slug": "panettone-com-frutas-village",
+    "measurementUnit": "1 fatia grande - (80g)",
+    "calories": 289
+  },
+  {
+    "name": "Panettone Light com Frutas - Village",
+    "slug": "panettone-light-com-frutas-village",
+    "measurementUnit": "1 fatia grande - (80g)",
+    "calories": 215
+  },
+  {
+    "name": "Pastel de Santa Clara",
+    "slug": "pastel-de-santa-clara",
+    "measurementUnit": "1 unidade - (80 g)",
+    "calories": 143
+  },
+  {
+    "name": "Pavê de amendoim",
+    "slug": "pave-de-amendoim",
+    "measurementUnit": "1 pedaço médio - (110 g)",
+    "calories": 481
+  },
+  {
+    "name": "Pavê de chocolate",
+    "slug": "pave-de-chocolate",
+    "measurementUnit": "1 pedaço médio - (85 g)",
+    "calories": 154
+  },
+  {
+    "name": "Pé-de- moleque",
+    "slug": "pe-de--moleque",
+    "measurementUnit": "1 unidade peq. - (17 g)",
+    "calories": 87
+  },
+  {
+    "name": "Pêssego em calda - Qualitá",
+    "slug": "pessego-em-calda-qualita",
+    "measurementUnit": "3 unidades - (140 g)",
+    "calories": 99
+  },
+  {
+    "name": "Petit Gateau - Mr Bey",
+    "slug": "petit-gateau-mr-bey",
+    "measurementUnit": "1 unidade - (50 g)",
+    "calories": 216
+  },
+  {
+    "name": "Picolé - Chicabon",
+    "slug": "picole-chicabon",
+    "measurementUnit": "1 unidade - (62 g)",
+    "calories": 102
+  },
+  {
+    "name": "Picole de coco - Kibon",
+    "slug": "picole-de-coco-kibon",
+    "measurementUnit": "1 unidade - (60 g)",
+    "calories": 88
+  },
+  {
+    "name": "Picolé de uva - Kibon",
+    "slug": "picole-de-uva-kibon",
+    "measurementUnit": "1 unidade - (59 g)",
+    "calories": 60
+  },
+  {
+    "name": "Profiteroles - Sadia",
+    "slug": "profiteroles-sadia",
+    "measurementUnit": "1 unidade/td> - (50 g)",
+    "calories": 191
+  },
+  {
+    "name": "Pudim de leite com calda de caramelo",
+    "slug": "pudim-de-leite-com-calda-de-caramelo",
+    "measurementUnit": "1 fatia média - (100 g)",
+    "calories": 323
+  },
+  {
+    "nome": "Pudim de baunilha",
+    "slug": "Pudim-de-baunilha",
+    "unidade": "1 porção - (125 g)",
+    "calorias": 155
+  },
+  {
+    "nome": "Pudim de chocolate",
+    "slug": "pudim-de-chocolate",
+    "unidade": "1 porção - (150 g)",
+    "calorias": 142
+  },
+  {
+    "nome": "Pudim de tapioca",
+    "slug": "pudim-de-tapioca",
+    "unidade": "1 porção - (110 g)",
+    "calorias": 145
+  },
+  {
+    "name": "Queijadinha caseira",
+    "slug": "queijadinha-caseira",
+    "measurementUnit": "1 unidade média - (35 g)",
+    "calories": 206
+  },
+  {
+    "name": "Quindim",
+    "slug": "quindim",
+    "measurementUnit": "1 unidade - (120 g)",
+    "calories": 475
+  },
+  {
+    "name": "Quindim Miss - Daisy",
+    "slug": "quindim-miss-daisy",
+    "measurementUnit": "1 fatia (porção) - (60 g)",
+    "calories": 243
+  },
+  {
+    "name": "Rabanada",
+    "slug": "rabanada",
+    "measurementUnit": "1 fatia - (60 g)",
+    "calories": 300
+  },
+  {
+    "name": "Rapadura",
+    "slug": "rapadura",
+    "measurementUnit": "1 pedaço médio - (55 g)",
+    "calories": 204
+  },
+  {
+    "name": "Salada de frutas com açúcar",
+    "slug": "salada-de-frutas-com-acucar",
+    "measurementUnit": "1 taça - (150 g)",
+    "calories": 329
+  },
+  {
+    "name": "Salada de frutas com chantilly",
+    "slug": "salada-de-frutas-com-chantilly",
+    "measurementUnit": "1 taça - (190 g)",
+    "calories": 407
+  },
+  {
+    "name": "Sagu de morango - Oetker",
+    "slug": "sagu-de-morango-oetker",
+    "measurementUnit": "2 col. sopa - (30 g)",
+    "calories": 114
+  },
+  {
+    "name": "Sonho",
+    "slug": "sonho",
+    "measurementUnit": "1 unidade - (85 g)",
+    "calories": 573
+  },
+  {
+    "name": "Sorvete de chocolate - Kibon",
+    "slug": "sorvete-de-chocolate-kibon",
+    "measurementUnit": "1 bola - (60 g)",
+    "calories": 112
+  },
+  {
+    "name": "Sorvete de creme - Nestlé",
+    "slug": "sorvete-de-creme-nestle",
+    "measurementUnit": "1 bola - (60 g)",
+    "calories": 102
+  },
+  {
+    "name": "Sorvete de flocos - Nestlé",
+    "slug": "sorvete-de-flocos-nestle",
+    "measurementUnit": "1 bola - (60 g)",
+    "calories": 121
+  },
+  {
+    "name": "Sorvete de morango - Kibon",
+    "slug": "sorvete-de-morango-kibon",
+    "measurementUnit": "1 bola - (60 g)",
+    "calories": 98
+  },
+  {
+    "name": "Sundae completo",
+    "slug": "sundae-completo",
+    "measurementUnit": "1 unidade - (350 g)",
+    "calories": 1
+  },
+  {
+    "name": "Sundae chocolate - Mc Donald's",
+    "slug": "sundae-chocolate-mc-donald's",
+    "measurementUnit": "1 unidade - (148 g)",
+    "calories": 302
+  },
+  {
+    "name": "Sundae morango - Mc Donald's",
+    "slug": "sundae-morango-mc-donald's",
+    "measurementUnit": "1 unidade - (153 g)",
+    "calories": 273
+  },
+  {
+    "name": "Suspiro",
+    "slug": "suspiro",
+    "measurementUnit": "1 unidade média - (10 g)",
+    "calories": 37
+  },
+  {
+    "name": "Torrone de amendoim - Montevergine",
+    "slug": "torrone-de-amendoim-montevergine",
+    "measurementUnit": "1 unidade peq. - (20 g)",
+    "calories": 81
+  },
+  {
+    "name": "Torta de banana - McDonald's",
+    "slug": "torta-de-banana-mcdonald's",
+    "measurementUnit": "1 unidade - (79 g)",
+    "calories": 228
+  },
+  {
+    "name": "Torta de limão Miss - Daisy",
+    "slug": "torta-de-limao-miss-daisy",
+    "measurementUnit": "1 fatia (porção) - (47 g)",
+    "calories": 126
+  },
+  {
+    "name": "Torta de maçã - McDonald's",
+    "slug": "torta-de-maca-mcdonald's",
+    "measurementUnit": "1 unidade - (81 g)",
+    "calories": 237
+  },
+  {
+    "name": "Torta de morango",
+    "slug": "torta-de-morango",
+    "measurementUnit": "1 fatia - (100 g)",
+    "calories": 184
+  },
+  {
+    "name": "Torta holandesa Miss - Daisy",
+    "slug": "torta-holandesa-miss-daisy",
+    "measurementUnit": "1 fatia (porção) - (60 g)",
+    "calories": 214
+  },
+  {
+    "name": "Torta mousse de chocolate Miss - Daisy",
+    "slug": "torta-mousse-de-chocolate-miss-daisy",
+    "measurementUnit": "1 fatia (porção) - (47 g)",
+    "calories": 144
+  },
+  {
+    "name": "Xarope de milho - Karo",
+    "slug": "xarope-de-milho-karo",
+    "measurementUnit": "1 col. sopa - (20 g)",
+    "calories": 60
+  },
+  {
+    "name": "Almôndega caseira frita",
+    "slug": "almondega-caseira-frita",
+    "measurementUnit": "1 unidade média - (50 g)",
+    "calories": 102
+  },
+  {
+    "name": "Bife à milanesa",
+    "slug": "bife-a-milanesa",
+    "measurementUnit": "1 unidade média - (80 g)",
+    "calories": 230
+  },
+  {
+    "name": "Bife à parmegiana",
+    "slug": "bife-a-parmegiana",
+    "measurementUnit": "1 unidade média - (150 g)",
+    "calories": 491
+  },
+  {
+    "name": "Bife de fígado",
+    "slug": "bife-de-figado",
+    "measurementUnit": "1 unidade grande - (130 g)",
+    "calories": 293
+  },
+  {
+    "name": "Bife grelhado contra-filé com gordura",
+    "slug": "bife-grelhado-contra-file-com-gordura",
+    "measurementUnit": "1 unidade média - (100 g)",
+    "calories": 278
+  },
+  {
+    "name": "Bife grelhado contra-filé sem gordura",
+    "slug": "bife-grelhado-contra-file-sem-gordura",
+    "measurementUnit": "1 unidade média - (90 g)",
+    "calories": 200
+  },
+  {
+    "name": "Bife grelhado filé mignon sem gordura",
+    "slug": "bife-grelhado-file-mignon-sem-gordura",
+    "measurementUnit": "1 unidade média - (90 g)",
+    "calories": 198
+  },
+  {
+    "name": "Bife grelhado miolo de alcatra sem gordura",
+    "slug": "bife-grelhado-miolo-de-alcatra-sem-gordura",
+    "measurementUnit": "1 unidade média - (90 g)",
+    "calories": 217
+  },
+  {
+    "name": "Bife rolê",
+    "slug": "bife-role",
+    "measurementUnit": "1 unidade média - (100 g)",
+    "calories": 179
+  },
+  {
+    "name": "Caldo de carne em tablete Knorr",
+    "slug": "caldo-de-carne-em-tablete-knorr",
+    "measurementUnit": "1 unidade - (9.5)",
+    "calories": 25
+  },
+  {
+    "name": "Carne assada",
+    "slug": "carne-assada",
+    "measurementUnit": "1 fatia média - (90 g)",
+    "calories": 259
+  },
+  {
+    "name": "Carne cozida (lagarto)",
+    "slug": "carne-cozida-(lagarto)",
+    "measurementUnit": "1 fatia média - (75 g)",
+    "calories": 134
+  },
+  {
+    "name": "Carne cozida (músculo)",
+    "slug": "carne-cozida-(musculo)",
+    "measurementUnit": "1 fatia média - (75 g)",
+    "calories": 146
+  },
+  {
+    "name": "Carne moída refogada (acém)",
+    "slug": "carne-moida-refogada-(acem)",
+    "measurementUnit": "1 col. sopa - (30 g)",
+    "calories": 64
+  },
+  {
+    "name": "Carne seca cozida",
+    "slug": "carne-seca-cozida",
+    "measurementUnit": "1 pedaço médio - (65 g)",
+    "calories": 205
+  },
+  {
+    "name": "Carpaccio",
+    "slug": "carpaccio",
+    "measurementUnit": "10 fatias - (80 g)",
+    "calories": 120
+  },
+  {
+    "name": "Costela de boi assado",
+    "slug": "costela-de-boi-assado",
+    "measurementUnit": "1 pedaço médio - (40 g)",
+    "calories": 181
+  },
+  {
+    "name": "Espetinho de carne na brasa",
+    "slug": "espetinho-de-carne-na-brasa",
+    "measurementUnit": "1 unidade - (50 g)",
+    "calories": 119
+  },
+  {
+    "name": "Hambúrguer frito",
+    "slug": "hamburguer-frito",
+    "measurementUnit": "1 unidade - (85 g)",
+    "calories": 219
+  },
+  {
+    "name": "Hambúrguer grelhado",
+    "slug": "hamburguer-grelhado",
+    "measurementUnit": "1 unidade - (85 g)",
+    "calories": 178
+  },
+  {
+    "name": "Picanha na brasa sem gordura",
+    "slug": "picanha-na-brasa-sem-gordura",
+    "measurementUnit": "1 pedaço médio - (100 g)",
+    "calories": 238
+  },
+  {
+    "name": "Quibe assado",
+    "slug": "quibe-assado",
+    "measurementUnit": "1 pedaço grande - (80 g)",
+    "calories": 145
+  },
+  {
+    "name": "Quibe frito",
+    "slug": "quibe-frito",
+    "measurementUnit": "1 unidade grande - (85 g)",
+    "calories": 176
+  },
+  {
+    "name": "Bacon frito",
+    "slug": "bacon-frito",
+    "measurementUnit": "1 fatia média - (15 g)",
+    "calories": 99
+  },
+  {
+    "name": "Bisteca de porco na brasa",
+    "slug": "bisteca-de-porco-na-brasa",
+    "measurementUnit": "1 unidade - (100 g)",
+    "calories": 280
+  },
+  {
+    "name": "Costela de porco assada",
+    "slug": "costela-de-porco-assada",
+    "measurementUnit": "1 unidade - (115 g)",
+    "calories": 462
+  },
+  {
+    "name": "Leitão assado",
+    "slug": "leitao-assado",
+    "measurementUnit": "1 pedaço médio - (85 g)",
+    "calories": 190
+  },
+  {
+    "name": "Lombo assado",
+    "slug": "lombo-assado",
+    "measurementUnit": "1 fatia - (100 g)",
+    "calories": 125
+  },
+  {
+    "name": "Paio",
+    "slug": "paio",
+    "measurementUnit": "1 unidade - (160 g)",
+    "calories": 363
+  },
+  {
+    "name": "Pernil assado",
+    "slug": "pernil-assado",
+    "measurementUnit": "1 fatia - (100 g)",
+    "calories": 158
+  },
+  {
+    "name": "Rabo de porco cozido",
+    "slug": "rabo-de-porco-cozido",
+    "measurementUnit": "3 unidades - (100 g)",
+    "calories": 377
+  },
+  {
+    "name": "Tender assado",
+    "slug": "tender-assado",
+    "measurementUnit": "1 fatia - (100 g)",
+    "calories": 121
+  },
+  {
+    "name": "Toucinho frito",
+    "slug": "toucinho-frito",
+    "measurementUnit": "1 fatia - (15 g)",
+    "calories": 105
+  },
+  {
+    "name": "Apresuntado - Perdigão",
+    "slug": "apresuntado-perdigao",
+    "measurementUnit": "1 fatia - (30 g)",
+    "calories": 114
+  },
+  {
+    "name": "Chester - Perdigão",
+    "slug": "chester-perdigao",
+    "measurementUnit": "2 fatias - (30 g)",
+    "calories": 36
+  },
+  {
+    "name": "Copa - Sadia",
+    "slug": "copa-sadia",
+    "measurementUnit": "10 fatias - (40 g)",
+    "calories": 137
+  },
+  {
+    "name": "Linguiça de frango na brasa",
+    "slug": "linguica-de-frango-na-brasa",
+    "measurementUnit": "1 unidade média - (60 g)",
+    "calories": 146
+  },
+  {
+    "name": "Linguiça de porco na brasa",
+    "slug": "linguica-de-porco-na-brasa",
+    "measurementUnit": "1 unidade média - (60 g)",
+    "calories": 177
+  },
+  {
+    "name": "Lombinho - Ceratti",
+    "slug": "lombinho-ceratti",
+    "measurementUnit": "2 fatias - (50 g)",
+    "calories": 78
+  },
+  {
+    "name": "Mortadela - Ceratti",
+    "slug": "mortadela-ceratti",
+    "measurementUnit": "3 fatias - (50 g)",
+    "calories": 120
+  },
+  {
+    "name": "Peito de peru - Perdigão",
+    "slug": "peito-de-peru-perdigao",
+    "measurementUnit": "2 fatias - (30 g)",
+    "calories": 33
+  },
+  {
+    "name": "Presunto cozido com capa de gordura - Sadia",
+    "slug": "presunto-cozido-com-capa-de-gordura-sadia",
+    "measurementUnit": "2 fatias - (40 g)",
+    "calories": 62
+  },
+  {
+    "name": "Presunto cozido sem capa de gordura - Perdigão",
+    "slug": "presunto-cozido-sem-capa-de-gordura-perdigao",
+    "measurementUnit": "2 fatias - (40 g)",
+    "calories": 48
+  },
+  {
+    "name": "Presunto parma - Sadia",
+    "slug": "presunto-parma-sadia",
+    "measurementUnit": "2 fatias - (40 g)",
+    "calories": 84
+  },
+  {
+    "name": "Salame - Sadia",
+    "slug": "salame-sadia",
+    "measurementUnit": "7 fatias - (40 g)",
+    "calories": 148
+  },
+  {
+    "name": "Salsicha",
+    "slug": "salsicha",
+    "measurementUnit": "1 unidade - (50 g)",
+    "calories": 146
+  },
+  {
+    "name": "Salsicha de frango",
+    "slug": "salsicha-de-frango",
+    "measurementUnit": "1 unidade - (50 g)",
+    "calories": 120
+  },
+  {
+    "name": "Salsicha de chester",
+    "slug": "salsicha-de-chester",
+    "measurementUnit": "1 unidade - (50 g)",
+    "calories": 90
+  },
+  {
+    "name": "All-bran - Kelloggs",
+    "slug": "all-bran-kelloggs",
+    "measurementUnit": "3/4 xic. chá - (40 g)",
+    "calories": 104
+  },
+  {
+    "name": "Amido de milho - Maizena",
+    "slug": "amido-de-milho-maizena",
+    "measurementUnit": "2 col. sopa - (22 g)",
+    "calories": 76
+  },
+  {
+    "name": "Arroz à grega",
+    "slug": "arroz-a-grega",
+    "measurementUnit": "1 col. sopa - (13 g)",
+    "calories": 18
+  },
+  {
+    "name": "Arroz branco cozido",
+    "slug": "arroz-branco-cozido",
+    "measurementUnit": "1 col. sopa - (31 g)",
+    "calories": 36
+  },
+  {
+    "name": "Arroz integral cozido",
+    "slug": "arroz-integral-cozido",
+    "measurementUnit": "1 col. sopa - (31 g)",
+    "calories": 34
+  },
+  {
+    "name": "Aveia (farinha) - Quaker",
+    "slug": "aveia-(farinha)-quaker",
+    "measurementUnit": "1/2 xic. chá - (50 g)",
+    "calories": 180
+  },
+  {
+    "name": "Aveia em flocos - Quaker",
+    "slug": "aveia-em-flocos-quaker",
+    "measurementUnit": "2 col. sopa - (30 g)",
+    "calories": 140
+  },
+  {
+    "name": "Cereal matinal fibre 1 - Nestlé",
+    "slug": "cereal-matinal-fibre-1-nestle",
+    "measurementUnit": "3/4 xic. chá - (40 g)",
+    "calories": 86
+  },
+  {
+    "name": "Cereal nescau - Nestlé",
+    "slug": "cereal-nescau-nestle",
+    "measurementUnit": "3/4 xic. chá - (30 g)",
+    "calories": 116
+  },
+  {
+    "name": "Corn flakes - Kelloggs",
+    "slug": "corn-flakes-kelloggs",
+    "measurementUnit": "1 xic. chá - (30 g)",
+    "calories": 110
+  },
+  {
+    "name": "Creme de arroz - Yoki",
+    "slug": "creme-de-arroz-yoki",
+    "measurementUnit": "2 e 1/2 col. sopa - (22 g)",
+    "calories": 74
+  },
+  {
+    "name": "Farinha de mandioca torrada - Yoki",
+    "slug": "farinha-de-mandioca-torrada-yoki",
+    "measurementUnit": "1/4 xic. chá - (40 g)",
+    "calories": 135
+  },
+  {
+    "name": "Farinha de milho - Yoki",
+    "slug": "farinha-de-milho-yoki",
+    "measurementUnit": "1/2 xic. chá - (40 g)",
+    "calories": 146
+  },
+  {
+    "name": "Farinha de rosca - Yoki",
+    "slug": "farinha-de-rosca-yoki",
+    "measurementUnit": "3 col. sopa - (30 g)",
+    "calories": 112
+  },
+  {
+    "name": "Farinha de trigo - Dona benta",
+    "slug": "farinha-de-trigo-dona-benta",
+    "measurementUnit": "1/2 xic. chá - (50 g)",
+    "calories": 180
+  },
+  {
+    "name": "Farinha láctea - Nestlé",
+    "slug": "farinha-lactea-nestle",
+    "measurementUnit": "4 col. sopa - (30 g)",
+    "calories": 119
+  },
+  {
+    "name": "Farofa de linhaça com passas",
+    "slug": "farofa-de-linhaca-com-passas",
+    "measurementUnit": "1 col. sopa - (25 g)",
+    "calories": 105
+  },
+  {
+    "name": "Farofa de mandioca pronta - Yoki",
+    "slug": "farofa-de-mandioca-pronta-yoki",
+    "measurementUnit": "1 col. sopa - (35 g)",
+    "calories": 144
+  },
+  {
+    "name": "Farofa de mandioca com bacon",
+    "slug": "farofa-de-mandioca-com-bacon",
+    "measurementUnit": "1 col. sopa - (35 g)",
+    "calories": 161
+  },
+  {
+    "name": "Farofa de soja pronta - Yoki",
+    "slug": "farofa-de-soja-pronta-yoki",
+    "measurementUnit": "1 col. sopa - (35 g)",
+    "calories": 149
+  },
+  {
+    "name": "Fécula de batata - Yoki",
+    "slug": "fecula-de-batata-yoki",
+    "measurementUnit": "2 col. sopa - (20 g)",
+    "calories": 70
+  },
+  {
+    "name": "Fubá de milho - Yoki",
+    "slug": "fuba-de-milho-yoki",
+    "measurementUnit": "1/2 xic. chá - (40 g)",
+    "calories": 136
+  },
+  {
+    "name": "Gérmen de trigo - Mãe terra",
+    "slug": "germen-de-trigo-mae-terra",
+    "measurementUnit": "1 col. sopa - (10 g)",
+    "calories": 30
+  },
+  {
+    "name": "Granola - Kelloggs",
+    "slug": "granola-kelloggs",
+    "measurementUnit": "1/2 xic. chá - (40 g)",
+    "calories": 138
+  },
+  {
+    "name": "Linhaça - Mãe terra",
+    "slug": "linhaca-mae-terra",
+    "measurementUnit": "1 col. sopa - (10 g)",
+    "calories": 45
+  },
+  {
+    "name": "Milho (espiga)",
+    "slug": "milho-(espiga)",
+    "measurementUnit": "1 unidade - (100 g)",
+    "calories": 132
+  },
+  {
+    "name": "Milho em conserva - Etti",
+    "slug": "milho-em-conserva-etti",
+    "measurementUnit": "1 xic. chá - (130 g)",
+    "calories": 103
+  },
+  {
+    "name": "Mucilon de arroz - Nestlé",
+    "slug": "mucilon-de-arroz-nestle",
+    "measurementUnit": "3 col. sopa - (21 g)",
+    "calories": 79
+  },
+  {
+    "name": "Mucilon de milho - Nestlé",
+    "slug": "mucilon-de-milho-nestle",
+    "measurementUnit": "3 col. sopa - (21 g)",
+    "calories": 79
+  },
+  {
+    "name": "Musli casino",
+    "slug": "musli-casino",
+    "measurementUnit": "1/2 xic. chá - (30 g)",
+    "calories": 126
+  },
+  {
+    "name": "Polentina - Quaker",
+    "slug": "polentina-quaker",
+    "measurementUnit": "1/2 xic. chá - (45 g)",
+    "calories": 147
+  },
+  {
+    "name": "Polvilho azedo - Yoki",
+    "slug": "polvilho-azedo-yoki",
+    "measurementUnit": "2 e 1/2 col. sopa - (20 g)",
+    "calories": 69
+  },
+  {
+    "name": "Polvilho doce - Yoki",
+    "slug": "polvilho-doce-yoki",
+    "measurementUnit": "2 e 1/2 col. sopa - (20 g)",
+    "calories": 71
+  },
+  {
+    "name": "Quinua real em grão - Mãe terra",
+    "slug": "quinua-real-em-grao-mae-terra",
+    "measurementUnit": "1/4 xic. chá - (45 g)",
+    "calories": 179
+  },
+  {
+    "name": "Sucrilhos - Kelloggs",
+    "slug": "sucrilhos-kelloggs",
+    "measurementUnit": "3/4 xic. chá - (30 g)",
+    "calories": 114
+  },
+  {
+    "name": "Tapioca - Yoki",
+    "slug": "tapioca-yoki",
+    "measurementUnit": "2 e 1/2 col. sopa - (30 g)",
+    "calories": 105
+  },
+  {
+    "name": "Trigo para kibe - Yoki",
+    "slug": "trigo-para-kibe-yoki",
+    "measurementUnit": "1/3 xic. - (50 g)",
+    "calories": 188
+  },
+  {
+    "name": "Abacate",
+    "slug": "abacate",
+    "measurementUnit": "1 col. sopa amassado - (45 g)",
+    "calories": 80
+  },
+  {
+    "name": "Abacaxi",
+    "slug": "abacaxi",
+    "measurementUnit": "1 fatia média - (75 g)",
+    "calories": 44
+  },
+  {
+    "name": "Açaí",
+    "slug": "acai",
+    "measurementUnit": "1 xíc. chá - (100 g)",
+    "calories": 110
+  },
+  {
+    "name": "Acerola",
+    "slug": "acerola",
+    "measurementUnit": "1 unidade",
+    "calories": 3
+  },
+  {
+    "name": "Ameixa amarela",
+    "slug": "ameixa-amarela",
+    "measurementUnit": "1 unidade - (25 g)",
+    "calories": 23
+  },
+  {
+    "name": "Ameixa preta seca",
+    "slug": "ameixa-preta-seca",
+    "measurementUnit": "1 unidade - (5 g)",
+    "calories": 10
+  },
+  {
+    "name": "Ameixa vermelha",
+    "slug": "ameixa-vermelha",
+    "measurementUnit": "1 unidade média - (16 g)",
+    "calories": 9
+  },
+  {
+    "name": "Amêndoas",
+    "slug": "amendoas",
+    "measurementUnit": "10 unidades - (100 g)",
+    "calories": 640
+  },
+  {
+    "name": "Amendoim",
+    "slug": "amendoim",
+    "measurementUnit": "1 xíc. de chá - (100 g)",
+    "calories": 576
+  },
+  {
+    "name": "Amora silvestre",
+    "slug": "amora-silvestre",
+    "measurementUnit": "1/2 copo - (100 g)",
+    "calories": 61
+  },
+  {
+    "name": "Avelã",
+    "slug": "avela",
+    "measurementUnit": "10 unidades - (100 g)",
+    "calories": 633
+  },
+  {
+    "name": "Banana-da-terra",
+    "slug": "banana-da-terra",
+    "measurementUnit": "1/2 unidade - (100 g)",
+    "calories": 105
+  },
+  {
+    "name": "Banana maçã",
+    "slug": "banana-maca",
+    "measurementUnit": "1 unidade média - (80 g)",
+    "calories": 97
+  },
+  {
+    "name": "Banana nanica",
+    "slug": "banana-nanica",
+    "measurementUnit": "1 unidade - (110 g)",
+    "calories": 89
+  },
+  {
+    "name": "Banana-nanica à milanesa",
+    "slug": "banana-nanica-a-milanesa",
+    "measurementUnit": "1/2 unidade - (100 g)",
+    "calories": 308
+  },
+  {
+    "name": "Banana-ouro",
+    "slug": "banana-ouro",
+    "measurementUnit": "2 unidades - (100 g)",
+    "calories": 159
+  },
+  {
+    "name": "Banana passa",
+    "slug": "banana-passa",
+    "measurementUnit": "1 unidade - (10 g)",
+    "calories": 35
+  },
+  {
+    "name": "Banana prata",
+    "slug": "banana-prata",
+    "measurementUnit": "1 unidade - (70 g)",
+    "calories": 74
+  },
+  {
+    "name": "Cajá-manga",
+    "slug": "caja-manga",
+    "measurementUnit": "1 unidade - (100 g)",
+    "calories": 46
+  },
+  {
+    "name": "Caju",
+    "slug": "caju",
+    "measurementUnit": "1 unidade - (150 g)",
+    "calories": 54
+  },
+  {
+    "name": "Caqui chocolate",
+    "slug": "caqui-chocolate",
+    "measurementUnit": "1 unidade - (113 g)",
+    "calories": 72
+  },
+  {
+    "name": "Caqui japonês",
+    "slug": "caqui-japones",
+    "measurementUnit": "1 unidade - (100 g)",
+    "calories": 86
+  },
+  {
+    "name": "Carambola",
+    "slug": "carambola",
+    "measurementUnit": "1 unidade - (128 g)",
+    "calories": 59
+  },
+  {
+    "name": "Castanha",
+    "slug": "castanha",
+    "measurementUnit": "5 unidades - (50 g)",
+    "calories": 100
+  },
+  {
+    "name": "Castanha-do-pará",
+    "slug": "castanha-do-para",
+    "measurementUnit": "1 xíc. chá - (100 g)",
+    "calories": 1049
+  },
+  {
+    "name": "Castanha de caju torrada",
+    "slug": "castanha-de-caju-torrada",
+    "measurementUnit": "1 xíc. chá - (150 g)",
+    "calories": 914
+  },
+  {
+    "name": "Castanha européia crua",
+    "slug": "castanha-europeia-crua",
+    "measurementUnit": "1 xíc. chá - (100 g)",
+    "calories": 287
+  },
+  {
+    "name": "Cereja",
+    "slug": "cereja",
+    "measurementUnit": "1 unidade - (7 g)",
+    "calories": 11
+  },
+  {
+    "name": "Coco ralado fresco",
+    "slug": "coco-ralado-fresco",
+    "measurementUnit": "1 col. sopa - (20 g)",
+    "calories": 50
+  },
+  {
+    "name": "Cupuaçu",
+    "slug": "cupuacu",
+    "measurementUnit": "1 unidade - (100 g)",
+    "calories": 72
+  },
+  {
+    "name": "Damasco seco",
+    "slug": "damasco-seco",
+    "measurementUnit": "1 unidade - (7 g)",
+    "calories": 9
+  },
+  {
+    "name": "Figo",
+    "slug": "figo",
+    "measurementUnit": "1 unidade - (60 g)",
+    "calories": 19
+  },
+  {
+    "name": "Figo seco",
+    "slug": "figo-seco",
+    "measurementUnit": "1 unidade - (30 g)",
+    "calories": 60
+  },
+  {
+    "name": "Framboesa",
+    "slug": "framboesa",
+    "measurementUnit": "1 col. sopa - (20 g)",
+    "calories": 12
+  },
+  {
+    "name": "Frutas cristalizadas",
+    "slug": "frutas-cristalizadas",
+    "measurementUnit": "1 e 1/2 xic. chá - (30 g)",
+    "calories": 92
+  },
+  {
+    "name": "Fruta-pão",
+    "slug": "fruta-pao",
+    "measurementUnit": "1 unidade",
+    "calories": 96
+  },
+  {
+    "name": "Goiaba branca",
+    "slug": "goiaba-branca",
+    "measurementUnit": "1 unidade - (170 g)",
+    "calories": 58
+  },
+  {
+    "name": "Goiaba vermelha",
+    "slug": "goiaba-vermelha",
+    "measurementUnit": "1 unidade - (170 g)",
+    "calories": 46
+  },
+  {
+    "name": "Grapefruit",
+    "slug": "grapefruit",
+    "measurementUnit": "1 unidade - (200 g)",
+    "calories": 94
+  },
+  {
+    "name": "Graviola",
+    "slug": "graviola",
+    "measurementUnit": "1 unidade - (100 g)",
+    "calories": 60
+  },
+  {
+    "name": "Jabuticaba",
+    "slug": "jabuticaba",
+    "measurementUnit": "10 unidades - (40 g)",
+    "calories": 14
+  },
+  {
+    "name": "Jaca",
+    "slug": "jaca",
+    "measurementUnit": "1 gomo - (10 g)",
+    "calories": 9
+  },
+  {
+    "name": "Jatobá",
+    "slug": "jatoba",
+    "measurementUnit": "1 unidade",
+    "calories": 115
+  },
+  {
+    "name": "Kiwi",
+    "slug": "kiwi",
+    "measurementUnit": "1 unidade - (77 g)",
+    "calories": 44
+  },
+  {
+    "name": "Laranja-da-baía",
+    "slug": "laranja-da-baia",
+    "measurementUnit": "1 unidade",
+    "calories": 42
+  },
+  {
+    "name": "Laranja lima",
+    "slug": "laranja-lima",
+    "measurementUnit": "1 unidade - (109 g)",
+    "calories": 38
+  },
+  {
+    "name": "Laranja pera",
+    "slug": "laranja-pera",
+    "measurementUnit": "1 unidade - (137 g)",
+    "calories": 42
+  },
+  {
+    "name": "Laranjinha-japonesa",
+    "slug": "laranjinha-japonesa",
+    "measurementUnit": "5 unidades - (100 g)",
+    "calories": 48
+  },
+  {
+    "name": "Lima-da-pérsia",
+    "slug": "lima-da-persia",
+    "measurementUnit": "1 unidade - (100 g)",
+    "calories": 32
+  },
+  {
+    "name": "Limão",
+    "slug": "limao",
+    "measurementUnit": "1 unidade - (60 g)",
+    "calories": 19
+  },
+  {
+    "name": "Manga desidratada Fruitwell",
+    "slug": "manga-desidratada-fruitwell",
+    "measurementUnit": "1 pacote - (40 g)",
+    "calories": 141
+  },
+  {
+    "name": "Maçã desidratada Jasmine",
+    "slug": "maca-desidratada-jasmine",
+    "measurementUnit": "1 pacote - (40 g)",
+    "calories": 128
+  },
+  {
+    "name": "Maçã fugi",
+    "slug": "maca-fugi",
+    "measurementUnit": "1 unidade - (130 g)",
+    "calories": 78
+  },
+  {
+    "name": "Mamão formosa",
+    "slug": "mamao-formosa",
+    "measurementUnit": "1 fatia - (100 g)",
+    "calories": 45
+  },
+  {
+    "name": "Mamão papaia",
+    "slug": "mamao-papaia",
+    "measurementUnit": "1 unidade - (283 g)",
+    "calories": 99
+  },
+  {
+    "name": "Manga",
+    "slug": "manga",
+    "measurementUnit": "1 xíc. chá - (240 g)",
+    "calories": 144
+  },
+  {
+    "name": "Maracujá",
+    "slug": "maracuja",
+    "measurementUnit": "1 unidade - (38 g)",
+    "calories": 25
+  },
+  {
+    "name": "Melancia",
+    "slug": "melancia",
+    "measurementUnit": "1 fatia - (148 g)",
+    "calories": 33
+  },
+  {
+    "name": "Melão",
+    "slug": "melao",
+    "measurementUnit": "1 fatia - (115 g)",
+    "calories": 28
+  },
+  {
+    "name": "Morango",
+    "slug": "morango",
+    "measurementUnit": "10 unidades - (120 g)",
+    "calories": 36
+  },
+  {
+    "name": "Nectarina",
+    "slug": "nectarina",
+    "measurementUnit": "1 unidade - (100 g)",
+    "calories": 64
+  },
+  {
+    "name": "Nêspera",
+    "slug": "nespera",
+    "measurementUnit": "1 unidade - (60 g)",
+    "calories": 26
+  },
+  {
+    "name": "Nozes",
+    "slug": "nozes",
+    "measurementUnit": "1 unidade - (10 g)",
+    "calories": 71
+  },
+  {
+    "name": "Nozes pecan",
+    "slug": "nozes-pecan",
+    "measurementUnit": "1/2 xíc. chá - (50 g)",
+    "calories": 200
+  },
+  {
+    "name": "Pera",
+    "slug": "pera",
+    "measurementUnit": "1 unidade - (133 g)",
+    "calories": 56
+  },
+  {
+    "name": "Pequi",
+    "slug": "pequi",
+    "measurementUnit": "1 unidade - (50 g)",
+    "calories": 40
+  },
+  {
+    "name": "Pêssego",
+    "slug": "pessego",
+    "measurementUnit": "1 unidade - (113 g)",
+    "calories": 46
+  },
+  {
+    "name": "Pinha (fruta do conde)",
+    "slug": "pinha-(fruta-do-conde)",
+    "measurementUnit": "1 unidade - (60 g)",
+    "calories": 53
+  },
+  {
+    "name": "Pitanga",
+    "slug": "pitanga",
+    "measurementUnit": "10 unidades - (100 g)",
+    "calories": 47
+  },
+  {
+    "name": "Romã",
+    "slug": "roma",
+    "measurementUnit": "1 unidade - (100 g)",
+    "calories": 62
+  },
+  {
+    "name": "Salada de frutas",
+    "slug": "salada-de-frutas",
+    "measurementUnit": "1 taça - (100 g)",
+    "calories": 99
+  },
+  {
+    "name": "Sementes de abóbora torradas",
+    "slug": "sementes-de-abobora-torradas",
+    "measurementUnit": "2 c. sopa - (30 g)",
+    "calories": 130
+  },
+  {
+    "name": "Sementes de gergelim secas",
+    "slug": "sementes-de-gergelim-secas",
+    "measurementUnit": "1 col. sopa - (10 g)",
+    "calories": 59
+  },
+  {
+    "name": "Tâmara seca",
+    "slug": "tamara-seca",
+    "measurementUnit": "1 unidade - (30 g)",
+    "calories": 76
+  },
+  {
+    "name": "Tamarindo (polpa)",
+    "slug": "tamarindo-(polpa)",
+    "measurementUnit": "1/2 xíc. chá - (100 g)",
+    "calories": 232
+  },
+  {
+    "name": "Tangerina",
+    "slug": "tangerina",
+    "measurementUnit": "1 unidade - (135 g)",
+    "calories": 72
+  },
+  {
+    "name": "Uva itália",
+    "slug": "uva-italia",
+    "measurementUnit": "1 cacho médio - (200 g)",
+    "calories": 158
+  },
+  {
+    "name": "Uva passa",
+    "slug": "uva-passa",
+    "measurementUnit": "1 col. sopa cheia - (18 g)",
+    "calories": 54
+  },
+  {
+    "name": "Uva rubi",
+    "slug": "uva-rubi",
+    "measurementUnit": "1 cacho grande - (371 g)",
+    "calories": 171
+  },
+  {
+    "name": "Camarão médio cozido",
+    "slug": "camarao-medio-cozido",
+    "measurementUnit": "10 unidades - (100 g)",
+    "calories": 90
+  },
+  {
+    "name": "Camarão pequeno frito",
+    "slug": "camarao-pequeno-frito",
+    "measurementUnit": "1 col. sopa - (20 g)",
+    "calories": 62
+  },
+  {
+    "name": "Camarão cozido pequeno",
+    "slug": "camarao-cozido-pequeno",
+    "measurementUnit": "5 col. sopa - (100 g)",
+    "calories": 82
+  },
+  {
+    "name": "Camarão frito grande",
+    "slug": "camarao-frito-grande",
+    "measurementUnit": "5 unidades - (100 g)",
+    "calories": 310
+  },
+  {
+    "name": "Camarão cozido grande",
+    "slug": "camarao-cozido-grande",
+    "measurementUnit": "5 unidades - (100 g)",
+    "calories": 82
+  },
+  {
+    "name": "Camarão seco descascado do norte",
+    "slug": "camarao-seco-descascado-do-norte",
+    "measurementUnit": "5 médios - (100 g)",
+    "calories": 158
+  },
+  {
+    "name": "Casquinha de caranguejo",
+    "slug": "casquinha-de-caranguejo",
+    "measurementUnit": "1 unidade - ()",
+    "calories": 250
+  },
+  {
+    "name": "Casquinha de siri",
+    "slug": "casquinha-de-siri",
+    "measurementUnit": "1 unidade - (100 g)",
+    "calories": 413
+  },
+  {
+    "name": "Kani-kama",
+    "slug": "kani-kama",
+    "measurementUnit": "1 unidade - (16 g)",
+    "calories": 13
+  },
+  {
+    "name": "Lagostim",
+    "slug": "lagostim",
+    "measurementUnit": "8 unidades - (100 g)",
+    "calories": 112
+  },
+  {
+    "name": "Lagosta grelhada com manteiga 308",
+    "slug": "lagosta-grelhada-com-manteiga-308",
+    "measurementUnit": "1 unidade - (200 g)",
+    "calories": 308
+  },
+  {
+    "name": "Lagosta cozida",
+    "slug": "lagosta-cozida",
+    "measurementUnit": "1 unidade - (200 g)",
+    "calories": 196
+  },
+  {
+    "name": "Lula à dorê",
+    "slug": "lula-a-dore",
+    "measurementUnit": "1 pires de chá - (100 g)",
+    "calories": 190
+  },
+  {
+    "name": "Lula cozida",
+    "slug": "lula-cozida",
+    "measurementUnit": "1 pires de chá - (100 g)",
+    "calories": 92
+  },
+  {
+    "name": "Marisco",
+    "slug": "marisco",
+    "measurementUnit": "1 xíc. chá - (100 g)",
+    "calories": 186
+  },
+  {
+    "name": "Ostra crua",
+    "slug": "ostra-crua",
+    "measurementUnit": "3 unidades - (100 g)",
+    "calories": 81
+  },
+  {
+    "name": "Ovas de peixe cruas",
+    "slug": "ovas-de-peixe-cruas",
+    "measurementUnit": "1/2 xíc. chá - (100 g)",
+    "calories": 123
+  },
+  {
+    "name": "Polvo refogado",
+    "slug": "polvo-refogado",
+    "measurementUnit": "1 escumadeira - (60 g)",
+    "calories": 49
+  },
+  {
+    "name": "Azeite de dendê",
+    "slug": "azeite-de-dende",
+    "measurementUnit": "1 col. sopa - (8 ml)",
+    "calories": 72
+  },
+  {
+    "name": "Azeite de oliva",
+    "slug": "azeite-de-oliva",
+    "measurementUnit": "1 col. sopa - (13 ml)",
+    "calories": 117
+  },
+  {
+    "name": "Creme de leite",
+    "slug": "creme-de-leite",
+    "measurementUnit": "1 col. sopa - (15 g)",
+    "calories": 38
+  },
+  {
+    "name": "Creme de leite light",
+    "slug": "creme-de-leite-light",
+    "measurementUnit": "1 col. sopa - (15 g)",
+    "calories": 24
+  },
+  {
+    "name": "Gordura vegetal hidrogenada",
+    "slug": "gordura-vegetal-hidrogenada",
+    "measurementUnit": "1 col. sopa - (21 g)",
+    "calories": 189
+  },
+  {
+    "name": "Manteiga",
+    "slug": "manteiga",
+    "measurementUnit": "1 col. sopa - (10 g)",
+    "calories": 75
+  },
+  {
+    "name": "Manteiga e margarina - Amélia",
+    "slug": "manteiga-e-margarina-amelia",
+    "measurementUnit": "1 col. sopa - (10 g)",
+    "calories": 72
+  },
+  {
+    "name": "Manteiga light",
+    "slug": "manteiga-light",
+    "measurementUnit": "1 col. sopa - (10 g)",
+    "calories": 43
+  },
+  {
+    "name": "Margarina",
+    "slug": "margarina",
+    "measurementUnit": "1 col. sopa - (10 g)",
+    "calories": 70
+  },
+  {
+    "name": "Margarina light",
+    "slug": "margarina-light",
+    "measurementUnit": "1 col. sopa - (10 g)",
+    "calories": 44
+  },
+  {
+    "name": "Óleo vegetal",
+    "slug": "oleo-vegetal",
+    "measurementUnit": "1 col. sopa - (12 ml)",
+    "calories": 108
+  },
+  {
+    "name": "Bebida láctea de morango - Danone",
+    "slug": "bebida-lactea-de-morango-danone",
+    "measurementUnit": "1 pote - (180 g)",
+    "calories": 157
+  },
+  {
+    "name": "Iogurte chandelle de chocolate - Nestlé",
+    "slug": "iogurte-chandelle-de-chocolate-nestle",
+    "measurementUnit": "1 pote - (110 g)",
+    "calories": 152
+  },
+  {
+    "name": "Iogurte chandelle de chocolate com calda de morango - Nestlé",
+    "slug": "iogurte-chandelle-de-chocolate-com-calda-de-morango-nestle",
+    "measurementUnit": "1 pote - (110 g)",
+    "calories": 166
+  },
+  {
+    "name": "Iogurte coalhada desnatada - Vigor",
+    "slug": "iogurte-coalhada-desnatada-vigor",
+    "measurementUnit": "1 pote - (200 ml)",
+    "calories": 124
+  },
+  {
+    "name": "Iogurte coalhada seca natural - Alibey",
+    "slug": "iogurte-coalhada-seca-natural-alibey",
+    "measurementUnit": "1 col. sopa - (30 g)",
+    "calories": 37
+  },
+  {
+    "name": "Iogurte flan de baunilha - Nestlé",
+    "slug": "iogurte-flan-de-baunilha-nestle",
+    "measurementUnit": "1 pote - (110 g)",
+    "calories": 128
+  },
+  {
+    "name": "Iogurte frozen yogurt - Yogen früz",
+    "slug": "iogurte-frozen-yogurt-yogen-fruz",
+    "measurementUnit": " - (100 g)",
+    "calories": 88
+  },
+  {
+    "name": "Iogurte frozen yogurt - Yogolove",
+    "slug": "iogurte-frozen-yogurt-yogolove",
+    "measurementUnit": " - (100 g)",
+    "calories": 111
+  },
+  {
+    "name": "Iogurte frozen yogurt - Yoggi",
+    "slug": "iogurte-frozen-yogurt-yoggi",
+    "measurementUnit": " - (100 g)",
+    "calories": 88
+  },
+  {
+    "name": "Iogurte frozen yogurt - Yogoberry",
+    "slug": "iogurte-frozen-yogurt-yogoberry",
+    "measurementUnit": " - (100 g)",
+    "calories": 88
+  },
+  {
+    "name": "Iogurte frozen yogurt - Yoforia",
+    "slug": "iogurte-frozen-yogurt-yoforia",
+    "measurementUnit": " - (100 g)",
+    "calories": 90
+  },
+  {
+    "name": "Iogurte frozen yogurt tutti frutti",
+    "slug": "iogurte-frozen-yogurt-tutti-frutti",
+    "measurementUnit": " - (100 g)",
+    "calories": 107
+  },
+  {
+    "name": "Iogurte frozen yogurt bendita fruta",
+    "slug": "iogurte-frozen-yogurt-bendita-fruta",
+    "measurementUnit": " - (100 g)",
+    "calories": 85
+  },
+  {
+    "name": "Iogurte frozen yogurt - Yogofresh",
+    "slug": "iogurte-frozen-yogurt-yogofresh",
+    "measurementUnit": " - (100 g)",
+    "calories": 86
+  },
+  {
+    "name": "Iogurte activia morango mix com corn flakes",
+    "slug": "iogurte-activia-morango-mix-com-corn-flakes",
+    "measurementUnit": "1 pote - (110 g)",
+    "calories": 144
+  },
+  {
+    "name": "Iogurte com aveia e fibras activia",
+    "slug": "iogurte-com-aveia-e-fibras-activia",
+    "measurementUnit": "1 pote - (100 g)",
+    "calories": 100
+  },
+  {
+    "name": "Iogurte com coco ralado - Batavo",
+    "slug": "iogurte-com-coco-ralado-batavo",
+    "measurementUnit": "1 pote - (200 g)",
+    "calories": 217
+  },
+  {
+    "name": "Iogurte com mel e baunilha activia - Danone",
+    "slug": "iogurte-com-mel-e-baunilha-activia-danone",
+    "measurementUnit": "1 pote - (100 g)",
+    "calories": 106
+  },
+  {
+    "name": "Iogurte com pedaços de morango - Batavo",
+    "slug": "iogurte-com-pedacos-de-morango-batavo",
+    "measurementUnit": "1 pote - (200 g)",
+    "calories": 196
+  },
+  {
+    "name": "Iogurte com polpa de ameixa activia - Danone",
+    "slug": "iogurte-com-polpa-de-ameixa-activia-danone",
+    "measurementUnit": "1 pote - (100 g)",
+    "calories": 110
+  },
+  {
+    "name": "Iogurte com polpa de cereja activia - Danone",
+    "slug": "iogurte-com-polpa-de-cereja-activia-danone",
+    "measurementUnit": "1 pote - (100 g)",
+    "calories": 106
+  },
+  {
+    "name": "Iogurte com polpa de coco ati latte",
+    "slug": "iogurte-com-polpa-de-coco-ati-latte",
+    "measurementUnit": "1 pote - (180 g)",
+    "calories": 173
+  },
+  {
+    "name": "Iogurte de mamão, banana e maça - Vigor",
+    "slug": "iogurte-de-mamao-banana-e-maca-vigor",
+    "measurementUnit": "1 pote - (200 g)",
+    "calories": 153
+  },
+  {
+    "name": "Iogurte com polpa de morango - Danone",
+    "slug": "iogurte-com-polpa-de-morango-danone",
+    "measurementUnit": "1 pote - (100 g)",
+    "calories": 90
+  },
+  {
+    "name": "Iogurte com polpa e geléia de morango - Danone",
+    "slug": "iogurte-com-polpa-e-geleia-de-morango-danone",
+    "measurementUnit": "1 pote - (120 g)",
+    "calories": 145
+  },
+  {
+    "name": "Iogurte desnatado de ameixa e fibras - Batavo",
+    "slug": "iogurte-desnatado-de-ameixa-e-fibras-batavo",
+    "measurementUnit": "1 pote - (110 g)",
+    "calories": 89
+  },
+  {
+    "name": "Iogurte integral paulista",
+    "slug": "iogurte-integral-paulista",
+    "measurementUnit": "1 pote - (170 g)",
+    "calories": 109
+  },
+  {
+    "name": "Iogurte integral com laranja, cenoura e mel - Danone",
+    "slug": "iogurte-integral-com-laranja-cenoura-e-mel-danone",
+    "measurementUnit": "1 pote - (170 g)",
+    "calories": 160
+  },
+  {
+    "name": "Iogurte integral com mel - Vigor",
+    "slug": "iogurte-integral-com-mel-vigor",
+    "measurementUnit": "1 pote - (200 g)",
+    "calories": 221
+  },
+  {
+    "name": "Iogurte integral com polpa de ameixa - Vigor",
+    "slug": "iogurte-integral-com-polpa-de-ameixa-vigor",
+    "measurementUnit": "1 pote - (200 g)",
+    "calories": 235
+  },
+  {
+    "name": "Iogurte integral com polpa de morango e fibra nesvita - Nestlé",
+    "slug": "iogurte-integral-com-polpa-de-morango-e-fibra-nesvita-nestle",
+    "measurementUnit": "1 pote - (100 g)",
+    "calories": 91
+  },
+  {
+    "name": "Iogurte integral com suco de uva e sabor sálvia - Nestlé",
+    "slug": "iogurte-integral-com-suco-de-uva-e-sabor-salvia-nestle",
+    "measurementUnit": "1 pote - (200 g)",
+    "calories": 186
+  },
+  {
+    "name": "Iogurte integral natural activia - Danone",
+    "slug": "iogurte-integral-natural-activia-danone",
+    "measurementUnit": "1 pote - (170 g)",
+    "calories": 132
+  },
+  {
+    "name": "Iogurte light com adoçante - Leco",
+    "slug": "iogurte-light-com-adocante-leco",
+    "measurementUnit": "1 copo - (200 ml)",
+    "calories": 66
+  },
+  {
+    "name": "Iogurte light com pedaço de frutas amarelas - Batavo",
+    "slug": "iogurte-light-com-pedaco-de-frutas-amarelas-batavo",
+    "measurementUnit": "1 pote - (110 g)",
+    "calories": 45
+  },
+  {
+    "name": "Iogurte light com pedaços de pêssego e proteína de soja - Leco",
+    "slug": "iogurte-light-com-pedacos-de-pessego-e-proteina-de-soja-leco",
+    "measurementUnit": "1 pote - (115 g)",
+    "calories": 60
+  },
+  {
+    "name": "Iogurte light com polpa de mamão - Batavo",
+    "slug": "iogurte-light-com-polpa-de-mamao-batavo",
+    "measurementUnit": "1 pote - (170 g)",
+    "calories": 45
+  },
+  {
+    "name": "Iogurte light desnatado com polpa de morango molico - Nestlé",
+    "slug": "iogurte-light-desnatado-com-polpa-de-morango-molico-nestle",
+    "measurementUnit": "1 copo - (200 ml)",
+    "calories": 62
+  },
+  {
+    "name": "Iogurte light morango com chocolate molico tentação - Nestlé",
+    "slug": "iogurte-light-morango-com-chocolate-molico-tentacao-nestle",
+    "measurementUnit": "1 pote - (100 g)",
+    "calories": 53
+  },
+  {
+    "name": "Iogurte natural desnatado - Nestlé",
+    "slug": "iogurte-natural-desnatado-nestle",
+    "measurementUnit": "1 pote - (185 g)",
+    "calories": 79
+  },
+  {
+    "name": "Iogurte parcialmente desnatado com aveia - Danone",
+    "slug": "iogurte-parcialmente-desnatado-com-aveia-danone",
+    "measurementUnit": "1 pote - (180 g)",
+    "calories": 144
+  },
+  {
+    "name": "Iogurte semi desnatado com cereal e polpa de morango - Ninho solei",
+    "slug": "iogurte-semi-desnatado-com-cereal-e-polpa-de-morango-ninho-solei",
+    "measurementUnit": "1 copo - (200 ml)",
+    "calories": 171
+  },
+  {
+    "name": "Iogurte semi desnatado com polpa de frutas vermelhas bliss - Nestlé",
+    "slug": "iogurte-semi-desnatado-com-polpa-de-frutas-vermelhas-bliss-nestle",
+    "measurementUnit": "1 pote - (180 g)",
+    "calories": 158
+  },
+  {
+    "name": "Iogurte semi desnatado com suco de maracujá, laranja e acerola - Batavo",
+    "slug": "iogurte-semi-desnatado-com-suco-de-maracuja-laranja-e-acerola-batavo",
+    "measurementUnit": "1 pote - (180 g)",
+    "calories": 102
+  },
+  {
+    "name": "Iogurte petit suisse com polpa de morango - Danone",
+    "slug": "iogurte-petit-suisse-com-polpa-de-morango-danone",
+    "measurementUnit": "1 pote - (45 g)",
+    "calories": 54
+  },
+  {
+    "name": "Iogurte petit suisse de chocolate - Vigor",
+    "slug": "iogurte-petit-suisse-de-chocolate-vigor",
+    "measurementUnit": "1 pote - (45 g)",
+    "calories": 83
+  },
+  {
+    "name": "Iogurte sobremesa láctea sabor beijinho paulista",
+    "slug": "iogurte-sobremesa-lactea-sabor-beijinho-paulista",
+    "measurementUnit": "1 pote - (100 g)",
+    "calories": 143
+  },
+  {
+    "name": "Ervilha em conserva",
+    "slug": "ervilha-em-conserva",
+    "measurementUnit": "1 xíc. chá - (130 g)",
+    "calories": 109
+  },
+  {
+    "name": "Fava em conserva",
+    "slug": "fava-em-conserva",
+    "measurementUnit": "1 xíc. chá - (125 g)",
+    "calories": 130
+  },
+  {
+    "name": "Feijão branco cozido",
+    "slug": "feijao-branco-cozido",
+    "measurementUnit": "1 concha peq. - (65 g)",
+    "calories": 79
+  },
+  {
+    "name": "Feijão branco em conserva",
+    "slug": "feijao-branco-em-conserva",
+    "measurementUnit": "1 xíc. chá - (130 g)",
+    "calories": 105
+  },
+  {
+    "name": "Feijão carioca cozido",
+    "slug": "feijao-carioca-cozido",
+    "measurementUnit": "1 concha peq. - (59 g)",
+    "calories": 41
+  },
+  {
+    "name": "Feijão mulatinho cozido",
+    "slug": "feijao-mulatinho-cozido",
+    "measurementUnit": "1 concha peq. - (59 g)",
+    "calories": 73
+  },
+  {
+    "name": "Feijão preto cozido",
+    "slug": "feijao-preto-cozido",
+    "measurementUnit": "1 concha peq. - (59 g)",
+    "calories": 69
+  },
+  {
+    "name": "Grão de bico cozido",
+    "slug": "grao-de-bico-cozido",
+    "measurementUnit": "1 concha peq. - (60 g)",
+    "calories": 82
+  },
+  {
+    "name": "Grão-de-bico em conserva Casino",
+    "slug": "grao-de-bico-em-conserva-casino",
+    "measurementUnit": "1 xíc. chá - (130 g)",
+    "calories": 154
+  },
+  {
+    "name": "Lentilha cozida",
+    "slug": "lentilha-cozida",
+    "measurementUnit": "1 concha peq. - (60 g)",
+    "calories": 65
+  },
+  {
+    "name": "Tremoço",
+    "slug": "tremoco",
+    "measurementUnit": "1 xíc. chá - (65 g)",
+    "calories": 50
+  },
+  {
+    "name": "Abóbora cozida",
+    "slug": "abobora-cozida",
+    "measurementUnit": "4 col. sopa - (100 g)",
+    "calories": 40
+  },
+  {
+    "name": "Abóbora moranga cozida",
+    "slug": "abobora-moranga-cozida",
+    "measurementUnit": "1 pedaço médio - (20 g)",
+    "calories": 10
+  },
+  {
+    "name": "Abobrinha cozida",
+    "slug": "abobrinha-cozida",
+    "measurementUnit": "1 xíc. chá picada - (166 g)",
+    "calories": 18
+  },
+  {
+    "name": "Acelga cozida",
+    "slug": "acelga-cozida",
+    "measurementUnit": "1 xíc. chá - (206 g)",
+    "calories": 23
+  },
+  {
+    "name": "Agrião",
+    "slug": "agriao",
+    "measurementUnit": "1 xíc. chá - (42 g)",
+    "calories": 10
+  },
+  {
+    "name": "Alcachofra em conserva",
+    "slug": "alcachofra-em-conserva",
+    "measurementUnit": "1/4 xíc. chá picado - (50 g)",
+    "calories": 8
+  },
+  {
+    "name": "Alface",
+    "slug": "alface",
+    "measurementUnit": "1 folha - (8 g)",
+    "calories": 1
+  },
+  {
+    "name": "Alfafa",
+    "slug": "alfafa",
+    "measurementUnit": "1 xíc. de chá - (50 g)",
+    "calories": 38
+  },
+  {
+    "name": "Alho-poró",
+    "slug": "alho-poro",
+    "measurementUnit": "1 xíc. de chá - (100 g)",
+    "calories": 30
+  },
+  {
+    "name": "Almeirão (50g)",
+    "slug": "almeirao-(50g)",
+    "measurementUnit": "1 pires de chá - (50 g)",
+    "calories": 14
+  },
+  {
+    "name": "Aspargo em conserva",
+    "slug": "aspargo-em-conserva",
+    "measurementUnit": "1 unidade - (10 g)",
+    "calories": 1
+  },
+  {
+    "name": "Azeitona",
+    "slug": "azeitona",
+    "measurementUnit": "1 unidade - (3 g)",
+    "calories": 4
+  },
+  {
+    "name": "Batata doce cozida",
+    "slug": "batata-doce-cozida",
+    "measurementUnit": "1 xíc. chá picada - (200 g)",
+    "calories": 230
+  },
+  {
+    "name": "Batata cozida",
+    "slug": "batata-cozida",
+    "measurementUnit": "1 unidade - (140 g)",
+    "calories": 71
+  },
+  {
+    "name": "Batata frita",
+    "slug": "batata-frita",
+    "measurementUnit": "1 escumadeira - (100 g)",
+    "calories": 267
+  },
+  {
+    "name": "Berinjela cozida",
+    "slug": "berinjela-cozida",
+    "measurementUnit": "1 xíc. chá picada - (206 g)",
+    "calories": 43
+  },
+  {
+    "name": "Berinjela italiana",
+    "slug": "berinjela-italiana",
+    "measurementUnit": "4 col. sopa - (40 g)",
+    "calories": 209
+  },
+  {
+    "name": "Bardana",
+    "slug": "bardana",
+    "measurementUnit": "1 pires de chá - (100 g)",
+    "calories": 90
+  },
+  {
+    "name": "Beterraba cozida",
+    "slug": "beterraba-cozida",
+    "measurementUnit": "1 unidade média - (125 g)",
+    "calories": 55
+  },
+  {
+    "name": "Beterraba crua",
+    "slug": "beterraba-crua",
+    "measurementUnit": "1 unidade média - (140 g)",
+    "calories": 65
+  },
+  {
+    "name": "Brócolis cozido",
+    "slug": "brocolis-cozido",
+    "measurementUnit": "1 xíc. chá picado - (107 g)",
+    "calories": 26
+  },
+  {
+    "name": "Broto de bambu",
+    "slug": "broto-de-bambu",
+    "measurementUnit": "1 xíc. chá - (70 g)",
+    "calories": 17
+  },
+  {
+    "name": "Broto de feijão",
+    "slug": "broto-de-feijao",
+    "measurementUnit": "1 xíc. chá - (70 g)",
+    "calories": 44
+  },
+  {
+    "name": "Cará cozido",
+    "slug": "cara-cozido",
+    "measurementUnit": "2 unidades - (100 g)",
+    "calories": 120
+  },
+  {
+    "name": "Cebola cozida",
+    "slug": "cebola-cozida",
+    "measurementUnit": "1 unidade - (100 g)",
+    "calories": 41
+  },
+  {
+    "name": "Cebolinha em conserva",
+    "slug": "cebolinha-em-conserva",
+    "measurementUnit": "1/2 xíc. chá - (50 g)",
+    "calories": 18
+  },
+  {
+    "name": "Cenoura cozida",
+    "slug": "cenoura-cozida",
+    "measurementUnit": "1 unidade média - (100 g)",
+    "calories": 54
+  },
+  {
+    "name": "Cenoura crua",
+    "slug": "cenoura-crua",
+    "measurementUnit": "1 unidade média - (120 g)",
+    "calories": 54
+  },
+  {
+    "name": "Chuchu cozido",
+    "slug": "chuchu-cozido",
+    "measurementUnit": "1 xíc. chá picado - (155 g)",
+    "calories": 29
+  },
+  {
+    "name": "Cogumelo em conserva",
+    "slug": "cogumelo-em-conserva",
+    "measurementUnit": "1 xíc. chá - (107 g)",
+    "calories": 26
+  },
+  {
+    "name": "Couve manteiga refogada",
+    "slug": "couve-manteiga-refogada",
+    "measurementUnit": "1 prato fundo - (88 g)",
+    "calories": 58
+  },
+  {
+    "name": "Couve-flor cozida",
+    "slug": "couve-flor-cozida",
+    "measurementUnit": "1 xíc. chá picada - (136 g)",
+    "calories": 19
+  },
+  {
+    "name": "Espinafre refogado",
+    "slug": "espinafre-refogado",
+    "measurementUnit": "1 xíc. chá picado - (205 g)",
+    "calories": 29
+  },
+  {
+    "name": "Mandioca cozida",
+    "slug": "mandioca-cozida",
+    "measurementUnit": "1 pedaço médio - (50 g)",
+    "calories": 57
+  },
+  {
+    "name": "Mandioquinha cozida",
+    "slug": "mandioquinha-cozida",
+    "measurementUnit": "1 unidade - (115 g)",
+    "calories": 72
+  },
+  {
+    "name": "Nabo",
+    "slug": "nabo",
+    "measurementUnit": "1 xíc. chá picado - (142 g)",
+    "calories": 14
+  },
+  {
+    "name": "Palmito em conserva",
+    "slug": "palmito-em-conserva",
+    "measurementUnit": "1/4 xíc. chá picado - (50 g)",
+    "calories": 14
+  },
+  {
+    "name": "Pepino (relish)",
+    "slug": "pepino-(relish)",
+    "measurementUnit": "1 1/2 col. sopa - (15 g)",
+    "calories": 19
+  },
+  {
+    "name": "Pepino japonês",
+    "slug": "pepino-japones",
+    "measurementUnit": "1 unidade - (130 g)",
+    "calories": 16
+  },
+  {
+    "name": "Picles",
+    "slug": "picles",
+    "measurementUnit": "1 col. sopa - (15 g)",
+    "calories": 6
+  },
+  {
+    "name": "Pimentão amarelo",
+    "slug": "pimentao-amarelo",
+    "measurementUnit": "1 col. sopa picado - (24 g)",
+    "calories": 6
+  },
+  {
+    "name": "Quiabo refogado",
+    "slug": "quiabo-refogado",
+    "measurementUnit": "1 unidade - (15 g)",
+    "calories": 2
+  },
+  {
+    "name": "Rabanete",
+    "slug": "rabanete",
+    "measurementUnit": "1 unidade - (30 g)",
+    "calories": 4
+  },
+  {
+    "name": "Repolho branco",
+    "slug": "repolho-branco",
+    "measurementUnit": "1 xíc. chá picado - (94 g)",
+    "calories": 13
+  },
+  {
+    "name": "Repolho roxo",
+    "slug": "repolho-roxo",
+    "measurementUnit": "1 xíc. chá - (77 g)",
+    "calories": 5
+  },
+  {
+    "name": "Rúcula",
+    "slug": "rucula",
+    "measurementUnit": "1 prato fundo - (50 g)",
+    "calories": 7
+  },
+  {
+    "name": "Seleta de legumes enlatada",
+    "slug": "seleta-de-legumes-enlatada",
+    "measurementUnit": "1 xíc. chá - (130 g)",
+    "calories": 78
+  },
+  {
+    "name": "Salada de maionese e batata",
+    "slug": "salada-de-maionese-e-batata",
+    "measurementUnit": "5 colheres de sopa - (190 g)",
+    "calories": 290
+  },
+  {
+    "name": "Tomate",
+    "slug": "tomate",
+    "measurementUnit": "1 unidade - (109 g)",
+    "calories": 16
+  },
+  {
+    "name": "Tomate seco",
+    "slug": "tomate-seco",
+    "measurementUnit": "2 col. sopa - (30 g)",
+    "calories": 101
+  },
+  {
+    "name": "Vagem",
+    "slug": "vagem",
+    "measurementUnit": "1 xíc. chá - (140 g)",
+    "calories": 25
+  },
+  {
+    "name": "Achocolatado líquido à base de soja sabor chocolate - Toddynho",
+    "slug": "achocolatado-liquido-a-base-de-soja-sabor-chocolate-toddynho",
+    "measurementUnit": "1 caixinha - (200 ml)",
+    "calories": 168
+  },
+  {
+    "name": "Achocolatado líquido pronto Toddy",
+    "slug": "achocolatado-liquido-pronto-toddy",
+    "measurementUnit": "1 caixinha - (200 ml)",
+    "calories": 185
+  },
+  {
+    "name": "Bebida láctea sabor chocolate - Nescau",
+    "slug": "bebida-lactea-sabor-chocolate-nescau",
+    "measurementUnit": "1 caixinha - (200 ml)",
+    "calories": 193
+  },
+  {
+    "name": "Chocolate quente com adoçante",
+    "slug": "chocolate-quente-com-adocante",
+    "measurementUnit": "1 xícara - (100 ml)",
+    "calories": 100
+  },
+  {
+    "name": "Chocolate quente puro",
+    "slug": "chocolate-quente-puro",
+    "measurementUnit": "1 xícara - (100 ml)",
+    "calories": 122
+  },
+  {
+    "name": "Chocolate quente com leite desnatado",
+    "slug": "chocolate-quente-com-leite-desnatado",
+    "measurementUnit": "1 xícara - (100 ml)",
+    "calories": 74
+  },
+  {
+    "name": "Leite de cabra desnatado",
+    "slug": "leite-de-cabra-desnatado",
+    "measurementUnit": "1 copo - (200 ml)",
+    "calories": 60
+  },
+  {
+    "name": "Leite de cabra integral",
+    "slug": "leite-de-cabra-integral",
+    "measurementUnit": "1 copo - (200 ml)",
+    "calories": 120
+  },
+  {
+    "name": "Leite de soja em pó",
+    "slug": "leite-de-soja-em-po",
+    "measurementUnit": "2 col. sopa - (26 g)",
+    "calories": 115
+  },
+  {
+    "name": "Leite de vaca desnatado",
+    "slug": "leite-de-vaca-desnatado",
+    "measurementUnit": "1 copo - (200 ml)",
+    "calories": 66
+  },
+  {
+    "name": "Leite de vaca desnatado em pó",
+    "slug": "leite-de-vaca-desnatado-em-po",
+    "measurementUnit": "2 col. sopa - (26 g)",
+    "calories": 64
+  },
+  {
+    "name": "Leite de vaca integral",
+    "slug": "leite-de-vaca-integral",
+    "measurementUnit": "1 copo - (200 ml)",
+    "calories": 119
+  },
+  {
+    "name": "Leite de vaca integral com - Nescau",
+    "slug": "leite-de-vaca-integral-com-nescau",
+    "measurementUnit": "1 copo - (200 ml)",
+    "calories": 194
+  },
+  {
+    "name": "Leite de vaca integral com Ovomaltine",
+    "slug": "leite-de-vaca-integral-com-ovomaltine",
+    "measurementUnit": "1 copo - (200 ml)",
+    "calories": 230
+  },
+  {
+    "name": "Leite de vaca integral em pó",
+    "slug": "leite-de-vaca-integral-em-po",
+    "measurementUnit": "2 col. sopa - (26 g)",
+    "calories": 130
+  },
+  {
+    "name": "Leite de vaca semidesnatado",
+    "slug": "leite-de-vaca-semidesnatado",
+    "measurementUnit": "1 copo - (200 ml)",
+    "calories": 85
+  },
+  {
+    "name": "Leite Fermentado Adoçado - Danone",
+    "slug": "leite-fermentado-adocado-danone",
+    "measurementUnit": "1 frasco - (80 ml)",
+    "calories": 67
+  },
+  {
+    "name": "Leite Fermentado Desnatado - Yakult",
+    "slug": "leite-fermentado-desnatado-yakult",
+    "measurementUnit": "1 frasco - (80 ml)",
+    "calories": 59
+  },
+  {
+    "name": "Leite integral batido com banana",
+    "slug": "leite-integral-batido-com-banana",
+    "measurementUnit": "1 copo - (200 ml)",
+    "calories": 168
+  },
+  {
+    "name": "Leite integral batido com mamão",
+    "slug": "leite-integral-batido-com-mamao",
+    "measurementUnit": "1 copo - (200 ml)",
+    "calories": 128
+  },
+  {
+    "name": "Leite integral batido com morango",
+    "slug": "leite-integral-batido-com-morango",
+    "measurementUnit": "1 copo - (200 ml)",
+    "calories": 130
+  },
+  {
+    "name": "Milk Shake de chocolate - Mc Donald's",
+    "slug": "milk-shake-de-chocolate-mc-donalds",
+    "measurementUnit": "1 copo - (300 ml)",
+    "calories": 251
+  },
+  {
+    "name": "Milk Shake de morango - Mc Donald's",
+    "slug": "milk-shake-de-morango-mc-donalds",
+    "measurementUnit": "1 copo - (300 ml)",
+    "calories": 219
+  },
+  {
+    "name": "Canelone de ricota com molho branco",
+    "slug": "canelone-de-ricota-com-molho-branco",
+    "measurementUnit": "1 unidade - (30 g)",
+    "calories": 127
+  },
+  {
+    "name": "Capelete de carne com molho de tomate",
+    "slug": "capelete-de-carne-com-molho-de-tomate",
+    "measurementUnit": "1 col. de servir - (45 g)",
+    "calories": 141
+  },
+  {
+    "name": "Capelete de frango com molho rosê",
+    "slug": "capelete-de-frango-com-molho-rose",
+    "measurementUnit": "1 col. de servir - (45 g)",
+    "calories": 176
+  },
+  {
+    "name": "Lasanha à bolonhesa com molho branco",
+    "slug": "lasanha-a-bolonhesa-com-molho-branco",
+    "measurementUnit": "1 pedaço grande - (325 g)",
+    "calories": 343
+  },
+  {
+    "name": "Lasanha de queijo e presunto",
+    "slug": "lasanha-de-queijo-e-presunto",
+    "measurementUnit": "1 pedaço médio - (150 g)",
+    "calories": 256
+  },
+  {
+    "name": "Lasanha quatro queijos",
+    "slug": "lasanha-quatro-queijos",
+    "measurementUnit": "1 pedaço médio - (150 g)",
+    "calories": 257
+  },
+  {
+    "name": "Macarrão à putanesca",
+    "slug": "macarrao-a-putanesca",
+    "measurementUnit": "1 prato fundo - (200 g)",
+    "calories": 290
+  },
+  {
+    "name": "Macarrão alho e óleo",
+    "slug": "macarrao-alho-e-oleo",
+    "measurementUnit": "1 prato fundo - (200 g)",
+    "calories": 438
+  },
+  {
+    "name": "Macarrão ao sugo",
+    "slug": "macarrao-ao-sugo",
+    "measurementUnit": "1 prato fundo - (200 g)",
+    "calories": 274
+  },
+  {
+    "name": "Macarrão com molho bolonhesa",
+    "slug": "macarrao-com-molho-bolonhesa",
+    "measurementUnit": "1 prato fundo - (200 g)",
+    "calories": 302
+  },
+  {
+    "name": "Macarrão com molho branco, ervilha e presunto",
+    "slug": "macarrao-com-molho-branco-ervilha-e-presunto",
+    "measurementUnit": "1 prato fundo - (200 g)",
+    "calories": 438
+  },
+  {
+    "name": "Macarrão instantâneo sabor carne",
+    "slug": "macarrao-instantaneo-sabor-carne",
+    "measurementUnit": "1 pacote - (85 g)",
+    "calories": 376
+  },
+  {
+    "name": "Macarrão instantâneo sabor galinha caipira light",
+    "slug": "macarrao-instantaneo-sabor-galinha-caipira-light",
+    "measurementUnit": "1 pacote - (88 g)",
+    "calories": 261
+  },
+  {
+    "name": "Macarrão instantâneo sabor quatro queijo",
+    "slug": "macarrao-instantaneo-sabor-quatro-queijo",
+    "measurementUnit": "1 pacote - (88 g)",
+    "calories": 399
+  },
+  {
+    "name": "Nhoque à bolonhesa",
+    "slug": "nhoque-a-bolonhesa",
+    "measurementUnit": "1 col. de servir - (65 g)",
+    "calories": 200
+  },
+  {
+    "name": "Panqueca de carne",
+    "slug": "panqueca-de-carne",
+    "measurementUnit": "1 unidade média - (80 g)",
+    "calories": 229
+  },
+  {
+    "name": "Pasta com champignon e ervas",
+    "slug": "pasta-com-champignon-e-ervas",
+    "measurementUnit": "1 prato raso - (90 g)",
+    "calories": 318
+  },
+  {
+    "name": "Pasta com molho de tomate e bacon",
+    "slug": "pasta-com-molho-de-tomate-e-bacon",
+    "measurementUnit": "1 prato raso - (90 g)",
+    "calories": 339
+  },
+  {
+    "name": "Penne ao funghi",
+    "slug": "penne-ao-funghi",
+    "measurementUnit": "1 prato raso - (88 g)",
+    "calories": 306
+  },
+  {
+    "name": "Quiche de alho poró",
+    "slug": "quiche-de-alho-poro",
+    "measurementUnit": "1 unidade - (120 g)",
+    "calories": 329
+  },
+  {
+    "name": "Quiche de frango",
+    "slug": "quiche-de-frango",
+    "measurementUnit": "1 unidade - (120 g)",
+    "calories": 336
+  },
+  {
+    "name": "Quiche de queijo",
+    "slug": "quiche-de-queijo",
+    "measurementUnit": "1 fatia - (113 g)",
+    "calories": 357
+  },
+  {
+    "name": "Quiche de queijo e bacon",
+    "slug": "quiche-de-queijo-e-bacon",
+    "measurementUnit": "1 unidade - (120 g)",
+    "calories": 357
+  },
+  {
+    "name": "Raviole de carne com molho de tomate",
+    "slug": "raviole-de-carne-com-molho-de-tomate",
+    "measurementUnit": "1 col. de servir - (45 g)",
+    "calories": 156
+  },
+  {
+    "name": "Raviole de queijo com molho branco",
+    "slug": "raviole-de-queijo-com-molho-branco",
+    "measurementUnit": "1 col. de servir - (45 g)",
+    "calories": 174
+  },
+  {
+    "name": "Torta de frango com catupiry",
+    "slug": "torta-de-frango-com-catupiry",
+    "measurementUnit": "1 fatia - (125 g)",
+    "calories": 399
+  },
+  {
+    "name": "Torta de palmito",
+    "slug": "torta-de-palmito",
+    "measurementUnit": "1 fatia - (125 g)",
+    "calories": 392
+  },
+  {
+    "name": "Torta de palmito com catupiry com massa de iogurte",
+    "slug": "torta-de-palmito-com-catupiry-com-massa-de-iogurte",
+    "measurementUnit": "1 fatia - (125 g)",
+    "calories": 317
+  },
+  {
+    "name": "Torta de peito de peru",
+    "slug": "torta-de-peito-de-peru",
+    "measurementUnit": "1 fatia - (125 g)",
+    "calories": 414
+  },
+  {
+    "name": "Torta de presunto e queijo",
+    "slug": "torta-de-presunto-e-queijo",
+    "measurementUnit": "1 unidade - (120 g)",
+    "calories": 319
+  },
+  {
+    "name": "Alichela - Magazzino",
+    "slug": "alichela-magazzino",
+    "measurementUnit": "1 col. sopa - (10 g)",
+    "calories": 40
+  },
+  {
+    "name": "Barbecue",
+    "slug": "barbecue",
+    "measurementUnit": "1 col. sopa - (12 g)",
+    "calories": 20
+  },
+  {
+    "name": "Catchup",
+    "slug": "catchup",
+    "measurementUnit": "1 col. sopa - (12 g)",
+    "calories": 11
+  },
+  {
+    "name": "Chutney de manga",
+    "slug": "chutney-de-manga",
+    "measurementUnit": "1 col. sopa - (20 g)",
+    "calories": 31
+  },
+  {
+    "name": "Maionese - Hellmann's",
+    "slug": "maionese-hellmann's",
+    "measurementUnit": "1 col. sopa - (12 g)",
+    "calories": 48
+  },
+  {
+    "name": "Maionese 0% colesterol - Hellmann's",
+    "slug": "maionese-0%-colesterol-hellmann's",
+    "measurementUnit": "1 col. sopa - (12 g)",
+    "calories": 16
+  },
+  {
+    "name": "Maionese Deleite - Hellmann's",
+    "slug": "maionese-deleite-hellmann's",
+    "measurementUnit": "1 col. sopa - (12 g)",
+    "calories": 27
+  },
+  {
+    "name": "Maionese light - Hellmann's",
+    "slug": "maionese-light-hellmann's",
+    "measurementUnit": "1 col. sopa - (12 g)",
+    "calories": 40
+  },
+  {
+    "name": "Molho agridoce - Sakura",
+    "slug": "molho-agridoce-sakura",
+    "measurementUnit": "1 col. sopa - (15 g)",
+    "calories": 20
+  },
+  {
+    "name": "Molho de alho - Istambul",
+    "slug": "molho-de-alho-istambul",
+    "measurementUnit": "1 col. chá - (6 ml)",
+    "calories": 15
+  },
+  {
+    "name": "Molho de gergelim - Istambul",
+    "slug": "molho-de-gergelim-istambul",
+    "measurementUnit": "1 col. chá - (6 ml)",
+    "calories": 5
+  },
+  {
+    "name": "Molho de iogurte para salada - Master Foods",
+    "slug": "molho-de-iogurte-para-salada-master-foods",
+    "measurementUnit": "1 col. sopa - (15 g)",
+    "calories": 20
+  },
+  {
+    "name": "Molho de mostarda para salada - Master Foods",
+    "slug": "molho-de-mostarda-para-salada-master-foods",
+    "measurementUnit": "1 col. sopa - (15 g)",
+    "calories": 15
+  },
+  {
+    "name": "Molho de parmesão para salada - Hellmann's",
+    "slug": "molho-de-parmesao-para-salada-hellmann's",
+    "measurementUnit": "1 col. sopa - (15 g)",
+    "calories": 80
+  },
+  {
+    "name": "Molho de pimenta - Tabasco",
+    "slug": "molho-de-pimenta-tabasco",
+    "measurementUnit": "1 col. chá - (6 ml)",
+    "calories": 0
+  },
+  {
+    "name": "Molho de soja shoyo",
+    "slug": "molho-de-soja-shoyo",
+    "measurementUnit": "1 col. sopa - (10 ml)",
+    "calories": 5
+  },
+  {
+    "name": "Molho de soja light shoyo light",
+    "slug": "molho-de-soja-light-shoyo-light",
+    "measurementUnit": "1 col. sopa - (10 ml)",
+    "calories": 0
+  },
+  {
+    "name": "Molho inglês",
+    "slug": "molho-ingles",
+    "measurementUnit": "1 col. sopa - (10 ml)",
+    "calories": 5
+  },
+  {
+    "name": "Molho para carpaccio - La Table Dor",
+    "slug": "molho-para-carpaccio-la-table-dor",
+    "measurementUnit": "1 col sopa - (15 g)",
+    "calories": 10
+  },
+  {
+    "name": "Molho rosé - Hellmann's",
+    "slug": "molho-rose-hellmann's",
+    "measurementUnit": "1 col. sopa - (13 ml)",
+    "calories": 46
+  },
+  {
+    "name": "Molho tártaro",
+    "slug": "molho-tartaro",
+    "measurementUnit": "1 col. sopa - (15 g)",
+    "calories": 64
+  },
+  {
+    "name": "Mostarda",
+    "slug": "mostarda",
+    "measurementUnit": "1 col. sopa - (12 g)",
+    "calories": 10
+  },
+  {
+    "name": "Sardela - La Table Dor",
+    "slug": "sardela-la-table-dor",
+    "measurementUnit": "2 col. sopa - (10 g)",
+    "calories": 28
+  },
+  {
+    "name": "Creme de gergelim - Jasmine",
+    "slug": "creme-de-gergelim-jasmine",
+    "measurementUnit": "1 col. sobremesa - (15 g)",
+    "calories": 89
+  },
+  {
+    "name": "Vinagrete",
+    "slug": "vinagrete",
+    "measurementUnit": "1 col. sopa - (15 g)",
+    "calories": 35
+  },
+  {
+    "name": "Gemada",
+    "slug": "gemada",
+    "measurementUnit": "1 porção - (150 ml)",
+    "calories": 210
+  },
+  {
+    "name": "Omelete com queijo mussarela",
+    "slug": "omelete-com-queijo-mussarela",
+    "measurementUnit": "1 porção - (100 g)",
+    "calories": 220
+  },
+  {
+    "name": "Omelete simples",
+    "slug": "omelete-simples",
+    "measurementUnit": "1 unidade - (65 g)",
+    "calories": 110
+  },
+  {
+    "name": "Ovo cozido",
+    "slug": "ovo-cozido",
+    "measurementUnit": "1 unidade - (45 g)",
+    "calories": 71
+  },
+  {
+    "name": "Ovo de codorna",
+    "slug": "ovo-de-codorna",
+    "measurementUnit": "1 unidade - (10 g)",
+    "calories": 16
+  },
+  {
+    "name": "Ovo frito",
+    "slug": "ovo-frito",
+    "measurementUnit": "1 unidade - (50 g)",
+    "calories": 105
+  },
+  {
+    "name": "Ovo mexido simples",
+    "slug": "ovo-mexido-simples",
+    "measurementUnit": "1 unidade - (60 g)",
+    "calories": 120
+  },
+  {
+    "name": "Bisnaguinha - Seven boys",
+    "slug": "bisnaguinha-seven-boys",
+    "measurementUnit": "1 unidade - (20 g)",
+    "calories": 59
+  },
+  {
+    "name": "Ciabatta",
+    "slug": "ciabatta",
+    "measurementUnit": "1 unidade grande - (80 g)",
+    "calories": 247
+  },
+  {
+    "name": "Croissant de queijo",
+    "slug": "croissant-de-queijo",
+    "measurementUnit": "1 unidade grande - (80 g)",
+    "calories": 328
+  },
+  {
+    "name": "Croissant simples",
+    "slug": "croissant-simples",
+    "measurementUnit": "1 unidade grande - (67 g)",
+    "calories": 276
+  },
+  {
+    "name": "Pão alemão - Wickbold",
+    "slug": "pao-alemao-wickbold",
+    "measurementUnit": "1 fatia - (72 g)",
+    "calories": 125
+  },
+  {
+    "name": "Pão com canela e passas - Nutrella",
+    "slug": "pao-com-canela-e-passas-nutrella",
+    "measurementUnit": "1 fatia - (25 g)",
+    "calories": 71
+  },
+  {
+    "name": "Pão de alho na brasa",
+    "slug": "pao-de-alho-na-brasa",
+    "measurementUnit": "1 unidade - (50 g)",
+    "calories": 187
+  },
+  {
+    "name": "Pão de batata com catupiry",
+    "slug": "pao-de-batata-com-catupiry",
+    "measurementUnit": "1 unidade - (70 g)",
+    "calories": 190
+  },
+  {
+    "name": "Pão de batata simples",
+    "slug": "pao-de-batata-simples",
+    "measurementUnit": "1 unidade - (50 g)",
+    "calories": 137
+  },
+  {
+    "name": "Pão de centeio - Nutrella",
+    "slug": "pao-de-centeio-nutrella",
+    "measurementUnit": "1 fatia - (25 g)",
+    "calories": 61
+  },
+  {
+    "name": "Pão de coco panco",
+    "slug": "pao-de-coco-panco",
+    "measurementUnit": "1 fatia grande - (50 g)",
+    "calories": 159
+  },
+  {
+    "name": "Pão de forma - Pullman",
+    "slug": "pao-de-forma-pullman",
+    "measurementUnit": "1 fatia - (25 g)",
+    "calories": 62
+  },
+  {
+    "name": "Pão de forma integral linhaça - Pullman",
+    "slug": "pao-de-forma-integral-linhaca-pullman",
+    "measurementUnit": "1 fatia - (25 g)",
+    "calories": 61
+  },
+  {
+    "name": "Pão de forma light - Nutrella",
+    "slug": "pao-de-forma-light-nutrella",
+    "measurementUnit": "1 fatia - (17 g)",
+    "calories": 36
+  },
+  {
+    "name": "Pão de forma sem casca - Wickbold",
+    "slug": "pao-de-forma-sem-casca-wickbold",
+    "measurementUnit": "1 fatia - (17 g)",
+    "calories": 43
+  },
+  {
+    "name": "Pão de hambúrguer",
+    "slug": "pao-de-hamburguer",
+    "measurementUnit": "1 unidade - (50 g)",
+    "calories": 177
+  },
+  {
+    "name": "Pão de hambúrguer com gergelim",
+    "slug": "pao-de-hamburguer-com-gergelim",
+    "measurementUnit": "1 unidade - (50 g)",
+    "calories": 188
+  },
+  {
+    "name": "Pão de hot dog",
+    "slug": "pao-de-hot-dog",
+    "measurementUnit": "1 unidade - (50 g)",
+    "calories": 133
+  },
+  {
+    "name": "Pão de milho panco",
+    "slug": "pao-de-milho-panco",
+    "measurementUnit": "1 fatia grande - (40 g)",
+    "calories": 120
+  },
+  {
+    "name": "Pão de queijo coquetel - Forno de minas",
+    "slug": "pao-de-queijo-coquetel-forno-de-minas",
+    "measurementUnit": "1 unidade - (25 g)",
+    "calories": 71
+  },
+  {
+    "name": "Pão de queijo coquetel light - Forno de minas",
+    "slug": "pao-de-queijo-coquetel-light-forno-de-minas",
+    "measurementUnit": "1 unidade - (14 g)",
+    "calories": 30
+  },
+  {
+    "name": "Pão de queijo recheado com requeijão - Forno de minas",
+    "slug": "pao-de-queijo-recheado-com-requeijao-forno-de-minas",
+    "measurementUnit": "1 unidade - (27 g)",
+    "calories": 74
+  },
+  {
+    "name": "Pão de soja light - Pullman",
+    "slug": "pao-de-soja-light-pullman",
+    "measurementUnit": "1 fatia - (25 g)",
+    "calories": 49
+  },
+  {
+    "name": "Pão francês",
+    "slug": "pao-frances",
+    "measurementUnit": "1 unidade - (50 g)",
+    "calories": 135
+  },
+  {
+    "name": "Pão francês integral",
+    "slug": "pao-frances-integral",
+    "measurementUnit": "1 unidade - (50 g)",
+    "calories": 135
+  },
+  {
+    "name": "Pão francês sem miolo",
+    "slug": "pao-frances-sem-miolo",
+    "measurementUnit": "1 unidade - (30 g)",
+    "calories": 75
+  },
+  {
+    "name": "Pão integral sem casca light - Wickbold",
+    "slug": "pao-integral-sem-casca-light-wickbold",
+    "measurementUnit": "1 fatia - (14 g)",
+    "calories": 29
+  },
+  {
+    "name": "Pão italiano",
+    "slug": "pao-italiano",
+    "measurementUnit": "1 fatia - (40 g)",
+    "calories": 137
+  },
+  {
+    "name": "Pão preto - Nutrella",
+    "slug": "pao-preto-nutrella",
+    "measurementUnit": "1 fatia - (28 g)",
+    "calories": 70
+  },
+  {
+    "name": "Pão sírio",
+    "slug": "pao-sirio",
+    "measurementUnit": "1 unidade grande - (50 g)",
+    "calories": 180
+  },
+  {
+    "name": "Pão sovado - Seven boys",
+    "slug": "pao-sovado-seven-boys",
+    "measurementUnit": "1 fatia - (50 g)",
+    "calories": 156
+  },
+  {
+    "name": "Pão sueco",
+    "slug": "pao-sueco",
+    "measurementUnit": "30 g",
+    "calories": 100
+  },
+  {
+    "name": "Torrada canapé - Bauducco",
+    "slug": "torrada-canape-bauducco",
+    "measurementUnit": "9 unidades - (30 g)",
+    "calories": 119
+  },
+  {
+    "name": "Torrada de alecrim com azeite in citta",
+    "slug": "torrada-de-alecrim-com-azeite-in-citta",
+    "measurementUnit": "3 unidades - (15 g)",
+    "calories": 78
+  },
+  {
+    "name": "Torrada de alho flório",
+    "slug": "torrada-de-alho-florio",
+    "measurementUnit": "6 unidades - (30 g)",
+    "calories": 122
+  },
+  {
+    "name": "Torrada integral - Bauducco",
+    "slug": "torrada-integral-bauducco",
+    "measurementUnit": "3 unidades - (30 g)",
+    "calories": 116
+  },
+  {
+    "name": "Torrada salgada - Bauducco",
+    "slug": "torrada-salgada-bauducco",
+    "measurementUnit": "3 unidades - (30 g)",
+    "calories": 119
+  },
+  {
+    "name": "Torrada tradicional - Pita toast",
+    "slug": "torrada-tradicional-pita-toast",
+    "measurementUnit": "30 unidades - (30 g)",
+    "calories": 111
+  },
+  {
+    "name": "Arraia",
+    "slug": "arraia",
+    "measurementUnit": "1 posta - (100g)",
+    "calories": 90
+  },
+  {
+    "name": "Arenque",
+    "slug": "arenque",
+    "measurementUnit": "2 filés - (100g)",
+    "calories": 230
+  },
+  {
+    "name": "Anchova cozida",
+    "slug": "anchova-cozida",
+    "measurementUnit": "1 filé - (100g)",
+    "calories": 118
+  },
+  {
+    "name": "Anchova à milanesa",
+    "slug": "anchova-a-milanesa",
+    "measurementUnit": "1 filé - (100g)",
+    "calories": 210
+  },
+  {
+    "name": "Cavala",
+    "slug": "cavala",
+    "measurementUnit": "2 unidades - (100 g)",
+    "calories": 260
+  },
+  {
+    "name": "Agulha frito",
+    "slug": "agulha-frito",
+    "measurementUnit": "5 unidades - (100 g)",
+    "calories": 94
+  },
+  {
+    "name": "Agulha cru",
+    "slug": "agulha-cru",
+    "measurementUnit": "5 unidades - (100g)",
+    "calories": 28
+  },
+  {
+    "name": "Atum cru",
+    "slug": "atum-cru",
+    "measurementUnit": "1 posta - (100 g)",
+    "calories": 118
+  },
+  {
+    "name": "Atum em conserva em água",
+    "slug": "atum-em-conserva-em-agua",
+    "measurementUnit": "1 col. sopa - (45 g)",
+    "calories": 52
+  },
+  {
+    "name": "Atum em conserva em óleo",
+    "slug": "atum-em-conserva-em-oleo",
+    "measurementUnit": "1 col. sopa - (45 g)",
+    "calories": 85
+  },
+  {
+    "name": "Bacalhau assado",
+    "slug": "bacalhau-assado",
+    "measurementUnit": "1 posta - (100 g)",
+    "calories": 110
+  },
+  {
+    "name": "Bacalhau cozido",
+    "slug": "bacalhau-cozido",
+    "measurementUnit": "1 posta - (100g)",
+    "calories": 100
+  },
+  {
+    "name": "Baiacu",
+    "slug": "baiacu",
+    "measurementUnit": "1 filé - (100g)",
+    "calories": 92
+  },
+  {
+    "name": "Badejo cozido",
+    "slug": "badejo-cozido",
+    "measurementUnit": "2 filés - (100g)",
+    "calories": 131
+  },
+  {
+    "name": "Badejo cru",
+    "slug": "badejo-cru",
+    "measurementUnit": "2 filés - (100 g)",
+    "calories": 97
+  },
+  {
+    "name": "Bagre cozido",
+    "slug": "bagre-cozido",
+    "measurementUnit": "1 posta - (100g)",
+    "calories": 120
+  },
+  {
+    "name": "Beijupirá",
+    "slug": "beijupira",
+    "measurementUnit": "1 posta - (100 g)",
+    "calories": 131
+  },
+  {
+    "name": "Bonito em conserva",
+    "slug": "bonito-em-conserva",
+    "measurementUnit": "1 col. sopa - (20g)",
+    "calories": 34
+  },
+  {
+    "name": "Bonito cru",
+    "slug": "bonito-cru",
+    "measurementUnit": "1 posta - (100 g)",
+    "calories": 149
+  },
+  {
+    "name": "Cação cru",
+    "slug": "cacao-cru",
+    "measurementUnit": "1 posta - (100 g)",
+    "calories": 129
+  },
+  {
+    "name": "Caviar vermelho de carpa",
+    "slug": "caviar-vermelho-de-carpa",
+    "measurementUnit": "1 porção - (100 g)",
+    "calories": 130
+  },
+  {
+    "name": "Caviar",
+    "slug": "caviar",
+    "measurementUnit": "1 xíc. chá - (10 g)",
+    "calories": 29
+  },
+  {
+    "name": "Dourado",
+    "slug": "dourado",
+    "measurementUnit": "1 posta - (100 g)",
+    "calories": 80
+  },
+  {
+    "name": "Esturjão",
+    "slug": "esturjao",
+    "measurementUnit": "1 porção - (100 g)",
+    "calories": 90
+  },
+  {
+    "name": "Esturjão defumado",
+    "slug": "esturjao-defumado",
+    "measurementUnit": "1 porção - (100 g)",
+    "calories": 141
+  },
+  {
+    "name": "Espada grelhado",
+    "slug": "espada-grelhado",
+    "measurementUnit": "1 porção - (100 g)",
+    "calories": 158
+  },
+  {
+    "name": "Galo",
+    "slug": "galo",
+    "measurementUnit": "1 porção - (100 g)",
+    "calories": 109
+  },
+  {
+    "name": "Garoupa São Tomé",
+    "slug": "garoupa-sao-tome",
+    "measurementUnit": "1 posta - (100 g)",
+    "calories": 89
+  },
+  {
+    "name": "Gordinho",
+    "slug": "gordinho",
+    "measurementUnit": "1 porção - (100 g)",
+    "calories": 103
+  },
+  {
+    "name": "Haddock cozido",
+    "slug": "haddock-cozido",
+    "measurementUnit": "1 filé - (100 g)",
+    "calories": 100
+  },
+  {
+    "name": "Haddock defumado",
+    "slug": "haddock-defumado",
+    "measurementUnit": "1 filé - (100 g)",
+    "calories": 78
+  },
+  {
+    "name": "Manjuba frita",
+    "slug": "manjuba-frita",
+    "measurementUnit": "10 unidades - (100 g)",
+    "calories": 285
+  },
+  {
+    "name": "Mero vermelho",
+    "slug": "mero-vermelho",
+    "measurementUnit": "1 porção - (100 g)",
+    "calories": 96
+  },
+  {
+    "name": "Merluza crua",
+    "slug": "merluza-crua",
+    "measurementUnit": "1 filé - (100 g)",
+    "calories": 200
+  },
+  {
+    "name": "Merluza cozida",
+    "slug": "merluza-cozida",
+    "measurementUnit": "1 filé - (100 g)",
+    "calories": 232
+  },
+  {
+    "name": "Moréia",
+    "slug": "moreia",
+    "measurementUnit": "1 porção - (100 g)",
+    "calories": 126
+  },
+  {
+    "name": "Namorado cozido",
+    "slug": "namorado-cozido",
+    "measurementUnit": "1 filé - (100 g)",
+    "calories": 122
+  },
+  {
+    "name": "Namorado cru",
+    "slug": "namorado-cru",
+    "measurementUnit": "1 filé - (100 g)",
+    "calories": 87
+  },
+  {
+    "name": "Namorado à milanesa",
+    "slug": "namorado-a-milanesa",
+    "measurementUnit": "1 filé - (100 g)",
+    "calories": 190
+  },
+  {
+    "name": "Ovas de peixe em conserva",
+    "slug": "ovas-de-peixe-em-conserva",
+    "measurementUnit": "1/2 xíc. chá - (100 g)",
+    "calories": 383
+  },
+  {
+    "name": "Ovas de peixe cruas",
+    "slug": "ovas-de-peixe-cruas",
+    "measurementUnit": "1/12 xíc. chá - (100 g)",
+    "calories": 123
+  },
+  {
+    "name": "Pescada frito",
+    "slug": "pescada-frito",
+    "measurementUnit": "1 filé - (100 g)",
+    "calories": 154
+  },
+  {
+    "name": "Pescada",
+    "slug": "pescada",
+    "measurementUnit": "1 filé - (100 g)",
+    "calories": 97
+  },
+  {
+    "name": "Pescada em conserva",
+    "slug": "pescada-em-conserva",
+    "measurementUnit": "1 filé - (100 g)",
+    "calories": 144
+  },
+  {
+    "name": "Pirarucu salgado",
+    "slug": "pirarucu-salgado",
+    "measurementUnit": "1 posta - (100 g)",
+    "calories": 251
+  },
+  {
+    "name": "Pollock assado ou grelhado",
+    "slug": "pollock-assado-ou-grelhado",
+    "measurementUnit": "1 filé - (100 g)",
+    "calories": 110
+  },
+  {
+    "name": "Robalo",
+    "slug": "robalo",
+    "measurementUnit": "1 posta - (100 g)",
+    "calories": 72
+  },
+  {
+    "name": "Salmão cru",
+    "slug": "salmao-cru",
+    "measurementUnit": "1 filé - (100 g)",
+    "calories": 211
+  },
+  {
+    "name": "Salmão defumado",
+    "slug": "salmao-defumado",
+    "measurementUnit": "1 filé - (100 g)",
+    "calories": 204
+  },
+  {
+    "name": "Salmão grelhado",
+    "slug": "salmao-grelhado",
+    "measurementUnit": "1 filé - (100 g)",
+    "calories": 220
+  },
+  {
+    "name": "Sardinha Coqueiro em óleo comestível",
+    "slug": "sardinha-coqueiro-em-oleo-comestivel",
+    "measurementUnit": "4 unidades - (100 g)",
+    "calories": 174
+  },
+  {
+    "name": "Sardinha em conserva com azeite",
+    "slug": "sardinha-em-conserva-com-azeite",
+    "measurementUnit": "3 unidades - (100 g)",
+    "calories": 298
+  },
+  {
+    "name": "Sardinha em conserva com molho de tomate",
+    "slug": "sardinha-em-conserva-com-molho-de-tomate",
+    "measurementUnit": "3 unidades - (100 g)",
+    "calories": 173
+  },
+  {
+    "name": "Sardinha em conserva",
+    "slug": "sardinha-em-conserva",
+    "measurementUnit": "4 unidades - (100 g)",
+    "calories": 158
+  },
+  {
+    "name": "Serra salgado",
+    "slug": "serra-salgado",
+    "measurementUnit": "1 posta - (100 g)",
+    "calories": 189
+  },
+  {
+    "name": "Surubim cru",
+    "slug": "surubim-cru",
+    "measurementUnit": "1 posta - (100 g)",
+    "calories": 107
+  },
+  {
+    "name": "Surubim salgado",
+    "slug": "surubim-salgado",
+    "measurementUnit": "1 posta - (100 g)",
+    "calories": 251
+  },
+  {
+    "name": "Tainha em conserva",
+    "slug": "tainha-em-conserva",
+    "measurementUnit": "1 posta - (100 g)",
+    "calories": 145
+  },
+  {
+    "name": "Tainha cozida",
+    "slug": "tainha-cozida",
+    "measurementUnit": "1 posta - (100 g)",
+    "calories": 204
+  },
+  {
+    "name": "Truta assada ou grelhada",
+    "slug": "truta-assada-ou-grelhada",
+    "measurementUnit": "1 filé - (100 g)",
+    "calories": 150
+  },
+  {
+    "name": "Tubarão",
+    "slug": "tubarao",
+    "measurementUnit": "1 posta - (100 g)",
+    "calories": 294
+  },
+  {
+    "name": "Vermelho assado ou grelhado",
+    "slug": "vermelho-assado-ou-grelhado",
+    "measurementUnit": "1 porção - (100 g)",
+    "calories": 130
+  },
+  {
+    "name": "Viola",
+    "slug": "viola",
+    "measurementUnit": "1 porção - (100 g)",
+    "calories": 127
+  },
+  {
+    "name": "Amêndoa torrada e salgada - Dr Oetker",
+    "slug": "amendoa-torrada-e-salgada-dr-oetker",
+    "measurementUnit": "1 col. sopa - (15 g)",
+    "calories": 92
+  },
+  {
+    "name": "Amendoim doce - Yoki",
+    "slug": "amendoim-doce-yoki",
+    "measurementUnit": "1 col. sopa - (15 g)",
+    "calories": 73
+  },
+  {
+    "name": "Amendoim japonês - Iracema",
+    "slug": "amendoim-japones-iracema",
+    "measurementUnit": "1/4 xíc. chá - (20 g)",
+    "calories": 100
+  },
+  {
+    "name": "Amendoim salgado com pele - Yoki",
+    "slug": "amendoim-salgado-com-pele-yoki",
+    "measurementUnit": "1 col. sopa - (15 g)",
+    "calories": 86
+  },
+  {
+    "name": "Avelã",
+    "slug": "avela",
+    "measurementUnit": "1 unidade - (1 g)",
+    "calories": 7
+  },
+  {
+    "name": "Azeitona preta - Raiola",
+    "slug": "azeitona-preta-raiola",
+    "measurementUnit": "2 unidades - (10 g)",
+    "calories": 20
+  },
+  {
+    "name": "Azeitona verde - Raiola",
+    "slug": "azeitona-verde-raiola",
+    "measurementUnit": "2 unidades - (10 g)",
+    "calories": 20
+  },
+  {
+    "name": "Banana à milanesa",
+    "slug": "banana-a-milanesa",
+    "measurementUnit": "1 unidade média - (100 g)",
+    "calories": 251
+  },
+  {
+    "name": "Baconzitos - Elma Chips",
+    "slug": "baconzitos-elma-chips",
+    "measurementUnit": "3 xíc. chá - (25 g)",
+    "calories": 126
+  },
+  {
+    "name": "Batata chip",
+    "slug": "batata-chip",
+    "measurementUnit": " - (30 g)",
+    "calories": 160
+  },
+  {
+    "name": "Batata frita média - Mc Donald's",
+    "slug": "batata-frita-media-mc-donald's",
+    "measurementUnit": "1 caixinha - (102 g)",
+    "calories": 288
+  },
+  {
+    "name": "Batata frita original - Pringles",
+    "slug": "batata-frita-original-pringles",
+    "measurementUnit": "12 unidades - (25 g)",
+    "calories": 139
+  },
+  {
+    "name": "Batata palha",
+    "slug": "batata-palha",
+    "measurementUnit": "1 xíc. chá - (25 g)",
+    "calories": 155
+  },
+  {
+    "name": "Batata ruffles",
+    "slug": "batata-ruffles",
+    "measurementUnit": "1 e 1/2 xíc. chá - (25 g)",
+    "calories": 141
+  },
+  {
+    "name": "Bolinha de queijo - Sadia",
+    "slug": "bolinha-de-queijo-sadia",
+    "measurementUnit": "1 e 1/2 unidade - (40 g)",
+    "calories": 108
+  },
+  {
+    "name": "Bolinho de aipim com carne moída - Sadia",
+    "slug": "bolinho-de-aipim-com-carne-moida-sadia",
+    "measurementUnit": "1 unidade - (40 g)",
+    "calories": 90
+  },
+  {
+    "name": "Bolinho de arroz",
+    "slug": "bolinho-de-arroz",
+    "measurementUnit": "1 unidade média - (40 g)",
+    "calories": 94
+  },
+  {
+    "name": "Bolinho de bacalhau",
+    "slug": "bolinho-de-bacalhau",
+    "measurementUnit": "1 unidade grd. - (60 g)",
+    "calories": 170
+  },
+  {
+    "name": "Castanha de caju - Dr Oetker",
+    "slug": "castanha-de-caju-dr-oetker",
+    "measurementUnit": "1 col. sopa - (15 g)",
+    "calories": 94
+  },
+  {
+    "name": "Castanha do pará - Estrela do Oriente",
+    "slug": "castanha-do-para-estrela-do-oriente",
+    "measurementUnit": "2 unidades - (10 g)",
+    "calories": 70
+  },
+  {
+    "name": "Castanha portuguesa",
+    "slug": "castanha-portuguesa",
+    "measurementUnit": "1 unidade - (10 g)",
+    "calories": 20
+  },
+  {
+    "name": "Cebolitos - Elma Chips",
+    "slug": "cebolitos-elma-chips",
+    "measurementUnit": "2 xíc. chá - (25 g)",
+    "calories": 123
+  },
+  {
+    "name": "Coxinha de frango",
+    "slug": "coxinha-de-frango",
+    "measurementUnit": "1 unidade - (50 g)",
+    "calories": 142
+  },
+  {
+    "name": "Croquete de carne",
+    "slug": "croquete-de-carne",
+    "measurementUnit": "1 unidade média - (25 g)",
+    "calories": 87
+  },
+  {
+    "name": "Croquete de milho",
+    "slug": "croquete-de-milho",
+    "measurementUnit": "1 unidade média - (22 g)",
+    "calories": 77
+  },
+  {
+    "name": "Doritos - Elma Chips",
+    "slug": "doritos-elma-chips",
+    "measurementUnit": "1 e 1/2 xíc. chá - (25 g)",
+    "calories": 125
+  },
+  {
+    "name": "Empadinha de frango",
+    "slug": "empadinha-de-frango",
+    "measurementUnit": "1 unidade - (50 g)",
+    "calories": 179
+  },
+  {
+    "name": "Esfiha de carne fechada - Sabor e Aroma",
+    "slug": "esfiha-de-carne-fechada-sabor-e-aroma",
+    "measurementUnit": "1 unidade peq. - (26 g)",
+    "calories": 65
+  },
+  {
+    "name": "Esfiha fechada de calabresa - Liban",
+    "slug": "esfiha-fechada-de-calabresa-liban",
+    "measurementUnit": "1 unidade grd. - (50 g)",
+    "calories": 120
+  },
+  {
+    "name": "Fandangos sabor presunto",
+    "slug": "fandangos-sabor-presunto",
+    "measurementUnit": "1 e 1/2 xíc. chá - (25 g)",
+    "calories": 111
+  },
+  {
+    "name": "Gergelim - Jasmine",
+    "slug": "gergelim-jasmine",
+    "measurementUnit": "1 col. sopa - (15 g)",
+    "calories": 91
+  },
+  {
+    "name": "Macadâmia - Qualitá",
+    "slug": "macadamia-qualita",
+    "measurementUnit": "5 unidades - (12 g)",
+    "calories": 81
+  },
+  {
+    "name": "Mandioca frita",
+    "slug": "mandioca-frita",
+    "measurementUnit": "1 pedaço médio - (80 g)",
+    "calories": 285
+  },
+  {
+    "name": "Mini hot dog",
+    "slug": "mini-hot-dog",
+    "measurementUnit": "1 unidade - (20 g)",
+    "calories": 94
+  },
+  {
+    "name": "Mini quibe - Sadia",
+    "slug": "mini-quibe-sadia",
+    "measurementUnit": "1 unidade - (40 g)",
+    "calories": 94
+  },
+  {
+    "name": "Nozes",
+    "slug": "nozes",
+    "measurementUnit": "5 unidades - (25 g)",
+    "calories": 163
+  },
+  {
+    "name": "Ovinhos de amendoim",
+    "slug": "ovinhos-de-amendoim",
+    "measurementUnit": "1/2 xíc. chá - (25 g)",
+    "calories": 116
+  },
+  {
+    "name": "Pastel de carne",
+    "slug": "pastel-de-carne",
+    "measurementUnit": "1 unidade média - (32 g)",
+    "calories": 84
+  },
+  {
+    "name": "Pastel de palmito",
+    "slug": "pastel-de-palmito",
+    "measurementUnit": "1 unidade média - (30 g)",
+    "calories": 81
+  },
+  {
+    "name": "Pastel de queijo",
+    "slug": "pastel-de-queijo",
+    "measurementUnit": "1 unidade média - (25 g)",
+    "calories": 76
+  },
+  {
+    "name": "Pingo D'Ouro - Elma Chips",
+    "slug": "pingo-d'ouro-elma-chips",
+    "measurementUnit": "1/2 xíc. chá - (25 g)",
+    "calories": 129
+  },
+  {
+    "name": "Pinhão cozido",
+    "slug": "pinhao-cozido",
+    "measurementUnit": "10 unidades - (100 g)",
+    "calories": 177
+  },
+  {
+    "name": "Pipoca doce",
+    "slug": "pipoca-doce",
+    "measurementUnit": "1 xíc. chá - (25 g)",
+    "calories": 112
+  },
+  {
+    "name": "Pipoca para micro-ondas manteiga - Yoki",
+    "slug": "pipoca-para-micro-ondas-manteiga-yoki",
+    "measurementUnit": "1 xíc. chá - (25 g)",
+    "calories": 110
+  },
+  {
+    "name": "Pistache torrado e salgado - Royale",
+    "slug": "pistache-torrado-e-salgado-royale",
+    "measurementUnit": "1 col. sopa - (15 g)",
+    "calories": 85
+  },
+  {
+    "name": "Risole de queijo",
+    "slug": "risole-de-queijo",
+    "measurementUnit": "1 unidade média - (35 g)",
+    "calories": 149
+  },
+  {
+    "name": "Salgadinho frito",
+    "slug": "salgadinho-frito",
+    "measurementUnit": " - (30 g)",
+    "calories": 100
+  },
+  {
+    "name": "Salgadinho frito industrializado",
+    "slug": "salgadinho-frito-industrializado",
+    "measurementUnit": " - (30 g)",
+    "calories": 160
+  },
+  {
+    "name": "Salgadinho industrializado a base de milho",
+    "slug": "salgadinho-industrializado-a-base-de-milho",
+    "measurementUnit": " - (30 g)",
+    "calories": 130
+  },
+  {
+    "name": "Salgadinho de queijo com ervas finas - Elma Chips",
+    "slug": "salgadinho-de-queijo-com-ervas-finas-elma-chips",
+    "measurementUnit": "1 e 1/2 xíc. chá - (25 g)",
+    "calories": 94
+  },
+  {
+    "name": "Salgadinho de camarão - Ebicen",
+    "slug": "salgadinho-de-camarao-ebicen",
+    "measurementUnit": "1 xíc. chá - (25 g)",
+    "calories": 98
+  },
+  {
+    "name": "Salgadinho de milho com queijo - Cheetos",
+    "slug": "salgadinho-de-milho-com-queijo-cheetos",
+    "measurementUnit": "2 xíc. chá - (25 g)",
+    "calories": 120
+  },
+  {
+    "name": "Sardinha frita",
+    "slug": "sardinha-frita",
+    "measurementUnit": "1 unidade média - (25 g)",
+    "calories": 91
+  },
+  {
+    "name": "Semente de abóbora - Estrela do Oriente",
+    "slug": "semente-de-abobora-estrela-do-oriente",
+    "measurementUnit": "1 col. sopa - (10 g)",
+    "calories": 45
+  },
+  {
+    "name": "Soja sabor Queijo - Estrela do Oriente",
+    "slug": "soja-sabor-queijo-estrela-do-oriente",
+    "measurementUnit": "1 col. sopa - (10 g)",
+    "calories": 40
+  },
+  {
+    "name": "Pizza de atum com cebola",
+    "slug": "pizza-de-atum-com-cebola",
+    "measurementUnit": "1 fatia - (120 g)",
+    "calories": 205
+  },
+  {
+    "name": "Pizza de calabresa com cebola",
+    "slug": "pizza-de-calabresa-com-cebola",
+    "measurementUnit": "1 fatia - (120g)",
+    "calories": 319
+  },
+  {
+    "name": "Pizza califórnia",
+    "slug": "pizza-california",
+    "measurementUnit": "1 fatia - (120 g)",
+    "calories": 308
+  },
+  {
+    "name": "Pizza de champignon com mussarela",
+    "slug": "pizza-de-champignon-com-mussarela",
+    "measurementUnit": "1 fatia - (120 g)",
+    "calories": 253
+  },
+  {
+    "name": "Pizza escarola",
+    "slug": "pizza-escarola",
+    "measurementUnit": "1 fatia - (120 g)",
+    "calories": 242
+  },
+  {
+    "name": "Pizza de frango com catupiry",
+    "slug": "pizza-de-frango-com-catupiry",
+    "measurementUnit": "1 fatia - (120 g)",
+    "calories": 354
+  },
+  {
+    "name": "Pizza de lombo canadense, cebola e azeitonas",
+    "slug": "pizza-de-lombo-canadense-cebola-e-azeitonas",
+    "measurementUnit": "1 fatia - (120 g)",
+    "calories": 310
+  },
+  {
+    "name": "Pizza de marguerita",
+    "slug": "pizza-de-marguerita",
+    "measurementUnit": "1 fatia - (120 g)",
+    "calories": 342
+  },
+  {
+    "name": "Pizza de mussarela",
+    "slug": "pizza-de-mussarela",
+    "measurementUnit": "1 fatia - (120 g)",
+    "calories": 360
+  },
+  {
+    "name": "Pizza de mussarela com bacon",
+    "slug": "pizza-de-mussarela-com-bacon",
+    "measurementUnit": "1 fatia - (120 g)",
+    "calories": 463
+  },
+  {
+    "name": "Pizza de mussarela de búfala",
+    "slug": "pizza-de-mussarela-de-bufala",
+    "measurementUnit": "1 fatia - (120 g)",
+    "calories": 280
+  },
+  {
+    "name": "Pizza de palmito com mussarela",
+    "slug": "pizza-de-palmito-com-mussarela",
+    "measurementUnit": "1 fatia - (120 g)",
+    "calories": 274
+  },
+  {
+    "name": "Pizza de peito de peru com catupiry",
+    "slug": "pizza-de-peito-de-peru-com-catupiry",
+    "measurementUnit": "1 fatia - (120 g)",
+    "calories": 271
+  },
+  {
+    "name": "Pizza portuguesa",
+    "slug": "pizza-portuguesa",
+    "measurementUnit": "1 fatia - (120 g)",
+    "calories": 316
+  },
+  {
+    "name": "Pizza de quatro queijos",
+    "slug": "pizza-de-quatro-queijos",
+    "measurementUnit": "1 fatia - (120 g)",
+    "calories": 382
+  },
+  {
+    "name": "Pizza de salmão defumado",
+    "slug": "pizza-de-salmao-defumado",
+    "measurementUnit": "1 fatia - (120 g)",
+    "calories": 318
+  },
+  {
+    "name": "Acarajé",
+    "slug": "acaraje",
+    "measurementUnit": "1 unidade - (100 g)",
+    "calories": 289
+  },
+  {
+    "name": "Arroz com lentilha",
+    "slug": "arroz-com-lentilha",
+    "measurementUnit": "1 col. sopa - (20 g)",
+    "calories": 32
+  },
+  {
+    "name": "Arroz de carreteiro com carne seca",
+    "slug": "arroz-de-carreteiro-com-carne-seca",
+    "measurementUnit": "1 col. sopa - (20 g)",
+    "calories": 31
+  },
+  {
+    "name": "Batata sauté",
+    "slug": "batata-saute",
+    "measurementUnit": "1 prato raso - (100g)",
+    "calories": 68
+  },
+  {
+    "name": "Bobó de camarão",
+    "slug": "bobo-de-camarao",
+    "measurementUnit": "1 prato raso - (225 g)",
+    "calories": 369
+  },
+  {
+    "name": "Chuchu ao molho branco",
+    "slug": "chuchu-ao-molho-branco",
+    "measurementUnit": "1 col. sopa cheia - (30 g)",
+    "calories": 28
+  },
+  {
+    "name": "Couve flor à milanesa",
+    "slug": "couve-flor-a-milanesa",
+    "measurementUnit": "1 ramo médio - (90 g)",
+    "calories": 137
+  },
+  {
+    "name": "Creme de espinafre",
+    "slug": "creme-de-espinafre",
+    "measurementUnit": "1 col. sopa cheia - (35 g)",
+    "calories": 47
+  },
+  {
+    "name": "Creme de milho",
+    "slug": "creme-de-milho",
+    "measurementUnit": "1 col. sopa cheia - (33 g)",
+    "calories": 35
+  },
+  {
+    "name": "Cuscuz de milho",
+    "slug": "cuscuz-de-milho",
+    "measurementUnit": "1 pedaço médio - (135 g)",
+    "calories": 257
+  },
+  {
+    "name": "Cuscuz de tapioca",
+    "slug": "cuscuz-de-tapioca",
+    "measurementUnit": "1 fatia média - (120 g)",
+    "calories": 298
+  },
+  {
+    "name": "Dobradinha",
+    "slug": "dobradinha",
+    "measurementUnit": "1 col. sopa cheia - (35 g)",
+    "calories": 39
+  },
+  {
+    "name": "Estrogonofe de carne",
+    "slug": "estrogonofe-de-carne",
+    "measurementUnit": "1 col. sopa cheia - (25 g)",
+    "calories": 43
+  },
+  {
+    "name": "Estrogonofe de frango",
+    "slug": "estrogonofe-de-frango",
+    "measurementUnit": "1 col. sopa cheia - (25 g)",
+    "calories": 49
+  },
+  {
+    "name": "Feijoada",
+    "slug": "feijoada",
+    "measurementUnit": "1 concha média - (225 g)",
+    "calories": 347
+  },
+  {
+    "name": "Pirão",
+    "slug": "pirao",
+    "measurementUnit": "1 col. sopa cheia - (30 g)",
+    "calories": 36
+  },
+  {
+    "name": "Purê de batata",
+    "slug": "pure-de-batata",
+    "measurementUnit": "1 col. sopa cheia - (45 g)",
+    "calories": 56
+  },
+  {
+    "name": "Quibebe",
+    "slug": "quibebe",
+    "measurementUnit": "1 col. sopa cheia - (35 g)",
+    "calories": 36
+  },
+  {
+    "name": "Rabada",
+    "slug": "rabada",
+    "measurementUnit": "1 pedaço médio - (60 g)",
+    "calories": 187
+  },
+  {
+    "name": "Risoto de frango",
+    "slug": "risoto-de-frango",
+    "measurementUnit": "1 col. sopa cheia - (25 g)",
+    "calories": 45
+  },
+  {
+    "name": "Salada de batata com maionese",
+    "slug": "salada-de-batata-com-maionese",
+    "measurementUnit": "1 col. sopa cheia - (38 g)",
+    "calories": 58
+  },
+  {
+    "name": "Salada waldorf",
+    "slug": "salada-waldorf",
+    "measurementUnit": "1 col. sopa cheia - (38 g)",
+    "calories": 35
+  },
+  {
+    "name": "Salpicão de frango",
+    "slug": "salpicao-de-frango",
+    "measurementUnit": "1 col. sopa cheia - (25 g)",
+    "calories": 47
+  },
+  {
+    "name": "Suflê de queijo",
+    "slug": "sufle-de-queijo",
+    "measurementUnit": "1 pedaço médio - (90 g)",
+    "calories": 103
+  },
+  {
+    "name": "Tutu de feijão",
+    "slug": "tutu-de-feijao",
+    "measurementUnit": "1 col. sopa cheia - (35 g)",
+    "calories": 40
+  },
+  {
+    "name": "Queijo brie luna",
+    "slug": "queijo-brie-luna",
+    "measurementUnit": "1 fatia - (30 g)",
+    "calories": 104
+  },
+  {
+    "name": "Queijo brie polenghi",
+    "slug": "queijo-brie-polenghi",
+    "measurementUnit": "2 fatias - (30 g)",
+    "calories": 100
+  },
+  {
+    "name": "Queijo camembert luna",
+    "slug": "queijo-camembert-luna",
+    "measurementUnit": "1 unidade - (50 g)",
+    "calories": 173
+  },
+  {
+    "name": "Queijo camembert president",
+    "slug": "queijo-camembert-president",
+    "measurementUnit": "1 fatia - (30 g)",
+    "calories": 84
+  },
+  {
+    "name": "Catupiry",
+    "slug": "catupiry",
+    "measurementUnit": "1 col. sopa - (30 g)",
+    "calories": 68
+  },
+  {
+    "name": "Queijo chancliche com zattar",
+    "slug": "queijo-chancliche-com-zattar",
+    "measurementUnit": "1 col. sopa - (20 g)",
+    "calories": 47
+  },
+  {
+    "name": "Queijo cheddar",
+    "slug": "queijo-cheddar",
+    "measurementUnit": "1 fatia - (30 g)",
+    "calories": 120
+  },
+  {
+    "name": "Queijo cottage tirolez",
+    "slug": "queijo-cottage-tirolez",
+    "measurementUnit": "2 col. sopa - (50 g)",
+    "calories": 47
+  },
+  {
+    "name": "Cream cheese danúbio",
+    "slug": "cream-cheese-danubio",
+    "measurementUnit": "3 col. sopa - (30 g)",
+    "calories": 75
+  },
+  {
+    "name": "Cream cheese light danúbio",
+    "slug": "cream-cheese-light-danubio",
+    "measurementUnit": "3 col. sopa - (30 g)",
+    "calories": 61
+  },
+  {
+    "name": "Cream cheese philadelphia light",
+    "slug": "cream-cheese-philadelphia-light",
+    "measurementUnit": "1 col. sopa - (20 g)",
+    "calories": 14
+  },
+  {
+    "name": "Cream cheese philadelphia",
+    "slug": "cream-cheese-philadelphia",
+    "measurementUnit": "1 col. sopa - (20g)",
+    "calories": 20
+  },
+  {
+    "name": "Queijo ementhal suíço",
+    "slug": "queijo-ementhal-suico",
+    "measurementUnit": "1 fatia - (30 g)",
+    "calories": 119
+  },
+  {
+    "name": "Queijo ementhal polenghi",
+    "slug": "queijo-ementhal-polenghi",
+    "measurementUnit": "1 fatia - (30 g)",
+    "calories": 115
+  },
+  {
+    "name": "Queijo estepe",
+    "slug": "queijo-estepe",
+    "measurementUnit": "1 fatia - (30 g)",
+    "calories": 100
+  },
+  {
+    "name": "Queijo fondue luna",
+    "slug": "queijo-fondue-luna",
+    "measurementUnit": "1 porção - (67 g)",
+    "calories": 276
+  },
+  {
+    "name": "Queijo fondue de queijo la table d'or",
+    "slug": "queijo-fondue-de-queijo-la-table-d'or",
+    "measurementUnit": "2 col. sopa - (30 g)",
+    "calories": 76
+  },
+  {
+    "name": "Queijo fundido",
+    "slug": "queijo-fundido",
+    "measurementUnit": "1 fatia - (35 g)",
+    "calories": 124
+  },
+  {
+    "name": "Queijo gorgonzola",
+    "slug": "queijo-gorgonzola",
+    "measurementUnit": "1 fatia média - (38 g)",
+    "calories": 182
+  },
+  {
+    "name": "Queijo gouda luna",
+    "slug": "queijo-gouda-luna",
+    "measurementUnit": "1 fatia - (30 g)",
+    "calories": 107
+  },
+  {
+    "name": "Queijo gouda polenghi",
+    "slug": "queijo-gouda-polenghi",
+    "measurementUnit": "1 fatia - (30 g)",
+    "calories": 105
+  },
+  {
+    "name": "Queijo gruyère luna",
+    "slug": "queijo-gruyere-luna",
+    "measurementUnit": "1 porção - (25 g)",
+    "calories": 89
+  },
+  {
+    "name": "Queijo gruyère polenghi",
+    "slug": "queijo-gruyere-polenghi",
+    "measurementUnit": "1 fatia - (30 g)",
+    "calories": 115
+  },
+  {
+    "name": "Queijo holanda",
+    "slug": "queijo-holanda",
+    "measurementUnit": "1 fatia - (30 g)",
+    "calories": 103
+  },
+  {
+    "name": "Queijo itálico luna",
+    "slug": "queijo-italico-luna",
+    "measurementUnit": "1 fatia - (30 g)",
+    "calories": 107
+  },
+  {
+    "name": "Queijo liederkranz",
+    "slug": "queijo-liederkranz",
+    "measurementUnit": "1 fatia - (30 g)",
+    "calories": 90
+  },
+  {
+    "name": "Queijo limburguês suíço",
+    "slug": "queijo-limburgues-suico",
+    "measurementUnit": "1 fatia - (30 g)",
+    "calories": 97
+  },
+  {
+    "name": "Queijo luninho luna",
+    "slug": "queijo-luninho-luna",
+    "measurementUnit": "1 unidade",
+    "calories": 53
+  },
+  {
+    "name": "Queijo mussarela",
+    "slug": "queijo-mussarela",
+    "measurementUnit": "1 fatia média - (20 g)",
+    "calories": 65
+  },
+  {
+    "name": "Queijo mussarela de búfala",
+    "slug": "queijo-mussarela-de-bufala",
+    "measurementUnit": "1 unidade - (30 g)",
+    "calories": 95
+  },
+  {
+    "name": "Queijo neufchatel suíço",
+    "slug": "queijo-neufchatel-suico",
+    "measurementUnit": "1 fatia - (30 g)",
+    "calories": 87
+  },
+  {
+    "name": "Queijo palmira",
+    "slug": "queijo-palmira",
+    "measurementUnit": "1 fatia - (30 g)",
+    "calories": 115
+  },
+  {
+    "name": "Queijo parmesão",
+    "slug": "queijo-parmesao",
+    "measurementUnit": "1 fatia - (39 g)",
+    "calories": 168
+  },
+  {
+    "name": "Queijo parmesão ralado",
+    "slug": "queijo-parmesao-ralado",
+    "measurementUnit": "1 col. sopa - (10 g)",
+    "calories": 47
+  },
+  {
+    "name": "Queijo pecorino",
+    "slug": "queijo-pecorino",
+    "measurementUnit": "1 fatia - (35 g)",
+    "calories": 128
+  },
+  {
+    "name": "Queijo petit suisse",
+    "slug": "queijo-petit-suisse",
+    "measurementUnit": "1 unidade - (25 g)",
+    "calories": 45
+  },
+  {
+    "name": "Queijo polenguinho",
+    "slug": "queijo-polenguinho",
+    "measurementUnit": "1 unidade - (20 g)",
+    "calories": 62
+  },
+  {
+    "name": "Queijo polenguinho light",
+    "slug": "queijo-polenguinho-light",
+    "measurementUnit": "1 unidade - (20 g)",
+    "calories": 52
+  },
+  {
+    "name": "Queijo prato",
+    "slug": "queijo-prato",
+    "measurementUnit": "1 fatia média - (15 g)",
+    "calories": 59
+  },
+  {
+    "name": "Queijo provolone",
+    "slug": "queijo-provolone",
+    "measurementUnit": "1 fatia média - (15 g)",
+    "calories": 51
+  },
+  {
+    "name": "Queijo quarticolo",
+    "slug": "queijo-quarticolo",
+    "measurementUnit": "1 porção - (30 g)",
+    "calories": 78
+  },
+  {
+    "name": "Queijo queijo coalho na brasa",
+    "slug": "queijo-queijo-coalho-na-brasa",
+    "measurementUnit": "1 espeto - (60 g)",
+    "calories": 168
+  },
+  {
+    "name": "Queijo queijo de cabra chamonix",
+    "slug": "queijo-queijo-de-cabra-chamonix",
+    "measurementUnit": "2 fatias - (30 g)",
+    "calories": 80
+  },
+  {
+    "name": "Queijo queijo-de-minas danubio",
+    "slug": "queijo-queijo-de-minas-danubio",
+    "measurementUnit": "1 fatia média - (30 g)",
+    "calories": 67
+  },
+  {
+    "name": "Queijo queijo-de-minas padrão quatá",
+    "slug": "queijo-queijo-de-minas-padrao-quata",
+    "measurementUnit": "1 fatia - (30 g)",
+    "calories": 114
+  },
+  {
+    "name": "Queijo queijo-do-norte",
+    "slug": "queijo-queijo-do-norte",
+    "measurementUnit": "1 fatia - (30 g)",
+    "calories": 115
+  },
+  {
+    "name": "Queijo queijo-do-reino suíço",
+    "slug": "queijo-queijo-do-reino-suico",
+    "measurementUnit": "1 fatia - (30 g)",
+    "calories": 115
+  },
+  {
+    "name": "Queijo requeijão",
+    "slug": "queijo-requeijao",
+    "measurementUnit": "1 col. sopa - (30 g)",
+    "calories": 74
+  },
+  {
+    "name": "Queijo requeijão light",
+    "slug": "queijo-requeijao-light",
+    "measurementUnit": "1 col. sopa - (30 g)",
+    "calories": 41
+  },
+  {
+    "name": "Queijo roqueford",
+    "slug": "queijo-roqueford",
+    "measurementUnit": "1 porção - (25 g)",
+    "calories": 100
+  },
+  {
+    "name": "Queijo ricota tirolez",
+    "slug": "queijo-ricota-tirolez",
+    "measurementUnit": "1 fatia - (30 g)",
+    "calories": 52
+  },
+  {
+    "name": "Queijo saint paulin luna",
+    "slug": "queijo-saint-paulin-luna",
+    "measurementUnit": "1 fatia - (30 g)",
+    "calories": 101
+  },
+  {
+    "name": "Queijo suíço",
+    "slug": "queijo-suico",
+    "measurementUnit": "1 fatia - (30 g)",
+    "calories": 122
+  },
+  {
+    "name": "Queijo tilsit luna",
+    "slug": "queijo-tilsit-luna",
+    "measurementUnit": "1 fatia - (35 g)",
+    "calories": 132
+  },
+  {
+    "name": "Queijo tofu (queijo de soja)",
+    "slug": "queijo-tofu-(queijo-de-soja)",
+    "measurementUnit": "1 fatia média - (28 g)",
+    "calories": 41
+  },
+  {
+    "name": "Bauru",
+    "slug": "bauru",
+    "measurementUnit": "1 unidade - (120 g)",
+    "calories": 350
+  },
+  {
+    "name": "Beirute de rosbife",
+    "slug": "beirute-de-rosbife",
+    "measurementUnit": "1 unidade - (150 g)",
+    "calories": 380
+  },
+  {
+    "name": "Big Mac - Mc Donald's",
+    "slug": "big-mac-mc-donald's",
+    "measurementUnit": "1 unidade - (204 g)",
+    "calories": 504
+  },
+  {
+    "name": "Cachorro quente com molho de tomate - Bob's",
+    "slug": "cachorro-quente-com-molho-de-tomate-bob's",
+    "measurementUnit": "1 unidade - (130 g)",
+    "calories": 291
+  },
+  {
+    "name": "Cheddar McMelt - Mc Donald's",
+    "slug": "cheddar-mcmelt-mc-donald's",
+    "measurementUnit": "1 unidade - (181 g)",
+    "calories": 507
+  },
+  {
+    "name": "Cheese salada com maionese - Bob's",
+    "slug": "cheese-salada-com-maionese-bob's",
+    "measurementUnit": "1 unidade - (225 g)",
+    "calories": 344
+  },
+  {
+    "name": "Cheesebúrguer - Mc Donald's",
+    "slug": "cheeseburguer-mc-donald's",
+    "measurementUnit": "1 unidade - (116 g)",
+    "calories": 310
+  },
+  {
+    "name": "Hambúrguer - Mc Donald's",
+    "slug": "hamburguer-mc-donald's",
+    "measurementUnit": "1 unidade - (102 g)",
+    "calories": 257
+  },
+  {
+    "name": "McChicken - Mc Donald's",
+    "slug": "mcchicken-mc-donald's",
+    "measurementUnit": "1 unidade - (176 g)",
+    "calories": 454
+  },
+  {
+    "name": "McFish - Mc Donald's",
+    "slug": "mcfish-mc-donald's",
+    "measurementUnit": "1 unidade - (149 g)",
+    "calories": 373
+  },
+  {
+    "name": "Misto quente",
+    "slug": "misto-quente",
+    "measurementUnit": "1 unidade - (85 g)",
+    "calories": 284
+  },
+  {
+    "name": "Quarterão com queijo - Mc Donald's",
+    "slug": "quarterao-com-queijo-mc-donald's",
+    "measurementUnit": "1 unidade - (202 g)",
+    "calories": 558
+  },
+  {
+    "name": "Queijo quente",
+    "slug": "queijo-quente",
+    "measurementUnit": "1 unidade - (85 g)",
+    "calories": 300
+  },
+  {
+    "name": "Sanduíche de atum com salada - Bob's",
+    "slug": "sanduiche-de-atum-com-salada-bob's",
+    "measurementUnit": "1 unidade - (228 g)",
+    "calories": 377
+  },
+  {
+    "name": "Sanduíche de frango com salada - Bob's",
+    "slug": "sanduiche-de-frango-com-salada-bob's",
+    "measurementUnit": "1 unidade - (298 g)",
+    "calories": 375
+  },
+  {
+    "name": "Sanduíche de peito de peru - Bob's",
+    "slug": "sanduiche-de-peito-de-peru-bob's",
+    "measurementUnit": "1 unidade - (162 g)",
+    "calories": 262
+  },
+  {
+    "name": "Sanduíche de queijo com banana - Bob's",
+    "slug": "sanduiche-de-queijo-com-banana-bob's",
+    "measurementUnit": "1 unidade - (125 g)",
+    "calories": 253
+  },
+  {
+    "name": "Caldinho de ervilha",
+    "slug": "caldinho-de-ervilha",
+    "measurementUnit": "1 copo pequeno - (100 ml)",
+    "calories": 92
+  },
+  {
+    "name": "Caldinho de feijão",
+    "slug": "caldinho-de-feijao",
+    "measurementUnit": "1 copo pequeno - (100 ml)",
+    "calories": 104
+  },
+  {
+    "name": "Caldo verde",
+    "slug": "caldo-verde",
+    "measurementUnit": "1 prato fundo - (200 ml)",
+    "calories": 120
+  },
+  {
+    "name": "Canja",
+    "slug": "canja",
+    "measurementUnit": "1 prato fundo - (200 ml)",
+    "calories": 80
+  },
+  {
+    "name": "Creme de aspargos - Campbells",
+    "slug": "creme-de-aspargos-campbells",
+    "measurementUnit": "1 prato fundo - (200 ml)",
+    "calories": 183
+  },
+  {
+    "name": "Creme de cebola - Campbells",
+    "slug": "creme-de-cebola-campbells",
+    "measurementUnit": "1 prato fundo - (200 ml)",
+    "calories": 167
+  },
+  {
+    "name": "Creme de champignon - Campbells",
+    "slug": "creme-de-champignon-campbells",
+    "measurementUnit": "1 prato fundo - (200 ml)",
+    "calories": 167
+  },
+  {
+    "name": "Creme de palmito",
+    "slug": "creme-de-palmito",
+    "measurementUnit": "1 prato fundo - (200 ml)",
+    "calories": 180
+  },
+  {
+    "name": "Creme de queijo Qualimax",
+    "slug": "creme-de-queijo-qualimax",
+    "measurementUnit": "1 prato fundo - (200 ml)",
+    "calories": 61
+  },
+  {
+    "name": "Sopa de brócoli com queijo - Campbell's",
+    "slug": "sopa-de-brocoli-com-queijo-campbell's",
+    "measurementUnit": "1 prato fundo - (200 ml)",
+    "calories": 167
+  },
+  {
+    "name": "Sopa de ervilha com presunto e bacon - Campbell's",
+    "slug": "sopa-de-ervilha-com-presunto-e-bacon-campbell's",
+    "measurementUnit": "1 prato fundo - (200 ml)",
+    "calories": 300
+  },
+  {
+    "name": "Sopa de feijão com macarrão",
+    "slug": "sopa-de-feijao-com-macarrao",
+    "measurementUnit": "1 prato fundo - (200 ml)",
+    "calories": 276
+  },
+  {
+    "name": "Sopa de galinha - Maggi",
+    "slug": "sopa-de-galinha-maggi",
+    "measurementUnit": "1 prato fundo - (200 ml)",
+    "calories": 69
+  },
+  {
+    "name": "Sopa de grão de bico",
+    "slug": "sopa-de-grao-de-bico",
+    "measurementUnit": "1 prato fundo - (200 ml)",
+    "calories": 190
+  },
+  {
+    "name": "Sopa de legumes",
+    "slug": "sopa-de-legumes",
+    "measurementUnit": "1 prato fundo - (200 ml)",
+    "calories": 150
+  },
+  {
+    "name": "Sopa de lentilha",
+    "slug": "sopa-de-lentilha",
+    "measurementUnit": "1 prato fundo - (200 ml)",
+    "calories": 240
+  },
+  {
+    "name": "Sopa de mandioquinha",
+    "slug": "sopa-de-mandioquinha",
+    "measurementUnit": "1 prato fundo - (200 ml)",
+    "calories": 130
+  },
+  {
+    "name": "Sopa de tomate - Campbell's",
+    "slug": "sopa-de-tomate-campbell's",
+    "measurementUnit": "1 prato fundo - (200 ml)",
+    "calories": 150
+  },
+  {
+    "name": "Albumina naturovos",
+    "slug": "albumina-naturovos",
+    "measurementUnit": "1 porção - (25 g)",
+    "calories": 89
+  },
+  {
+    "name": "Barra de proteína",
+    "slug": "barra-de-proteina",
+    "measurementUnit": "1 barra - (40 g)",
+    "calories": 153
+  },
+  {
+    "name": "Bcaa",
+    "slug": "bcaa",
+    "measurementUnit": "1 porção - (8 g)",
+    "calories": 32
+  },
+  {
+    "name": "Caseína",
+    "slug": "caseina",
+    "measurementUnit": "1 porção - (30 g)",
+    "calories": 100
+  },
+  {
+    "name": "Colágeno",
+    "slug": "colageno",
+    "measurementUnit": "1 porção - (14 g)",
+    "calories": 50
+  },
+  {
+    "name": "Creatina",
+    "slug": "creatina",
+    "measurementUnit": "1 porção - (5 g)",
+    "calories": 5
+  },
+  {
+    "name": "Eaa",
+    "slug": "eaa",
+    "measurementUnit": "1 porção - (30.1 g)",
+    "calories": 110
+  },
+  {
+    "name": "Impact whey protein (myprotein)",
+    "slug": "impact-whey-protein-(myprotein)",
+    "measurementUnit": "1 porção - (30 g)",
+    "calories": 123
+  },
+  {
+    "name": "Iso whey hardcore",
+    "slug": "iso-whey-hardcore",
+    "measurementUnit": "1 porção - (30 g)",
+    "calories": 108
+  },
+  {
+    "name": "Neston",
+    "slug": "neston",
+    "measurementUnit": "1 porção - (24 g)",
+    "calories": 83
+  },
+  {
+    "name": "Proteína em pó",
+    "slug": "proteina-em-po",
+    "measurementUnit": "1 porção - (30 g)",
+    "calories": 120
+  },
+  {
+    "name": "Proteína vegana",
+    "slug": "proteina-vegana",
+    "measurementUnit": "1 porção - (30 g)",
+    "calories": 121
+  },
+  {
+    "name": "Top whey 3w",
+    "slug": "top-whey-3w",
+    "measurementUnit": "1 porção - (40 g)",
+    "calories": 163
+  },
+  {
+    "name": "Whey 100",
+    "slug": "whey-100",
+    "measurementUnit": "1 porção - (28 g)",
+    "calories": 103
+  },
+  {
+    "name": "Whey blend",
+    "slug": "whey-blend",
+    "measurementUnit": "1 porção - (34 g)",
+    "calories": 134
+  },
+  {
+    "name": "Whey concentrado",
+    "slug": "whey-concentrado",
+    "measurementUnit": "1 porção - (30 g)",
+    "calories": 115
+  },
+  {
+    "name": "Whey protein concentrado",
+    "slug": "whey-protein-concentrado",
+    "measurementUnit": "1 porção - (25 g)",
+    "calories": 99
+  },
+  {
+    "name": "Whey protein gold standard",
+    "slug": "whey-protein-gold-standard",
+    "measurementUnit": "1 porção - (31 g)",
+    "calories": 117
+  },
+  {
+    "name": "Whey protein isolado",
+    "slug": "whey-protein-isolado",
+    "measurementUnit": "1 porção - (30 g)",
+    "calories": 108
+  },
+  {
+    "name": "Whey protein",
+    "slug": "whey-protein",
+    "measurementUnit": "1 porção - (30 g)",
+    "calories": 120
+  },
+  {
+    "name": "Ômega 3",
+    "slug": "omega-3",
+    "measurementUnit": "1 porção - (1.4 g)",
+    "calories": 10
+  },
+  {
+    "name": "Hossomaki",
+    "slug": "hossomaki",
+    "measurementUnit": "1 porção - (30 g)",
+    "calories": 49
+  },
+  {
+    "name": "Hot roll",
+    "slug": "hot-roll",
+    "measurementUnit": "1 porção - (106 g)",
+    "calories": 170
+  },
+  {
+    "name": "Kappamaki (hossomaki de pepino)",
+    "slug": "kappamaki-(hossomaki-de-pepino)",
+    "measurementUnit": "1 porção - (22 g)",
+    "calories": 20
+  },
+  {
+    "name": "Niguiri de salmão",
+    "slug": "niguiri-de-salmao",
+    "measurementUnit": "1 porção - (35 g)",
+    "calories": 63
+  },
+  {
+    "name": "Niguiri",
+    "slug": "niguiri",
+    "measurementUnit": "1 porção - (32 g)",
+    "calories": 53
+  },
+  {
+    "name": "Sakemaki",
+    "slug": "sakemaki",
+    "measurementUnit": "1 porção - (15.2 g)",
+    "calories": 25
+  },
+  {
+    "name": "Sashimi de salmão",
+    "slug": "sashimi-de-salmao",
+    "measurementUnit": "1 porção - (60 g)",
+    "calories": 95
+  },
+  {
+    "name": "Sushi",
+    "slug": "sushi",
+    "measurementUnit": "1 porção - (28 g)",
+    "calories": 86
+  },
+  {
+    "name": "Sushi de abacate",
+    "slug": "sushi-de-abacate",
+    "measurementUnit": "1 porção - (30 g)",
+    "calories": 28
+  },
+  {
+    "name": "Sushi de atum",
+    "slug": "sushi-de-atum",
+    "measurementUnit": "1 porção - (32 g)",
+    "calories": 55
+  },
+  {
+    "name": "tekkamaki",
+    "slug": "tekkamaki",
+    "measurementUnit": "1 porção - (29 g)",
+    "calories": 41
+  },
+  {
+    "name": "Uramaki",
+    "slug": "uramaki",
+    "measurementUnit": "1 porção - (30 g)",
+    "calories": 28
+  }
+]
