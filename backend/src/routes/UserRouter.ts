@@ -16,7 +16,7 @@ userRouter.get(
 userRouter.put(
   "/profile",
   authorizationMiddleware,
-  validationMiddleware(updateUserSchema),
+  validationMiddleware(updateUserSchema, "body"),
   (req, res) => userController.update(req, res)
 );
 
