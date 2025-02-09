@@ -13,10 +13,10 @@ export class FoodController {
     };
 
     try {
-      const foods = await this._foodService.get({
+      const { foods, hasMore } = await this._foodService.get({
         filter: { name: query.name, limit: query.limit, offset: query.offset },
       });
-      return res.status(200).json({ data: { foods, hasMore: false } });
+      return res.status(200).json({ data: { foods, hasMore } });
     } catch (error: any) {
       return exceptionResponseAdapter({
         req,

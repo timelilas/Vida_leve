@@ -282,7 +282,7 @@
     "calories": 0
   },
   {
-    "name": "Água-de-coco - Kerococo",
+    "name": "Água de coco - Kerococo",
     "slug": "agua-de-coco-kerococo",
     "measurementUnit": "1 copo - (200 ml)",
     "calories": 45
@@ -1338,8 +1338,8 @@
     "calories": 462
   },
   {
-    "name": "Manjar de coco c/ calda de ameixa - Ducoco",
-    "slug": "manjar-de-coco-c/-calda-de-ameixa-ducoco",
+    "name": "Manjar de coco com calda de ameixa - Ducoco",
+    "slug": "manjar-de-coco-com-calda-de-ameixa-ducoco",
     "measurementUnit": "1 fatia - (50 g)",
     "calories": 178
   },
@@ -1548,22 +1548,22 @@
     "calories": 323
   },
   {
-    "nome": "Pudim de baunilha",
+    "name": "Pudim de baunilha",
     "slug": "Pudim-de-baunilha",
-    "unidade": "1 porção - (125 g)",
-    "calorias": 155
+    "measurementUnit": "1 porção - (125 g)",
+    "calories": 155
   },
   {
-    "nome": "Pudim de chocolate",
+    "name": "Pudim de chocolate",
     "slug": "pudim-de-chocolate",
-    "unidade": "1 porção - (150 g)",
-    "calorias": 142
+    "measurementUnit": "1 porção - (150 g)",
+    "calories": 142
   },
   {
-    "nome": "Pudim de tapioca",
+    "name": "Pudim de tapioca",
     "slug": "pudim-de-tapioca",
-    "unidade": "1 porção - (110 g)",
-    "calorias": 145
+    "measurementUnit": "1 porção - (110 g)",
+    "calories": 145
   },
   {
     "name": "Queijadinha caseira",

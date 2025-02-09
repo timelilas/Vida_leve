@@ -1,4 +1,4 @@
-import { Op } from "sequelize";
+import { FindOptions, InferAttributes, Op } from "sequelize";
 import { DatabaseException } from "../../@core/exception/infrastructure/DatabaseException";
 import Food from "../../database/models/Food";
 import { GetFoodsDTO } from "./types";
@@ -6,19 +6,32 @@ import { transformNameIntoSlug } from "../../utils/postgres/helpers";
 
 export default class FoodService {
   public get = async (params: GetFoodsDTO) => {
-    const whereOptions = params.filter?.name
-      ? { slug: { [Op.like]: `${transformNameIntoSlug(params.filter.name)}%` } }
+    const { filter } = params;
+
+    const whereQuery = filter?.name
+      ? { slug: { [Op.like]: `${transformNameIntoSlug(filter.name)}%` } }
       : undefined;
 
-    try {
-      const foods = await Food.findAll({
-        where: whereOptions,
+    const findFoodsQuery: FindOptions<InferAttributes<Food, { omit: never }>> =
+      {
+        limit: filter?.limit,
+        offset: filter?.offset,
+        order: [["slug", "ASC"]],
         attributes: { exclude: ["createdAt", "updatedAt"] },
-      });
+        where: whereQuery,
+      };
 
-      return foods.map((food) => food.toJSON());
+    try {
+      const [foods, total] = await Promise.all([
+        Food.findAll(findFoodsQuery),
+        Food.count({ where: whereQuery }),
+      ]);
+
+      const hasMore = (filter?.limit || 0) + (filter?.offset || 0) < total;
+
+      return { foods: foods.map((food) => food.toJSON()), hasMore };
     } catch (error: any) {
-      const foodName = params.filter?.name;
+      const foodName = filter?.name;
       const errorMessage = foodName
         ? `Erro na busca de alimentos com nome: ${foodName}.`
         : `Erro durante a busca de alimentos.`;
