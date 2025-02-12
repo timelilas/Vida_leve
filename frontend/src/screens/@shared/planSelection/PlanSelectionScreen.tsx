@@ -18,13 +18,13 @@ import { SuccessModal } from "../../../components/successModal/SuccessModal";
 import { useState } from "react";
 import { useCaloriePlanStore } from "../../../store/caloriePlan";
 
-type PlanSelectionScreenlRouteProp = RouteProp<
+type PlanSelectionScreenRouteProp = RouteProp<
   RouteParamsList,
   RouteConstants.PlanSelection
 >;
 
 interface PlanSelectionScreenProps {
-  route: PlanSelectionScreenlRouteProp;
+  route: PlanSelectionScreenRouteProp;
 }
 
 const PlanSelectionScreen = ({ route }: PlanSelectionScreenProps) => {

@@ -1,6 +1,6 @@
 import { View } from "react-native";
 import { Input } from "../inputs/Input";
-import { WeightInput } from "../inputs/WeightInput";
+import { WeightInput } from "./WeightInput";
 import { ActivityFrequencySelection } from "../acitivityFrequencySelection/ActivityFrequencySelection";
 import { styles } from "./styles";
 import { maskHeight, onlyNumbers, parseHeight } from "../../utils/masks";

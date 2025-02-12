@@ -15,10 +15,8 @@ export const ScreenWrapper = forwardRef<ScrollView, ScreenWrapper>(
             ref={ref}
             contentContainerStyle={styles.scrollView}
             showsVerticalScrollIndicator={false}
-            scrollEnabled={props.scrollEnabled}
-          >
-            {props.children}
-          </ScrollView>
+            {...props}
+          ></ScrollView>
         </View>
       </SafeAreaView>
     );
