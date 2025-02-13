@@ -6,12 +6,16 @@ import { loginSchema, signupSchema } from "../controller/auth/schemas";
 const authRouter = Router();
 const authController = new AuthController();
 
-authRouter.post("/signup", validationMiddleware(signupSchema), (req, res) =>
-  authController.signup(req, res)
+authRouter.post(
+  "/signup",
+  validationMiddleware(signupSchema, "body"),
+  (req, res) => authController.signup(req, res)
 );
 
-authRouter.post("/login", validationMiddleware(loginSchema), (req, res) =>
-  authController.login(req, res)
+authRouter.post(
+  "/login",
+  validationMiddleware(loginSchema, "body"),
+  (req, res) => authController.login(req, res)
 );
 
 export default authRouter;

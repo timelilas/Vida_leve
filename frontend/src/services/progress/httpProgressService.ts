@@ -6,13 +6,13 @@ import { STORAGE_ACCESS_TOKEN } from "../../constants/localStorageConstants";
 import { SecureStorage } from "../secureStorage/SecureStorage";
 
 export class HttpProgressService extends HttpService {
-  public async upsertProgress(data: HttpUpsertProgressInputDTO) {
+  public async upsertProgress(params: HttpUpsertProgressInputDTO) {
     const accessToken = await SecureStorage.getItem(STORAGE_ACCESS_TOKEN);
 
     return await this.submit<ProgressProps>({
       method: "POST",
       path: "/progress",
-      body: data,
+      body: params,
       headers: {
         Authorization: `Bearer ${accessToken}`,
       },

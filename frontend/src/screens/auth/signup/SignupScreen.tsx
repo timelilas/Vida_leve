@@ -11,7 +11,6 @@ import { validatePassword } from "../../../utils/validations/password";
 import { validatePasswordConfirmation } from "../../../utils/validations/passwordConfirmation";
 import { SignupFormData } from "./types";
 import { maskEmail } from "../../../utils/masks";
-import { HeaderNavigator } from "../../../components/HeaderNavigator";
 import { useForm } from "../../../hooks/useForm";
 import { httpAuthService } from "../../../services/auth";
 import { StackActions } from "@react-navigation/native";
@@ -21,6 +20,7 @@ import { useAppNavigation } from "../../../hooks/useAppNavigation";
 import { RouteConstants } from "../../../routes/types";
 import styles from "../styles";
 import { useSnackbar } from "../../../hooks/useSnackbar";
+import { NavigationHeader } from "../../../components/navigationHeader/NavigationHeader";
 
 const signupFormInitialState: SignupFormData = {
   email: "",
@@ -102,7 +102,7 @@ const SignupScreen = () => {
   return (
     <ScreenWrapper snackbar={<Snackbar />}>
       <View style={styles.container}>
-        <HeaderNavigator style={styles.headerNavigator} onGoBack={goBack} />
+        <NavigationHeader variant="default" onBack={goBack} />
         <LogoSVG style={styles.logo} />
         <ScreenTitle
           style={styles.title}

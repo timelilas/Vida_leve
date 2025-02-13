@@ -1,6 +1,6 @@
 import { StyleSheet } from "react-native";
 import { ScreenWrapper } from "../../../components/ScreenWrapper";
-import { ScreenHeader } from "../../../components/ScreenHeader";
+import { NavigationHeader } from "../../../components/navigationHeader/NavigationHeader";
 import { ScreenTitle } from "../../../components/ScreenTitle";
 import { Paragraph } from "../../../components/Paragraph";
 import { useUserStore } from "../../../store/user";
@@ -73,7 +73,7 @@ const CreateProgressScreen = () => {
 
   return (
     <ScreenWrapper snackbar={<Snackbar />}>
-      <ScreenHeader style={styles.header} onGoBack={goBack} />
+      <NavigationHeader variant="branded" onBack={goBack} />
       <ScreenTitle style={styles.title} title="Nos conte mais sobre você!" />
       <Paragraph style={styles.description}>
         Precisamos da sua altura, peso atual, meta de peso e frequência de
@@ -92,13 +92,11 @@ const CreateProgressScreen = () => {
 export default CreateProgressScreen;
 
 const styles = StyleSheet.create({
-  header: {
-    marginBottom: 40,
-  },
   title: {
-    marginBottom: 8,
+    marginTop: 40,
   },
   description: {
     marginTop: 8,
+    marginBottom: 40,
   },
 });

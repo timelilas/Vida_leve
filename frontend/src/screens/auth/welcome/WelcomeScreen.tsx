@@ -1,5 +1,4 @@
 import { View, StyleSheet, ScrollView, Text, Platform } from "react-native";
-import { ScreenWrapper } from "../../../components/ScreenWrapper";
 import { SubmitButton } from "../../../components/buttons/SubmitButton";
 import { Image } from "react-native";
 import { BigLogoSVG } from "../../../components/logos/BigLogoSVG";

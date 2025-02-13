@@ -1,6 +1,5 @@
 import { StyleSheet } from "react-native";
 import { ScreenWrapper } from "../../../components/ScreenWrapper";
-import { ScreenHeader } from "../../../components/ScreenHeader";
 import { ScreenTitle } from "../../../components/ScreenTitle";
 import { Paragraph } from "../../../components/Paragraph";
 import { useUserStore } from "../../../store/user";
@@ -12,6 +11,7 @@ import { RouteConstants } from "../../../routes/types";
 import { useSnackbar } from "../../../hooks/useSnackbar";
 import { ProgressForm } from "../../../components/progressForm/ProgressForm";
 import { OnProgressSubmitData } from "../../../components/progressForm/types";
+import { NavigationHeader } from "../../../components/navigationHeader/NavigationHeader";
 
 const UpdateProgressScreen = () => {
   const { Snackbar, showSnackbar } = useSnackbar();
@@ -59,7 +59,7 @@ const UpdateProgressScreen = () => {
 
   return (
     <ScreenWrapper snackbar={<Snackbar />}>
-      <ScreenHeader style={styles.header} onGoBack={goBack} />
+      <NavigationHeader variant="branded" onBack={goBack} />
       <ScreenTitle
         style={styles.title}
         title="Ajuste sua meta de perda de peso"
@@ -81,14 +81,12 @@ const UpdateProgressScreen = () => {
 export default UpdateProgressScreen;
 
 const styles = StyleSheet.create({
-  header: {
-    marginBottom: 40,
-  },
   title: {
-    marginBottom: 8,
+    marginTop: 40,
   },
   description: {
     marginTop: 8,
+    marginBottom: 24,
   },
   label: {
     lineHeight: 16,

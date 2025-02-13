@@ -3,15 +3,15 @@ import Svg, { Path, SvgProps } from "react-native-svg";
 export function ArrowIcon(props: SvgProps) {
   return (
     <Svg
-      width={24}
-      height={24}
+      width={32}
+      height={32}
+      viewBox="0 0 32 32"
       style={{ flexShrink: 0 }}
-      viewBox="0 0 24 24"
       fill="none"
       {...props}
     >
       <Path
-        d="M15 18.5L9 12.5L15 6.5"
+        d="M20 24L12 16L20 8"
         stroke="#4E4B66"
         strokeWidth={2.5}
         strokeLinecap="round"

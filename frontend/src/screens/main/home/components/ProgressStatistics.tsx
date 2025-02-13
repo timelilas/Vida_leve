@@ -7,12 +7,19 @@ import { SoupIcon } from "../../../../components/icons/SoupIcon";
 import { ProgressBar } from "../../../../components/ProgressBar";
 import { useProgressStore } from "../../../../store/progress";
 import { useCaloriePlanStore } from "../../../../store/caloriePlan";
+import { useAppNavigation } from "../../../../hooks/useAppNavigation";
+import { RouteConstants } from "../../../../routes/types";
 
 export function ProgressStatistics() {
+  const navigation = useAppNavigation();
   const planType = useProgressStore((state) => state.data?.currentCaloriePlan);
   const currentPlan = useCaloriePlanStore((state) =>
     state.data.find(({ type }) => type === planType)
   );
+
+  function navigateToCreateMealScreen() {
+    navigation.navigate(RouteConstants.CreateMeal);
+  }
 
   return (
     <View style={styles.container}>
@@ -34,7 +41,7 @@ export function ProgressStatistics() {
         <TouchableOpacity>
           <Text style={styles.buttonText}>Relatórios</Text>
         </TouchableOpacity>
-        <TouchableOpacity>
+        <TouchableOpacity onPress={navigateToCreateMealScreen}>
           <Text style={styles.buttonText}>Registrar refeição</Text>
         </TouchableOpacity>
       </View>

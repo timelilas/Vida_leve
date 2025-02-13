@@ -1,14 +1,14 @@
 import { StyleSheet, View } from "react-native";
-import { ScreenHeader } from "../../../components/ScreenHeader";
 import { ScreenWrapper } from "../../../components/ScreenWrapper";
 import { ProileHeader } from "./components/ProfileHeader";
 import { PlanInformation } from "./components/PlanInformation";
 import { ProgressStatistics } from "./components/ProgressStatistics";
+import { NavigationHeader } from "../../../components/navigationHeader/NavigationHeader";
 
 const HomeScreen = () => {
   return (
     <ScreenWrapper>
-      <ScreenHeader />
+      <NavigationHeader variant="branded" />
       <View style={styles.body}>
         <ProileHeader />
         <View style={styles.separatorLine} />

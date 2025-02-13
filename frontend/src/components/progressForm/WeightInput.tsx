@@ -1,5 +1,5 @@
 import { TextInputProps } from "react-native";
-import { Input, InputProps } from "./Input";
+import { Input, InputProps } from "../inputs/Input";
 
 export function WeightInput(props: InputProps & TextInputProps) {
   const { label, value, error, errorMessage, disabled, ...propsRest } = props;

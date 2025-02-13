@@ -4,12 +4,16 @@ import { ZodHelper } from "../../utils/zod/helpers";
 import { BadRequestException } from "../../@core/exception/http/BadRequestException";
 import { exceptionResponseAdapter } from "../../utils/express/helpers";
 
-export function validationMiddleware(zodSchema: ZodSchema) {
+export function validationMiddleware(
+  zodSchema: ZodSchema,
+  target: "body" | "query"
+) {
   const resource = "ValidationMiddleware";
 
   return (req: Request, res: Response, next: NextFunction) => {
     try {
-      const validationResult = zodSchema.safeParse(req.body);
+      const validationTarget = target === "body" ? req.body : req.query;
+      const validationResult = zodSchema.safeParse(validationTarget);
 
       if (!validationResult.success) {
         const errors = ZodHelper.formatZodError(validationResult.error);
@@ -21,7 +25,13 @@ export function validationMiddleware(zodSchema: ZodSchema) {
         );
       }
 
-      req.body = validationResult.data;
+      if (target === "body") {
+        req.body = validationResult.data;
+      }
+
+      if (target === "query") {
+        req.query = validationResult.data;
+      }
 
       next();
     } catch (error: any) {

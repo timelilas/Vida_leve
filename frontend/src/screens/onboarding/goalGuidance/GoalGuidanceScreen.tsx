@@ -6,7 +6,7 @@ import { ClipboardIcon } from "../../../components/icons/ClipboardIcon";
 import { TargetIcon } from "../../../components/icons/TargetIcon";
 import { CommonActions } from "@react-navigation/native";
 import { ScreenTitle } from "../../../components/ScreenTitle";
-import { ScreenHeader } from "../../../components/ScreenHeader";
+import { NavigationHeader } from "../../../components/navigationHeader/NavigationHeader";
 import { useAppNavigation } from "../../../hooks/useAppNavigation";
 import { RouteConstants } from "../../../routes/types";
 import { SubmitButton } from "../../../components/buttons/SubmitButton";
@@ -25,7 +25,7 @@ const GoalGuidanceScreen = () => {
 
   return (
     <ScreenWrapper>
-      <ScreenHeader />
+      <NavigationHeader variant="branded" />
       <View style={styles.contentContainer}>
         <ScreenTitle
           style={styles.title}
@@ -91,7 +91,7 @@ const styles = StyleSheet.create({
     marginTop: 64,
   },
   separator: {
-    height: 2,
+    height: 1,
     backgroundColor: "#B7B7B7",
   },
   title: {
@@ -103,7 +103,7 @@ const styles = StyleSheet.create({
     borderRadius: 16,
     borderBottomLeftRadius: 28,
     borderBottomRightRadius: 28,
-    marginTop: 10,
+    marginTop: 16,
   },
   guidanceWrapper: {
     backgroundColor: "#f7f7fc",
@@ -124,7 +124,7 @@ const styles = StyleSheet.create({
     },
   },
   adviceWrapper: {
-    marginTop: 32,
+    marginTop: 16,
     gap: 8,
     alignItems: "center",
   },
