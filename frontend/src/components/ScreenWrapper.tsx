@@ -8,6 +8,7 @@ interface ScreenWrapper extends ScrollViewProps {
 
 export const ScreenWrapper = forwardRef<ScrollView, ScreenWrapper>(
   (props, ref) => {
+    const { snackbar, ...propsRest } = props;
     return (
       <SafeAreaView style={styles.safeArea}>
         <View style={styles.container}>
@@ -15,8 +16,9 @@ export const ScreenWrapper = forwardRef<ScrollView, ScreenWrapper>(
             ref={ref}
             contentContainerStyle={styles.scrollView}
             showsVerticalScrollIndicator={false}
-            {...props}
-          ></ScrollView>
+            {...propsRest}
+          />
+          {snackbar}
         </View>
       </SafeAreaView>
     );

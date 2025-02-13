@@ -82,3 +82,33 @@ export function convertDateToDateData(date: Date): DateData {
     weekDay: date.getDay(),
   };
 }
+
+export function formatDateToLabel(date: Date, type: "long" | "short") {
+  const day = date.getUTCDate();
+  const weekDay = date.getUTCDay();
+  const month = date.getUTCMonth();
+  const year = date.getUTCFullYear();
+
+  const formattedDay = `0${day}`.slice(-2);
+  const weekdayName = toCapitalized(getWeekdayFromIndex(weekDay)).split("-")[0];
+  const monthName = toCapitalized(getMonthNameFromIndex(month)).slice(0, 3);
+
+  if (type === "short") {
+    return `${weekdayName}, ${formattedDay} ${monthName.toUpperCase()} - ${year}`;
+  }
+
+  return `${weekdayName}, ${formattedDay} de ${monthName} - ${year}`;
+}
+
+export function transformFoodNameIntoSlug(name: string) {
+  if (!name.length) {
+    return "";
+  }
+
+  return name
+    .toLowerCase()
+    .normalize("NFD")
+    .replace(/[\u0300-\u036f]|\,/g, "")
+    .replace(/\s\-\s/g, "-")
+    .replace(/\s/g, "-");
+}

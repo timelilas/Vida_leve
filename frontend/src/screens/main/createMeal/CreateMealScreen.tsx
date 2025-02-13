@@ -5,15 +5,14 @@ import { useAppNavigation } from "../../../hooks/useAppNavigation";
 import { ScreenTitle } from "../../../components/ScreenTitle";
 import { MealButton } from "./components/MealButton";
 import { mealButtonsData } from "./utils";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { MealType } from "../../../@core/entities/@shared/meal/type";
 import { DayPicker } from "../../../components/dayPicker/DayPicker";
 import { DateData } from "../../../components/dayPicker/types";
+import { RouteConstants } from "../../../routes/types";
 import {
   convertDateToDateData,
-  getMonthNameFromIndex,
-  getWeekdayFromIndex,
-  toCapitalized,
+  formatDateToLabel,
 } from "../../../utils/helpers";
 
 const CreateMealScreen = () => {
@@ -21,6 +20,19 @@ const CreateMealScreen = () => {
   const today = convertDateToDateData(new Date());
   const [selectedDate, setSelectedDate] = useState<DateData>(today);
   const [selectedMeal, setSelectedMeal] = useState<MealType | null>(null);
+
+  useEffect(() => {
+    if (selectedDate && selectedMeal) {
+      navigation.navigate(RouteConstants.SearchFoods, {
+        mealType: selectedMeal,
+        mealDate: {
+          year: selectedDate.year,
+          month: selectedDate.month,
+          day: selectedDate.day,
+        },
+      });
+    }
+  }, [selectedDate, selectedMeal, navigation]);
 
   function goBack() {
     navigation.goBack();
@@ -34,26 +46,24 @@ const CreateMealScreen = () => {
     setSelectedDate(dateData);
   }
 
-  const isSlectedDateToday = today.id === selectedDate?.id;
-  const weekdayName = toCapitalized(getWeekdayFromIndex(selectedDate.weekDay));
-  const monthName = toCapitalized(
-    getMonthNameFromIndex(selectedDate.month)
-  ).slice(0, 3);
+  const currentDate = new Date(
+    selectedDate.year,
+    selectedDate.month,
+    selectedDate.day
+  );
+  const shortDateLabel = formatDateToLabel(currentDate, "short");
+  const longDateLAbel = formatDateToLabel(currentDate, "long");
 
   return (
     <ScreenWrapper>
       <NavigationHeader
         variant="titled"
         title="Registrar Refeição"
-        subtitle="Terça, 08 OUT."
+        subtitle={shortDateLabel}
         onBack={goBack}
       />
       <ScreenTitle
-        title={`${
-          isSlectedDateToday
-            ? "Hoje"
-            : `${weekdayName}, ${selectedDate.day} de ${monthName} - ${selectedDate.year}`
-        }`}
+        title={longDateLAbel}
         style={[styles.title, styles.dayTitle]}
       />
       <View style={styles.dayPicker}>

@@ -1,3 +1,4 @@
+import { MealType } from "../@core/entities/@shared/meal/type";
 import { PlanType } from "../@core/entities/@shared/planType/type";
 import { CaloriePlanProps } from "../@core/entities/caloriePlan/type";
 import { ProgressProps } from "../@core/entities/progress/type";
@@ -14,6 +15,7 @@ export enum RouteConstants {
   GoalSettings = "SCREEN_Main_GoalSettings",
   UpdateProgress = "SCREEN_MAIN_UpdateProgress",
   CreateMeal = "SCREEN_MAIN_CreateMeal",
+  SearchFoods = "SCREEN_MAIN_SearchFoods",
   ConnectionError = "SCREEN_Error_ConnectionError",
 }
 
@@ -36,4 +38,12 @@ export type RouteParamsList = {
   [RouteConstants.UpdateProgress]: undefined;
   [RouteConstants.CreateMeal]: undefined;
   [RouteConstants.ConnectionError]: undefined;
+  [RouteConstants.SearchFoods]: {
+    mealType: MealType;
+    mealDate: {
+      year: number;
+      month: number;
+      day: number;
+    };
+  };
 };

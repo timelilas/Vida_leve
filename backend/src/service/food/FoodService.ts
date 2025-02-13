@@ -9,7 +9,7 @@ export default class FoodService {
     const { filter } = params;
 
     const whereQuery = filter?.name
-      ? { slug: { [Op.like]: `${transformNameIntoSlug(filter.name)}%` } }
+      ? { slug: { [Op.like]: `%${transformNameIntoSlug(filter.name)}%` } }
       : undefined;
 
     const findFoodsQuery: FindOptions<InferAttributes<Food, { omit: never }>> =
