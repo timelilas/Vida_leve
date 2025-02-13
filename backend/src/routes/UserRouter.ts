@@ -8,15 +8,15 @@ const userRouter = Router();
 const userController = new UserController();
 
 userRouter.get(
-  "/profile/",
+  "/profile",
   authorizationMiddleware,
   (req: Request, res: Response) => userController.getById(req, res)
 );
 
 userRouter.put(
-  "/profile/",
+  "/profile",
   authorizationMiddleware,
-  validationMiddleware(updateUserSchema),
+  validationMiddleware(updateUserSchema, "body"),
   (req, res) => userController.update(req, res)
 );
 

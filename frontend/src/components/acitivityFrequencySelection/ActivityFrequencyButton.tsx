@@ -16,7 +16,7 @@ export function ActivityFrequencyButton(props: ActivityFrequencyButtonProps) {
       selected={props.selected}
       onPress={props.onPress}
     >
-      <View style={styles.container}>
+      <View style={[styles.container, props.disabled && styles.disabled]}>
         <Text style={styles.title}>{props.title}</Text>
         {props.selected && (
           <Text style={[styles.description]}>{props.description}</Text>
@@ -48,5 +48,8 @@ const styles = StyleSheet.create({
   descriptionHidden: {
     overflow: "hidden",
     maxHeight: 0,
+  },
+  disabled: {
+    opacity: 0.5,
   },
 });

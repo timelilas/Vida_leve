@@ -8,7 +8,12 @@ interface SnackbarState {
   variant: SnackbarVariant;
 }
 
-type SnackbarOptions = Pick<SnackbarState, "message" | "variant" | "duration">;
+type SnackbarOptions = Pick<
+  SnackbarState,
+  "message" | "variant" | "duration"
+> & {
+  id?: number;
+};
 
 export function useSnackbar() {
   const [snackbarState, setSnackbarState] = useState<SnackbarState>({

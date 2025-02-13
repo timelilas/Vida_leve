@@ -1,5 +1,5 @@
 import { StyleSheet, View } from "react-native";
-import { CaloriePlanButton } from "../../../../../components/buttons/CaloriePlanButton";
+import { CaloriePlanButton } from "./CaloriePlanButton";
 import { CaloriePlanProps } from "../../../../../@core/entities/caloriePlan/type";
 import { planUiDetails } from "./utils";
 import { PlanType } from "../../../../../@core/entities/@shared/planType/type";
@@ -57,6 +57,7 @@ export function PlanSelectionForm(props: PlanSelectionFormProps) {
           const Icon = planUiDetails[plan.type].icon;
           return (
             <CaloriePlanButton
+              disabled={data.isSubmitting}
               onPress={() => handlePlanSelection(plan.type)}
               selected={plan.type === data.values.planType}
               key={plan.type}
@@ -84,7 +85,6 @@ const styles = StyleSheet.create({
     flex: 1,
   },
   plansWrapper: {
-    paddingBottom: 16,
     gap: 16,
     marginBottom: 40,
   },

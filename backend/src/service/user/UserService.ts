@@ -11,7 +11,7 @@ export default class UserService {
       return profiles;
     } catch (error: any) {
       throw new DatabaseException(
-        `Erro na busca do perfil de todos os usuários`,
+        `Erro na busca do perfil de todos os usuários.`,
         UserService.name,
         error.message
       );
@@ -27,7 +27,7 @@ export default class UserService {
       return user.getProfile();
     } catch (error: any) {
       throw new DatabaseException(
-        `Erro durante a criação do usuário com email: ${email}`,
+        `Erro durante a criação do usuário com email: ${email}.`,
         UserService.name,
         error.message
       );
@@ -48,7 +48,7 @@ export default class UserService {
       return foundUser.getProfile();
     } catch (error: any) {
       throw new DatabaseException(
-        `Erro na busca das informações do usuário com id: ${id}`,
+        `Erro na busca das informações do usuário com id: ${id}.`,
         UserService.name,
         error.message
       );
@@ -61,7 +61,7 @@ export default class UserService {
       return foundUser?.toJSON();
     } catch (error: any) {
       throw new DatabaseException(
-        `Erro na busca das informações do usuário com email: ${email}`,
+        `Erro na busca das informações do usuário com email: ${email}.`,
         UserService.name,
         error.message
       );
@@ -84,7 +84,7 @@ export default class UserService {
       return (updatedUser[0] as User).getProfile();
     } catch (error: any) {
       throw new DatabaseException(
-        `Erro na tentativa de atualizar o perfil do usuário com id: ${id}`,
+        `Erro na tentativa de atualizar o perfil do usuário com id: ${id}.`,
         UserService.name,
         error.message
       );
@@ -102,7 +102,7 @@ export default class UserService {
       return true;
     } catch (error: any) {
       throw new DatabaseException(
-        `Erro ao deletar o usuário com id: ${id}`,
+        `Erro ao deletar o usuário com id: ${id}.`,
         UserService.name,
         error.message
       );

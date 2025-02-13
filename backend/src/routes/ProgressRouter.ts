@@ -17,14 +17,14 @@ progressRouter.get("/", authorizationMiddleware, (req, res) =>
 progressRouter.post(
   "/",
   authorizationMiddleware,
-  validationMiddleware(upsertProgressSchema),
+  validationMiddleware(upsertProgressSchema, "body"),
   (req, res) => progressController.upsert(req, res)
 );
 
 progressRouter.patch(
   "/plan",
   authorizationMiddleware,
-  validationMiddleware(setCurrentCaloriePlanSchema),
+  validationMiddleware(setCurrentCaloriePlanSchema, "body"),
   (req, res) => progressController.setCaloriePlan(req, res)
 );
 

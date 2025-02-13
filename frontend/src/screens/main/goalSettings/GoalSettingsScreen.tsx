@@ -1,5 +1,5 @@
 import { StyleSheet, Text, View } from "react-native";
-import { ScreenHeader } from "../../../components/ScreenHeader";
+import { NavigationHeader } from "../../../components/navigationHeader/NavigationHeader";
 import { ScreenTitle } from "../../../components/ScreenTitle";
 import { ScreenWrapper } from "../../../components/ScreenWrapper";
 import { useAppNavigation } from "../../../hooks/useAppNavigation";
@@ -46,7 +46,7 @@ const GoalSettingsScreen = () => {
   return (
     <ScreenWrapper scrollEnabled={selectedRoute === null}>
       <View style={styles.body}>
-        <ScreenHeader onGoBack={goBack} />
+        <NavigationHeader variant="branded" onBack={goBack} />
         <View style={styles.contentContainer}>
           <ScreenTitle title="Altere sua meta diária" />
           <Paragraph>
