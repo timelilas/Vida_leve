@@ -16,10 +16,7 @@ import { Paragraph } from "../../../components/Paragraph/Paragraph";
 import SearchInput from "./components/SearchInput";
 import { useEffect, useState } from "react";
 import { FOOD_ITEM_HEIGHT } from "./components/FoodItem/constants";
-import {
-  formatDateToLabel,
-  transformFoodNameIntoSlug,
-} from "../../../utils/helpers";
+import { formatDateToLabel } from "../../../utils/helpers";
 import { useSearchFoods } from "./hooks/useSearchFoods";
 import { useThrottle } from "../../../hooks/useThrottle ";
 import { useSnackbar } from "../../../hooks/useSnackbar";
@@ -44,23 +41,19 @@ const SearchFoodsScreen = ({ route }: SearchFoodsScreenProps) => {
   const [foodName, setFoodName] = useState("");
   const [bodyHeight, setBodyHeight] = useState<number | null>(null);
 
-  const foodSlug = transformFoodNameIntoSlug(foodName);
-  const { throttler, clearThrottler } = useThrottle(400);
+  const { isThrottling, startThrottler } = useThrottle(350);
   const { showSnackbar, Snackbar } = useSnackbar();
 
-  const { foods, hasMore, isError, isFetching, fetchFoods, fetchMoreFoods } =
-    useSearchFoods(foodSlug);
+  const isQueryEnabled = foodName.length > 0 && !!bodyHeight && !isThrottling;
 
-  useEffect(() => {
-    if (bodyHeight) {
-      const remainingHeight = windowDimensions.height - bodyHeight;
-      const totalItemsToFetch = Math.ceil(remainingHeight / FOOD_ITEM_HEIGHT);
+  const limit = calculateTotalFoodsToFetch();
 
-      foodSlug.length > 0
-        ? throttler(() => fetchFoods(totalItemsToFetch))
-        : clearThrottler();
-    }
-  }, [bodyHeight, foodSlug]);
+  const { foods, hasMore, isError, isFetching, fetchMoreFoods } =
+    useSearchFoods({
+      foodName,
+      enabled: isQueryEnabled,
+      limit,
+    });
 
   useEffect(() => {
     if (isError) {
@@ -69,7 +62,7 @@ const SearchFoodsScreen = ({ route }: SearchFoodsScreenProps) => {
         variant: "error",
         duration: 5000,
         message:
-          "Desculpe, não conseguimos encontrar as informações solicitadas, tente novamente mais tarde.",
+          "Desculpe, não conseguimos encontrar as informações solicitadas, por favor, tente novamente mais tarde.",
       });
     }
   }, [isError, isFetching]);
@@ -78,7 +71,17 @@ const SearchFoodsScreen = ({ route }: SearchFoodsScreenProps) => {
     navigation.goBack();
   }
 
+  function calculateTotalFoodsToFetch() {
+    if (!bodyHeight) return 0;
+
+    const remainingHeight = windowDimensions.height - bodyHeight;
+    const totalItemsToFetch = Math.ceil(remainingHeight / FOOD_ITEM_HEIGHT);
+
+    return totalItemsToFetch;
+  }
+
   function handleInputChange(text: string) {
+    startThrottler();
     setFoodName(text);
   }
 
@@ -95,8 +98,8 @@ const SearchFoodsScreen = ({ route }: SearchFoodsScreenProps) => {
     return verticalOffset + layoutHeight >= contentHeight - VERTICAL_THRESHOLD;
   }
 
-  function handleScroll(e: NativeSyntheticEvent<NativeScrollEvent>) {
-    if (!foodSlug.length) return;
+  function handleSceenScroll(e: NativeSyntheticEvent<NativeScrollEvent>) {
+    if (!foodName.length) return;
     if (!hasMore) return;
 
     const isScrollCloseToBottom = isCloseToBottom(e);
@@ -118,7 +121,7 @@ const SearchFoodsScreen = ({ route }: SearchFoodsScreenProps) => {
   return (
     <ScreenWrapper
       contentContainerStyle={styles.container}
-      onScroll={handleScroll}
+      onScroll={handleSceenScroll}
       snackbar={<Snackbar />}
     >
       <View style={styles.body} onLayout={getBodyHeight}>

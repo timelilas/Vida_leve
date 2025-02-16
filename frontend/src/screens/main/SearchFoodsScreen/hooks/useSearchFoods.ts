@@ -4,23 +4,42 @@ import { FoodProps } from "../../../../@core/entities/food/type";
 import { httpFoodService } from "../../../../services/food";
 import { queryClient } from "../../../../libs/react-query/queryClient";
 import { useCallback, useDeferredValue } from "react";
+import { delay, transformFoodNameIntoSlug } from "../../../../utils/helpers";
 
 interface FoodDataState {
   hasMore: boolean;
   foods: FoodProps[];
 }
 
-export function useSearchFoods(foodName: string) {
-  const queryKey = QueryKeys.DATABASE.FOODS(foodName);
+interface UseFoodParams {
+  limit: number;
+  foodName: string;
+  enabled: boolean;
+}
+
+export function useSearchFoods(params: UseFoodParams) {
+  const foodSlug = transformFoodNameIntoSlug(params.foodName);
+  const queryKey = QueryKeys.DATABASE.FOODS(foodSlug);
+
   const options = queryOptions<FoodDataState>({
     queryKey: queryKey,
-    enabled: false,
-    gcTime: Infinity,
-    refetchInterval: false,
-    refetchOnMount: false,
     refetchIntervalInBackground: false,
-    refetchOnReconnect: true,
+    enabled: params.enabled,
     staleTime: Infinity,
+    gcTime: 5 * 60 * 1000,
+    refetchOnMount: false,
+    refetchOnWindowFocus: false,
+    refetchInterval: false,
+    refetchOnReconnect: false,
+    queryFn: async () => {
+      const { data } = await httpFoodService.searchFoods({
+        name: foodSlug,
+        limit: Math.max(params.limit, 10),
+        offset: 0,
+      });
+      await delay(500);
+      return data;
+    },
   });
 
   const { data, isFetching, error, isError } = useQuery<FoodDataState>(options);
@@ -35,9 +54,10 @@ export function useSearchFoods(foodName: string) {
 
     await queryClient.fetchQuery<FoodDataState>({
       queryKey,
+      gcTime: options.gcTime,
       queryFn: async () => {
         const { data: newData } = await httpFoodService.searchFoods({
-          name: foodName,
+          name: foodSlug,
           limit: 5,
           offset: currentState?.foods.length || 0,
         });
@@ -52,34 +72,12 @@ export function useSearchFoods(foodName: string) {
     });
   }, [queryKey]);
 
-  const fetchFoods = useCallback(
-    async (limit: number) => {
-      const currentState = queryClient.getQueryData<FoodDataState>(queryKey);
-
-      if (currentState) return;
-
-      await queryClient.fetchQuery<FoodDataState>({
-        queryKey,
-        queryFn: async () => {
-          const { data } = await httpFoodService.searchFoods({
-            name: foodName,
-            limit: Math.max(limit, 10),
-            offset: 0,
-          });
-          return data;
-        },
-      });
-    },
-    [queryKey]
-  );
-
   return {
     foods: deferredData?.foods || [],
     hasMore: deferredData?.hasMore ?? true,
     isFetching,
     isError,
     error,
-    fetchFoods,
     fetchMoreFoods,
   };
 }
