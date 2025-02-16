@@ -1,8 +1,10 @@
 import { StyleSheet } from "react-native";
+import { colors } from "../../styles/colors";
+import { fonts } from "../../styles/fonts";
 
 export const styles = StyleSheet.create({
   progressBar: {
-    backgroundColor: "#ffffff",
+    backgroundColor: colors.common.white,
     padding: 2,
     borderRadius: 20,
     height: 20,
@@ -14,7 +16,7 @@ export const styles = StyleSheet.create({
     borderRadius: 20,
   },
   prgressBarColored: {
-    backgroundColor: "#FFAE31",
+    backgroundColor: colors.secondary,
     height: "100%",
     width: "0%",
     borderRadius: 20,
@@ -25,7 +27,7 @@ export const styles = StyleSheet.create({
     textAlign: "center",
     fontSize: 14,
     lineHeight: 14,
-    fontFamily: "Roboto-400",
-    color: "#242424",
+    fontFamily: fonts.robotoRegular,
+    color: colors.text.secondary,
   },
 });

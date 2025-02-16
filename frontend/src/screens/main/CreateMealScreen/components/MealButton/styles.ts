@@ -1,4 +1,6 @@
 import { StyleSheet } from "react-native";
+import { fonts } from "../../../../../styles/fonts";
+import { colors } from "../../../../../styles/colors";
 
 export const styles = StyleSheet.create({
   container: {
@@ -11,7 +13,7 @@ export const styles = StyleSheet.create({
   title: {
     fontSize: 16,
     lineHeight: 16,
-    fontFamily: "Roboto-400",
-    color: "#242424",
+    fontFamily: fonts.robotoRegular,
+    color: colors.text.secondary,
   },
 });

@@ -1,4 +1,6 @@
 import { StyleSheet } from "react-native";
+import { fonts } from "../../../../../styles/fonts";
+import { colors } from "../../../../../styles/colors";
 
 export const styles = StyleSheet.create({
   container: {
@@ -7,8 +9,8 @@ export const styles = StyleSheet.create({
   title: {
     fontSize: 16,
     lineHeight: 16,
-    fontFamily: "Roboto-300",
-    color: "#4e4b66",
+    fontFamily: fonts.robotoLight,
+    color: colors.text.primary,
   },
   calorieProgress: {
     padding: 10,
@@ -29,7 +31,7 @@ export const styles = StyleSheet.create({
   buttonText: {
     textAlign: "auto",
     fontSize: 14,
-    fontFamily: "Roboto-300",
-    color: "#0000FF",
+    fontFamily: fonts.robotoLight,
+    color: colors.blue,
   },
 });

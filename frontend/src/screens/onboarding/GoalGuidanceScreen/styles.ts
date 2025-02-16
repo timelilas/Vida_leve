@@ -1,4 +1,6 @@
 import { StyleSheet, Platform } from "react-native";
+import { colors } from "../../../styles/colors";
+import { fonts } from "../../../styles/fonts";
 
 export const styles = StyleSheet.create({
   contentContainer: {
@@ -7,7 +9,7 @@ export const styles = StyleSheet.create({
   },
   separator: {
     height: 1,
-    backgroundColor: "#B7B7B7",
+    backgroundColor: colors.gray.medium,
   },
   title: {
     textAlign: "center",
@@ -21,11 +23,11 @@ export const styles = StyleSheet.create({
     marginTop: 16,
   },
   guidanceWrapper: {
-    backgroundColor: "#f7f7fc",
+    backgroundColor: colors.background.secondary,
     padding: 8,
     borderRadius: 16,
     gap: 16,
-    shadowColor: "#000000",
+    shadowColor: colors.common.black,
     ...{
       ...(Platform.OS === "android"
         ? {
@@ -45,9 +47,9 @@ export const styles = StyleSheet.create({
   },
   adviceDescription: {
     fontSize: 16,
-    fontFamily: "Roboto-300",
+    fontFamily: fonts.robotoLight,
     textAlign: "center",
-    color: "#242424",
+    color: colors.text.secondary,
   },
   adviceImageBox: {
     maxWidth: 314,
@@ -59,9 +61,9 @@ export const styles = StyleSheet.create({
     height: "100%",
   },
   adviceLabel: {
-    fontFamily: "Roboto-300",
+    fontFamily: fonts.robotoLight,
     fontSize: 14,
-    color: "#242424",
+    color: colors.text.secondary,
     textAlign: "center",
     marginBottom: 36,
   },

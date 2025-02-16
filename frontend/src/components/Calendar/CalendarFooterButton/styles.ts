@@ -1,4 +1,6 @@
 import { StyleSheet } from "react-native";
+import { fonts } from "../../../styles/fonts";
+import { colors } from "../../../styles/colors";
 
 export const styles = StyleSheet.create({
   button: {
@@ -6,8 +8,8 @@ export const styles = StyleSheet.create({
     paddingHorizontal: 12,
   },
   text: {
-    fontFamily: "Roboto-500",
+    fontFamily: fonts.robotoMedium,
     fontSize: 14,
-    color: "#242424",
+    color: colors.text.secondary,
   },
 });

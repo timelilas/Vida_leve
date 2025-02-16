@@ -1,4 +1,5 @@
 import { StyleSheet } from "react-native";
+import { fonts } from "../../../styles/fonts";
 
 export const styles = StyleSheet.create({
   item: {
@@ -12,7 +13,7 @@ export const styles = StyleSheet.create({
     backgroundColor: "#DEDFE5",
   },
   itemText: {
-    fontFamily: "Roboto-400",
+    fontFamily: fonts.robotoRegular,
     color: "#1D1B20",
     fontSize: 16,
     letterSpacing: 0.5,

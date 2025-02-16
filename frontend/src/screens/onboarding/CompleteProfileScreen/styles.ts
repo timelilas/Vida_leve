@@ -1,4 +1,6 @@
 import { StyleSheet } from "react-native";
+import { fonts } from "../../../styles/fonts";
+import { colors } from "../../../styles/colors";
 
 export const styles = StyleSheet.create({
   header: {
@@ -21,10 +23,10 @@ export const styles = StyleSheet.create({
     gap: 40,
   },
   genderLabel: {
-    fontFamily: "Roboto-400",
+    fontFamily: fonts.robotoRegular,
     fontSize: 16,
     lineHeight: 16,
-    color: "#4E4B66",
+    color: colors.text.primary,
     marginBottom: 8,
   },
   gender: {
@@ -32,8 +34,8 @@ export const styles = StyleSheet.create({
     lineHeight: 16,
     paddingVertical: 14,
     paddingHorizontal: 6,
-    fontFamily: "Roboto-400",
-    color: "#4E4B66",
+    fontFamily: fonts.robotoRegular,
+    color: colors.text.primary,
   },
   submitButton: {
     marginTop: "auto",

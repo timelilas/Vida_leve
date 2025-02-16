@@ -1,4 +1,6 @@
 import { StyleSheet } from "react-native";
+import { colors } from "../../styles/colors";
+import { fonts } from "../../styles/fonts";
 
 export const styles = StyleSheet.create({
   navigatinContainer: {
@@ -8,7 +10,7 @@ export const styles = StyleSheet.create({
   titleNavigationContainer: {
     paddingVertical: 14,
     paddingInline: 4,
-    backgroundColor: "#F7F7FC",
+    backgroundColor: colors.background.secondary,
   },
   titleBox: {
     gap: 6,
@@ -17,14 +19,14 @@ export const styles = StyleSheet.create({
   title: {
     fontSize: 20,
     lineHeight: 20,
-    color: "#242424",
-    fontFamily: "Roboto-400",
+    color: colors.text.secondary,
+    fontFamily: fonts.robotoRegular,
   },
   subtitle: {
     fontSize: 14,
     lineHeight: 14,
-    color: "#242424",
-    fontFamily: "Roboto-300",
+    color: colors.text.secondary,
+    fontFamily: fonts.robotoLight,
   },
   brand: {
     marginHorizontal: "auto",

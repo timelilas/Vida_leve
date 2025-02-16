@@ -10,6 +10,7 @@ import { SearchIcon } from "../../../../../components/Icons/SearchIcon";
 import { ClearInputIcon } from "../ClearInputIcon";
 import { useEffect, useRef } from "react";
 import { styles } from "./styles";
+import { colors } from "../../../../../styles/colors";
 
 interface SearchInputProps {
   onClearInput: () => void;
@@ -25,7 +26,7 @@ export default function SearchInput(props: TextInputProps & SearchInputProps) {
       ) : null}
       <TextInput
         style={styles.input}
-        placeholderTextColor="#B7B7B7"
+        placeholderTextColor={colors.gray.medium}
         {...propsRest}
       />
       <SearchIcon style={styles.icon} />

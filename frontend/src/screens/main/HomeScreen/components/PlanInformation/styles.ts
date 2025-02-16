@@ -1,24 +1,26 @@
 import { Platform, StyleSheet } from "react-native";
+import { fonts } from "../../../../../styles/fonts";
+import { colors } from "../../../../../styles/colors";
 
 export const styles = StyleSheet.create({
   titleThin: {
     fontSize: 16,
     lineHeight: 16,
-    fontFamily: "Roboto-300",
-    color: "#4e4b66",
+    fontFamily: fonts.robotoLight,
+    color: colors.text.primary,
     marginBottom: 8,
   },
   titleRegular: {
-    fontFamily: "Roboto-400",
+    fontFamily: fonts.robotoRegular,
   },
   targetCalorie: {
     borderRadius: 8,
     height: 48,
     borderWidth: 3,
-    borderColor: "#ffae31",
+    borderColor: colors.secondary,
     justifyContent: "center",
-    backgroundColor: "#f7f7fc",
-    shadowColor: "#000000",
+    backgroundColor: colors.background.secondary,
+    shadowColor: colors.common.black,
     ...(Platform.OS === "android"
       ? {
           elevation: 2,
@@ -32,8 +34,8 @@ export const styles = StyleSheet.create({
   targetCalorieText: {
     fontSize: 16,
     lineHeight: 16,
-    fontFamily: "Roboto-400",
-    color: "##242424",
+    fontFamily: fonts.robotoRegular,
+    color: colors.text.secondary,
     textAlign: "center",
   },
   adjustGoalButton: {
@@ -44,7 +46,7 @@ export const styles = StyleSheet.create({
     textAlign: "auto",
     fontSize: 14,
     lineHeight: 14,
-    fontFamily: "Roboto-300",
-    color: "#0000FF",
+    fontFamily: fonts.robotoLight,
+    color: colors.blue,
   },
 });

@@ -1,4 +1,5 @@
 import { StyleSheet } from "react-native";
+import { colors } from "../../../styles/colors";
 
 export const styles = StyleSheet.create({
   dayPicker: {
@@ -10,7 +11,7 @@ export const styles = StyleSheet.create({
     lineHeight: 20,
   },
   dayTitle: {
-    color: "#242424",
+    color: colors.text.secondary,
     marginTop: 16,
     marginInline: "auto",
   },

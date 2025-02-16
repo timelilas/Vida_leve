@@ -1,4 +1,6 @@
 import { StyleSheet } from "react-native";
+import { colors } from "../../styles/colors";
+import { fonts } from "../../styles/fonts";
 
 export const styles = StyleSheet.create({
   container: {
@@ -9,7 +11,7 @@ export const styles = StyleSheet.create({
     padding: 15,
     alignItems: "center",
     borderWidth: 1,
-    borderColor: "#4e4b66",
+    borderColor: colors.text.primary,
     flexDirection: "row",
     justifyContent: "center",
     gap: 8,
@@ -18,22 +20,22 @@ export const styles = StyleSheet.create({
     opacity: 0.5,
   },
   primary: {
-    backgroundColor: "#ffae31",
+    backgroundColor: colors.secondary,
   },
   outlined: {
-    backgroundColor: "#f7f7fc",
+    backgroundColor: colors.background.secondary,
   },
   highlighted: {
-    backgroundColor: "#f7f7fc",
+    backgroundColor: colors.background.secondary,
     borderWidth: 2,
-    borderColor: "#FFAE31",
+    borderColor: colors.secondary,
     paddingVertical: 14,
   },
   text: {
     textAlign: "center",
     fontSize: 16,
     lineHeight: 16,
-    fontFamily: "Roboto-400",
-    color: "#242424",
+    fontFamily: fonts.robotoRegular,
+    color: colors.text.secondary,
   },
 });

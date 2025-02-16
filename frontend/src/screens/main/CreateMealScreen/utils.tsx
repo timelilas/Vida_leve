@@ -5,6 +5,7 @@ import { CookieIcon } from "../../../components/Icons/CookieIcon";
 import { FreshFruitsIcon } from "../../../components/Icons/FreshFruitsIcon";
 import { MugIcon } from "../../../components/Icons/MugIcon";
 import { SoupIcon } from "../../../components/Icons/SoupIcon";
+import { colors } from "../../../styles/colors";
 
 interface MealButtonData {
   type: MealType;
@@ -16,26 +17,26 @@ export const mealButtonsData: MealButtonData[] = [
   {
     type: "cafe-da-manha",
     name: "Café da manha",
-    icon: <MugIcon stroke="#FFAE31" />,
+    icon: <MugIcon stroke={colors.secondary} />,
   },
   {
     type: "lanche",
     name: "Lanche",
-    icon: <CookieIcon stroke="#FFAE31" />,
+    icon: <CookieIcon stroke={colors.secondary} />,
   },
   {
     type: "almoco",
     name: "Almoço",
-    icon: <FreshFruitsIcon stroke="#FFAE31" />,
+    icon: <FreshFruitsIcon stroke={colors.secondary} />,
   },
   {
     type: "jantar",
     name: "Janta",
-    icon: <SoupIcon stroke="#FFAE31" />,
+    icon: <SoupIcon stroke={colors.secondary} />,
   },
   {
     type: "outro",
     name: "Outro",
-    icon: <AppleIcon stroke="#FFAE31" />,
+    icon: <AppleIcon stroke={colors.secondary} />,
   },
 ];

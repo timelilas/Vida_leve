@@ -1,4 +1,6 @@
 import { StyleSheet } from "react-native";
+import { colors } from "../../../styles/colors";
+import { fonts } from "../../../styles/fonts";
 
 export const styles = StyleSheet.create({
   container: {
@@ -20,8 +22,8 @@ export const styles = StyleSheet.create({
     alignSelf: "center",
   },
   closeAppButtonLabel: {
-    color: "#FFAE31",
-    fontFamily: "Roboto-700",
+    color: colors.secondary,
+    fontFamily: fonts.rudaBold,
     fontSize: 16,
     lineHeight: 16,
   },

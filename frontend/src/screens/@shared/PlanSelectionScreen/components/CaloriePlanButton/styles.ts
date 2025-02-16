@@ -1,5 +1,7 @@
 import { StyleSheet } from "react-native";
 import { useWindowDimensions } from "react-native";
+import { fonts } from "../../../../../styles/fonts";
+import { colors } from "../../../../../styles/colors";
 
 export function useStyles() {
   const screen = useWindowDimensions();
@@ -22,8 +24,8 @@ export function useStyles() {
       width: "100%",
       fontSize: 16,
       lineHeight: 16,
-      fontFamily: "Roboto-400",
-      color: "#242424",
+      fontFamily: fonts.robotoRegular,
+      color: colors.text.secondary,
       textAlign: "center",
     },
     goal: {
@@ -31,15 +33,15 @@ export function useStyles() {
     },
     dailyCalories: {
       fontSize: 24,
-      color: "#242424",
-      fontFamily: "Roboto-700",
+      color: colors.text.secondary,
+      fontFamily: fonts.robotoBold,
       textAlign: "center",
     },
     duration: {
       fontSize: 14,
       lineHeight: 14,
-      fontFamily: "Roboto-300",
-      color: "#242424",
+      fontFamily: fonts.robotoLight,
+      color: colors.text.secondary,
       textAlign: "center",
     },
     disabled: {

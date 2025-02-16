@@ -1,4 +1,6 @@
 import { StyleSheet } from "react-native";
+import { colors } from "../../styles/colors";
+import { fonts } from "../../styles/fonts";
 
 export const styles = StyleSheet.create({
   container: {
@@ -9,19 +11,19 @@ export const styles = StyleSheet.create({
     width: "100%",
     maxWidth: 390,
     minHeight: 170,
-    backgroundColor: "#eff0f6",
+    backgroundColor: colors.background.primary,
     justifyContent: "center",
     alignItems: "center",
     borderWidth: 3,
-    borderColor: "#14ae5c",
+    borderColor: colors.success,
     borderRadius: 8,
     padding: 24,
   },
   message: {
-    color: "#4e4b66",
+    color: colors.text.primary,
     fontSize: 24,
     lineHeight: 28.8,
-    fontFamily: "Roboto-700",
+    fontFamily: fonts.robotoBold,
     textAlign: "center",
   },
   closeButton: {

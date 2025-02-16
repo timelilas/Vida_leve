@@ -1,9 +1,10 @@
-import { View, ViewStyle, StyleProp, StyleSheet } from "react-native";
+import { View, ViewStyle, StyleProp } from "react-native";
 import { Paragraph } from "../Paragraph/Paragraph";
 import { ActivityFrequencyButton } from "./ActivityFrequencyButton";
 import { activityFrequencies } from "./utils";
 import { ErrorMessage } from "../ErrorMessage";
 import { ActitivyFrequency } from "../../@core/entities/@shared/activityFrequency/type";
+import { styles } from "./styles";
 
 interface ActivityFrequencySelectionProps {
   errorMessage?: string;
@@ -36,15 +37,3 @@ export function ActivityFrequencySelection(
     </View>
   );
 }
-
-const styles = StyleSheet.create({
-  container: {
-    gap: 8,
-  },
-  label: {
-    lineHeight: 16,
-  },
-  submitButton: {
-    marginTop: "auto",
-  },
-});

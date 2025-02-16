@@ -11,7 +11,7 @@ export interface ToggleButtonProps extends PropsWithChildren {
 export function ToggleButton(
   props: ToggleButtonProps & Omit<PressableProps, "style">
 ) {
-  const { selected, rounded, backgroundColor, ...propsRest } = props;
+  const { selected, rounded, backgroundColor, children, ...propsRest } = props;
 
   return (
     <Pressable
@@ -30,7 +30,7 @@ export function ToggleButton(
           backgroundColor && { backgroundColor },
         ]}
       >
-        {props.children}
+        {children}
       </View>
     </Pressable>
   );

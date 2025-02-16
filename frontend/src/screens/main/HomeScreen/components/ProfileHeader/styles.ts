@@ -1,4 +1,6 @@
 import { StyleSheet } from "react-native";
+import { colors } from "../../../../../styles/colors";
+import { fonts } from "../../../../../styles/fonts";
 
 export const styles = StyleSheet.create({
   container: {
@@ -12,7 +14,7 @@ export const styles = StyleSheet.create({
   profilImageContainer: {
     width: 88,
     height: 88,
-    backgroundColor: "#f7f7fC",
+    backgroundColor: colors.background.secondary,
     alignItems: "center",
     justifyContent: "center",
     borderRadius: 44,
@@ -26,7 +28,7 @@ export const styles = StyleSheet.create({
     borderRadius: 16,
     justifyContent: "center",
     alignItems: "center",
-    backgroundColor: "#b7b7b7",
+    backgroundColor: colors.gray.medium,
   },
   updateProfileButton: {
     marginLeft: "auto",
@@ -38,7 +40,7 @@ export const styles = StyleSheet.create({
   userName: {
     fontSize: 24,
     lineHeight: 28.8,
-    fontFamily: "Roboto-700",
-    color: "#4E4B66",
+    fontFamily: fonts.robotoBold,
+    color: colors.text.primary,
   },
 });

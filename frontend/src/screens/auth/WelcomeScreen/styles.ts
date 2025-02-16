@@ -1,5 +1,7 @@
 import { Platform } from "react-native";
 import { StyleSheet } from "react-native";
+import { fonts } from "../../../styles/fonts";
+import { colors } from "../../../styles/colors";
 
 export const styles = StyleSheet.create({
   safeAreaView: {
@@ -24,13 +26,12 @@ export const styles = StyleSheet.create({
     borderBottomRightRadius: 80,
     borderBottomLeftRadius: 80,
     overflow: "hidden",
+    shadowColor: colors.common.black,
     ...(Platform.OS === "android"
       ? {
-          shadowColor: "#000000",
           elevation: 6,
         }
       : {
-          shadowColor: "#00000040",
           shadowOffset: { width: 0, height: 4 },
           shadowRadius: 4,
         }),
@@ -56,20 +57,20 @@ export const styles = StyleSheet.create({
     marginTop: "auto",
   },
   titleRuda: {
-    fontFamily: "Ruda-700",
+    fontFamily: fonts.rudaBold,
     fontSize: 48,
     lineHeight: 53,
-    color: "#3AA1A8",
+    color: colors.primary,
   },
   titleRoboto: {
-    fontFamily: "Roboto-400",
+    fontFamily: fonts.robotoRegular,
     fontSize: 24,
     lineHeight: 24,
-    color: "#242424",
+    color: colors.text.secondary,
   },
   titleRobotoBold: {
-    fontFamily: "Roboto-700",
-    color: "#FFAE31",
+    fontFamily: fonts.robotoBold,
+    color: colors.secondary,
   },
   buttonWrapper: {
     marginTop: "auto",

@@ -1,4 +1,6 @@
 import { StyleSheet } from "react-native";
+import { fonts } from "../../../styles/fonts";
+import { colors } from "../../../styles/colors";
 
 export const styles = StyleSheet.create({
   boardItem: {
@@ -9,14 +11,14 @@ export const styles = StyleSheet.create({
   },
   text: {
     fontSize: 14,
-    fontFamily: "Roboto-400",
+    fontFamily: fonts.robotoRegular,
     lineHeight: 19,
-    color: "#4E4B66",
+    color: colors.text.primary,
   },
   textValid: {
-    color: "#14AE5C",
+    color: colors.success,
   },
   textInvalid: {
-    color: "#F95D4D",
+    color: colors.error,
   },
 });

@@ -1,9 +1,11 @@
 import { StyleSheet } from "react-native";
+import { colors } from "../../../styles/colors";
+import { fonts } from "../../../styles/fonts";
 
 export const styles = StyleSheet.create({
   container: {
     overflow: "hidden",
-    backgroundColor: "#EFF0F6",
+    backgroundColor: colors.background.primary,
     borderRadius: 16,
     borderColor: "#CAC4D0",
     borderWidth: 1,
@@ -29,7 +31,7 @@ export const styles = StyleSheet.create({
     fontSize: 14,
     lineHeight: 20,
     letterSpacing: 0.1,
-    fontFamily: "Roboto-500",
+    fontFamily: fonts.robotoMedium,
     color: "#49454F",
   },
   footer: {

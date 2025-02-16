@@ -14,6 +14,7 @@ import GoalSettingsScreen from "../screens/main/GoalSettingsScreen";
 import UpdateProgressScreen from "../screens/main/UpdateProgressScreen";
 import CreateMealScreen from "../screens/main/CreateMealScreen";
 import SearchFoodsScreen from "../screens/main/SearchFoodsScreen";
+import { colors } from "../styles/colors";
 
 const Stack = createNativeStackNavigator<RouteParamsList>();
 
@@ -27,7 +28,7 @@ const Navigation = () => {
           animationDuration: 300,
           orientation: "all",
           statusBarStyle: "dark",
-          statusBarColor: "#eff0f6",
+          statusBarColor: colors.background.primary,
         }}
       >
         <Stack.Screen

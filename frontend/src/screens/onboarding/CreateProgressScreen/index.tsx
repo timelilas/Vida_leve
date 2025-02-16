@@ -13,7 +13,7 @@ import { httpProgressService } from "../../../services/progress";
 import { useSnackbar } from "../../../hooks/useSnackbar";
 import { ProgressForm } from "../../../components/ProgressForm";
 import { OnProgressSubmitData } from "../../../components/ProgressForm/types";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { styles } from "./styles";
 
 const CreateProgressScreen = () => {

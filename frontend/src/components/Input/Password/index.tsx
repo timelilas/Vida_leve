@@ -42,7 +42,6 @@ export function PasswordInput(props: PasswordInputProps & TextInputProps) {
       <RawInput
         textContentType="password"
         secureTextEntry={!isPasswordVisible}
-        placeholderTextColor={"#B7B7B7"}
         disabled={disabled}
         error={error}
         rightAdornment={

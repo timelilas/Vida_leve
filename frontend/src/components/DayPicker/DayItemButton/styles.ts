@@ -1,4 +1,6 @@
 import { StyleSheet } from "react-native";
+import { colors } from "../../../styles/colors";
+import { fonts } from "../../../styles/fonts";
 
 export const styles = StyleSheet.create({
   container: {
@@ -9,11 +11,11 @@ export const styles = StyleSheet.create({
   text: {
     fontSize: 14,
     lineHeight: 14,
-    fontFamily: "Roboto-300",
-    color: "#242424",
+    fontFamily: fonts.robotoLight,
+    color: colors.text.secondary,
   },
   textDisabled: {
-    color: "#868686",
+    color: colors.text.disabled,
   },
   containerDisabled: {
     opacity: 0.5,

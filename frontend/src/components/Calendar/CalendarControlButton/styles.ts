@@ -1,4 +1,5 @@
 import { StyleSheet } from "react-native";
+import { fonts } from "../../../styles/fonts";
 
 export const styles = StyleSheet.create({
   button: {
@@ -11,7 +12,7 @@ export const styles = StyleSheet.create({
     fontSize: 14,
     lineHeight: 20,
     letterSpacing: 0.1,
-    fontFamily: "Roboto-500",
+    fontFamily: fonts.robotoMedium,
     color: "#49454F",
   },
 });

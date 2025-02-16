@@ -54,7 +54,6 @@ export function DateInput(props: InputProps & TextInputProps) {
     <View style={defaultInputStyles.inputField}>
       {label ? <Text style={defaultInputStyles.label}>{label}</Text> : null}
       <RawInput
-        placeholderTextColor={"#B7B7B7"}
         value={props.value}
         disabled={disabled}
         error={error}

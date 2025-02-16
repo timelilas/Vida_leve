@@ -2,6 +2,7 @@ import { ReactNode } from "react";
 import { AlertIcon } from "../../Icons/AlertIcon";
 import { defaultInputStyles } from "../styles";
 import { View, TextInput, TextInputProps } from "react-native";
+import { colors } from "../../../styles/colors";
 
 interface RawInputProps {
   error?: boolean;
@@ -37,7 +38,7 @@ export function RawInput(props: RawInputProps & TextInputProps) {
       <View style={inputBoxShadowStyles}>
         <View style={inputBoxStyles}>
           <TextInput
-            placeholderTextColor={"#B7B7B7"}
+            placeholderTextColor={colors.gray.medium}
             style={inputStyles}
             value={props.value}
             editable={!disabled}

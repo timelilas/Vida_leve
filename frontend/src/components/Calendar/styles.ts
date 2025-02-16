@@ -1,9 +1,10 @@
 import { StyleSheet } from "react-native";
+import { colors } from "../../styles/colors";
 
 export const styles = StyleSheet.create({
   container: {
     overflow: "hidden",
-    backgroundColor: "#EFF0F6",
+    backgroundColor: colors.background.primary,
     borderRadius: 16,
     borderColor: "#CAC4D0",
     borderWidth: 1,

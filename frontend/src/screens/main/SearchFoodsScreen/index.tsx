@@ -15,7 +15,7 @@ import {
 import { Paragraph } from "../../../components/Paragraph/Paragraph";
 import SearchInput from "./components/SearchInput";
 import { useEffect, useState } from "react";
-import { FOOD_ITEM_HEIGHT } from "./components/FoodItem";
+import { FOOD_ITEM_HEIGHT } from "./components/FoodItem/constants";
 import {
   formatDateToLabel,
   transformFoodNameIntoSlug,
@@ -25,6 +25,7 @@ import { useThrottle } from "../../../hooks/useThrottle ";
 import { useSnackbar } from "../../../hooks/useSnackbar";
 import { FoodList } from "./components/FoodList";
 import { styles } from "./styles";
+import { colors } from "../../../styles/colors";
 
 type SearchFoodsScreenRouteProp = RouteProp<
   RouteParamsList,
@@ -147,7 +148,7 @@ const SearchFoodsScreen = ({ route }: SearchFoodsScreenProps) => {
       {isFetching ? (
         <ActivityIndicator
           style={styles.activityIndicator}
-          color="#3AA1A8"
+          color={colors.primary}
           size="large"
         />
       ) : null}

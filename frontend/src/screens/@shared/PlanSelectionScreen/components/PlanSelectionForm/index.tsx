@@ -1,5 +1,5 @@
 import { StyleSheet, View } from "react-native";
-import { CaloriePlanButton } from "./CaloriePlanButton";
+import { CaloriePlanButton } from "../CaloriePlanButton";
 import { CaloriePlanProps } from "../../../../../@core/entities/caloriePlan/type";
 import { planUiDetails } from "./utils";
 import { PlanType } from "../../../../../@core/entities/@shared/planType/type";

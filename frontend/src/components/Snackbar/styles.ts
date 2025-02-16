@@ -1,4 +1,6 @@
 import { StyleSheet } from "react-native";
+import { colors } from "../../styles/colors";
+import { fonts } from "../../styles/fonts";
 
 export const styles = StyleSheet.create({
   container: {
@@ -10,23 +12,23 @@ export const styles = StyleSheet.create({
     right: 0,
   },
   message: {
-    fontFamily: "Roboto-400",
+    fontFamily: fonts.robotoRegular,
     fontSize: 15,
-    color: "#ffffff",
+    color: colors.text.secondary,
   },
 });
 
 export const neutralStyles = StyleSheet.create({
-  container: { backgroundColor: "transparent" },
-  message: { color: "#ffffff" },
+  container: { backgroundColor: colors.gray.medium },
+  message: { color: colors.text.secondary },
 });
 
 export const errorStyles = StyleSheet.create({
-  container: { backgroundColor: "#DC2626" },
-  message: { color: "#ffffff" },
+  container: { backgroundColor: colors.error },
+  message: { color: colors.common.white },
 });
 
 export const successStyles = StyleSheet.create({
-  container: { backgroundColor: "#16A34A" },
-  message: { color: "#ffffff" },
+  container: { backgroundColor: colors.success },
+  message: { color: colors.common.white },
 });

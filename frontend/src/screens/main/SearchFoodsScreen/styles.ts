@@ -1,4 +1,6 @@
 import { StyleSheet } from "react-native";
+import { colors } from "../../../styles/colors";
+import { fonts } from "../../../styles/fonts";
 
 export const styles = StyleSheet.create({
   container: {
@@ -15,13 +17,13 @@ export const styles = StyleSheet.create({
     marginTop: 32,
     fontSize: 20,
     lineHeight: 20,
-    color: "#242424",
+    color: colors.text.secondary,
   },
   text: {
     paddingHorizontal: 16,
     marginTop: 16,
-    fontFamily: "Roboto-300",
-    color: "#242424",
+    fontFamily: fonts.robotoLight,
+    color: colors.text.secondary,
   },
   inputBox: {
     marginTop: 24,

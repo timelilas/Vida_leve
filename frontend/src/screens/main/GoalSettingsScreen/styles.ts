@@ -1,4 +1,6 @@
 import { StyleSheet } from "react-native";
+import { fonts } from "../../../styles/fonts";
+import { colors } from "../../../styles/colors";
 
 export const styles = StyleSheet.create({
   body: {
@@ -15,14 +17,14 @@ export const styles = StyleSheet.create({
     paddingVertical: 14,
     fontSize: 16,
     lineHeight: 16,
-    fontFamily: "Roboto-400",
-    color: "#242424",
+    fontFamily: fonts.robotoRegular,
+    color: colors.text.secondary,
   },
   textDivider: {
     fontSize: 20,
     lineHeight: 20,
-    fontFamily: "Roboto-700",
+    fontFamily: fonts.robotoBold,
     textAlign: "center",
-    color: "#4E4B66",
+    color: colors.text.primary,
   },
 });

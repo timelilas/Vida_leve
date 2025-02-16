@@ -11,7 +11,6 @@ export function DefaultInput(props: InputProps & TextInputProps) {
     <View style={defaultInputStyles.inputField}>
       <Text style={defaultInputStyles.label}>{label}</Text>
       <RawInput
-        placeholderTextColor={"#B7B7B7"}
         value={props.value}
         disabled={disabled}
         error={error}

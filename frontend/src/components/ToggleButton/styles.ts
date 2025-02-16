@@ -1,21 +1,22 @@
 import { Platform, StyleSheet } from "react-native";
+import { colors } from "../../styles/colors";
 
 export const styles = StyleSheet.create({
   button: {
     padding: 2,
     borderRadius: 8,
     borderWidth: 1,
-    borderColor: "#4e4b66",
-    backgroundColor: "#f7f7fc",
+    borderColor: colors.text.primary,
+    backgroundColor: colors.background.secondary,
   },
   buttonRounded: {
     borderRadius: 18,
   },
   buttonSelected: {
-    backgroundColor: "#ffae31",
-    borderColor: "#ffae31",
+    backgroundColor: colors.secondary,
+    borderColor: colors.secondary,
     borderRadius: 10,
-    shadowColor: "#000000",
+    shadowColor: colors.common.black,
     ...(Platform.OS === "android"
       ? {
           elevation: 4,
@@ -27,7 +28,7 @@ export const styles = StyleSheet.create({
         }),
   },
   container: {
-    backgroundColor: "#f7f7fc",
+    backgroundColor: colors.background.secondary,
     borderRadius: 8,
   },
   containerRounded: {

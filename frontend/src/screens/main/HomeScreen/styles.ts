@@ -1,4 +1,5 @@
 import { StyleSheet } from "react-native";
+import { colors } from "../../../styles/colors";
 
 export const styles = StyleSheet.create({
   body: {
@@ -9,7 +10,7 @@ export const styles = StyleSheet.create({
     width: "86%",
     alignSelf: "center",
     marginTop: 6,
-    backgroundColor: "#4e4b66",
+    backgroundColor: colors.text.primary,
   },
   progressContainer: {
     marginTop: 24,

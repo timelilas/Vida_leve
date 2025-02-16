@@ -1,4 +1,6 @@
 import { StyleSheet } from "react-native";
+import { colors } from "../../styles/colors";
+import { fonts } from "../../styles/fonts";
 
 export const defaultInputStyles = StyleSheet.create({
   inputField: {
@@ -13,7 +15,7 @@ export const defaultInputStyles = StyleSheet.create({
     borderColor: "transparent",
     borderWidth: 1,
     borderRadius: 8,
-    backgroundColor: "#F7F7FC",
+    backgroundColor: colors.background.secondary,
     padding: 1,
     height: 48,
     flex: 1,
@@ -27,15 +29,15 @@ export const defaultInputStyles = StyleSheet.create({
     backgroundColor: "#f5f5f5",
   },
   boxShadowFilled: {
-    borderColor: "#4E4B66",
+    borderColor: colors.text.primary,
   },
   boxShadowError: {
-    borderColor: "#F95D4D",
+    borderColor: colors.error,
     borderRadius: 10,
-    backgroundColor: "#F95D4D",
+    backgroundColor: colors.error,
   },
   inputBox: {
-    backgroundColor: "#F7F7FC",
+    backgroundColor: colors.background.secondary,
     flexDirection: "row",
     alignItems: "center",
     borderRadius: 8,
@@ -45,15 +47,15 @@ export const defaultInputStyles = StyleSheet.create({
     backgroundColor: "#f5f5f5",
   },
   label: {
-    fontFamily: "Roboto-400",
+    fontFamily: fonts.robotoRegular,
     fontSize: 16,
     lineHeight: 16,
-    color: "#4E4B66",
+    color: colors.text.primary,
   },
   input: {
-    fontFamily: "Roboto-400",
+    fontFamily: fonts.robotoRegular,
     fontSize: 16,
-    color: "#242424",
+    color: colors.text.secondary,
     paddingHorizontal: 16,
     borderRadius: 8,
     height: "100%",

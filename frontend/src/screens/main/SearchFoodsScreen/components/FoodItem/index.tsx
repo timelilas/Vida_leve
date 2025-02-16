@@ -7,8 +7,6 @@ interface FoodItemProps extends Pick<FoodProps, "name"> {
   action: () => void;
 }
 
-export const FOOD_ITEM_HEIGHT = 50;
-
 export function FoodItem(props: FoodItemProps) {
   const { name, action } = props;
   return (

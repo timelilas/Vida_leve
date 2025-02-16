@@ -1,5 +1,7 @@
 import { StyleSheet } from "react-native";
-import { FOOD_ITEM_HEIGHT } from ".";
+import { FOOD_ITEM_HEIGHT } from "./constants";
+import { colors } from "../../../../../styles/colors";
+import { fonts } from "../../../../../styles/fonts";
 
 export const styles = StyleSheet.create({
   container: {
@@ -10,14 +12,14 @@ export const styles = StyleSheet.create({
     paddingHorizontal: 16,
     paddingVertical: 12,
     minHeight: FOOD_ITEM_HEIGHT,
-    borderBottomColor: "#B7B7B7",
+    borderBottomColor: colors.gray.medium,
     borderBottomWidth: 1,
   },
   text: {
     flexShrink: 1,
     fontSize: 16,
     lineHeight: 16,
-    color: "#242424",
-    fontFamily: "Roboto-400",
+    color: colors.text.secondary,
+    fontFamily: fonts.robotoRegular,
   },
 });

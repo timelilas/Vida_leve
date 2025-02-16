@@ -200,7 +200,7 @@
   {
     "name": "Quentão",
     "slug": "quentao",
-    "measurementUnit": " - (100 ml)",
+    "measurementUnit": "1 dose - (100 ml)",
     "calories": 294
   },
   {
@@ -254,7 +254,7 @@
   {
     "name": "Vinho quente",
     "slug": "vinho-quente",
-    "measurementUnit": " - (100 ml)",
+    "measurementUnit": "1 dose - (100 ml)",
     "calories": 120
   },
   {
@@ -730,12 +730,6 @@
     "slug": "biscoito-de-leite-passatempo-nestle",
     "measurementUnit": "5 unidades - (30 g)",
     "calories": 134
-  },
-  {
-    "name": "Biscoito de fibra",
-    "slug": "biscoito-de-fibra",
-    "measurementUnit": " - ()",
-    "calories": 135
   },
   {
     "name": "Biscoito de polvilho doce - Cassini",
@@ -2912,49 +2906,49 @@
   {
     "name": "Iogurte frozen yogurt - Yogen früz",
     "slug": "iogurte-frozen-yogurt-yogen-fruz",
-    "measurementUnit": " - (100 g)",
+    "measurementUnit": "1 pote - (100 g)",
     "calories": 88
   },
   {
     "name": "Iogurte frozen yogurt - Yogolove",
     "slug": "iogurte-frozen-yogurt-yogolove",
-    "measurementUnit": " - (100 g)",
+    "measurementUnit": "1 pote - (100 g)",
     "calories": 111
   },
   {
     "name": "Iogurte frozen yogurt - Yoggi",
     "slug": "iogurte-frozen-yogurt-yoggi",
-    "measurementUnit": " - (100 g)",
+    "measurementUnit": "1 pote - (100 g)",
     "calories": 88
   },
   {
     "name": "Iogurte frozen yogurt - Yogoberry",
     "slug": "iogurte-frozen-yogurt-yogoberry",
-    "measurementUnit": " - (100 g)",
+    "measurementUnit": "1 pote - (100 g)",
     "calories": 88
   },
   {
     "name": "Iogurte frozen yogurt - Yoforia",
     "slug": "iogurte-frozen-yogurt-yoforia",
-    "measurementUnit": " - (100 g)",
+    "measurementUnit": "1 pote - (100 g)",
     "calories": 90
   },
   {
     "name": "Iogurte frozen yogurt tutti frutti",
     "slug": "iogurte-frozen-yogurt-tutti-frutti",
-    "measurementUnit": " - (100 g)",
+    "measurementUnit": "1 pote - (100 g)",
     "calories": 107
   },
   {
     "name": "Iogurte frozen yogurt bendita fruta",
     "slug": "iogurte-frozen-yogurt-bendita-fruta",
-    "measurementUnit": " - (100 g)",
+    "measurementUnit": "1 pote - (100 g)",
     "calories": 85
   },
   {
     "name": "Iogurte frozen yogurt - Yogofresh",
     "slug": "iogurte-frozen-yogurt-yogofresh",
-    "measurementUnit": " - (100 g)",
+    "measurementUnit": "1 pote - (100 g)",
     "calories": 86
   },
   {
@@ -4700,7 +4694,7 @@
   {
     "name": "Batata chip",
     "slug": "batata-chip",
-    "measurementUnit": " - (30 g)",
+    "measurementUnit": "1 porção - (30 g)",
     "calories": 160
   },
   {
@@ -4922,19 +4916,19 @@
   {
     "name": "Salgadinho frito",
     "slug": "salgadinho-frito",
-    "measurementUnit": " - (30 g)",
+    "measurementUnit": "1 porção - (30 g)",
     "calories": 100
   },
   {
     "name": "Salgadinho frito industrializado",
     "slug": "salgadinho-frito-industrializado",
-    "measurementUnit": " - (30 g)",
+    "measurementUnit": "1 porção - (30 g)",
     "calories": 160
   },
   {
     "name": "Salgadinho industrializado a base de milho",
     "slug": "salgadinho-industrializado-a-base-de-milho",
-    "measurementUnit": " - (30 g)",
+    "measurementUnit": "1 porção - (30 g)",
     "calories": 130
   },
   {

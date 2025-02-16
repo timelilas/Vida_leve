@@ -59,7 +59,7 @@ export function useSearchFoods(foodName: string) {
       if (currentState) return;
 
       await queryClient.fetchQuery<FoodDataState>({
-        ...options,
+        queryKey,
         queryFn: async () => {
           const { data } = await httpFoodService.searchFoods({
             name: foodName,

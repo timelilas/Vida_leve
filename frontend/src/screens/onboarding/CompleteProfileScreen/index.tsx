@@ -1,8 +1,7 @@
-import { StyleSheet, Text, View } from "react-native";
+import { Text, View } from "react-native";
 import { ScreenWrapper } from "../../../components/ScreenWrapper";
 import { Input } from "../../../components/Input";
 import { SubmitButton } from "../../../components/SubmitButton";
-import { ToggleButton } from "../../../components/ToggleButton";
 import { ProfileFormData } from "./types";
 import { Paragraph } from "../../../components/Paragraph/Paragraph";
 import { ScreenTitle } from "../../../components/ScreenTitle";
@@ -32,6 +31,7 @@ import { STORAGE_ACCESS_TOKEN } from "../../../constants/localStorageConstants";
 import { CommonActions } from "@react-navigation/native";
 import { NavigationHeader } from "../../../components/NavigationHeader";
 import { styles } from "./styles";
+import { GenderButton } from "./components/GenderButton";
 
 const CompleteProfileScreen = () => {
   const { Snackbar, showSnackbar } = useSnackbar();
@@ -168,20 +168,20 @@ const CompleteProfileScreen = () => {
         <View>
           <Text style={styles.genderLabel}>Gênero social</Text>
           <View style={styles.genderButtons}>
-            <ToggleButton
+            <GenderButton
               disabled={isSubmitting}
               selected={data.values.gender === "feminino"}
               onPress={() => selectGender("feminino")}
             >
               <Text style={styles.gender}>Feminino</Text>
-            </ToggleButton>
-            <ToggleButton
+            </GenderButton>
+            <GenderButton
               disabled={isSubmitting}
               selected={data.values.gender === "masculino"}
               onPress={() => selectGender("masculino")}
             >
               <Text style={styles.gender}>Masculino</Text>
-            </ToggleButton>
+            </GenderButton>
           </View>
           {error.field === "gender" && error.message && (
             <ErrorMessage style={styles.genderError} message={error.message} />

@@ -7,6 +7,7 @@ import {
 } from "../../../utils/helpers";
 import { DateData } from "../types";
 import { memo } from "react";
+import { colors } from "../../../styles/colors";
 
 interface DayItemProps extends PressableProps {
   selected: boolean;
@@ -27,7 +28,7 @@ export const DayItemButton = memo(
     return (
       <ToggleButton
         selected={selected}
-        backgroundColor="#EFF0F6"
+        backgroundColor={colors.background.primary}
         {...propsRest}
       >
         <View
