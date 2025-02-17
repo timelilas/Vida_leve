@@ -1,19 +1,20 @@
 import { RouteConstants, RouteParamsList } from "./types";
 import { NavigationContainer } from "@react-navigation/native";
 import { createNativeStackNavigator } from "@react-navigation/native-stack";
-import LoginScreen from "../screens/auth/login/LoginScreen";
-import SignupScreen from "../screens/auth/signup/SignupScreen";
-import PlanSelectionScreen from "../screens/@shared/planSelection/PlanSelectionScreen";
-import GoalGuidanceScreen from "../screens/onboarding/goalGuidance/GoalGuidanceScreen";
-import CreateProgressScreen from "../screens/onboarding/createProgress/CreateProgressScreen";
-import CompleteProfileScreen from "../screens/onboarding/completeProfile/CompleteProfileScreen";
-import ConnectionErrorScreen from "../screens/error/connectionError/ConnectionErrorScreen";
-import WelcomeScreen from "../screens/auth/welcome/WelcomeScreen";
-import HomeScreen from "../screens/main/home/HomeScreen";
-import GoalSettingsScreen from "../screens/main/goalSettings/GoalSettingsScreen";
-import UpdateProgressScreen from "../screens/main/updateProgress/UpdateProgressScreen";
-import CreateMealScreen from "../screens/main/createMeal/CreateMealScreen";
-import SearchFoodsScreen from "../screens/main/searchFoods/SearchFoodsScreen";
+import LoginScreen from "../screens/auth/LoginScreen";
+import SignupScreen from "../screens/auth/SignupScreen";
+import PlanSelectionScreen from "../screens/@shared/PlanSelectionScreen";
+import GoalGuidanceScreen from "../screens/onboarding/GoalGuidanceScreen";
+import CreateProgressScreen from "../screens/onboarding/CreateProgressScreen";
+import CompleteProfileScreen from "../screens/onboarding/CompleteProfileScreen";
+import ConnectionErrorScreen from "../screens/error/ConnectionErrorScreen";
+import WelcomeScreen from "../screens/auth/WelcomeScreen";
+import HomeScreen from "../screens/main/HomeScreen";
+import GoalSettingsScreen from "../screens/main/GoalSettingsScreen";
+import UpdateProgressScreen from "../screens/main/UpdateProgressScreen";
+import CreateMealScreen from "../screens/main/CreateMealScreen";
+import SearchFoodsScreen from "../screens/main/SearchFoodsScreen";
+import { colors } from "../styles/colors";
 
 const Stack = createNativeStackNavigator<RouteParamsList>();
 
@@ -27,7 +28,7 @@ const Navigation = () => {
           animationDuration: 300,
           orientation: "all",
           statusBarStyle: "dark",
-          statusBarColor: "#eff0f6",
+          statusBarColor: colors.background.primary,
         }}
       >
         <Stack.Screen

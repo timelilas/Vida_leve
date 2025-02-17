@@ -6,6 +6,8 @@ import {
 } from "react-native-calendars";
 import { ptBR } from "./localeConfig";
 import { StyleSheet, View } from "react-native";
+import { colors } from "../../styles/colors";
+import { fonts } from "../../styles/fonts";
 
 interface CustomCalendarBodyProps {
   onDayPress?: (date: DateData) => void;
@@ -44,7 +46,7 @@ const baseStyles = StyleSheet.create({
     padding: 0,
   },
   textDay: {
-    fontFamily: "Roboto-400",
+    fontFamily: fonts.robotoRegular,
     fontSize: 16,
     color: "#1D1B20",
   },
@@ -52,20 +54,20 @@ const baseStyles = StyleSheet.create({
 
 const markedStyles = StyleSheet.create({
   text: {
-    color: "#FFFFFF",
+    color: colors.common.white,
   },
   container: {
-    backgroundColor: "#3AA1A8",
+    backgroundColor: colors.primary,
     borderRadius: 20,
   },
 });
 
 const theme: CalendarProps["theme"] = {
   todayTextColor: "#e45f5f",
-  calendarBackground: "#EFF0F6",
+  calendarBackground: colors.background.primary,
   textDisabledColor: "#827e8a",
   textDayHeaderFontSize: 16,
-  textDayHeaderFontFamily: "Roboto-400",
+  textDayHeaderFontFamily: fonts.robotoRegular,
   textSectionTitleColor: "#1D1B20",
   textDayStyle: baseStyles.textDay,
 };
