@@ -37,7 +37,6 @@ export function useSearchFoods(params: UseFoodParams) {
         limit: Math.max(params.limit, 10),
         offset: 0,
       });
-      await delay(500);
       return data;
     },
   });
