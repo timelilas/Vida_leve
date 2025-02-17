@@ -1,5 +1,6 @@
 import { useCallback, useState } from "react";
-import { Snackbar, SnackbarVariant } from "../components/snackbar/Snackbar";
+import { Snackbar } from "../components/Snackbar/Index";
+import { SnackbarVariant } from "../components/Snackbar/types";
 
 interface SnackbarState {
   id: number | string;

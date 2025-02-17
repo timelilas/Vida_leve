@@ -1,4 +1,4 @@
-import { DateData } from "../components/dayPicker/types";
+import { DateData } from "../components/DayPicker/types";
 
 export function toCapitalized(input: string): string {
   const words = input.split("-");

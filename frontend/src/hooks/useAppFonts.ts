@@ -4,12 +4,12 @@ import * as SplashScreen from "expo-splash-screen";
 
 export function useAppFonts() {
   const [loaded, error] = useFonts({
-    "Roboto-900": require("../assets/fonts/Roboto-Black.ttf"),
-    "Roboto-700": require("../assets/fonts/Roboto-Bold.ttf"),
-    "Roboto-500": require("../assets/fonts/Roboto-Medium.ttf"),
-    "Roboto-400": require("../assets/fonts/Roboto-Regular.ttf"),
-    "Roboto-300": require("../assets/fonts/Roboto-Light.ttf"),
-    "Ruda-700": require("../assets/fonts/Ruda-Bold.ttf"),
+    "Roboto-Black": require("../assets/fonts/Roboto-Black.ttf"),
+    "Roboto-Bold": require("../assets/fonts/Roboto-Bold.ttf"),
+    "Roboto-Medium": require("../assets/fonts/Roboto-Medium.ttf"),
+    "Roboto-Regular": require("../assets/fonts/Roboto-Regular.ttf"),
+    "Roboto-Light": require("../assets/fonts/Roboto-Light.ttf"),
+    "Ruda-Bold": require("../assets/fonts/Ruda-Bold.ttf"),
   });
 
   useEffect(() => {

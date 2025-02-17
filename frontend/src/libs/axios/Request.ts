@@ -7,9 +7,7 @@ import {
 } from "../../constants/errorMessages";
 
 const api = axios.create({
-  // baseURL: "http://192.168.0.117:3000",
-  // baseURL: "http://localhost:3000/",
-  baseURL: "https://vida-leve-h7ug.onrender.com",
+  baseURL: process.env.EXPO_PUBLIC_API_URL,
   timeout: 5000,
 });
 
