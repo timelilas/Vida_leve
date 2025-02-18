@@ -3,6 +3,8 @@ import { sequelize } from "../index";
 import Sequelize from "sequelize";
 import { ConsumedFoodsEntity } from "../../@core/entity/ConsumedFoods/enitys";
 import { TableNames } from "../constants";
+import Food from "./Food";
+import Meals from "./Meals";
 
 class ConsumedFoods
     extends Model<InferAttributes<ConsumedFoods>, InferCreationAttributes<ConsumedFoods>>
@@ -58,5 +60,11 @@ ConsumedFoods.init(
         freezeTableName: true,
     }
 )
+
+Food.hasMany(ConsumedFoods, { foreignKey: "foodId" });
+ConsumedFoods.belongsTo(Food, { foreignKey: "foodId" });
+
+Meals.hasMany(ConsumedFoods, { foreignKey: "mealId" });
+ConsumedFoods.belongsTo(Meals, { foreignKey: "mealId" });
 
 export default ConsumedFoods
