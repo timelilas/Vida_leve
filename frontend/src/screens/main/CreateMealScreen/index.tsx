@@ -6,7 +6,7 @@ import { ScreenTitle } from "../../../components/ScreenTitle";
 import { MealButton } from "./components/MealButton";
 import { mealButtonsData } from "./utils";
 import { useEffect, useState } from "react";
-import { MealType } from "../../../@core/entities/@shared/meal/type";
+import { MealType } from "../../../@core/entities/@shared/mealType/type";
 import { DayPicker } from "../../../components/DayPicker";
 import { DateData } from "../../../components/DayPicker/types";
 import { RouteConstants } from "../../../routes/types";

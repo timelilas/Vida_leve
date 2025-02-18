@@ -23,6 +23,7 @@ import { useSnackbar } from "../../../hooks/useSnackbar";
 import { FoodList } from "./components/FoodList";
 import { styles } from "./styles";
 import { colors } from "../../../styles/colors";
+import { MealType } from "../../../@core/entities/@shared/mealType/type";
 
 type SearchFoodsScreenRouteProp = RouteProp<
   RouteParamsList,
@@ -34,7 +35,7 @@ interface SearchFoodsScreenProps {
 }
 
 const SearchFoodsScreen = ({ route }: SearchFoodsScreenProps) => {
-  const { mealDate } = route.params;
+  const { mealDate, mealType } = route.params;
   const navigation = useAppNavigation();
   const windowDimensions = useWindowDimensions();
 
@@ -113,6 +114,23 @@ const SearchFoodsScreen = ({ route }: SearchFoodsScreenProps) => {
     setBodyHeight(e.nativeEvent.layout.height);
   }
 
+  function getTitleFromMealType(type: MealType) {
+    switch (type) {
+      case "cafe-da-manha":
+        return "Café da manhã";
+      case "lanche":
+        return "Lanche";
+      case "almoco":
+        return "Almoço";
+      case "jantar":
+        return "Jantar";
+      case "outro":
+        return "Outros";
+      default:
+        return "";
+    }
+  }
+
   const shortDateLabel = formatDateToLabel(
     new Date(mealDate.year, mealDate.month, mealDate.day),
     "short"
@@ -127,7 +145,7 @@ const SearchFoodsScreen = ({ route }: SearchFoodsScreenProps) => {
       <View style={styles.body} onLayout={getBodyHeight}>
         <NavigationHeader
           variant="titled"
-          title="Lanche"
+          title={getTitleFromMealType(mealType)}
           subtitle={shortDateLabel}
           onBack={goBack}
         />
@@ -136,8 +154,7 @@ const SearchFoodsScreen = ({ route }: SearchFoodsScreenProps) => {
           title="Encontre o que você vai comer!"
         />
         <Paragraph style={styles.text}>
-          Pesquise pelo nome do alimento ou escolha entre as sugestões abaixo
-          para manter seu controle alimentar em dia.
+          Digite o nome do alimento para encontrar o que procura.
         </Paragraph>
         <View style={styles.inputBox}>
           <SearchInput
