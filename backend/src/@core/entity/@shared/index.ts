@@ -15,10 +15,10 @@ export const allowedActivityFrequencies = [
 export type ActivityFrequency = (typeof allowedActivityFrequencies)[number];
 
 export const allowedTypeMeals = [
-  "Café da manhã",
-  "Lanche",
-  "Almoço",
-  "Jantar",
-  "Outros",
+  "cafe-da-manha",
+  "lanche",
+  "almoco",
+  "jantar",
+  "outro",
 ]
 export type TypeMeal = (typeof allowedTypeMeals)[number];

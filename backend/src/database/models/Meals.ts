@@ -19,6 +19,7 @@ class Meals
     declare typeMeals: TypeMeal
     declare userId: number
     declare date: Date
+    declare totalCalories: number
     
     public toJSON(): MealsEntity {
         const props = super.toJSON()
@@ -27,6 +28,7 @@ class Meals
         typeMeals: props.typeMeals,
         userId: props.userId,
         date: props.date,
+        totalCalories: props.totalCalories,
         }
     }
 }
@@ -48,6 +50,10 @@ Meals.init(
         },
         date: {
             type: Sequelize.DATE,
+            allowNull: false,
+        },
+        totalCalories: {
+            type: Sequelize.INTEGER,
             allowNull: false,
         },
     },

@@ -5,4 +5,5 @@ export interface MealsEntity {
     typeMeals: TypeMeal;
     userId: number;
     date: Date;
+    totalCalories: number;
 }

@@ -14,7 +14,6 @@ class ConsumedFoods
     declare mealId: number
     declare foodId: number
     declare quantity: number
-    declare totalCalories: number
 
     public toJSON(): ConsumedFoodsEntity {
         const props = super.toJSON()
@@ -23,7 +22,6 @@ class ConsumedFoods
             mealId: props.mealId,
             foodId: props.foodId,
             quantity: props.quantity,
-            totalCalories: props.totalCalories,
         }
     }
 }
@@ -44,10 +42,6 @@ ConsumedFoods.init(
             allowNull: false,
         },
         quantity: {
-            type: Sequelize.INTEGER,
-            allowNull: false,
-        },
-        totalCalories: {
             type: Sequelize.INTEGER,
             allowNull: false,
         },
