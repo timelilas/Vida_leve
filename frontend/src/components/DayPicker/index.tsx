@@ -8,7 +8,7 @@ import {
 import { ArrowIcon } from "../Icons/ArrowIcon";
 import { styles } from "./styles";
 import { DayItemButton } from "./DayItemButton";
-import { mockedDays } from "./data";
+import { createMockedDays } from "./utils";
 import { useEffect, useMemo, useRef } from "react";
 import { DateData } from "./types";
 import { delay } from "../../utils/helpers";
@@ -19,11 +19,12 @@ interface DayPickerProps {
 }
 
 export function DayPicker(props: DayPickerProps) {
+  const dayList = useRef(createMockedDays(31));
   const indexRef = useRef<number>(0);
   const listRef = useRef<FlatList | null>(null);
 
   const currentDateIndex = useMemo(() => {
-    return mockedDays.findIndex(({ id }) => id === props.currentDate?.id);
+    return dayList.current.findIndex(({ id }) => id === props.currentDate?.id);
   }, []);
 
   const initialNumToRender = currentDateIndex > 10 ? currentDateIndex + 1 : 10;
@@ -46,7 +47,7 @@ export function DayPicker(props: DayPickerProps) {
       }
 
       if (direction === "left") {
-        const maxIndex = mockedDays.length - 1;
+        const maxIndex = dayList.current.length - 1;
         indexRef.current =
           indexRef.current >= maxIndex ? maxIndex : indexRef.current + 1;
       }
@@ -92,7 +93,7 @@ export function DayPicker(props: DayPickerProps) {
         horizontal
         inverted
         ItemSeparatorComponent={itemSeparator}
-        data={mockedDays}
+        data={dayList.current}
         initialNumToRender={initialNumToRender}
         decelerationRate={0.95}
         windowSize={8}
