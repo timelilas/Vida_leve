@@ -1,5 +1,5 @@
 import { ReactNode } from "react";
-import { MealType } from "../../../@core/entities/@shared/meal/type";
+import { MealType } from "../../../@core/entities/@shared/mealType/type";
 import { AppleIcon } from "../../../components/Icons/AppleIcon";
 import { CookieIcon } from "../../../components/Icons/CookieIcon";
 import { FreshFruitsIcon } from "../../../components/Icons/FreshFruitsIcon";
@@ -16,7 +16,7 @@ interface MealButtonData {
 export const mealButtonsData: MealButtonData[] = [
   {
     type: "cafe-da-manha",
-    name: "Café da manha",
+    name: "Café da manhã",
     icon: <MugIcon stroke={colors.secondary} />,
   },
   {
@@ -31,12 +31,12 @@ export const mealButtonsData: MealButtonData[] = [
   },
   {
     type: "jantar",
-    name: "Janta",
+    name: "Jantar",
     icon: <SoupIcon stroke={colors.secondary} />,
   },
   {
     type: "outro",
-    name: "Outro",
+    name: "Outros",
     icon: <AppleIcon stroke={colors.secondary} />,
   },
 ];
