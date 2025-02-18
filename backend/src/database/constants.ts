@@ -3,4 +3,6 @@ export enum TableNames {
   Progress = "progress",
   CaloriePlan = "caloriePlan",
   Food = "food",
+  Meal = "meal",
+  ConsumedFoods = "consumedFoods",
 }

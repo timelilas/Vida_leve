@@ -13,3 +13,12 @@ export const allowedActivityFrequencies = [
   "intensa",
 ] as const;
 export type ActivityFrequency = (typeof allowedActivityFrequencies)[number];
+
+export const allowedTypeMeals = [
+  "cafe-da-manha",
+  "lanche",
+  "almoco",
+  "jantar",
+  "outro",
+]
+export type TypeMeal = (typeof allowedTypeMeals)[number];
