@@ -12,7 +12,7 @@ export const styles = StyleSheet.create({
   },
   dayTitle: {
     color: colors.text.secondary,
-    marginTop: 16,
+    marginTop: 32,
     marginInline: "auto",
   },
   mealButtons: {
