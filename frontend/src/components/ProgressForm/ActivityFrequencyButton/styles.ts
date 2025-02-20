@@ -4,7 +4,7 @@ import { colors } from "../../../styles/colors";
 
 export const styles = StyleSheet.create({
   container: {
-    padding: 14,
+    padding: 13,
     justifyContent: "center",
   },
   title: {

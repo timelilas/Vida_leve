@@ -27,7 +27,7 @@ const ConnectionErrorScreen = () => {
   return (
     <ScreenWrapper>
       <View style={styles.container}>
-        <View style={styles.containerContainer}>
+        <View style={styles.contentContainer}>
           <ScreenTitle title="Ocorreu um erro" />
           <Paragraph>
             Não foi possível carregar as informações. Verifique sua conexão e
@@ -38,8 +38,12 @@ const ConnectionErrorScreen = () => {
           <SubmitButton
             onPress={goBack}
             type="highlighted"
-            title="Atualizar"
-            icon={<ReloadIcon />}
+            title={
+              <View style={styles.reloadButtonContainer}>
+                <ReloadIcon height={18} />
+                <Text style={styles.reloadButtonLabel}>Atualizar</Text>
+              </View>
+            }
           />
           <TouchableOpacity
             onPress={closeApp}

@@ -1,7 +1,7 @@
 import { View } from "react-native";
 import { Input } from "../Input";
 import { WeightInput } from "./WeightInput";
-import { ActivityFrequencySelection } from "../AcitivityFrequencySelection";
+import { ActivityFrequencySelection } from "./ActivityFrequencySelection";
 import { styles } from "./styles";
 import { maskHeight, onlyNumbers, parseHeight } from "../../utils/masks";
 import { SubmitButton } from "../SubmitButton";

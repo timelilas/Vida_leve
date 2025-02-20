@@ -1,9 +1,9 @@
 import { View, ViewStyle, StyleProp } from "react-native";
-import { Paragraph } from "../Paragraph/Paragraph";
-import { ActivityFrequencyButton } from "./ActivityFrequencyButton";
+import { Paragraph } from "../../Paragraph/Paragraph";
+import { ActivityFrequencyButton } from "../ActivityFrequencyButton";
 import { activityFrequencies } from "./utils";
-import { ErrorMessage } from "../ErrorMessage";
-import { ActitivyFrequency } from "../../@core/entities/@shared/activityFrequency/type";
+import { ErrorMessage } from "../../ErrorMessage";
+import { ActitivyFrequency } from "../../../@core/entities/@shared/activityFrequency/type";
 import { styles } from "./styles";
 
 interface ActivityFrequencySelectionProps {

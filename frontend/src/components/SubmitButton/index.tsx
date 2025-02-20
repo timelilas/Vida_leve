@@ -5,13 +5,12 @@ import {
   ViewStyle,
   TouchableOpacity,
 } from "react-native";
-import { ReactNode } from "react";
+import { isValidElement, ReactNode } from "react";
 import { styles } from "./styles";
 
 interface SubmitButtonProps {
   type: "primary" | "outlined" | "highlighted";
-  title: string;
-  icon?: ReactNode;
+  title: ReactNode;
   disabled?: boolean;
   style?: StyleProp<ViewStyle>;
   onPress?: () => void;
@@ -30,8 +29,11 @@ export function SubmitButton(props: SubmitButtonProps) {
       ]}
     >
       <View style={[styles.base, styles[props.type]]}>
-        {props.icon}
-        <Text style={styles.text}>{props.title}</Text>
+        {isValidElement(props.title) ? (
+          props.title
+        ) : (
+          <Text style={styles.text}>{props.title}</Text>
+        )}
       </View>
     </TouchableOpacity>
   );

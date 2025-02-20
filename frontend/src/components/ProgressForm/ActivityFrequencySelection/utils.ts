@@ -1,4 +1,4 @@
-import { ActitivyFrequency } from "../../@core/entities/@shared/activityFrequency/type";
+import { ActitivyFrequency } from "../../../@core/entities/@shared/activityFrequency/type";
 
 export const activityFrequencies: {
   type: ActitivyFrequency;
