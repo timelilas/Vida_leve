@@ -16,7 +16,11 @@ import { Paragraph } from "../../../components/Paragraph/Paragraph";
 import SearchInput from "./components/SearchInput";
 import { useEffect, useState } from "react";
 import { FOOD_ITEM_HEIGHT } from "./components/FoodItem/constants";
-import { delay, formatDateToLabel } from "../../../utils/helpers";
+import {
+  delay,
+  formatDateToLabel,
+  getTitleFromMealType,
+} from "../../../utils/helpers";
 import { useSearchFoods } from "./hooks/useSearchFoods";
 import { useThrottle } from "../../../hooks/useThrottle ";
 import { useSnackbar } from "../../../hooks/useSnackbar";
@@ -122,23 +126,6 @@ const SearchFoodsScreen = ({ route }: SearchFoodsScreenProps) => {
 
   function getBodyHeight(e: LayoutChangeEvent) {
     setBodyHeight(e.nativeEvent.layout.height);
-  }
-
-  function getTitleFromMealType(type: MealType | null) {
-    switch (type) {
-      case "cafe-da-manha":
-        return "Café da manhã";
-      case "lanche":
-        return "Lanche";
-      case "almoco":
-        return "Almoço";
-      case "jantar":
-        return "Jantar";
-      case "outro":
-        return "Outros";
-      default:
-        return "";
-    }
   }
 
   return (
