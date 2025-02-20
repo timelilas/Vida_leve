@@ -73,13 +73,13 @@ export function getWeekdayFromIndex(index: number) {
   return weekdays[index] || "";
 }
 
-export function convertDateToDateData(date: Date): DateData {
+export function convertDateToLocalDateData(date: Date): DateData {
   return {
     id: `${date.getDate()}-${date.getMonth()}-${date.getFullYear()}`,
     day: date.getDate(),
     month: date.getMonth(),
     year: date.getFullYear(),
-    weekDay: date.getDay(),
+    weekDay: date.getUTCDay(),
   };
 }
 

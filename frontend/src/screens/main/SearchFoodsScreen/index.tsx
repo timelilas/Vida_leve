@@ -16,7 +16,7 @@ import { Paragraph } from "../../../components/Paragraph/Paragraph";
 import SearchInput from "./components/SearchInput";
 import { useEffect, useState } from "react";
 import { FOOD_ITEM_HEIGHT } from "./components/FoodItem/constants";
-import { formatDateToLabel } from "../../../utils/helpers";
+import { delay, formatDateToLabel } from "../../../utils/helpers";
 import { useSearchFoods } from "./hooks/useSearchFoods";
 import { useThrottle } from "../../../hooks/useThrottle ";
 import { useSnackbar } from "../../../hooks/useSnackbar";
@@ -24,6 +24,7 @@ import { FoodList } from "./components/FoodList";
 import { styles } from "./styles";
 import { colors } from "../../../styles/colors";
 import { MealType } from "../../../@core/entities/@shared/mealType/type";
+import { useMealStore } from "../../../store/meal";
 
 type SearchFoodsScreenRouteProp = RouteProp<
   RouteParamsList,
@@ -35,9 +36,11 @@ interface SearchFoodsScreenProps {
 }
 
 const SearchFoodsScreen = ({ route }: SearchFoodsScreenProps) => {
-  const { mealDate, mealType } = route.params;
   const navigation = useAppNavigation();
   const windowDimensions = useWindowDimensions();
+
+  const mealDate = useMealStore((state) => state.date);
+  const mealType = useMealStore((state) => state.type);
 
   const [foodName, setFoodName] = useState("");
   const [bodyHeight, setBodyHeight] = useState<number | null>(null);
@@ -46,8 +49,8 @@ const SearchFoodsScreen = ({ route }: SearchFoodsScreenProps) => {
   const { showSnackbar, Snackbar } = useSnackbar();
 
   const isQueryEnabled = foodName.length > 0 && !!bodyHeight && !isThrottling;
-
   const limit = calculateTotalFoodsToFetch();
+  const shortDateLabel = formatDateToLabel(new Date(mealDate), "short");
 
   const { foods, hasMore, isError, isFetching, fetchMoreFoods } =
     useSearchFoods({
@@ -67,6 +70,13 @@ const SearchFoodsScreen = ({ route }: SearchFoodsScreenProps) => {
       });
     }
   }, [isError, isFetching]);
+
+  useEffect(() => {
+    const unsubscribe = navigation.addListener("blur", () => {
+      delay(200).then(() => setFoodName(""));
+    });
+    return () => unsubscribe();
+  }, []);
 
   function goBack() {
     navigation.goBack();
@@ -114,7 +124,7 @@ const SearchFoodsScreen = ({ route }: SearchFoodsScreenProps) => {
     setBodyHeight(e.nativeEvent.layout.height);
   }
 
-  function getTitleFromMealType(type: MealType) {
+  function getTitleFromMealType(type: MealType | null) {
     switch (type) {
       case "cafe-da-manha":
         return "Café da manhã";
@@ -130,11 +140,6 @@ const SearchFoodsScreen = ({ route }: SearchFoodsScreenProps) => {
         return "";
     }
   }
-
-  const shortDateLabel = formatDateToLabel(
-    new Date(mealDate.year, mealDate.month, mealDate.day),
-    "short"
-  );
 
   return (
     <ScreenWrapper

@@ -22,7 +22,10 @@ export const useMealStore = create<MealStore>((set, get) => {
       if (!existingFood) {
         return set(() => ({
           foodIds: [food.id, ...prevState.foodIds],
-          foodMap: { ...prevState.foodMap, [food.id]: { ...food } },
+          foodMap: {
+            ...prevState.foodMap,
+            [food.id]: { ...food, quantity: 1 },
+          },
         }));
       }
 

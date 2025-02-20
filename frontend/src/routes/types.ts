@@ -1,4 +1,3 @@
-import { MealType } from "../@core/entities/@shared/meal/type";
 import { PlanType } from "../@core/entities/@shared/planType/type";
 import { CaloriePlanProps } from "../@core/entities/caloriePlan/type";
 import { ProgressProps } from "../@core/entities/progress/type";
@@ -37,13 +36,6 @@ export type RouteParamsList = {
   [RouteConstants.GoalSettings]: undefined;
   [RouteConstants.UpdateProgress]: undefined;
   [RouteConstants.CreateMeal]: undefined;
+  [RouteConstants.SearchFoods]: undefined;
   [RouteConstants.ConnectionError]: undefined;
-  [RouteConstants.SearchFoods]: {
-    mealType: MealType;
-    mealDate: {
-      year: number;
-      month: number;
-      day: number;
-    };
-  };
 };

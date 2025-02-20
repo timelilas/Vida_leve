@@ -1,6 +1,7 @@
-import { RouteConstants, RouteParamsList } from "./types";
+import { Stack } from "./stack";
+import { colors } from "../styles/colors";
+import { RouteConstants } from "./types";
 import { NavigationContainer } from "@react-navigation/native";
-import { createNativeStackNavigator } from "@react-navigation/native-stack";
 import LoginScreen from "../screens/auth/LoginScreen";
 import SignupScreen from "../screens/auth/SignupScreen";
 import PlanSelectionScreen from "../screens/@shared/PlanSelectionScreen";
@@ -14,11 +15,8 @@ import GoalSettingsScreen from "../screens/main/GoalSettingsScreen";
 import UpdateProgressScreen from "../screens/main/UpdateProgressScreen";
 import CreateMealScreen from "../screens/main/CreateMealScreen";
 import SearchFoodsScreen from "../screens/main/SearchFoodsScreen";
-import { colors } from "../styles/colors";
 
-const Stack = createNativeStackNavigator<RouteParamsList>();
-
-const Navigation = () => {
+const AppRouter = () => {
   return (
     <NavigationContainer>
       <Stack.Navigator
@@ -101,4 +99,4 @@ const Navigation = () => {
   );
 };
 
-export default Navigation;
+export default AppRouter;
