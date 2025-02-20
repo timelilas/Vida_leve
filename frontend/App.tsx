@@ -1,5 +1,5 @@
 import React from "react";
-import Navigation from "./src/routes/Navigation";
+import AppRouter from "./src/routes/AppRouter";
 import * as SplashScreen from "expo-splash-screen";
 import { useAppFonts } from "./src/hooks/useAppFonts";
 import { LogBox } from "react-native";
@@ -21,7 +21,7 @@ const App = () => {
   return (
     <SafeAreaProvider>
       <QueryClientProvider client={queryClient}>
-        <Navigation />
+        <AppRouter />
       </QueryClientProvider>
     </SafeAreaProvider>
   );

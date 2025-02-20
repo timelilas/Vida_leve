@@ -1,3 +1,4 @@
+import { MealType } from "../@core/entities/@shared/mealType/type";
 import { DateData } from "../components/DayPicker/types";
 
 export function toCapitalized(input: string): string {
@@ -111,4 +112,21 @@ export function transformFoodNameIntoSlug(name: string) {
     .replace(/[\u0300-\u036f]|\,/g, "")
     .replace(/\s\-\s/g, "-")
     .replace(/\s/g, "-");
+}
+
+export function getTitleFromMealType(type: MealType | null) {
+  switch (type) {
+    case "cafe-da-manha":
+      return "Café da manhã";
+    case "lanche":
+      return "Lanche";
+    case "almoco":
+      return "Almoço";
+    case "jantar":
+      return "Jantar";
+    case "outro":
+      return "Outros";
+    default:
+      return "";
+  }
 }

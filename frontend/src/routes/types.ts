@@ -15,6 +15,7 @@ export enum RouteConstants {
   UpdateProgress = "SCREEN_MAIN_UpdateProgress",
   CreateMeal = "SCREEN_MAIN_CreateMeal",
   SearchFoods = "SCREEN_MAIN_SearchFoods",
+  MealRegistration = "SCREEN_MealRegistration",
   ConnectionError = "SCREEN_Error_ConnectionError",
 }
 
@@ -37,5 +38,6 @@ export type RouteParamsList = {
   [RouteConstants.UpdateProgress]: undefined;
   [RouteConstants.CreateMeal]: undefined;
   [RouteConstants.SearchFoods]: undefined;
+  [RouteConstants.MealRegistration]: undefined;
   [RouteConstants.ConnectionError]: undefined;
 };
