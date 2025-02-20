@@ -41,5 +41,5 @@ export const DayItemButton = memo(
       </ToggleButton>
     );
   },
-  (prev, current) => prev.selected === current.selected
+  (prev, next) => prev.selected === next.selected
 );
