@@ -1,6 +1,6 @@
 import { MealType } from "../../@core/entities/@shared/mealType/type";
 import { FoodProps } from "../../@core/entities/food/type";
-import { MealFoodProps, MealProps } from "../../@core/entities/meal/type";
+import { MealFoodProps } from "../../@core/entities/meal/type";
 
 export interface MealStoreState {
   type: MealType | null;
