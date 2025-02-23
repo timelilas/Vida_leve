@@ -5,8 +5,10 @@ import { CaloriePlanController } from "../controller/caloriePlan/CaloriePlanCont
 const caloriePlanRouter = Router();
 const caloriePlanController = new CaloriePlanController();
 
-caloriePlanRouter.get("/", authorizationMiddleware, (req, res) =>
-  caloriePlanController.getPlans(req, res)
+caloriePlanRouter.get(
+  "/",
+  (req, res, next) => authorizationMiddleware.execute(req, res, next),
+  (req, res) => caloriePlanController.getPlans(req, res)
 );
 
 export default caloriePlanRouter;
