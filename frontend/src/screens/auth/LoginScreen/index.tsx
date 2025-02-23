@@ -89,7 +89,7 @@ const LoginScreen = () => {
     if (error instanceof ConnectionError) {
       return navigation.navigate(RouteConstants.ConnectionError);
     }
-    if (error instanceof HttpError) {
+    if (error instanceof HttpError && error.field) {
       if (error.status === 401) scrollToTop();
       setError(
         error.status === 401
