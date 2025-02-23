@@ -137,7 +137,7 @@ export function ProgressForm(props: ProgressFormProps) {
   }
 
   function handleError(error: Error) {
-    if (error instanceof HttpError) {
+    if (error instanceof HttpError && error.field) {
       setError({ field: error.field as any, message: error.message });
     }
     props.onError(error);

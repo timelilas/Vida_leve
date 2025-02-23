@@ -63,7 +63,7 @@ const SignupScreen = () => {
     if (error instanceof ConnectionError) {
       return navigation.navigate(RouteConstants.ConnectionError);
     }
-    if (error instanceof HttpError) {
+    if (error instanceof HttpError && error.field) {
       setError({ field: error.field as any, message: error.message });
     }
     if (!(error as any).field) {
