@@ -9,13 +9,13 @@ const userController = new UserController();
 
 userRouter.get(
   "/profile",
-  authorizationMiddleware,
+  (req, res, next) => authorizationMiddleware.execute(req, res, next),
   (req: Request, res: Response) => userController.getById(req, res)
 );
 
 userRouter.put(
   "/profile",
-  authorizationMiddleware,
+  (req, res, next) => authorizationMiddleware.execute(req, res, next),
   validationMiddleware(updateUserSchema, "body"),
   (req, res) => userController.update(req, res)
 );
