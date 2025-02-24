@@ -14,11 +14,11 @@ export const allowedActivityFrequencies = [
 ] as const;
 export type ActivityFrequency = (typeof allowedActivityFrequencies)[number];
 
-export const allowedTypeMeals = [
+export const allowedTypeMeal = [
   "cafe-da-manha",
   "lanche",
   "almoco",
   "jantar",
   "outro",
 ]
-export type TypeMeal = (typeof allowedTypeMeals)[number];
+export type TypeMeal = (typeof allowedTypeMeal)[number];

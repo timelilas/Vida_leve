@@ -1,8 +1,8 @@
 import { TypeMeal } from "../@shared";
 
-export interface MealsEntity {
+export interface MealEntity {
     id: number;
-    typeMeals: TypeMeal;
+    typeMeal: TypeMeal;
     userId: number;
     date: Date;
     totalCalories: number;

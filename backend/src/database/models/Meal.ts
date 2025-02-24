@@ -6,26 +6,26 @@ import {
   } from "sequelize";
 import { sequelize } from "../index";
 import Sequelize from "sequelize";
-import { MealsEntity } from "../../@core/entity/Meals/enitys"
-import { allowedTypeMeals, TypeMeal  } from "../../@core/entity/@shared";
+import { MealEntity } from "../../@core/entity/Meal/enitys"
+import { allowedTypeMeal, TypeMeal  } from "../../@core/entity/@shared";
 import { TableNames } from "../constants";
 import User from "./User";
 
-class Meals
-    extends Model<InferAttributes<Meals>, InferCreationAttributes<Meals>>
-    implements MealsEntity
+class Meal
+    extends Model<InferAttributes<Meal>, InferCreationAttributes<Meal>>
+    implements MealEntity
 {
     declare id: CreationOptional<number>
-    declare typeMeals: TypeMeal
+    declare typeMeal: TypeMeal
     declare userId: number
     declare date: Date
     declare totalCalories: number
     
-    public toJSON(): MealsEntity {
+    public toJSON(): MealEntity {
         const props = super.toJSON()
         return {
         id: props.id,
-        typeMeals: props.typeMeals,
+        typeMeal: props.typeMeal,
         userId: props.userId,
         date: props.date,
         totalCalories: props.totalCalories,
@@ -33,15 +33,15 @@ class Meals
     }
 }
 
-Meals.init(
+Meal.init(
     {
         id: {
             type: Sequelize.INTEGER,
             autoIncrement: true,
             primaryKey: true,
         },
-        typeMeals: {
-            type: Sequelize.ENUM<TypeMeal>(...allowedTypeMeals),
+        typeMeal: {
+            type: Sequelize.ENUM<TypeMeal>(...allowedTypeMeal),
             allowNull: false,
         },
         userId: {
@@ -65,7 +65,7 @@ Meals.init(
     }
 )
 
-User.hasMany(Meals, { foreignKey: "userId" });
-Meals.belongsTo(User, { foreignKey: "userId" });
+User.hasMany(Meal, { foreignKey: "userId" });
+Meal.belongsTo(User, { foreignKey: "userId" });
 
-export default Meals;
+export default Meal;
