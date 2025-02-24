@@ -4,7 +4,7 @@ import Sequelize from "sequelize";
 import { ConsumedFoodsEntity } from "../../@core/entity/ConsumedFoods/enitys";
 import { TableNames } from "../constants";
 import Food from "./Food";
-import Meals from "./Meals";
+import Meals from "./Meal";
 
 class ConsumedFoods
     extends Model<InferAttributes<ConsumedFoods>, InferCreationAttributes<ConsumedFoods>>
