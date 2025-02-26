@@ -26,7 +26,13 @@ export default class UserController {
     const { id } = req.user;
 
     try {
-      const updateUserParams = { id, name, phone, birthDate, gender };
+      const updateUserParams = {
+        id,
+        name,
+        phone,
+        birthDate: new Date(birthDate),
+        gender,
+      };
       const foundUser = await this._userService.update(updateUserParams);
 
       if (!foundUser) {

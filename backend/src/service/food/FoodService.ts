@@ -27,7 +27,8 @@ export default class FoodService {
         Food.count({ where: whereQuery }),
       ]);
 
-      const hasMore = (filter?.limit || 0) + (filter?.offset || 0) < total;
+      const hasMore =
+        (filter?.limit || foods.length) + (filter?.offset || 0) < total;
 
       return { foods: foods.map((food) => food.toJSON()), hasMore };
     } catch (error: any) {

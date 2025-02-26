@@ -12,7 +12,7 @@ export class ZodHelper {
   public static date(field: string) {
     return z
       .string({ required_error: messages.requiredMsg(field) })
-      .date(messages.invalidDateMsg());
+      .datetime(messages.invalidDateMsg());
   }
 
   public static number(field: string, min: number, max?: number) {
