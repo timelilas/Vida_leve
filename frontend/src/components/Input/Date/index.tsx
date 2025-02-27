@@ -4,7 +4,7 @@ import { useRef, useState } from "react";
 import { Calendar } from "../../Calendar";
 import { CalendarSection } from "../../Calendar/types";
 import { DateData } from "react-native-calendars";
-import { useCalendar } from "../../Calendar/useCalendar";
+import { useCalendar } from "../../../hooks/useCalendar";
 import { dateToPTBR } from "../../../utils/helpers";
 import { defaultInputStyles } from "../styles";
 import { ErrorMessage } from "../../ErrorMessage";

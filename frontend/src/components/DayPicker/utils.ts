@@ -1,7 +1,7 @@
 import { DateData } from "./types";
 
 export function createMockedDays(count: number) {
-  const mockedDays: DateData[] = new Array(count).fill(null).map((_, index) => {
+  const mockedDays: DateData[] = Array.from({ length: count }, (_, index) => {
     const date = new Date(Date.now() - 3600 * 24 * 1000 * (-1 + index));
     const day = date.getDate();
     const weekDay = date.getDay();
