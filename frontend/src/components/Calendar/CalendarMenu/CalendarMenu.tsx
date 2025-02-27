@@ -1,6 +1,6 @@
 import { View, FlatList } from "react-native";
 import { mockedMonths, mockedYears } from "../data";
-import { numberToMonth, toCapitalized } from "../../../utils/helpers";
+import { numberToMonthName, toCapitalized } from "../../../utils/helpers";
 import { CalendarMenuItem } from "../CalendarMenuItem";
 import { CalendarSection, GenericItem } from "../types";
 import { CalendarControlButton } from "../CalendarControlButton";
@@ -17,7 +17,7 @@ interface CalendarMenuProps {
 }
 
 export function CalendarMenu(props: CalendarMenuProps) {
-  const monthName = numberToMonth(props.month);
+  const monthName = numberToMonthName(props.month);
 
   function renderMonth({ item }: { item: GenericItem }) {
     return (

@@ -14,7 +14,7 @@ export const styles = StyleSheet.create({
   },
   buttonText: {
     textAlign: "center",
-    paddingVertical: 14,
+    paddingVertical: 13,
     fontSize: 16,
     lineHeight: 16,
     fontFamily: fonts.robotoRegular,

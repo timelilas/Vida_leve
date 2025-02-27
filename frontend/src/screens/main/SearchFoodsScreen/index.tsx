@@ -16,13 +16,18 @@ import { Paragraph } from "../../../components/Paragraph/Paragraph";
 import SearchInput from "./components/SearchInput";
 import { useEffect, useState } from "react";
 import { FOOD_ITEM_HEIGHT } from "./components/FoodItem/constants";
-import { formatDateToLabel } from "../../../utils/helpers";
+import {
+  delay,
+  formatDateToLabel,
+  getTitleFromMealType,
+} from "../../../utils/helpers";
 import { useSearchFoods } from "./hooks/useSearchFoods";
 import { useThrottle } from "../../../hooks/useThrottle ";
 import { useSnackbar } from "../../../hooks/useSnackbar";
 import { FoodList } from "./components/FoodList";
 import { styles } from "./styles";
 import { colors } from "../../../styles/colors";
+import { useMealStore } from "../../../store/meal";
 
 type SearchFoodsScreenRouteProp = RouteProp<
   RouteParamsList,
@@ -34,9 +39,11 @@ interface SearchFoodsScreenProps {
 }
 
 const SearchFoodsScreen = ({ route }: SearchFoodsScreenProps) => {
-  const { mealDate } = route.params;
   const navigation = useAppNavigation();
   const windowDimensions = useWindowDimensions();
+
+  const mealDate = useMealStore((state) => state.date);
+  const mealType = useMealStore((state) => state.type);
 
   const [foodName, setFoodName] = useState("");
   const [bodyHeight, setBodyHeight] = useState<number | null>(null);
@@ -45,8 +52,8 @@ const SearchFoodsScreen = ({ route }: SearchFoodsScreenProps) => {
   const { showSnackbar, Snackbar } = useSnackbar();
 
   const isQueryEnabled = foodName.length > 0 && !!bodyHeight && !isThrottling;
-
   const limit = calculateTotalFoodsToFetch();
+  const shortDateLabel = formatDateToLabel(new Date(mealDate), "short");
 
   const { foods, hasMore, isError, isFetching, fetchMoreFoods } =
     useSearchFoods({
@@ -66,6 +73,13 @@ const SearchFoodsScreen = ({ route }: SearchFoodsScreenProps) => {
       });
     }
   }, [isError, isFetching]);
+
+  useEffect(() => {
+    const unsubscribe = navigation.addListener("blur", () => {
+      delay(200).then(() => setFoodName(""));
+    });
+    return () => unsubscribe();
+  }, []);
 
   function goBack() {
     navigation.goBack();
@@ -113,11 +127,6 @@ const SearchFoodsScreen = ({ route }: SearchFoodsScreenProps) => {
     setBodyHeight(e.nativeEvent.layout.height);
   }
 
-  const shortDateLabel = formatDateToLabel(
-    new Date(mealDate.year, mealDate.month, mealDate.day),
-    "short"
-  );
-
   return (
     <ScreenWrapper
       contentContainerStyle={styles.container}
@@ -127,7 +136,7 @@ const SearchFoodsScreen = ({ route }: SearchFoodsScreenProps) => {
       <View style={styles.body} onLayout={getBodyHeight}>
         <NavigationHeader
           variant="titled"
-          title="Lanche"
+          title={getTitleFromMealType(mealType)}
           subtitle={shortDateLabel}
           onBack={goBack}
         />
@@ -136,8 +145,7 @@ const SearchFoodsScreen = ({ route }: SearchFoodsScreenProps) => {
           title="Encontre o que você vai comer!"
         />
         <Paragraph style={styles.text}>
-          Pesquise pelo nome do alimento ou escolha entre as sugestões abaixo
-          para manter seu controle alimentar em dia.
+          Digite o nome do alimento para encontrar o que procura.
         </Paragraph>
         <View style={styles.inputBox}>
           <SearchInput

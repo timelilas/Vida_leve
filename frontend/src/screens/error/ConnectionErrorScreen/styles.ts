@@ -8,7 +8,7 @@ export const styles = StyleSheet.create({
     gap: 56,
     justifyContent: "space-between",
   },
-  containerContainer: {
+  contentContainer: {
     gap: 8,
     marginTop: 105,
   },
@@ -23,8 +23,19 @@ export const styles = StyleSheet.create({
   },
   closeAppButtonLabel: {
     color: colors.secondary,
-    fontFamily: fonts.rudaBold,
+    fontFamily: fonts.robotoBold,
     fontSize: 16,
     lineHeight: 16,
+  },
+  reloadButtonContainer: {
+    flexDirection: "row",
+    alignItems: "flex-end",
+    gap: 8,
+  },
+  reloadButtonLabel: {
+    fontFamily: fonts.robotoRegular,
+    fontSize: 16,
+    lineHeight: 16,
+    color: colors.text.secondary,
   },
 });

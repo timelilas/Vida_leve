@@ -6,10 +6,10 @@ export const styles = StyleSheet.create({
   container: {
     padding: 0,
     paddingBottom: 24,
+    paddingTop: 24,
   },
   body: {
     paddingHorizontal: 16,
-    paddingTop: 24,
     flex: 1,
   },
   title: {

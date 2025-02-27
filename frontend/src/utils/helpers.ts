@@ -1,3 +1,4 @@
+import { MealType } from "../@core/entities/@shared/mealType/type";
 import { DateData } from "../components/DayPicker/types";
 
 export function toCapitalized(input: string): string {
@@ -8,7 +9,7 @@ export function toCapitalized(input: string): string {
   return capitalizedWords.join("-");
 }
 
-export function numberToMonth(number: number): string {
+export function numberToMonthName(number: number): string {
   return Intl.DateTimeFormat("pt-br", { month: "long" }).format(
     new Date().setMonth(number - 1)
   );
@@ -73,13 +74,13 @@ export function getWeekdayFromIndex(index: number) {
   return weekdays[index] || "";
 }
 
-export function convertDateToDateData(date: Date): DateData {
+export function convertDateToLocalDateData(date: Date): DateData {
   return {
     id: `${date.getDate()}-${date.getMonth()}-${date.getFullYear()}`,
     day: date.getDate(),
     month: date.getMonth(),
     year: date.getFullYear(),
-    weekDay: date.getDay(),
+    weekDay: date.getUTCDay(),
   };
 }
 
@@ -111,4 +112,21 @@ export function transformFoodNameIntoSlug(name: string) {
     .replace(/[\u0300-\u036f]|\,/g, "")
     .replace(/\s\-\s/g, "-")
     .replace(/\s/g, "-");
+}
+
+export function getTitleFromMealType(type: MealType | null) {
+  switch (type) {
+    case "cafe-da-manha":
+      return "Café da manhã";
+    case "lanche":
+      return "Lanche";
+    case "almoco":
+      return "Almoço";
+    case "jantar":
+      return "Jantar";
+    case "outro":
+      return "Outros";
+    default:
+      return "";
+  }
 }

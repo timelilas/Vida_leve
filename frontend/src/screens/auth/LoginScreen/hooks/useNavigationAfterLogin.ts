@@ -1,16 +1,18 @@
 import { CommonActions } from "@react-navigation/native";
 import { useAppNavigation } from "../../../../hooks/useAppNavigation";
 import { RouteConstants } from "../../../../routes/types";
+import { useCaloriePlanStore } from "../../../../store/caloriePlan";
 
 export function useNavigationAfterLogin() {
   const navigation = useAppNavigation();
+  const plans = useCaloriePlanStore((state) => state.data);
 
   const homeRoute = { name: RouteConstants.Home };
   const completeProfileRoute = { name: RouteConstants.CompleteProfile };
   const createProgressRoute = { name: RouteConstants.CreateProgress };
   const planSelectionRoute = {
     name: RouteConstants.PlanSelection,
-    params: { nextRoute: RouteConstants.GoalGuidance },
+    params: { nextRoute: RouteConstants.GoalGuidance, plans },
   };
 
   function navigateToProfileForm() {

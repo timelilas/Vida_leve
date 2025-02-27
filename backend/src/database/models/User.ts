@@ -12,14 +12,14 @@ import Sequelize from "sequelize";
 
 class User
   extends Model<InferAttributes<User>, InferCreationAttributes<User>>
-  implements UserEntity
+  implements Omit<UserEntity, "birthDate">
 {
   declare id: CreationOptional<number>;
   declare email: string;
   declare password: string;
   declare name: string | null;
   declare phone: string | null;
-  declare birthDate: Date | null;
+  declare birthDate: string | null;
   declare gender: Gender | null;
   declare createdAt: CreationOptional<Date>;
   declare updatedAt: CreationOptional<Date>;
@@ -30,9 +30,9 @@ class User
       id: props.id,
       name: props.name,
       email: props.email,
-      birthDate: props.birthDate,
       phone: props.phone,
       gender: props.gender,
+      birthDate: props.birthDate ? new Date(props.birthDate) : null,
     };
   }
 }

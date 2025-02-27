@@ -2,7 +2,7 @@ import { View } from "react-native";
 import { CalendarSwipeButton } from "../CalendarSwipeButton";
 import { CalendarControlButton } from "../CalendarControlButton";
 import { useCalendarHeaderStyles } from "./useCalendarHeaderStyles";
-import { numberToMonth, toCapitalized } from "../../../utils/helpers";
+import { numberToMonthName, toCapitalized } from "../../../utils/helpers";
 import { memo } from "react";
 import { CalendarSection } from "../types";
 
@@ -19,7 +19,7 @@ interface CalendarHeaderProps {
 export const CalendarHeader = memo(
   (props: CalendarHeaderProps) => {
     const styles = useCalendarHeaderStyles();
-    const monthShortName = numberToMonth(props.month).slice(0, 3);
+    const monthShortName = numberToMonthName(props.month).slice(0, 3);
 
     return (
       <View style={styles.container}>

@@ -1,4 +1,4 @@
-import { ValidationResult } from "../utils/validations/type";
+type ValidationResult = { success: true } | { success: false; error: string };
 
 export interface ErrorState<Fields> {
   field?: Fields;

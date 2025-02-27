@@ -4,7 +4,6 @@ import { Paragraph } from "../../../components/Paragraph/Paragraph";
 import { useUserStore } from "../../../store/user";
 import { useProgressStore } from "../../../store/progress";
 import { ConnectionError } from "../../../@core/errors/connectionError";
-import { heightToString } from "../../../utils/masks";
 import { useAppNavigation } from "../../../hooks/useAppNavigation";
 import { RouteConstants } from "../../../routes/types";
 import { useSnackbar } from "../../../hooks/useSnackbar";
@@ -21,12 +20,12 @@ const UpdateProgressScreen = () => {
   const navigation = useAppNavigation();
 
   const initialFormData = {
-    height: progress?.height ? heightToString(progress?.height) : "",
-    weight: progress?.weight ?? 0,
-    goalWeight: progress?.goalWeight ?? 0,
+    height: `${progress?.height ?? ""}`,
+    weight: `${progress?.weight ?? ""}`,
+    goalWeight: `${progress?.goalWeight ?? ""}`,
     activityFrequency: progress?.activityFrequency ?? null,
     gender: gender,
-    birthDate: birthDate,
+    birthDate: birthDate ?? "",
   };
 
   function goBack() {
