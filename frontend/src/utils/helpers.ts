@@ -9,7 +9,7 @@ export function toCapitalized(input: string): string {
   return capitalizedWords.join("-");
 }
 
-export function numberToMonth(number: number): string {
+export function numberToMonthName(number: number): string {
   return Intl.DateTimeFormat("pt-br", { month: "long" }).format(
     new Date().setMonth(number - 1)
   );
