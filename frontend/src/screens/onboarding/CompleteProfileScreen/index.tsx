@@ -5,13 +5,8 @@ import { SubmitButton } from "../../../components/SubmitButton";
 import { ProfileFormData } from "./types";
 import { Paragraph } from "../../../components/Paragraph/Paragraph";
 import { ScreenTitle } from "../../../components/ScreenTitle";
-import { useForm } from "../../../hooks/useForm";
 import { GenderType } from "../../../@core/entities/@shared/gender/type";
-import { validatePhone } from "../../../utils/validations/phone";
-import { validateBirthDate } from "../../../utils/validations/date";
-import { validateName } from "../../../utils/validations/name";
 import { ErrorMessage } from "../../../components/ErrorMessage";
-import { validateGender } from "../../../utils/validations/gender";
 import {
   maskPhone,
   maskDatePTBR,
@@ -19,7 +14,7 @@ import {
   maskName,
 } from "../../../utils/masks";
 import { useUserStore } from "../../../store/user";
-import { dateToPTBR, formatDateToISO } from "../../../utils/helpers";
+import { dateToPTBR, delay, formatDateToISO } from "../../../utils/helpers";
 import { HttpError } from "../../../@core/errors/httpError";
 import { ConnectionError } from "../../../@core/errors/connectionError";
 import { useAppNavigation } from "../../../hooks/useAppNavigation";
@@ -32,21 +27,39 @@ import { CommonActions } from "@react-navigation/native";
 import { NavigationHeader } from "../../../components/NavigationHeader";
 import { styles } from "./styles";
 import { GenderButton } from "./components/GenderButton";
+import { Controller, useForm } from "react-hook-form";
+import { zodProfileSchema } from "./schema";
+import { customZodResolver } from "../../../libs/zod/@shared/resolver";
 
 const CompleteProfileScreen = () => {
   const { Snackbar, showSnackbar } = useSnackbar();
   const { setUser, data: user } = useUserStore((state) => state);
-  const { data, handleChange, setError, validateField, onSubmit } =
-    useForm<ProfileFormData>({
-      initialState: {
-        name: user.name ?? "",
-        phone: user.phone ?? "",
-        birthDate: user.birthDate ? dateToPTBR(new Date(user.birthDate)) : "",
-        gender: user.gender ?? null,
-      },
-    });
 
-  const { values, error, isSubmitting, isFormDirty } = data;
+  const formInitialState: ProfileFormData = {
+    name: user.name ?? "",
+    phone: user.phone ?? "",
+    gender: user.gender ?? null,
+    birthDate: user.birthDate ? dateToPTBR(new Date(user.birthDate)) : "",
+  };
+
+  const {
+    control,
+    formState: { errors, isSubmitting },
+    handleSubmit,
+    setValue,
+    setError,
+    clearErrors,
+    getValues,
+    trigger,
+  } = useForm({
+    criteriaMode: "firstError",
+    mode: "onBlur",
+    reValidateMode: "onBlur",
+    resolver: customZodResolver(zodProfileSchema),
+    values: formInitialState,
+  });
+
+  const firstFieldError = Object.entries(errors).at(0);
   const navigation = useAppNavigation({ preventGoBack: isSubmitting });
 
   function goBack() {
@@ -62,59 +75,52 @@ const CompleteProfileScreen = () => {
     );
   }
 
+  function revalidateFields(fields?: (keyof ProfileFormData)[]) {
+    trigger(fields);
+  }
+
+  function clearErrorsWithDelay(fields?: (keyof ProfileFormData)[]) {
+    delay(100).then(() => clearErrors(fields));
+  }
+
   function navigateToProgressForm() {
     navigation.navigate(RouteConstants.CreateProgress);
   }
 
   function selectGender(value: GenderType) {
-    const newGender = value !== values.gender ? value : null;
-    handleChange("gender", newGender);
-    validateField("gender", newGender || "", validateGender);
+    const currentGender = getValues("gender");
+    setValue("gender", currentGender === value ? null : value);
+    trigger();
   }
 
-  function validateAllFields() {
-    const validationMap = {
-      name: validateName(values.name),
-      phone: validatePhone(values.phone),
-      birthDate: validateBirthDate(values.birthDate),
-      gender: validateGender(values.gender || ""),
-    };
-
-    for (const [field, validation] of Object.entries(validationMap)) {
-      if (!validation.success) {
-        setError({ field: field as any, message: validation.error });
-        return false;
-      }
+  async function onSubmit(params: ProfileFormData) {
+    const birthDateISO = formatDateToISO(params.birthDate);
+    try {
+      const { data } = await httpUserService.updateProfile({
+        name: params.name,
+        phone: params.phone,
+        gender: params.gender as GenderType,
+        birthDate: new Date(birthDateISO),
+      });
+      setUser(data);
+      navigateToProgressForm();
+    } catch (error: any) {
+      handleApiError(error);
     }
-    return true;
   }
 
-  async function handleSubmit() {
-    if (!validateAllFields()) return;
-    if (!isFormDirty) return navigateToProgressForm();
-
-    const birthDateISO = formatDateToISO(values.birthDate);
-    const dataToSubmit = { ...values, birthDate: birthDateISO };
-    const { data } = await httpUserService.updateProfile(dataToSubmit as any);
-
-    setUser(data);
-    navigateToProgressForm();
-  }
-
-  async function handleError(error: Error) {
+  async function handleApiError(error: Error) {
     if (error instanceof ConnectionError) {
       return navigation.navigate(RouteConstants.ConnectionError);
     }
     if (error instanceof HttpError && error.field) {
-      setError({ field: error.field as any, message: error.message });
+      return setError(error.field as any, { message: error.message });
     }
-    if (!(error as any).field) {
-      showSnackbar({
-        duration: 4000,
-        message: error.message,
-        variant: "error",
-      });
-    }
+    showSnackbar({
+      duration: 5000,
+      message: error.message,
+      variant: "error",
+    });
   }
 
   return (
@@ -125,72 +131,121 @@ const CompleteProfileScreen = () => {
         Complete seu cadastro para tornarmos sua experiência mais personalizada.
       </Paragraph>
       <View style={styles.form}>
-        <Input
-          onBlur={() => validateField("name", values.name, validateName)}
-          onChangeText={(value) => handleChange("name", maskName(value))}
-          value={data.values.name}
-          error={error.field === "name"}
-          errorMessage={error.field === "name" ? error.message : undefined}
-          disabled={isSubmitting}
-          label="Como você gostaria de ser chamado(a)?"
-          placeholder="Ex.: Maria Silva"
-          textContentType="name"
-          autoFocus
+        <Controller
+          control={control}
+          name="name"
+          render={({ field: { onChange, value, name }, fieldState }) => {
+            const isInvalid = fieldState.invalid;
+            const isNameError = firstFieldError?.at(0) === name;
+            return (
+              <Input
+                value={value}
+                error={isNameError}
+                label="Como você gostaria de ser chamado(a)?"
+                placeholder="Ex.: Maria Silva"
+                textContentType="name"
+                disabled={isSubmitting}
+                errorMessage={
+                  isNameError ? firstFieldError[1].message : undefined
+                }
+                onBlur={() => revalidateFields(["name"])}
+                onChangeText={(text) => onChange(maskName(text))}
+                onFocus={() =>
+                  isInvalid &&
+                  clearErrorsWithDelay(["phone", "birthDate", "gender"])
+                }
+              />
+            );
+          }}
         />
-        <Input
-          onBlur={() => validateField("phone", values.phone, validatePhone)}
-          onChangeText={(value) =>
-            handleChange("phone", onlyNumbers(value, 11))
-          }
-          value={maskPhone(data.values.phone)}
-          error={error.field === "phone"}
-          errorMessage={error.field === "phone" ? error.message : undefined}
-          disabled={isSubmitting}
-          label="Telefone"
-          placeholder="(DDD) + número de telefone"
-          textContentType="telephoneNumber"
+        <Controller
+          control={control}
+          name="phone"
+          render={({ field: { onChange, value, name }, fieldState }) => {
+            const isPhoneError = firstFieldError?.at(0) === name;
+            const isInvalid = fieldState.invalid;
+            return (
+              <Input
+                value={maskPhone(value)}
+                error={isPhoneError}
+                label="Telefone"
+                placeholder="(DDD) + número de telefone"
+                textContentType="telephoneNumber"
+                disabled={isSubmitting}
+                errorMessage={
+                  isPhoneError ? firstFieldError[1].message : undefined
+                }
+                onBlur={() => revalidateFields(["name", "phone"])}
+                onChangeText={(text) => onChange(onlyNumbers(text, 11))}
+                onFocus={() =>
+                  isInvalid && clearErrorsWithDelay(["birthDate", "gender"])
+                }
+              />
+            );
+          }}
         />
-        <Input.Date
-          onChangeText={(value) =>
-            handleChange("birthDate", maskDatePTBR(value))
-          }
-          onBlur={() =>
-            validateField("birthDate", values.birthDate, validateBirthDate)
-          }
-          value={data.values.birthDate}
-          error={error.field === "birthDate"}
-          errorMessage={error.field === "birthDate" ? error.message : undefined}
-          disabled={isSubmitting}
-          textContentType="birthdate"
-          label="Data de nascimento"
-          placeholder="dd/mm/aaaa"
+        <Controller
+          control={control}
+          name="birthDate"
+          render={({ field: { value, name, onChange }, fieldState }) => {
+            const isDateError = firstFieldError?.at(0) === name;
+            const isInvalid = fieldState.invalid;
+            return (
+              <Input.Date
+                onBlur={() => revalidateFields(["name", "phone", "birthDate"])}
+                onChangeText={(text) => onChange(maskDatePTBR(text))}
+                onFocus={() => isInvalid && clearErrorsWithDelay(["gender"])}
+                value={value}
+                error={isDateError}
+                errorMessage={
+                  isDateError ? firstFieldError[1].message : undefined
+                }
+                disabled={isSubmitting}
+                textContentType="birthdate"
+                label="Data de nascimento"
+                placeholder="dd/mm/aaaa"
+              />
+            );
+          }}
         />
-        <View>
-          <Text style={styles.genderLabel}>Gênero social</Text>
-          <View style={styles.genderButtons}>
-            <GenderButton
-              disabled={isSubmitting}
-              selected={data.values.gender === "feminino"}
-              onPress={() => selectGender("feminino")}
-            >
-              <Text style={styles.gender}>Feminino</Text>
-            </GenderButton>
-            <GenderButton
-              disabled={isSubmitting}
-              selected={data.values.gender === "masculino"}
-              onPress={() => selectGender("masculino")}
-            >
-              <Text style={styles.gender}>Masculino</Text>
-            </GenderButton>
-          </View>
-          {error.field === "gender" && error.message && (
-            <ErrorMessage style={styles.genderError} message={error.message} />
-          )}
-        </View>
+        <Controller
+          control={control}
+          name="gender"
+          render={({ field: { value, name } }) => {
+            const isGenderError = firstFieldError?.at(0) === name;
+            return (
+              <View>
+                <Text style={styles.genderLabel}>Gênero social</Text>
+                <View style={styles.genderButtons}>
+                  <GenderButton
+                    disabled={isSubmitting}
+                    selected={value === "feminino"}
+                    onPress={() => selectGender("feminino")}
+                  >
+                    <Text style={styles.gender}>Feminino</Text>
+                  </GenderButton>
+                  <GenderButton
+                    disabled={isSubmitting}
+                    selected={value === "masculino"}
+                    onPress={() => selectGender("masculino")}
+                  >
+                    <Text style={styles.gender}>Masculino</Text>
+                  </GenderButton>
+                </View>
+                {isGenderError && firstFieldError[1].message && (
+                  <ErrorMessage
+                    style={styles.genderError}
+                    message={firstFieldError[1].message}
+                  />
+                )}
+              </View>
+            );
+          }}
+        />
       </View>
       <SubmitButton
         disabled={isSubmitting}
-        onPress={onSubmit(handleSubmit, handleError)}
+        onPress={handleSubmit(onSubmit)}
         style={styles.submitButton}
         title="Continuar cadastro"
         type="primary"

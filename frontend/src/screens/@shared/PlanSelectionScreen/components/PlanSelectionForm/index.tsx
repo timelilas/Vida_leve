@@ -3,9 +3,9 @@ import { CaloriePlanButton } from "../CaloriePlanButton";
 import { CaloriePlanProps } from "../../../../../@core/entities/caloriePlan/type";
 import { planUiDetails } from "./utils";
 import { PlanType } from "../../../../../@core/entities/@shared/planType/type";
-import { useForm } from "../../../../../hooks/useForm";
 import { SubmitButton } from "../../../../../components/SubmitButton";
 import { useAppNavigation } from "../../../../../hooks/useAppNavigation";
+import { useState } from "react";
 
 export interface FormState {
   selectedPlan: PlanType;
@@ -20,34 +20,30 @@ export interface PlanSelectionFormProps {
 
 export function PlanSelectionForm(props: PlanSelectionFormProps) {
   const { currentPlan, plans, onSubmit, onError } = props;
-  const {
-    handleChange,
-    onSubmit: onFormSubmit,
-    data,
-  } = useForm<{ planType: PlanType | null }>({
-    initialState: { planType: currentPlan },
-  });
+  const [selectedPlan, setSelectedPlan] = useState<PlanType | null>(
+    currentPlan
+  );
+  const [isSubmitting, setIsSubmitting] = useState(false);
 
-  useAppNavigation({ preventGoBack: data.isSubmitting });
+  useAppNavigation({ preventGoBack: isSubmitting });
 
   function handlePlanSelection(planType: PlanType) {
-    if (planType === data.values.planType) {
-      handleChange("planType", null);
-    } else {
-      handleChange("planType", planType);
-    }
+    setSelectedPlan((prevState) => {
+      return planType === prevState ? null : planType;
+    });
   }
 
   async function handleSubmit() {
-    const selectedPlan = data.values.planType;
-
-    if (selectedPlan) {
-      await onSubmit({ selectedPlan });
+    setIsSubmitting(true);
+    try {
+      if (selectedPlan) {
+        await onSubmit({ selectedPlan });
+      }
+    } catch (error: any) {
+      onError(error);
+    } finally {
+      setIsSubmitting(false);
     }
-  }
-
-  function handleError(error: Error) {
-    onError(error);
   }
 
   return (
@@ -57,9 +53,9 @@ export function PlanSelectionForm(props: PlanSelectionFormProps) {
           const Icon = planUiDetails[plan.type].icon;
           return (
             <CaloriePlanButton
-              disabled={data.isSubmitting}
+              disabled={isSubmitting}
               onPress={() => handlePlanSelection(plan.type)}
-              selected={plan.type === data.values.planType}
+              selected={plan.type === selectedPlan}
               key={plan.type}
               icon={<Icon />}
               title={planUiDetails[plan.type].title}
@@ -70,8 +66,8 @@ export function PlanSelectionForm(props: PlanSelectionFormProps) {
         })}
       </View>
       <SubmitButton
-        disabled={data.isSubmitting || !data.values.planType}
-        onPress={onFormSubmit(handleSubmit, handleError)}
+        disabled={isSubmitting || !selectedPlan}
+        onPress={handleSubmit}
         title="Salvar informações"
         type="primary"
         style={styles.submitButton}

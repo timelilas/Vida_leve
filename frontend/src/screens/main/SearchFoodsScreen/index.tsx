@@ -27,7 +27,6 @@ import { useSnackbar } from "../../../hooks/useSnackbar";
 import { FoodList } from "./components/FoodList";
 import { styles } from "./styles";
 import { colors } from "../../../styles/colors";
-import { MealType } from "../../../@core/entities/@shared/mealType/type";
 import { useMealStore } from "../../../store/meal";
 
 type SearchFoodsScreenRouteProp = RouteProp<

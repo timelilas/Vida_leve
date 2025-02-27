@@ -7,9 +7,6 @@ import { SubmitButton } from "../../../components/SubmitButton";
 import { ScreenTitle } from "../../../components/ScreenTitle";
 import { httpAuthService } from "../../../services/auth";
 import { ErrorMessage } from "../../../components/ErrorMessage";
-import { useForm } from "../../../hooks/useForm";
-import { validateEmail } from "../../../utils/validations/email";
-import { validateEmptyField } from "../../../utils/validations/common";
 import { LoginFormData } from "./types";
 import { maskEmail } from "../../../utils/masks";
 import { HttpError } from "../../../@core/errors/httpError";
@@ -27,15 +24,24 @@ import { useProgressStore } from "../../../store/progress";
 import { useUserStore } from "../../../store/user";
 import { useCaloriePlanStore } from "../../../store/caloriePlan";
 import { useNavigationAfterLogin } from "./hooks/useNavigationAfterLogin";
-import styles from "../styles";
 import { NavigationHeader } from "../../../components/NavigationHeader";
+import { zodLoginSchema } from "./schema";
+import { Controller, useForm } from "react-hook-form";
+import styles from "../styles";
+import { customZodResolver } from "../../../libs/zod/@shared/resolver";
+import { delay } from "../../../utils/helpers";
 
 const loginInitialState: LoginFormData = { email: "", password: "" };
 
 const LoginScreen = () => {
+  const navigation = useAppNavigation();
+  const scrollRef = useRef<ScrollView | null>(null);
+
   const setUser = useUserStore((state) => state.setUser);
   const setPlans = useCaloriePlanStore((state) => state.setPlans);
   const setProgress = useProgressStore((state) => state.setProgress);
+
+  const { Snackbar, showSnackbar } = useSnackbar();
 
   const {
     naivgateToHome,
@@ -44,13 +50,22 @@ const LoginScreen = () => {
     navigateToPlanSelection,
   } = useNavigationAfterLogin();
 
-  const { Snackbar, showSnackbar } = useSnackbar();
-  const navigation = useAppNavigation();
-  const scrollRef = useRef<ScrollView | null>(null);
-  const { data, handleChange, setError, validateField, onSubmit } = useForm({
-    initialState: loginInitialState,
+  const {
+    formState: { errors, isSubmitting },
+    control,
+    handleSubmit,
+    setError,
+    trigger,
+    clearErrors,
+  } = useForm<LoginFormData>({
+    criteriaMode: "firstError",
+    values: loginInitialState,
+    resolver: customZodResolver(zodLoginSchema),
+    mode: "onBlur",
+    reValidateMode: "onBlur",
   });
-  const { values, error, isSubmitting } = data;
+
+  const firstFieldError = Object.entries(errors).at(0);
 
   function goBack() {
     navigation.goBack();
@@ -60,54 +75,34 @@ const LoginScreen = () => {
     scrollRef.current?.scrollTo({ y: 0, animated: true });
   }
 
-  function validateAllFields() {
-    const validationMap = {
-      email: validateEmail(values.email),
-      password: validateEmptyField(values.password),
-    };
-
-    for (const [field, validation] of Object.entries(validationMap)) {
-      if (!validation.success) {
-        setError({ field: field as any, message: validation.error });
-        return false;
-      }
-    }
-    return true;
+  function revalidateFields(fields?: (keyof LoginFormData)[]) {
+    trigger(fields);
   }
 
-  async function handleSubmit() {
-    if (!validateAllFields()) return;
-
-    const { data } = await httpAuthService.login(values);
-
-    await SecureStorage.setItem(STORAGE_ACCESS_TOKEN, data.token);
-
-    await handleNavigationAfterLogin();
+  function clearErrorsWithDelay(fields?: (keyof LoginFormData)[]) {
+    delay(100).then(() => clearErrors(fields));
   }
 
-  function handleError(error: Error) {
+  function handleApiError(error: Error) {
     if (error instanceof ConnectionError) {
       return navigation.navigate(RouteConstants.ConnectionError);
     }
     if (error instanceof HttpError && error.field) {
       if (error.status === 401) scrollToTop();
-      setError(
-        error.status === 401
-          ? { field: "all", message: wrongCredentialsMessage }
-          : { field: error.field as any, message: error.message }
-      );
+      const field = error.status === 401 ? "root" : error.field;
+      const message =
+        error.status === 401 ? wrongCredentialsMessage : error.message;
+      return setError(field as any, { message });
     }
-    if (!(error as any).field) {
-      showSnackbar({
-        duration: 4000,
-        message: error.message,
-        variant: "error",
-      });
-    }
+    showSnackbar({
+      duration: 5000,
+      message: error.message,
+      variant: "error",
+    });
   }
 
   async function handleNavigationAfterLogin() {
-    const { user, progress, plans } = await getOnboardingData();
+    const { user, progress, plans } = await setOnboardingData();
 
     if (!user.birthDate || !user.gender || !user.phone || !user.name) {
       return navigateToProfileForm();
@@ -122,7 +117,7 @@ const LoginScreen = () => {
     return naivgateToHome();
   }
 
-  async function getOnboardingData() {
+  async function setOnboardingData() {
     const [{ data: user }, { data: progress }, { data: plans }] =
       await Promise.all([
         httpUserService.getProfile(),
@@ -137,41 +132,74 @@ const LoginScreen = () => {
     return { user, progress, plans };
   }
 
+  async function onSubmit(params: LoginFormData) {
+    try {
+      const { data } = await httpAuthService.login(params);
+      await SecureStorage.setItem(STORAGE_ACCESS_TOKEN, data.token);
+      await handleNavigationAfterLogin();
+    } catch (error: any) {
+      handleApiError(error);
+    }
+  }
+
   return (
     <ScreenWrapper ref={scrollRef} snackbar={<Snackbar />}>
       <NavigationHeader variant="default" onBack={goBack} />
       <LogoSVG style={styles.logo} />
-      {error.message && (!error.field || error.field === "all") && (
-        <ErrorMessage style={styles.error} message={error.message} />
+      {errors.root?.message && (
+        <ErrorMessage style={styles.error} message={errors.root.message} />
       )}
       <ScreenTitle
         style={styles.title}
         title={`Boas vindas!\nEntre em sua conta para continuar`}
       />
       <View style={styles.form}>
-        <Input
-          onChangeText={(data) => handleChange("email", maskEmail(data))}
-          onBlur={() => validateField("email", values.email, validateEmail)}
-          autoFocus
-          label="E-mail"
-          placeholder="Ex: joaodasilva@email.com"
-          textContentType="emailAddress"
-          errorMessage={error.field === "email" ? error.message : undefined}
-          value={values.email}
-          disabled={isSubmitting}
-          error={error.field === "email" || error.field === "all"}
+        <Controller
+          control={control}
+          name="email"
+          render={({ field: { onChange, value, name }, fieldState }) => {
+            const isEmailError = firstFieldError?.at(0) === name;
+            const isRootError = firstFieldError?.at(0) === "root";
+            const isInvalid = fieldState.invalid;
+            return (
+              <Input
+                onChangeText={(text) => onChange(maskEmail(text))}
+                onBlur={() => revalidateFields(["email"])}
+                onFocus={() => isInvalid && clearErrorsWithDelay(["password"])}
+                label="E-mail"
+                placeholder="Ex: joaodasilva@email.com"
+                textContentType="emailAddress"
+                errorMessage={
+                  isEmailError ? firstFieldError[1]?.message : undefined
+                }
+                error={isEmailError || isRootError}
+                value={value}
+                disabled={isSubmitting}
+              />
+            );
+          }}
         />
-        <Input.Password
-          onChangeText={(data) => handleChange("password", data)}
-          onBlur={() =>
-            validateField("password", values.password, validateEmptyField)
-          }
-          label="Senha"
-          placeholder="**********"
-          value={values.password}
-          errorMessage={error.field === "password" ? error.message : undefined}
-          disabled={isSubmitting}
-          error={error.field === "password" || error.field === "all"}
+        <Controller
+          control={control}
+          name="password"
+          render={({ field: { onChange, value, name } }) => {
+            const isPasswordError = firstFieldError?.at(0) === name;
+            const isRootError = firstFieldError?.at(0) === "root";
+            return (
+              <Input.Password
+                onChangeText={onChange}
+                onBlur={() => revalidateFields()}
+                label="Senha"
+                placeholder="**********"
+                value={value}
+                errorMessage={
+                  isPasswordError ? firstFieldError[1]?.message : undefined
+                }
+                error={isPasswordError || isRootError}
+                disabled={isSubmitting}
+              />
+            );
+          }}
         />
       </View>
       <SubmitButton
@@ -179,7 +207,7 @@ const LoginScreen = () => {
         style={styles.button}
         title="Continuar"
         type="primary"
-        onPress={onSubmit(handleSubmit, handleError)}
+        onPress={handleSubmit(onSubmit)}
       />
     </ScreenWrapper>
   );
