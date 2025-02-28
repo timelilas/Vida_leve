@@ -3,17 +3,14 @@ import { GenderType } from "../../@core/entities/@shared/gender/type";
 import { CaloriePlanProps } from "../../@core/entities/caloriePlan/type";
 import { ProgressProps } from "../../@core/entities/progress/type";
 
-export interface ProgressFormInitialData
-  extends Pick<ProgressProps, "weight" | "goalWeight"> {
+export interface ProgressFormData {
   height: string;
-  activityFrequency: ActitivyFrequency | null;
-  birthDate: string | null;
+  weight: string;
+  goalWeight: string;
+  birthDate: string;
   gender: GenderType | null;
+  activityFrequency: ActitivyFrequency | null;
 }
-
-export type ProgressFormValidationResult<T> =
-  | { success: false }
-  | { success: true; data: T };
 
 export interface OnProgressSubmitData {
   formData: Omit<ProgressProps, "currentCaloriePlan">;

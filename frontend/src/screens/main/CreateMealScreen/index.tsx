@@ -6,41 +6,42 @@ import { ScreenTitle } from "../../../components/ScreenTitle";
 import { MealButton } from "./components/MealButton";
 import { mealButtonsData } from "./utils";
 import { useEffect, useState } from "react";
-import { MealType } from "../../../@core/entities/@shared/meal/type";
+import { MealType } from "../../../@core/entities/@shared/mealType/type";
 import { DayPicker } from "../../../components/DayPicker";
 import { DateData } from "../../../components/DayPicker/types";
 import { RouteConstants } from "../../../routes/types";
 import { styles } from "./styles";
 import {
-  convertDateToDateData,
+  convertDateToLocalDateData,
   formatDateToLabel,
 } from "../../../utils/helpers";
+import { useMealStore } from "../../../store/meal";
 
 const CreateMealScreen = () => {
+  const setMeal = useMealStore((state) => state.setMeal);
+  const resetMeal = useMealStore((state) => state.resetMeal);
   const navigation = useAppNavigation();
-  const today = convertDateToDateData(new Date());
-  const [selectedDate, setSelectedDate] = useState<DateData>(today);
-  const [selectedMeal, setSelectedMeal] = useState<MealType | null>(null);
+  const currentLocalDate = convertDateToLocalDateData(new Date());
+  const [selectedDate, setSelectedDate] = useState<DateData>(currentLocalDate);
+  const [selectedMealType, setSelectedMealType] = useState<MealType | null>(
+    null
+  );
 
   useEffect(() => {
-    if (selectedDate && selectedMeal) {
-      navigation.navigate(RouteConstants.SearchFoods, {
-        mealType: selectedMeal,
-        mealDate: {
-          year: selectedDate.year,
-          month: selectedDate.month,
-          day: selectedDate.day,
-        },
-      });
+    if (selectedDate && selectedMealType) {
+      const { year, month, day } = selectedDate;
+      setMeal(selectedMealType, new Date(year, month, day));
+      navigation.navigate(RouteConstants.SearchFoods);
     }
-  }, [selectedDate, selectedMeal, navigation]);
+  }, [selectedDate, selectedMealType, navigation, setMeal]);
 
   function goBack() {
     navigation.goBack();
+    resetMeal();
   }
 
   function handleMealSelection(mealType: MealType) {
-    setSelectedMeal(mealType === selectedMeal ? null : mealType);
+    setSelectedMealType(mealType === selectedMealType ? null : mealType);
   }
 
   function handleDaySelection(dateData: DateData) {
@@ -84,7 +85,7 @@ const CreateMealScreen = () => {
             key={meal.type}
             icon={meal.icon}
             title={meal.name}
-            selected={meal.type === selectedMeal}
+            selected={meal.type === selectedMealType}
           />
         ))}
       </View>

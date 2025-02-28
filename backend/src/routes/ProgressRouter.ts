@@ -10,20 +10,22 @@ import {
 const progressRouter = Router();
 const progressController = new ProgressController();
 
-progressRouter.get("/", authorizationMiddleware, (req, res) =>
-  progressController.getProgress(req, res)
+progressRouter.get(
+  "/",
+  (req, res, next) => authorizationMiddleware.execute(req, res, next),
+  (req, res) => progressController.getProgress(req, res)
 );
 
 progressRouter.post(
   "/",
-  authorizationMiddleware,
+  (req, res, next) => authorizationMiddleware.execute(req, res, next),
   validationMiddleware(upsertProgressSchema, "body"),
   (req, res) => progressController.upsert(req, res)
 );
 
 progressRouter.patch(
   "/plan",
-  authorizationMiddleware,
+  (req, res, next) => authorizationMiddleware.execute(req, res, next),
   validationMiddleware(setCurrentCaloriePlanSchema, "body"),
   (req, res) => progressController.setCaloriePlan(req, res)
 );

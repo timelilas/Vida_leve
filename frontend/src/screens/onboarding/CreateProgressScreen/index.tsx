@@ -6,14 +6,13 @@ import { useUserStore } from "../../../store/user";
 import { useProgressStore } from "../../../store/progress";
 import { ConnectionError } from "../../../@core/errors/connectionError";
 import { useCaloriePlanStore } from "../../../store/caloriePlan";
-import { heightToString } from "../../../utils/masks";
 import { useAppNavigation } from "../../../hooks/useAppNavigation";
 import { RouteConstants } from "../../../routes/types";
 import { httpProgressService } from "../../../services/progress";
 import { useSnackbar } from "../../../hooks/useSnackbar";
 import { ProgressForm } from "../../../components/ProgressForm";
 import { OnProgressSubmitData } from "../../../components/ProgressForm/types";
-import { useEffect, useState } from "react";
+import { useState } from "react";
 import { styles } from "./styles";
 
 const CreateProgressScreen = () => {
@@ -27,12 +26,12 @@ const CreateProgressScreen = () => {
   const navigation = useAppNavigation({ preventGoBack: isSubmitting });
 
   const initialFormData = {
-    height: progress?.height ? heightToString(progress?.height) : "",
-    weight: progress?.weight ?? 0,
-    goalWeight: progress?.goalWeight ?? 0,
-    activityFrequency: progress?.activityFrequency ?? null,
     gender: gender,
-    birthDate: birthDate,
+    birthDate: birthDate || "",
+    weight: `${progress?.weight ?? ""}`,
+    height: progress?.height ? progress.height.toFixed(2) : "",
+    goalWeight: `${progress?.goalWeight ?? ""}`,
+    activityFrequency: progress?.activityFrequency ?? null,
   };
 
   function goBack() {

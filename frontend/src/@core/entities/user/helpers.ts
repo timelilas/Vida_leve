@@ -1,3 +1,5 @@
+import { MAX_USER_AGE, MIN_USER_AGE } from "./constants";
+
 export function calculateAge(birthDate: Date) {
   const currentLocalDate = new Date().toLocaleDateString("pt-br");
 
@@ -18,5 +20,5 @@ export function calculateAge(birthDate: Date) {
 
 export function validateUserAge(birthDate: Date) {
   const age = calculateAge(birthDate);
-  return age >= 18 && age <= 90;
+  return age >= MIN_USER_AGE && age <= MAX_USER_AGE;
 }

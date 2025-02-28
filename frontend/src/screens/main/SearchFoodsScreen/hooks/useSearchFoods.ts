@@ -4,7 +4,7 @@ import { FoodProps } from "../../../../@core/entities/food/type";
 import { httpFoodService } from "../../../../services/food";
 import { queryClient } from "../../../../libs/react-query/queryClient";
 import { useCallback, useDeferredValue } from "react";
-import { delay, transformFoodNameIntoSlug } from "../../../../utils/helpers";
+import { transformFoodNameIntoSlug } from "../../../../utils/helpers";
 
 interface FoodDataState {
   hasMore: boolean;
@@ -57,7 +57,7 @@ export function useSearchFoods(params: UseFoodParams) {
       queryFn: async () => {
         const { data: newData } = await httpFoodService.searchFoods({
           name: foodSlug,
-          limit: 5,
+          limit: 10,
           offset: currentState?.foods.length || 0,
         });
 
