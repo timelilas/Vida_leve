@@ -66,17 +66,24 @@ export const zodProgressSchema = z
     age: zodAgeSchema,
     gender: zodGenderSchema,
   })
-  .strict()
-  .superRefine(({ age, height, goalWeight, gender }, ctx) => {
+  .superRefine(({ age, height, weight, goalWeight, gender }, ctx) => {
     const floatHeight = parseFloat(height.replace(",", "."));
     const intGoalWeight = parseInt(goalWeight);
     const { min, max } = calculateWeightRangeByIMC(age, floatHeight);
+
+    if (weight === goalWeight) {
+      return ctx.addIssue({
+        code: "custom",
+        path: ["goalWeight"],
+        message: "O peso desejado deve ser diferente do peso atual",
+      });
+    }
 
     if (intGoalWeight < min || intGoalWeight > max) {
       const genderLabel = gender === "masculino" ? "um homem" : "uma mulher";
       const heightAsString = `${height}`.replace(".", ",");
 
-      ctx.addIssue({
+      return ctx.addIssue({
         code: "custom",
         path: ["goalWeight"],
         message: `Quase lá! O peso saudável para ${genderLabel} de ${age} anos com ${heightAsString} m está entre ${min} kg e ${max} kg.`,

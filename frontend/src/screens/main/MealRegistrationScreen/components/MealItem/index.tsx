@@ -11,7 +11,6 @@ import { IncrementIcon } from "../../../../../components/Icons/IncrementIcon";
 import { DecrementIcon } from "../../../../../components/Icons/DecrementIcon";
 import { TrashIcon } from "../../../../../components/Icons/TrashIcon";
 import { useMealStore } from "../../../../../store/meal";
-import { useState } from "react";
 import { useAnimation } from "./animation";
 import { styles } from "./styles";
 
@@ -22,17 +21,17 @@ interface MealItemProps {
 export function MealItem(props: MealItemProps) {
   const addFood = useMealStore((state) => state.addFood);
   const removeFood = useMealStore((state) => state.removeFood);
+  const toggleItemExpantion = useMealStore(
+    (state) => state.toggleItemExpansion
+  );
   const decrementFoodQuantity = useMealStore(
     (state) => state.decrementFoodQuantity
   );
 
-  const { foodId } = props;
-  const food = useMealStore((state) => state.foodMap[foodId]);
-  const [isItemExpanded, setIsItemExpanded] = useState(false);
-
+  const food = useMealStore((state) => state.foodMap[props.foodId]);
   const totalCalories = food.calories * food.quantity;
 
-  const { animatedValue } = useAnimation({ isItemExpanded });
+  const { animatedValue } = useAnimation({ isItemExpanded: food.isExpanded });
   const containerHeight = animatedValue.interpolate({
     inputRange: [0, 1],
     outputRange: [ITEM_HEIGHT_SHRINKED, ITEM_HEIGHT_EXPANDED],
@@ -51,7 +50,7 @@ export function MealItem(props: MealItemProps) {
   }
 
   function toggleItemExpansion() {
-    setIsItemExpanded((prevState) => !prevState);
+    toggleItemExpantion(food.id);
   }
 
   return (
@@ -102,7 +101,7 @@ export function MealItem(props: MealItemProps) {
             onPress={toggleItemExpansion}
             style={styles.toggleItemButton}
           >
-            <Animated.View style={isItemExpanded && styles.chvronIconDown}>
+            <Animated.View style={!food.isExpanded && styles.chvronIconDown}>
               <ChevronUpIcon />
             </Animated.View>
           </TouchableOpacity>
