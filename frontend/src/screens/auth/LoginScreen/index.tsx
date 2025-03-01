@@ -111,7 +111,7 @@ const LoginScreen = () => {
       return navigateToProgressForm();
     }
     if (!progress.currentCaloriePlan) {
-      return navigateToPlanSelection();
+      return navigateToPlanSelection(plans);
     }
 
     return naivgateToHome();
