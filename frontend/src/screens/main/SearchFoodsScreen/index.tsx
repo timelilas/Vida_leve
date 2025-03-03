@@ -17,7 +17,6 @@ import SearchInput from "./components/SearchInput";
 import { useEffect, useState } from "react";
 import { FOOD_ITEM_HEIGHT } from "./components/FoodItem/constants";
 import {
-  delay,
   formatDateToLabel,
   getTitleFromMealType,
 } from "../../../utils/helpers";
@@ -37,14 +36,12 @@ type SearchFoodsScreenRouteProp = RouteProp<
 interface SearchFoodsScreenProps {
   route: SearchFoodsScreenRouteProp;
 }
-
 const SearchFoodsScreen = ({ route }: SearchFoodsScreenProps) => {
   const navigation = useAppNavigation();
   const windowDimensions = useWindowDimensions();
 
   const mealDate = useMealStore((state) => state.date);
   const mealType = useMealStore((state) => state.type);
-
   const [foodName, setFoodName] = useState("");
   const [bodyHeight, setBodyHeight] = useState<number | null>(null);
 
@@ -63,6 +60,15 @@ const SearchFoodsScreen = ({ route }: SearchFoodsScreenProps) => {
     });
 
   useEffect(() => {
+    const unsubscribe = navigation.addListener("focus", () => {
+      if (route.params?.foodName !== undefined) {
+        setFoodName(route.params.foodName);
+      }
+    });
+    return () => unsubscribe();
+  }, [route.params?.foodName]);
+
+  useEffect(() => {
     if (isError) {
       showSnackbar({
         id: Math.floor(Math.random() * 2),
@@ -73,13 +79,6 @@ const SearchFoodsScreen = ({ route }: SearchFoodsScreenProps) => {
       });
     }
   }, [isError, isFetching]);
-
-  useEffect(() => {
-    const unsubscribe = navigation.addListener("blur", () => {
-      delay(200).then(() => setFoodName(""));
-    });
-    return () => unsubscribe();
-  }, []);
 
   function goBack() {
     navigation.goBack();

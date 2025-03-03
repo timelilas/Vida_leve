@@ -19,8 +19,8 @@ interface MealItemProps {
 }
 
 export function MealItem(props: MealItemProps) {
-  const addFood = useMealStore((state) => state.addFood);
   const removeFood = useMealStore((state) => state.removeFood);
+  const incrementFood = useMealStore((state) => state.incrementFoodQuantity);
   const toggleItemExpantion = useMealStore(
     (state) => state.toggleItemExpansion
   );
@@ -38,7 +38,7 @@ export function MealItem(props: MealItemProps) {
   });
 
   function handleIncrement() {
-    addFood(food);
+    incrementFood(food.id);
   }
 
   function hadleDecrement() {

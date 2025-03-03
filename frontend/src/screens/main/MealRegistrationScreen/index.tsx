@@ -12,6 +12,7 @@ import {
   formatDateToLabel,
   getTitleFromMealType,
 } from "../../../utils/helpers";
+import { RouteConstants } from "../../../routes/types";
 
 const MealRegistrationScreen = () => {
   const navigation = useAppNavigation();
@@ -21,7 +22,7 @@ const MealRegistrationScreen = () => {
   const shortDateLabel = formatDateToLabel(new Date(mealDate), "short");
 
   function goBack() {
-    navigation.goBack();
+    navigation.navigate(RouteConstants.SearchFoods);
   }
 
   return (

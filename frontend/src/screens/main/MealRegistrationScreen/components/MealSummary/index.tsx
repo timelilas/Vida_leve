@@ -18,7 +18,7 @@ export function MealSummary() {
   }
 
   function handleFoodAddition() {
-    navigation.navigate(RouteConstants.SearchFoods);
+    navigation.navigate(RouteConstants.SearchFoods, { foodName: "" });
   }
 
   return (
