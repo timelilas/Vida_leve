@@ -2,7 +2,7 @@ import { View, ScrollView, Text } from "react-native";
 import { SubmitButton } from "../../../components/SubmitButton";
 import { Image } from "react-native";
 import { BigLogoSVG } from "../../../components/Logos/BigLogoSVG";
-import { useAppNavigation } from "../../../hooks/useAppNavigation";
+import { useAppNavigation } from "../../../hooks/common/useAppNavigation";
 import { RouteConstants } from "../../../routes/types";
 import { SafeAreaView } from "react-native-safe-area-context";
 import { styles } from "./styles";

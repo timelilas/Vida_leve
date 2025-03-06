@@ -1,5 +1,5 @@
 import { NavigationProp, useNavigation } from "@react-navigation/native";
-import { RouteParamsList } from "../routes/types";
+import { RouteParamsList } from "../../routes/types";
 import { useEffect } from "react";
 
 interface UseAppNavigationOptions {

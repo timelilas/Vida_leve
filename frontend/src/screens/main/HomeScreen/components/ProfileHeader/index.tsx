@@ -4,12 +4,12 @@ import { CameraIcon } from "../../../../../components/Icons/CameraIcon";
 import { ScreenTitle } from "../../../../../components/ScreenTitle";
 import { Paragraph } from "../../../../../components/Paragraph/Paragraph";
 import { PencilIcon } from "../../../../../components/Icons/PencilIcon";
-import { useUserStore } from "../../../../../store/user";
 import { styles } from "./styles";
+import { useUser } from "../../../../../hooks/user/useUser";
 
 export function ProileHeader() {
-  const email = useUserStore((state) => state.data.email);
-  const firstname = useUserStore((state) => state.data.name)?.split(" ")[0];
+  const { user } = useUser();
+  const firstName = user.name?.split(" ")[0];
   const profileImage = null;
 
   return (
@@ -23,8 +23,8 @@ export function ProileHeader() {
         </TouchableOpacity>
       </View>
       <View style={styles.userInformation}>
-        <ScreenTitle title={firstname || ""} />
-        <Paragraph>{email}</Paragraph>
+        <ScreenTitle title={firstName || ""} />
+        <Paragraph>{user.email}</Paragraph>
       </View>
       <TouchableOpacity style={styles.updateProfileButton}>
         <PencilIcon />

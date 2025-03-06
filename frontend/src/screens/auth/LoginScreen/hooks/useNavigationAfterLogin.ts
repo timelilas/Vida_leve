@@ -1,5 +1,5 @@
 import { CommonActions } from "@react-navigation/native";
-import { useAppNavigation } from "../../../../hooks/useAppNavigation";
+import { useAppNavigation } from "../../../../hooks/common/useAppNavigation";
 import { RouteConstants } from "../../../../routes/types";
 import { CaloriePlanProps } from "../../../../@core/entities/caloriePlan/type";
 

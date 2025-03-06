@@ -1,7 +1,7 @@
 import { View } from "react-native";
 import { NavigationHeader } from "../../../components/NavigationHeader";
 import { ScreenWrapper } from "../../../components/ScreenWrapper";
-import { useAppNavigation } from "../../../hooks/useAppNavigation";
+import { useAppNavigation } from "../../../hooks/common/useAppNavigation";
 import { ScreenTitle } from "../../../components/ScreenTitle";
 import { MealButton } from "./components/MealButton";
 import { mealButtonsData } from "./utils";

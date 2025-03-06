@@ -5,7 +5,7 @@ import { PlusIcon } from "../../../../../components/Icons/PlusIcon";
 import { useMealStore } from "../../../../../store/meal";
 import { calculateMealCalories } from "../../../../../@core/entities/meal/helpers";
 import { RouteConstants } from "../../../../../routes/types";
-import { useAppNavigation } from "../../../../../hooks/useAppNavigation";
+import { useAppNavigation } from "../../../../../hooks/common/useAppNavigation";
 
 export function MealSummary() {
   const navigation = useAppNavigation();

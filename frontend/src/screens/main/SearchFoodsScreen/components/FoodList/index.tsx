@@ -3,7 +3,7 @@ import { styles } from "./styles";
 import { FoodItem } from "../FoodItem";
 import { FoodProps } from "../../../../../@core/entities/food/type";
 import { memo } from "react";
-import { useAppNavigation } from "../../../../../hooks/useAppNavigation";
+import { useAppNavigation } from "../../../../../hooks/common/useAppNavigation";
 import { RouteConstants } from "../../../../../routes/types";
 import { useMealStore } from "../../../../../store/meal";
 

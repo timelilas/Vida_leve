@@ -1,7 +1,7 @@
 import { RouteProp } from "@react-navigation/native";
 import { NavigationHeader } from "../../../components/NavigationHeader";
 import { ScreenWrapper } from "../../../components/ScreenWrapper";
-import { useAppNavigation } from "../../../hooks/useAppNavigation";
+import { useAppNavigation } from "../../../hooks/common/useAppNavigation";
 import { RouteConstants, RouteParamsList } from "../../../routes/types";
 import { ScreenTitle } from "../../../components/ScreenTitle";
 import {
@@ -21,8 +21,8 @@ import {
   getTitleFromMealType,
 } from "../../../utils/helpers";
 import { useSearchFoods } from "./hooks/useSearchFoods";
-import { useThrottle } from "../../../hooks/useThrottle ";
-import { useSnackbar } from "../../../hooks/useSnackbar";
+import { useThrottle } from "../../../hooks/common/useThrottle ";
+import { useSnackbar } from "../../../hooks/common/useSnackbar";
 import { FoodList } from "./components/FoodList";
 import { styles } from "./styles";
 import { colors } from "../../../styles/colors";

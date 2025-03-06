@@ -7,7 +7,7 @@ import { TargetIcon } from "../../../components/Icons/TargetIcon";
 import { CommonActions } from "@react-navigation/native";
 import { ScreenTitle } from "../../../components/ScreenTitle";
 import { NavigationHeader } from "../../../components/NavigationHeader";
-import { useAppNavigation } from "../../../hooks/useAppNavigation";
+import { useAppNavigation } from "../../../hooks/common/useAppNavigation";
 import { RouteConstants } from "../../../routes/types";
 import { SubmitButton } from "../../../components/SubmitButton";
 import { styles } from "./styles";

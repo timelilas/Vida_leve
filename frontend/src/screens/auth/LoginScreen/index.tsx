@@ -11,17 +11,15 @@ import { LoginFormData } from "./types";
 import { maskEmail } from "../../../utils/masks";
 import { HttpError } from "../../../@core/errors/httpError";
 import { ConnectionError } from "../../../@core/errors/connectionError";
-import { useAppNavigation } from "../../../hooks/useAppNavigation";
+import { useAppNavigation } from "../../../hooks/common/useAppNavigation";
 import { RouteConstants } from "../../../routes/types";
 import { wrongCredentialsMessage } from "./utils";
 import { SecureStorage } from "../../../services/secureStorage/SecureStorage";
-import { useSnackbar } from "../../../hooks/useSnackbar";
+import { useSnackbar } from "../../../hooks/common/useSnackbar";
 import { STORAGE_ACCESS_TOKEN } from "../../../constants/localStorageConstants";
-import { httpUserService } from "../../../services/user";
 import { httpProgressService } from "../../../services/progress";
 import { httpCaloriePlanService } from "../../../services/caloriePlan";
 import { useProgressStore } from "../../../store/progress";
-import { useUserStore } from "../../../store/user";
 import { useCaloriePlanStore } from "../../../store/caloriePlan";
 import { useNavigationAfterLogin } from "./hooks/useNavigationAfterLogin";
 import { NavigationHeader } from "../../../components/NavigationHeader";
@@ -30,19 +28,18 @@ import { Controller, useForm } from "react-hook-form";
 import styles from "../styles";
 import { customZodResolver } from "../../../libs/zod/@shared/resolver";
 import { delay } from "../../../utils/helpers";
+import { useUser } from "../../../hooks/user/useUser";
 
 const loginInitialState: LoginFormData = { email: "", password: "" };
 
 const LoginScreen = () => {
   const navigation = useAppNavigation();
   const scrollRef = useRef<ScrollView | null>(null);
-
-  const setUser = useUserStore((state) => state.setUser);
+  const { getUserProfile } = useUser({ queryEnabled: false });
   const setPlans = useCaloriePlanStore((state) => state.setPlans);
   const setProgress = useProgressStore((state) => state.setProgress);
 
   const { Snackbar, showSnackbar } = useSnackbar();
-
   const {
     naivgateToHome,
     navigateToProfileForm,
@@ -102,30 +99,31 @@ const LoginScreen = () => {
   }
 
   async function handleNavigationAfterLogin() {
-    const { user, progress, plans } = await setOnboardingData();
+    try {
+      const { user, progress, plans } = await setOnboardingData();
 
-    if (!user.birthDate || !user.gender || !user.phone || !user.name) {
-      return navigateToProfileForm();
-    }
-    if (!progress || !plans.length) {
-      return navigateToProgressForm();
-    }
-    if (!progress.currentCaloriePlan) {
-      return navigateToPlanSelection(plans);
-    }
+      if (!user.birthDate || !user.gender || !user.phone || !user.name) {
+        return navigateToProfileForm();
+      }
+      if (!progress || !plans.length) {
+        return navigateToProgressForm();
+      }
+      if (!progress.currentCaloriePlan) {
+        return navigateToPlanSelection(plans);
+      }
 
-    return naivgateToHome();
+      return naivgateToHome();
+    } catch (error) {
+      console.log(error);
+    }
   }
 
   async function setOnboardingData() {
-    const [{ data: user }, { data: progress }, { data: plans }] =
-      await Promise.all([
-        httpUserService.getProfile(),
-        httpProgressService.getProgress(),
-        httpCaloriePlanService.getPlans(),
-      ]);
-
-    setUser(user);
+    const [user, { data: progress }, { data: plans }] = await Promise.all([
+      getUserProfile(),
+      httpProgressService.getProgress(),
+      httpCaloriePlanService.getPlans(),
+    ]);
     setPlans(plans);
     setProgress(progress);
 

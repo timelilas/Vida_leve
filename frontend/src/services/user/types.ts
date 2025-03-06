@@ -1,14 +1,26 @@
-import { UserProps } from "../../@core/entities/user/type";
+import { GenderType } from "../../@core/entities/@shared/gender/type";
 
-interface UserProfileData extends Omit<UserProps, "password" | "birthDate"> {
+export interface HttpGetUserProfileOutputDTO {
+  id: number;
+  email: string;
+  name: string | null;
+  phone: string | null;
+  gender: GenderType | null;
   birthDate: string | null;
 }
 
-export type HttpGetProfileOutputDTO = UserProfileData;
+export interface HttpUpdateUserProfileOutputDTO {
+  id: number;
+  email: string;
+  name: string;
+  phone: string;
+  gender: GenderType;
+  birthDate: string;
+}
 
-export type HttpUpdateProfileOutputDTO = UserProfileData;
-
-export type HttpUpdateProfileInputDTO = Pick<
-  UserProps,
-  "name" | "phone" | "birthDate" | "gender"
->;
+export interface HttpUpdateUserProfileInputDTO {
+  name: string;
+  phone: string;
+  gender: GenderType;
+  birthDate: Date;
+}

@@ -2,7 +2,7 @@ import { Text, TouchableOpacity, View } from "react-native";
 import { PlanType } from "../../../../../@core/entities/@shared/planType/type";
 import { useProgressStore } from "../../../../../store/progress";
 import { useCaloriePlanStore } from "../../../../../store/caloriePlan";
-import { useAppNavigation } from "../../../../../hooks/useAppNavigation";
+import { useAppNavigation } from "../../../../../hooks/common/useAppNavigation";
 import { RouteConstants } from "../../../../../routes/types";
 import { styles } from "./styles";
 

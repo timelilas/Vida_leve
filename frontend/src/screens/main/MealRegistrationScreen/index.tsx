@@ -1,6 +1,6 @@
 import { ScreenWrapper } from "../../../components/ScreenWrapper";
 import { NavigationHeader } from "../../../components/NavigationHeader";
-import { useAppNavigation } from "../../../hooks/useAppNavigation";
+import { useAppNavigation } from "../../../hooks/common/useAppNavigation";
 import { styles } from "./styles";
 import { View } from "react-native";
 import { ScreenTitle } from "../../../components/ScreenTitle";

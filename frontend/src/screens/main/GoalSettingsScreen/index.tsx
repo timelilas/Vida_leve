@@ -2,7 +2,7 @@ import { Text, View } from "react-native";
 import { NavigationHeader } from "../../../components/NavigationHeader";
 import { ScreenTitle } from "../../../components/ScreenTitle";
 import { ScreenWrapper } from "../../../components/ScreenWrapper";
-import { useAppNavigation } from "../../../hooks/useAppNavigation";
+import { useAppNavigation } from "../../../hooks/common/useAppNavigation";
 import { Paragraph } from "../../../components/Paragraph/Paragraph";
 import { ToggleButton } from "../../../components/ToggleButton";
 import { useState } from "react";

@@ -7,7 +7,7 @@ import { SoupIcon } from "../../../../../components/Icons/SoupIcon";
 import { ProgressBar } from "../../../../../components/ProgressBar/ProgressBar";
 import { useProgressStore } from "../../../../../store/progress";
 import { useCaloriePlanStore } from "../../../../../store/caloriePlan";
-import { useAppNavigation } from "../../../../../hooks/useAppNavigation";
+import { useAppNavigation } from "../../../../../hooks/common/useAppNavigation";
 import { RouteConstants } from "../../../../../routes/types";
 import { styles } from "./styles";
 

@@ -4,7 +4,7 @@ import { CaloriePlanProps } from "../../../../../@core/entities/caloriePlan/type
 import { planUiDetails } from "./utils";
 import { PlanType } from "../../../../../@core/entities/@shared/planType/type";
 import { SubmitButton } from "../../../../../components/SubmitButton";
-import { useAppNavigation } from "../../../../../hooks/useAppNavigation";
+import { useAppNavigation } from "../../../../../hooks/common/useAppNavigation";
 import { useState } from "react";
 
 export interface FormState {
