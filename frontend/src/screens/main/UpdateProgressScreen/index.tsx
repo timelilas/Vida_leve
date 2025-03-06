@@ -1,7 +1,6 @@
 import { ScreenWrapper } from "../../../components/ScreenWrapper";
 import { ScreenTitle } from "../../../components/ScreenTitle";
 import { Paragraph } from "../../../components/Paragraph/Paragraph";
-import { useProgressStore } from "../../../store/progress";
 import { ConnectionError } from "../../../@core/errors/connectionError";
 import { useAppNavigation } from "../../../hooks/common/useAppNavigation";
 import { RouteConstants } from "../../../routes/types";
@@ -11,10 +10,11 @@ import { OnProgressSubmitData } from "../../../components/ProgressForm/types";
 import { NavigationHeader } from "../../../components/NavigationHeader";
 import { styles } from "./styles";
 import { useUser } from "../../../hooks/user/useUser";
+import { useProgress } from "../../../hooks/progress/useProgress";
 
 const UpdateProgressScreen = () => {
   const { Snackbar, showSnackbar } = useSnackbar();
-  const progress = useProgressStore((state) => state.data);
+  const { progress } = useProgress();
   const { user } = useUser();
   const navigation = useAppNavigation();
 

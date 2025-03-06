@@ -17,18 +17,17 @@ import { wrongCredentialsMessage } from "./utils";
 import { SecureStorage } from "../../../services/secureStorage/SecureStorage";
 import { useSnackbar } from "../../../hooks/common/useSnackbar";
 import { STORAGE_ACCESS_TOKEN } from "../../../constants/localStorageConstants";
-import { httpProgressService } from "../../../services/progress";
 import { httpCaloriePlanService } from "../../../services/caloriePlan";
-import { useProgressStore } from "../../../store/progress";
 import { useCaloriePlanStore } from "../../../store/caloriePlan";
 import { useNavigationAfterLogin } from "./hooks/useNavigationAfterLogin";
 import { NavigationHeader } from "../../../components/NavigationHeader";
 import { zodLoginSchema } from "./schema";
 import { Controller, useForm } from "react-hook-form";
-import styles from "../styles";
 import { customZodResolver } from "../../../libs/zod/@shared/resolver";
 import { delay } from "../../../utils/helpers";
 import { useUser } from "../../../hooks/user/useUser";
+import { useProgress } from "../../../hooks/progress/useProgress";
+import styles from "../styles";
 
 const loginInitialState: LoginFormData = { email: "", password: "" };
 
@@ -36,8 +35,8 @@ const LoginScreen = () => {
   const navigation = useAppNavigation();
   const scrollRef = useRef<ScrollView | null>(null);
   const { getUserProfile } = useUser({ queryEnabled: false });
+  const { getProgress } = useProgress({ queryEnabled: false });
   const setPlans = useCaloriePlanStore((state) => state.setPlans);
-  const setProgress = useProgressStore((state) => state.setProgress);
 
   const { Snackbar, showSnackbar } = useSnackbar();
   const {
@@ -119,13 +118,12 @@ const LoginScreen = () => {
   }
 
   async function setOnboardingData() {
-    const [user, { data: progress }, { data: plans }] = await Promise.all([
+    const [user, progress, { data: plans }] = await Promise.all([
       getUserProfile(),
-      httpProgressService.getProgress(),
+      getProgress(),
       httpCaloriePlanService.getPlans(),
     ]);
     setPlans(plans);
-    setProgress(progress);
 
     return { user, progress, plans };
   }

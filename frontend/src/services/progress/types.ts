@@ -1,7 +1,10 @@
+import { ActitivyFrequency } from "../../@core/entities/@shared/activityFrequency/type";
 import { PlanType } from "../../@core/entities/@shared/planType/type";
-import { ProgressProps } from "../../@core/entities/progress/type";
 
-export interface HttpUpsertProgressInputDTO
-  extends Omit<ProgressProps, "currentCaloriePlan"> {
+export interface HttpUpsertProgressInputDTO {
+  height: number;
+  weight: number;
+  goalWeight: number;
+  activityFrequency: ActitivyFrequency;
   currentCaloriePlan?: PlanType;
 }

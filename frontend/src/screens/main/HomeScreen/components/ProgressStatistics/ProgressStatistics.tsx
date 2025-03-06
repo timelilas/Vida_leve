@@ -5,17 +5,17 @@ import { FreshFruitsIcon } from "../../../../../components/Icons/FreshFruitsIcon
 import { CookieIcon } from "../../../../../components/Icons/CookieIcon";
 import { SoupIcon } from "../../../../../components/Icons/SoupIcon";
 import { ProgressBar } from "../../../../../components/ProgressBar/ProgressBar";
-import { useProgressStore } from "../../../../../store/progress";
 import { useCaloriePlanStore } from "../../../../../store/caloriePlan";
 import { useAppNavigation } from "../../../../../hooks/common/useAppNavigation";
 import { RouteConstants } from "../../../../../routes/types";
 import { styles } from "./styles";
+import { useProgress } from "../../../../../hooks/progress/useProgress";
 
 export function ProgressStatistics() {
   const navigation = useAppNavigation();
-  const planType = useProgressStore((state) => state.data?.currentCaloriePlan);
+  const { progress } = useProgress();
   const currentPlan = useCaloriePlanStore((state) =>
-    state.data.find(({ type }) => type === planType)
+    state.data.find(({ type }) => type === progress?.currentCaloriePlan)
   );
 
   function navigateToCreateMealScreen() {

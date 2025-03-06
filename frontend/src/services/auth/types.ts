@@ -1,14 +1,14 @@
 import { UserProps } from "../../@core/entities/user/type";
 
-export interface HttpSignupInputDTO
-  extends Pick<UserProps, "email" | "password"> {
+export interface HttpSignupInputDTO {
+  email: string;
+  password: string;
   passwordConfirmation: string;
 }
 
 export type HttpSignupOutputDTO = Omit<UserProps, "password">;
 
-export interface HttpLoginInputDTO
-  extends Pick<UserProps, "email" | "password"> {
+export interface HttpLoginInputDTO {
   email: string;
   password: string;
 }

@@ -1,16 +1,16 @@
 import { Text, TouchableOpacity, View } from "react-native";
 import { PlanType } from "../../../../../@core/entities/@shared/planType/type";
-import { useProgressStore } from "../../../../../store/progress";
 import { useCaloriePlanStore } from "../../../../../store/caloriePlan";
 import { useAppNavigation } from "../../../../../hooks/common/useAppNavigation";
 import { RouteConstants } from "../../../../../routes/types";
 import { styles } from "./styles";
+import { useProgress } from "../../../../../hooks/progress/useProgress";
 
 export function PlanInformation() {
   const navigation = useAppNavigation();
-  const planType = useProgressStore((state) => state.data?.currentCaloriePlan);
+  const { progress } = useProgress();
   const currentPlan = useCaloriePlanStore((state) =>
-    state.data.find(({ type }) => type === planType)
+    state.data.find(({ type }) => type === progress?.currentCaloriePlan)
   );
 
   const planLabelMap: Record<PlanType, string> = {
@@ -25,10 +25,12 @@ export function PlanInformation() {
 
   return (
     <View>
-      {planType ? (
+      {progress?.currentCaloriePlan ? (
         <Text style={styles.titleThin}>
           A meta que será executada:{" "}
-          <Text style={styles.titleRegular}>{planLabelMap[planType]}</Text>
+          <Text style={styles.titleRegular}>
+            {planLabelMap[progress.currentCaloriePlan]}
+          </Text>
         </Text>
       ) : (
         <Text style={styles.titleThin}>

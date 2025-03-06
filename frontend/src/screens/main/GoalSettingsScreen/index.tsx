@@ -8,17 +8,15 @@ import { ToggleButton } from "../../../components/ToggleButton";
 import { useState } from "react";
 import { RouteConstants } from "../../../routes/types";
 import { useCaloriePlanStore } from "../../../store/caloriePlan";
-import { useProgressStore } from "../../../store/progress";
 import { styles } from "./styles";
+import { useProgress } from "../../../hooks/progress/useProgress";
 
 type SelectedRoute = "progress" | "plan";
 
 const GoalSettingsScreen = () => {
   const navigation = useAppNavigation();
   const caloriePlans = useCaloriePlanStore((state) => state.data);
-  const currentPlan = useProgressStore(
-    (state) => state.data?.currentCaloriePlan
-  );
+  const { progress } = useProgress();
   const [selectedRoute, setSelectedRoute] = useState<SelectedRoute | null>(
     null
   );
@@ -36,7 +34,7 @@ const GoalSettingsScreen = () => {
       nextRoute: RouteConstants.Home,
       withModal: true,
       plans: caloriePlans,
-      curentPlan: currentPlan || null,
+      curentPlan: progress?.currentCaloriePlan || null,
     });
   }
 
