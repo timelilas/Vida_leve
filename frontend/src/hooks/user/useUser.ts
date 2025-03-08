@@ -7,6 +7,7 @@ import { useCallback } from "react";
 
 interface UseUserParams {
   queryEnabled?: boolean;
+  refetchOnMount?: boolean;
 }
 
 const initialData: UserQueryState = {
@@ -22,6 +23,7 @@ export function useUser(params?: UseUserParams) {
   const { data, isLoading, error, refetch } = useQuery<UserQueryState>({
     queryKey: QueryKeys.DATABASE.USER,
     enabled: params?.queryEnabled ?? true,
+    refetchOnMount: params?.refetchOnMount,
     queryFn: async () => {
       const { data } = await httpUserService.getProfile();
       return data;

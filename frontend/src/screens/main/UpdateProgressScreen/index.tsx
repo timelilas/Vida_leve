@@ -14,8 +14,8 @@ import { useProgress } from "../../../hooks/progress/useProgress";
 
 const UpdateProgressScreen = () => {
   const { Snackbar, showSnackbar } = useSnackbar();
-  const { progress } = useProgress();
-  const { user } = useUser();
+  const { progress } = useProgress({ refetchOnMount: false });
+  const { user } = useUser({ refetchOnMount: false });
   const navigation = useAppNavigation();
 
   const initialFormData = {

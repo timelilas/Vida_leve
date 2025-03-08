@@ -25,13 +25,15 @@ interface PlanSelectionScreenProps {
 }
 
 const PlanSelectionScreen = ({ route }: PlanSelectionScreenProps) => {
-  const { Snackbar, showSnackbar } = useSnackbar();
-  const { setCaloriePlan, upsertProgress } = useProgress();
-  const { updateLocalPlans } = useCaloriePlans({ queryEnabled: false });
   const navigation = useAppNavigation();
+  const [isModalVisible, setIsModalVisible] = useState(false);
+  const { Snackbar, showSnackbar } = useSnackbar();
+  const { updateLocalPlans } = useCaloriePlans({ refetchOnMount: false });
+  const { setCaloriePlan, upsertProgress } = useProgress({
+    refetchOnMount: false,
+  });
   const { progressData, plans, curentPlan, nextRoute, withModal } =
     route.params;
-  const [isModalVisible, setIsModalVisible] = useState(false);
 
   function goBack() {
     navigation.goBack();

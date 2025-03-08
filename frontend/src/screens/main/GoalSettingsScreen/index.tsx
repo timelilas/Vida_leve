@@ -15,8 +15,8 @@ type SelectedRoute = "progress" | "plan";
 
 const GoalSettingsScreen = () => {
   const navigation = useAppNavigation();
-  const { plans } = useCaloriePlans();
-  const { progress } = useProgress();
+  const { plans } = useCaloriePlans({ refetchOnMount: false });
+  const { progress } = useProgress({ refetchOnMount: false });
   const [selectedRoute, setSelectedRoute] = useState<SelectedRoute | null>(
     null
   );

@@ -20,13 +20,13 @@ import {
   formatDateToLabel,
   getTitleFromMealType,
 } from "../../../utils/helpers";
-import { useSearchFoods } from "./hooks/useSearchFoods";
 import { useThrottle } from "../../../hooks/common/useThrottle ";
 import { useSnackbar } from "../../../hooks/common/useSnackbar";
 import { FoodList } from "./components/FoodList";
 import { styles } from "./styles";
 import { colors } from "../../../styles/colors";
 import { useMealStore } from "../../../store/meal";
+import { useFoods } from "../../../hooks/food/useFoods";
 
 type SearchFoodsScreenRouteProp = RouteProp<
   RouteParamsList,
@@ -52,12 +52,11 @@ const SearchFoodsScreen = ({ route }: SearchFoodsScreenProps) => {
   const limit = calculateTotalFoodsToFetch();
   const shortDateLabel = formatDateToLabel(new Date(mealDate), "short");
 
-  const { foods, hasMore, isError, isFetching, fetchMoreFoods } =
-    useSearchFoods({
-      foodName,
-      enabled: isQueryEnabled,
-      limit,
-    });
+  const { foods, hasMore, isError, isFetching, fetchMoreFoods } = useFoods({
+    foodName,
+    enabled: isQueryEnabled,
+    limit,
+  });
 
   useEffect(() => {
     const unsubscribe = navigation.addListener("focus", () => {

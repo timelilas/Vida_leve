@@ -7,13 +7,15 @@ import { queryClient } from "../../libs/react-query/queryClient";
 import { PlanType } from "../../@core/entities/@shared/planType/type";
 
 interface UseProgressParams {
-  queryEnabled: boolean;
+  queryEnabled?: boolean;
+  refetchOnMount?: boolean;
 }
 
 export function useProgress(params?: UseProgressParams) {
   const { data, isLoading, error, refetch } = useQuery<ProgressQueryState>({
     queryKey: QueryKeys.DATABASE.PROGRESS,
     enabled: params?.queryEnabled ?? true,
+    refetchOnMount: params?.refetchOnMount,
     queryFn: async () => {
       const { data: progressData } = await httpProgressService.getProgress();
       return progressData;

@@ -6,13 +6,15 @@ import { CaloriePlanProps } from "../../@core/entities/caloriePlan/type";
 import { useCallback } from "react";
 
 interface UseCaloriePlansParams {
-  queryEnabled: boolean;
+  queryEnabled?: boolean;
+  refetchOnMount?: boolean;
 }
 
 export function useCaloriePlans(params?: UseCaloriePlansParams) {
   const { data, isLoading, error, refetch } = useQuery({
     queryKey: QueryKeys.DATABASE.CALORIE_PLANS,
     enabled: params?.queryEnabled ?? true,
+    refetchOnMount: params?.refetchOnMount,
     queryFn: async () => {
       const caloriePlans = await httpCaloriePlanService.getPlans();
       return caloriePlans.data;

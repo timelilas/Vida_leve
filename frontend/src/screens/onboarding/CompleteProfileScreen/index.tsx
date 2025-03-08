@@ -32,7 +32,7 @@ import { useUser } from "../../../hooks/user/useUser";
 
 const CompleteProfileScreen = () => {
   const { Snackbar, showSnackbar } = useSnackbar();
-  const { user, updateUserProfile } = useUser();
+  const { user, updateUserProfile } = useUser({ refetchOnMount: false });
 
   const formInitialState: ProfileFormData = {
     name: user.name ?? "",

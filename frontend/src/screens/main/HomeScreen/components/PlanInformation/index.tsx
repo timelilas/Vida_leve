@@ -8,8 +8,8 @@ import { useCaloriePlans } from "../../../../../hooks/caloriePlan/useCaloriePlan
 
 export function PlanInformation() {
   const navigation = useAppNavigation();
-  const { progress } = useProgress();
-  const { plans } = useCaloriePlans();
+  const { progress } = useProgress({ refetchOnMount: false });
+  const { plans } = useCaloriePlans({ refetchOnMount: false });
   const currentPlan = plans.find(
     ({ type }) => type === progress?.currentCaloriePlan
   );

@@ -8,7 +8,7 @@ import { styles } from "./styles";
 import { useUser } from "../../../../../hooks/user/useUser";
 
 export function ProileHeader() {
-  const { user } = useUser();
+  const { user } = useUser({ refetchOnMount: false });
   const firstName = user.name?.split(" ")[0];
   const profileImage = null;
 

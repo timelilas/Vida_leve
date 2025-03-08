@@ -16,9 +16,9 @@ import { useCaloriePlans } from "../../../hooks/caloriePlan/useCaloriePlans";
 
 const CreateProgressScreen = () => {
   const { Snackbar, showSnackbar } = useSnackbar();
-  const { updateLocalPlans } = useCaloriePlans();
-  const { user } = useUser();
-  const { progress, upsertProgress } = useProgress();
+  const { updateLocalPlans } = useCaloriePlans({ refetchOnMount: false });
+  const { user } = useUser({ refetchOnMount: false });
+  const { progress, upsertProgress } = useProgress({ refetchOnMount: false });
   const [isSubmitting, setIsSubmitting] = useState(false);
   const navigation = useAppNavigation({ preventGoBack: isSubmitting });
 
