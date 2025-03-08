@@ -11,9 +11,9 @@ import { RouteProp } from "@react-navigation/native";
 import { SuccessModal } from "../../../components/SuccessModal";
 import { useState } from "react";
 import { styles } from "./styles";
-import { useCaloriePlanStore } from "../../../store/caloriePlan";
 import { FormState, PlanSelectionForm } from "./components/PlanSelectionForm";
 import { useProgress } from "../../../hooks/progress/useProgress";
+import { useCaloriePlans } from "../../../hooks/caloriePlan/useCaloriePlans";
 
 type PlanSelectionScreenRouteProp = RouteProp<
   RouteParamsList,
@@ -27,7 +27,7 @@ interface PlanSelectionScreenProps {
 const PlanSelectionScreen = ({ route }: PlanSelectionScreenProps) => {
   const { Snackbar, showSnackbar } = useSnackbar();
   const { setCaloriePlan, upsertProgress } = useProgress();
-  const setPlans = useCaloriePlanStore((state) => state.setPlans);
+  const { updateLocalPlans } = useCaloriePlans({ queryEnabled: false });
   const navigation = useAppNavigation();
   const { progressData, plans, curentPlan, nextRoute, withModal } =
     route.params;
@@ -56,7 +56,7 @@ const PlanSelectionScreen = ({ route }: PlanSelectionScreenProps) => {
         ...progressData,
         currentCaloriePlan: selectedPlan,
       });
-      setPlans(plans);
+      updateLocalPlans(plans);
     } else {
       await setCaloriePlan(selectedPlan);
     }

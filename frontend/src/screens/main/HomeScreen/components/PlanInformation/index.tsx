@@ -1,16 +1,17 @@
 import { Text, TouchableOpacity, View } from "react-native";
 import { PlanType } from "../../../../../@core/entities/@shared/planType/type";
-import { useCaloriePlanStore } from "../../../../../store/caloriePlan";
 import { useAppNavigation } from "../../../../../hooks/common/useAppNavigation";
 import { RouteConstants } from "../../../../../routes/types";
 import { styles } from "./styles";
 import { useProgress } from "../../../../../hooks/progress/useProgress";
+import { useCaloriePlans } from "../../../../../hooks/caloriePlan/useCaloriePlans";
 
 export function PlanInformation() {
   const navigation = useAppNavigation();
   const { progress } = useProgress();
-  const currentPlan = useCaloriePlanStore((state) =>
-    state.data.find(({ type }) => type === progress?.currentCaloriePlan)
+  const { plans } = useCaloriePlans();
+  const currentPlan = plans.find(
+    ({ type }) => type === progress?.currentCaloriePlan
   );
 
   const planLabelMap: Record<PlanType, string> = {

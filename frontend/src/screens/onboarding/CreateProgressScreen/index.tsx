@@ -3,7 +3,6 @@ import { NavigationHeader } from "../../../components/NavigationHeader";
 import { ScreenTitle } from "../../../components/ScreenTitle";
 import { Paragraph } from "../../../components/Paragraph/Paragraph";
 import { ConnectionError } from "../../../@core/errors/connectionError";
-import { useCaloriePlanStore } from "../../../store/caloriePlan";
 import { useAppNavigation } from "../../../hooks/common/useAppNavigation";
 import { RouteConstants } from "../../../routes/types";
 import { useSnackbar } from "../../../hooks/common/useSnackbar";
@@ -13,10 +12,11 @@ import { useState } from "react";
 import { styles } from "./styles";
 import { useUser } from "../../../hooks/user/useUser";
 import { useProgress } from "../../../hooks/progress/useProgress";
+import { useCaloriePlans } from "../../../hooks/caloriePlan/useCaloriePlans";
 
 const CreateProgressScreen = () => {
   const { Snackbar, showSnackbar } = useSnackbar();
-  const setPlans = useCaloriePlanStore((state) => state.setPlans);
+  const { updateLocalPlans } = useCaloriePlans();
   const { user } = useUser();
   const { progress, upsertProgress } = useProgress();
   const [isSubmitting, setIsSubmitting] = useState(false);
@@ -40,7 +40,7 @@ const CreateProgressScreen = () => {
     const { formData, newCaloriePlans } = data;
     const progressData = await upsertProgress({ ...formData });
 
-    setPlans(newCaloriePlans);
+    updateLocalPlans(newCaloriePlans);
     setIsSubmitting(false);
 
     navigation.navigate(RouteConstants.PlanSelection, {

@@ -17,8 +17,6 @@ import { wrongCredentialsMessage } from "./utils";
 import { SecureStorage } from "../../../services/secureStorage/SecureStorage";
 import { useSnackbar } from "../../../hooks/common/useSnackbar";
 import { STORAGE_ACCESS_TOKEN } from "../../../constants/localStorageConstants";
-import { httpCaloriePlanService } from "../../../services/caloriePlan";
-import { useCaloriePlanStore } from "../../../store/caloriePlan";
 import { useNavigationAfterLogin } from "./hooks/useNavigationAfterLogin";
 import { NavigationHeader } from "../../../components/NavigationHeader";
 import { zodLoginSchema } from "./schema";
@@ -28,6 +26,7 @@ import { delay } from "../../../utils/helpers";
 import { useUser } from "../../../hooks/user/useUser";
 import { useProgress } from "../../../hooks/progress/useProgress";
 import styles from "../styles";
+import { useCaloriePlans } from "../../../hooks/caloriePlan/useCaloriePlans";
 
 const loginInitialState: LoginFormData = { email: "", password: "" };
 
@@ -36,7 +35,7 @@ const LoginScreen = () => {
   const scrollRef = useRef<ScrollView | null>(null);
   const { getUserProfile } = useUser({ queryEnabled: false });
   const { getProgress } = useProgress({ queryEnabled: false });
-  const setPlans = useCaloriePlanStore((state) => state.setPlans);
+  const { getPlans } = useCaloriePlans({ queryEnabled: false });
 
   const { Snackbar, showSnackbar } = useSnackbar();
   const {
@@ -118,13 +117,11 @@ const LoginScreen = () => {
   }
 
   async function setOnboardingData() {
-    const [user, progress, { data: plans }] = await Promise.all([
+    const [user, progress, plans] = await Promise.all([
       getUserProfile(),
       getProgress(),
-      httpCaloriePlanService.getPlans(),
+      getPlans(),
     ]);
-    setPlans(plans);
-
     return { user, progress, plans };
   }
 
