@@ -1,4 +1,4 @@
-import { Request, Response, Router } from "express";
+import { Router } from "express";
 import UserController from "../controller/user/UserController";
 import { authorizationMiddleware } from "../middleware/authorization/authorizationMiddleware";
 import { validationMiddleware } from "../middleware/validation/validationMiddleware";
@@ -10,7 +10,7 @@ const userController = new UserController();
 userRouter.get(
   "/profile",
   (req, res, next) => authorizationMiddleware.execute(req, res, next),
-  (req: Request, res: Response) => userController.getById(req, res)
+  (req, res) => userController.getById(req, res)
 );
 
 userRouter.put(

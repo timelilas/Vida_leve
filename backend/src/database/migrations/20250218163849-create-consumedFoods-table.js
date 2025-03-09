@@ -1,38 +1,30 @@
-'use strict';
+"use strict";
 
 /** @type {import('sequelize-cli').Migration} */
 module.exports = {
-  async up (queryInterface, Sequelize) {
-    await queryInterface.createTable('consumedFoods', {
-      id: {
-        type: Sequelize.INTEGER,
-        autoIncrement: true,
-        primaryKey: true,
-      },
+  async up(queryInterface, Sequelize) {
+    await queryInterface.createTable("consumedFood", {
       mealId: {
         type: Sequelize.INTEGER,
         allowNull: false,
-        references: { model: 'meal', key: 'id' },
-        onUpdate: 'CASCADE',
-        onDelete: 'CASCADE',
+        primaryKey: true,
+        references: { model: "meal", key: "id" },
+        onDelete: "CASCADE",
       },
       foodId: {
         type: Sequelize.INTEGER,
+        primaryKey: true,
         allowNull: false,
-        references: { model: 'food', key: 'id' },
-        onUpdate: 'CASCADE',
-        onDelete: 'CASCADE',
+        references: { model: "food", key: "id" },
       },
       quantity: {
-        type: Sequelize.DECIMAL(10, 2),
+        type: Sequelize.INTEGER,
         allowNull: false,
       },
     });
-    await queryInterface.addIndex('consumedFoods', ['mealId'], { using: 'BTREE' });
-    await queryInterface.addIndex('consumedFoods', ['foodId'], { using: 'BTREE' });
   },
 
-  async down (queryInterface, Sequelize) {
-    await queryInterface.dropTable('consumedFoods');
-  }
+  async down(queryInterface) {
+    await queryInterface.dropTable("consumedFood");
+  },
 };

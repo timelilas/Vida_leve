@@ -4,5 +4,5 @@ export enum TableNames {
   CaloriePlan = "caloriePlan",
   Food = "food",
   Meal = "meal",
-  ConsumedFoods = "consumedFoods",
+  ConsumedFood = "consumedFood",
 }

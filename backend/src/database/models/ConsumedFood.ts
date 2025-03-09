@@ -1,14 +1,7 @@
-import {
-  CreationOptional,
-  InferAttributes,
-  InferCreationAttributes,
-  Model,
-} from "sequelize";
+import { InferAttributes, InferCreationAttributes, Model } from "sequelize";
 import { sequelize } from "../index";
 import Sequelize from "sequelize";
 import { TableNames } from "../constants";
-import Food from "./Food";
-import Meal from "./Meal";
 
 class ConsumedFood extends Model<
   InferAttributes<ConsumedFood>,
@@ -43,21 +36,10 @@ ConsumedFood.init(
   },
   {
     sequelize,
-    tableName: TableNames.ConsumedFoods,
-    timestamps: true,
+    tableName: TableNames.ConsumedFood,
+    timestamps: false,
     freezeTableName: true,
   }
 );
-
-Food.belongsToMany(Meal, {
-  through: ConsumedFood,
-  targetKey: "id",
-  sourceKey: "foodId",
-});
-Meal.belongsToMany(ConsumedFood, {
-  through: ConsumedFood,
-  targetKey: "id",
-  sourceKey: "mealId",
-});
 
 export default ConsumedFood;

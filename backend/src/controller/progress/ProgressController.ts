@@ -20,39 +20,40 @@ export default class ProgressController {
     const { height, weight, goalWeight, activityFrequency } = req.body;
 
     const userProfile = await this._UserService.get(userId);
-
-    if (!userProfile?.birthDate) {
-      throw new BadRequestException(
-        "É necessário ter uma data de nascimento cadastrada para continuar.",
-        ProgressController.name
-      );
-    }
-
-    if (!userProfile.gender) {
-      throw new BadRequestException(
-        "É necessário ter um gênero cadastrado para continuar.",
-        ProgressController.name
-      );
-    }
-
-    const { birthDate, gender } = userProfile;
-    const age = UserHelper.calculateAge(birthDate);
-    const { min, max } = ProgressHelper.calculateHealthyWeightRange(
-      age,
-      height
-    );
-
-    if (goalWeight < min || goalWeight > max) {
-      throw new BadRequestException(
-        `O peso desejado informado está fora dos limites saudáveis. Mínimo de ${min}kg e máximo de ${max}kg.`,
-        ProgressController.name,
-        "goalWeight"
-      );
-    }
-
-    const transaction = await sequelize.transaction();
+    let transaction = null;
 
     try {
+      if (!userProfile?.birthDate) {
+        throw new BadRequestException(
+          "É necessário ter uma data de nascimento cadastrada para continuar.",
+          ProgressController.name
+        );
+      }
+
+      if (!userProfile.gender) {
+        throw new BadRequestException(
+          "É necessário ter um gênero cadastrado para continuar.",
+          ProgressController.name
+        );
+      }
+
+      const { birthDate, gender } = userProfile;
+      const age = UserHelper.calculateAge(birthDate);
+      const { min, max } = ProgressHelper.calculateHealthyWeightRange(
+        age,
+        height
+      );
+
+      if (goalWeight < min || goalWeight > max) {
+        throw new BadRequestException(
+          `O peso desejado informado está fora dos limites saudáveis. Mínimo de ${min}kg e máximo de ${max}kg.`,
+          ProgressController.name,
+          "goalWeight"
+        );
+      }
+
+      transaction = await sequelize.transaction();
+
       const bmrParams = { weight, height, gender, age };
       const newCaloriePlans = allowedPlans.map((type) => {
         return ProgressHelper.createCaloriePlan({
@@ -76,7 +77,7 @@ export default class ProgressController {
       await transaction.commit();
       return res.status(200).json({ data: createdProgress });
     } catch (error: any) {
-      await transaction.rollback();
+      await transaction?.rollback();
       return exceptionResponseAdapter({
         req,
         res,

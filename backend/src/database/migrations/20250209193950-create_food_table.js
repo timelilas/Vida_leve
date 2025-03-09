@@ -39,7 +39,7 @@ module.exports = {
     await queryInterface.addIndex("food", ["slug"], { using: "BTREE" });
   },
 
-  async down(queryInterface, Sequelize) {
+  async down(queryInterface) {
     await queryInterface.dropTable("food");
   },
 };
