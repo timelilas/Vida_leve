@@ -7,16 +7,20 @@ interface MealButtonProps {
   title: string;
   icon: ReactNode;
   selected: boolean;
+  caloriesConsumed: number;
 }
 
 export function MealButton(props: MealButtonProps & PressableProps) {
-  const { icon, title, selected, ...propsRest } = props;
+  const { icon, title, selected, caloriesConsumed, ...propsRest } = props;
 
   return (
     <ToggleButton selected={selected} {...propsRest}>
       <View style={styles.container}>
         {icon}
         <Text style={styles.title}>{title}</Text>
+        {caloriesConsumed ? (
+          <Text style={styles.caloriesText}>{caloriesConsumed} Kcal</Text>
+        ) : null}
       </View>
     </ToggleButton>
   );

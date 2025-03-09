@@ -16,12 +16,18 @@ import {
   formatDateToLabel,
 } from "../../../utils/helpers";
 import { useMealStore } from "../../../store/meal";
+import { useMeal } from "../../../hooks/meal/useMeal";
 
 const CreateMealScreen = () => {
   const setMeal = useMealStore((state) => state.setMeal);
-  const resetMeal = useMealStore((state) => state.resetMeal);
+
+  const existingFoods = useMealStore((state) => state.foodIds.length);
   const navigation = useAppNavigation();
   const currentLocalDate = convertDateToLocalDateData(new Date());
+  const { dailyCalorieConsumption } = useMeal({
+    calorieConsumption: { date: new Date()},
+  });
+
   const [selectedDate, setSelectedDate] = useState<DateData>(currentLocalDate);
   const [selectedMealType, setSelectedMealType] = useState<MealType | null>(
     null
@@ -31,13 +37,16 @@ const CreateMealScreen = () => {
     if (selectedDate && selectedMealType) {
       const { year, month, day } = selectedDate;
       setMeal(selectedMealType, new Date(year, month, day));
-      navigation.navigate(RouteConstants.SearchFoods);
+      navigation.navigate(
+        existingFoods
+          ? RouteConstants.MealRegistration
+          : RouteConstants.SearchFoods
+      );
     }
   }, [selectedDate, selectedMealType, navigation, setMeal]);
 
   function goBack() {
     navigation.goBack();
-    resetMeal();
   }
 
   function handleMealSelection(mealType: MealType) {
@@ -86,6 +95,7 @@ const CreateMealScreen = () => {
             icon={meal.icon}
             title={meal.name}
             selected={meal.type === selectedMealType}
+            caloriesConsumed={dailyCalorieConsumption.data[`${meal.type}`]}
           />
         ))}
       </View>

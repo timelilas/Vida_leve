@@ -6,6 +6,7 @@ export interface MealFoodProps extends FoodProps {
 }
 
 export interface MealProps {
+  id: number;
   type: MealType;
   date: Date;
   foods: MealFoodProps[];

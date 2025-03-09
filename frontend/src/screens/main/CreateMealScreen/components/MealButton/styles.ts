@@ -16,4 +16,12 @@ export const styles = StyleSheet.create({
     fontFamily: fonts.robotoRegular,
     color: colors.text.secondary,
   },
+  caloriesText: {
+    fontSize: 16,
+    lineHeight: 16,
+    color: colors.primary,
+    fontFamily: fonts.robotoRegular,
+    marginLeft: "auto",
+    marginRight: 24,
+  },
 });

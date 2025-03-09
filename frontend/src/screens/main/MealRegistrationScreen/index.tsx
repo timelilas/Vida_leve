@@ -9,10 +9,16 @@ import { MealItem } from "./components/MealItem";
 import { useMealStore } from "../../../store/meal";
 import { MealSummary } from "./components/MealSummary";
 import {
+  delay,
   formatDateToLabel,
   getTitleFromMealType,
 } from "../../../utils/helpers";
 import { RouteConstants } from "../../../routes/types";
+import { ConnectionError } from "../../../@core/errors/connectionError";
+import { useSnackbar } from "../../../hooks/common/useSnackbar";
+import { useState } from "react";
+import { CreateMealParams } from "../../../hooks/meal/types";
+import { useMeal } from "../../../hooks/meal/useMeal";
 
 const MealRegistrationScreen = () => {
   const navigation = useAppNavigation();
@@ -21,12 +27,41 @@ const MealRegistrationScreen = () => {
   const foodIds = useMealStore((state) => state.foodIds);
   const shortDateLabel = formatDateToLabel(new Date(mealDate), "short");
 
+  const [isSubmitting, setIsSubmitting] = useState(false);
+  const collapseAllItems = useMealStore((state) => state.collapseAllItems);
+  const { Snackbar, showSnackbar } = useSnackbar();
+  const { createMeal } = useMeal({
+    calorieConsumption: { refetchOnMount: false },
+  });
+
   function goBack() {
-    navigation.navigate(RouteConstants.SearchFoods);
+    navigation.goBack();
+  }
+
+  function handleError(error: Error) {
+    setIsSubmitting(false);
+
+    if (error instanceof ConnectionError) {
+      return navigation.navigate(RouteConstants.ConnectionError);
+    }
+    showSnackbar({ duration: 5000, message: error.message, variant: "error" });
+  }
+
+  async function handleSubmit(data: CreateMealParams) {
+    collapseAllItems();
+    setIsSubmitting(true);
+
+    const { date, foods, mealType } = data;
+    await createMeal({ date, mealType, foods });
+
+    setIsSubmitting(false);
   }
 
   return (
-    <ScreenWrapper contentContainerStyle={styles.container}>
+    <ScreenWrapper
+      contentContainerStyle={styles.container}
+      snackbar={<Snackbar />}
+    >
       <View style={styles.body}>
         <NavigationHeader
           variant="titled"
@@ -48,10 +83,14 @@ const MealRegistrationScreen = () => {
       </View>
       <View>
         {foodIds.map((id) => (
-          <MealItem key={`${id}`} foodId={`${id}`} />
+          <MealItem key={`${id}`} foodId={`${id}`} disabled={isSubmitting} />
         ))}
       </View>
-      <MealSummary />
+      <MealSummary
+        isSubmitting={isSubmitting}
+        onSubmit={handleSubmit}
+        onError={handleError}
+      />
     </ScreenWrapper>
   );
 };

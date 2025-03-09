@@ -12,13 +12,13 @@ export interface MealStoreState {
 }
 
 export interface MealStoreActions {
-  resetMeal: () => void;
   setMeal: (type: MealType, date: Date) => void;
   addFood: (food: FoodProps) => void;
   removeFood: (foodId: number) => void;
   incrementFoodQuantity: (foodId: number) => void;
   decrementFoodQuantity: (foodId: number) => void;
   toggleItemExpansion: (foodId: number) => void;
+  collapseAllItems: () => void;
 }
 
 export type MealStore = MealStoreState & MealStoreActions;

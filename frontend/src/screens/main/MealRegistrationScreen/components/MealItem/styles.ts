@@ -11,6 +11,9 @@ export const styles = StyleSheet.create({
     borderBottomWidth: 1,
     borderColor: colors.gray.medium,
   },
+  containerDisabled: {
+    opacity: 0.5,
+  },
   innerContainer: {
     gap: 16,
     alignItems: "flex-end",

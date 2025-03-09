@@ -8,16 +8,14 @@ import { ProgressBar } from "../../../../../components/ProgressBar/ProgressBar";
 import { useAppNavigation } from "../../../../../hooks/common/useAppNavigation";
 import { RouteConstants } from "../../../../../routes/types";
 import { styles } from "./styles";
-import { useProgress } from "../../../../../hooks/progress/useProgress";
-import { useCaloriePlans } from "../../../../../hooks/caloriePlan/useCaloriePlans";
 
-export function ProgressStatistics() {
+interface ProgressStatisticsProps {
+  targetCalories: number;
+  consumedCalories: number;
+}
+
+export function ProgressStatistics(props: ProgressStatisticsProps) {
   const navigation = useAppNavigation();
-  const { progress } = useProgress({ refetchOnMount: false });
-  const { plans } = useCaloriePlans({ refetchOnMount: false });
-  const currentPlan = plans.find(
-    ({ type }) => type === progress?.currentCaloriePlan
-  );
 
   function navigateToCreateMealScreen() {
     navigation.navigate(RouteConstants.CreateMeal);
@@ -35,8 +33,8 @@ export function ProgressStatistics() {
           <SoupIcon />
         </View>
         <ProgressBar
-          total={currentPlan?.dailyCalorieIntake || 0}
-          achieved={850} //Dado mockado
+          total={props.targetCalories}
+          achieved={props.consumedCalories}
         />
       </View>
       <View style={styles.buttonWrapper}>

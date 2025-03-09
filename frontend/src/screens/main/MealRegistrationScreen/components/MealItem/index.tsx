@@ -16,6 +16,7 @@ import { styles } from "./styles";
 
 interface MealItemProps {
   foodId: string;
+  disabled?: boolean;
 }
 
 export function MealItem(props: MealItemProps) {
@@ -38,18 +39,22 @@ export function MealItem(props: MealItemProps) {
   });
 
   function handleIncrement() {
+    if (props.disabled) return;
     incrementFood(food.id);
   }
 
   function hadleDecrement() {
+    if (props.disabled) return;
     decrementFoodQuantity(food.id);
   }
 
   function handleDelete() {
+    if (props.disabled) return;
     removeFood(food.id);
   }
 
   function toggleItemExpansion() {
+    if (props.disabled) return;
     toggleItemExpantion(food.id);
   }
 
@@ -58,7 +63,12 @@ export function MealItem(props: MealItemProps) {
       <Animated.View
         style={[styles.innerContainer, { height: containerHeight }]}
       >
-        <View style={styles.foodDetails}>
+        <View
+          style={[
+            styles.foodDetails,
+            props.disabled ? styles.containerDisabled : null,
+          ]}
+        >
           <View style={styles.itemBoxWrapper}>
             <View style={[styles.itemBox, styles.itemHeader]}>
               <ScrollView
@@ -76,12 +86,15 @@ export function MealItem(props: MealItemProps) {
                 <TouchableOpacity
                   style={food.quantity <= 1 && styles.buttonDisabled}
                   onPress={hadleDecrement}
-                  disabled={food.quantity <= 1}
+                  disabled={food.quantity <= 1 || props.disabled}
                 >
                   <DecrementIcon />
                 </TouchableOpacity>
                 <Text style={styles.text}>{food.quantity}</Text>
-                <TouchableOpacity onPress={handleIncrement}>
+                <TouchableOpacity
+                  onPress={handleIncrement}
+                  disabled={props.disabled}
+                >
                   <IncrementIcon />
                 </TouchableOpacity>
               </View>
@@ -99,6 +112,7 @@ export function MealItem(props: MealItemProps) {
           </View>
           <TouchableOpacity
             onPress={toggleItemExpansion}
+            disabled={props.disabled}
             style={styles.toggleItemButton}
           >
             <Animated.View style={!food.isExpanded && styles.chvronIconDown}>
@@ -108,6 +122,7 @@ export function MealItem(props: MealItemProps) {
         </View>
         <TouchableOpacity
           onPress={handleDelete}
+          disabled={props.disabled}
           style={styles.removeFoodButton}
         >
           <TrashIcon width={18} height={18} />

@@ -14,11 +14,6 @@ export const useMealStore = create<MealStore>((set, get) => {
     setMeal(type, date) {
       set(() => ({ type, date: date.toISOString() }));
     },
-    resetMeal: () => {
-      set(() => {
-        return { ...initialState, date: new Date().toISOString() };
-      });
-    },
     addFood: (food) => {
       const prevState = get();
       const existingFood = prevState.foodMap[`${food.id}`];
@@ -50,9 +45,18 @@ export const useMealStore = create<MealStore>((set, get) => {
       };
       return set(() => ({ foodMap: newFoodMap }));
     },
+    collapseAllItems: () => {
+      set((prevState) => {
+        return {
+          foodMap: prevState.foodIds.reduce((acc, id) => {
+            acc[`${id}`] = { ...prevState.foodMap[`${id}`], isExpanded: false };
+            return acc;
+          }, {} as MealStoreState["foodMap"]),
+        };
+      });
+    },
     removeFood(foodId) {
       const prevState = get();
-
       const newFoodMap: MealStoreState["foodMap"] = {};
 
       for (const key in prevState.foodMap) {
