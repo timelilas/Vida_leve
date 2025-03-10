@@ -1,6 +1,5 @@
-import { DATEONLY } from "sequelize";
 import { DatabaseException } from "../../@core/exception/infrastructure/DatabaseException";
-import User from "../../database/models/User";
+import { User } from "../../database/associations";
 import { CreateUserDTO, UpdateUserDTO } from "./types";
 
 export default class UserService {

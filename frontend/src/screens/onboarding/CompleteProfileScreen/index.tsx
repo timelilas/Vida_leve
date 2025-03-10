@@ -13,14 +13,12 @@ import {
   onlyNumbers,
   maskName,
 } from "../../../utils/masks";
-import { useUserStore } from "../../../store/user";
 import { dateToPTBR, delay, formatDateToISO } from "../../../utils/helpers";
 import { HttpError } from "../../../@core/errors/httpError";
 import { ConnectionError } from "../../../@core/errors/connectionError";
-import { useAppNavigation } from "../../../hooks/useAppNavigation";
+import { useAppNavigation } from "../../../hooks/common/useAppNavigation";
 import { RouteConstants } from "../../../routes/types";
-import { httpUserService } from "../../../services/user";
-import { useSnackbar } from "../../../hooks/useSnackbar";
+import { useSnackbar } from "../../../hooks/common/useSnackbar";
 import { SecureStorage } from "../../../services/secureStorage/SecureStorage";
 import { STORAGE_ACCESS_TOKEN } from "../../../constants/localStorageConstants";
 import { CommonActions } from "@react-navigation/native";
@@ -30,10 +28,11 @@ import { GenderButton } from "./components/GenderButton";
 import { Controller, useForm } from "react-hook-form";
 import { zodProfileSchema } from "./schema";
 import { customZodResolver } from "../../../libs/zod/@shared/resolver";
+import { useUser } from "../../../hooks/user/useUser";
 
 const CompleteProfileScreen = () => {
   const { Snackbar, showSnackbar } = useSnackbar();
-  const { setUser, data: user } = useUserStore((state) => state);
+  const { user, updateUserProfile } = useUser({ refetchOnMount: false });
 
   const formInitialState: ProfileFormData = {
     name: user.name ?? "",
@@ -96,13 +95,12 @@ const CompleteProfileScreen = () => {
   async function onSubmit(params: ProfileFormData) {
     const birthDateISO = formatDateToISO(params.birthDate);
     try {
-      const { data } = await httpUserService.updateProfile({
+      await updateUserProfile({
         name: params.name,
         phone: params.phone,
         gender: params.gender as GenderType,
         birthDate: new Date(birthDateISO),
       });
-      setUser(data);
       navigateToProgressForm();
     } catch (error: any) {
       handleApiError(error);

@@ -4,17 +4,16 @@ import { NavigationHeader } from "../../../components/NavigationHeader";
 import { ScreenTitle } from "../../../components/ScreenTitle";
 import { Paragraph } from "../../../components/Paragraph/Paragraph";
 import { ConnectionError } from "../../../@core/errors/connectionError";
-import { useProgressStore } from "../../../store/progress";
-import { useAppNavigation } from "../../../hooks/useAppNavigation";
+import { useAppNavigation } from "../../../hooks/common/useAppNavigation";
 import { RouteConstants, RouteParamsList } from "../../../routes/types";
-import { httpProgressService } from "../../../services/progress";
-import { useSnackbar } from "../../../hooks/useSnackbar";
+import { useSnackbar } from "../../../hooks/common/useSnackbar";
 import { RouteProp } from "@react-navigation/native";
 import { SuccessModal } from "../../../components/SuccessModal";
 import { useState } from "react";
 import { styles } from "./styles";
-import { useCaloriePlanStore } from "../../../store/caloriePlan";
 import { FormState, PlanSelectionForm } from "./components/PlanSelectionForm";
+import { useProgress } from "../../../hooks/progress/useProgress";
+import { useCaloriePlans } from "../../../hooks/caloriePlan/useCaloriePlans";
 
 type PlanSelectionScreenRouteProp = RouteProp<
   RouteParamsList,
@@ -26,13 +25,15 @@ interface PlanSelectionScreenProps {
 }
 
 const PlanSelectionScreen = ({ route }: PlanSelectionScreenProps) => {
-  const { Snackbar, showSnackbar } = useSnackbar();
-  const setProgress = useProgressStore((state) => state.setProgress);
-  const setPlans = useCaloriePlanStore((state) => state.setPlans);
   const navigation = useAppNavigation();
+  const [isModalVisible, setIsModalVisible] = useState(false);
+  const { Snackbar, showSnackbar } = useSnackbar();
+  const { updateLocalPlans } = useCaloriePlans({ refetchOnMount: false });
+  const { setCaloriePlan, upsertProgress } = useProgress({
+    refetchOnMount: false,
+  });
   const { progressData, plans, curentPlan, nextRoute, withModal } =
     route.params;
-  const [isModalVisible, setIsModalVisible] = useState(false);
 
   function goBack() {
     navigation.goBack();
@@ -51,25 +52,19 @@ const PlanSelectionScreen = ({ route }: PlanSelectionScreenProps) => {
 
   async function handleSubmit(formState: FormState) {
     const { selectedPlan } = formState;
-    let apiResponse;
 
     if (progressData) {
-      apiResponse = await httpProgressService.upsertProgress({
+      await upsertProgress({
         ...progressData,
         currentCaloriePlan: selectedPlan,
       });
-      setPlans(plans);
+      updateLocalPlans(plans);
     } else {
-      apiResponse = await httpProgressService.setCaloriePlan(selectedPlan);
+      await setCaloriePlan(selectedPlan);
     }
 
-    setProgress(apiResponse.data);
-
-    if (withModal) {
-      setIsModalVisible(true);
-    } else {
-      navigateAfterSubmit();
-    }
+    if (withModal) setIsModalVisible(true);
+    else navigateAfterSubmit();
   }
 
   async function handleError(error: Error) {

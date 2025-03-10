@@ -1,7 +1,7 @@
 import { RouteProp } from "@react-navigation/native";
 import { NavigationHeader } from "../../../components/NavigationHeader";
 import { ScreenWrapper } from "../../../components/ScreenWrapper";
-import { useAppNavigation } from "../../../hooks/useAppNavigation";
+import { useAppNavigation } from "../../../hooks/common/useAppNavigation";
 import { RouteConstants, RouteParamsList } from "../../../routes/types";
 import { ScreenTitle } from "../../../components/ScreenTitle";
 import {
@@ -17,17 +17,16 @@ import SearchInput from "./components/SearchInput";
 import { useEffect, useState } from "react";
 import { FOOD_ITEM_HEIGHT } from "./components/FoodItem/constants";
 import {
-  delay,
   formatDateToLabel,
   getTitleFromMealType,
 } from "../../../utils/helpers";
-import { useSearchFoods } from "./hooks/useSearchFoods";
-import { useThrottle } from "../../../hooks/useThrottle ";
-import { useSnackbar } from "../../../hooks/useSnackbar";
+import { useThrottle } from "../../../hooks/common/useThrottle ";
+import { useSnackbar } from "../../../hooks/common/useSnackbar";
 import { FoodList } from "./components/FoodList";
 import { styles } from "./styles";
 import { colors } from "../../../styles/colors";
 import { useMealStore } from "../../../store/meal";
+import { useFoods } from "../../../hooks/food/useFoods";
 
 type SearchFoodsScreenRouteProp = RouteProp<
   RouteParamsList,
@@ -37,14 +36,12 @@ type SearchFoodsScreenRouteProp = RouteProp<
 interface SearchFoodsScreenProps {
   route: SearchFoodsScreenRouteProp;
 }
-
 const SearchFoodsScreen = ({ route }: SearchFoodsScreenProps) => {
   const navigation = useAppNavigation();
   const windowDimensions = useWindowDimensions();
 
   const mealDate = useMealStore((state) => state.date);
   const mealType = useMealStore((state) => state.type);
-
   const [foodName, setFoodName] = useState("");
   const [bodyHeight, setBodyHeight] = useState<number | null>(null);
 
@@ -55,12 +52,20 @@ const SearchFoodsScreen = ({ route }: SearchFoodsScreenProps) => {
   const limit = calculateTotalFoodsToFetch();
   const shortDateLabel = formatDateToLabel(new Date(mealDate), "short");
 
-  const { foods, hasMore, isError, isFetching, fetchMoreFoods } =
-    useSearchFoods({
-      foodName,
-      enabled: isQueryEnabled,
-      limit,
+  const { foods, hasMore, isError, isFetching, fetchMoreFoods } = useFoods({
+    foodName,
+    enabled: isQueryEnabled,
+    limit,
+  });
+
+  useEffect(() => {
+    const unsubscribe = navigation.addListener("focus", () => {
+      if (route.params?.foodName !== undefined) {
+        setFoodName(route.params.foodName);
+      }
     });
+    return () => unsubscribe();
+  }, [route.params?.foodName]);
 
   useEffect(() => {
     if (isError) {
@@ -73,13 +78,6 @@ const SearchFoodsScreen = ({ route }: SearchFoodsScreenProps) => {
       });
     }
   }, [isError, isFetching]);
-
-  useEffect(() => {
-    const unsubscribe = navigation.addListener("blur", () => {
-      delay(200).then(() => setFoodName(""));
-    });
-    return () => unsubscribe();
-  }, []);
 
   function goBack() {
     navigation.goBack();

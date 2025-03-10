@@ -11,47 +11,51 @@ import { IncrementIcon } from "../../../../../components/Icons/IncrementIcon";
 import { DecrementIcon } from "../../../../../components/Icons/DecrementIcon";
 import { TrashIcon } from "../../../../../components/Icons/TrashIcon";
 import { useMealStore } from "../../../../../store/meal";
-import { useState } from "react";
 import { useAnimation } from "./animation";
 import { styles } from "./styles";
 
 interface MealItemProps {
   foodId: string;
+  disabled?: boolean;
 }
 
 export function MealItem(props: MealItemProps) {
-  const addFood = useMealStore((state) => state.addFood);
   const removeFood = useMealStore((state) => state.removeFood);
+  const incrementFood = useMealStore((state) => state.incrementFoodQuantity);
+  const toggleItemExpantion = useMealStore(
+    (state) => state.toggleItemExpansion
+  );
   const decrementFoodQuantity = useMealStore(
     (state) => state.decrementFoodQuantity
   );
 
-  const { foodId } = props;
-  const food = useMealStore((state) => state.foodMap[foodId]);
-  const [isItemExpanded, setIsItemExpanded] = useState(false);
-
+  const food = useMealStore((state) => state.foodMap[props.foodId]);
   const totalCalories = food.calories * food.quantity;
 
-  const { animatedValue } = useAnimation({ isItemExpanded });
+  const { animatedValue } = useAnimation({ isItemExpanded: food.isExpanded });
   const containerHeight = animatedValue.interpolate({
     inputRange: [0, 1],
     outputRange: [ITEM_HEIGHT_SHRINKED, ITEM_HEIGHT_EXPANDED],
   });
 
   function handleIncrement() {
-    addFood(food);
+    if (props.disabled) return;
+    incrementFood(food.id);
   }
 
   function hadleDecrement() {
+    if (props.disabled) return;
     decrementFoodQuantity(food.id);
   }
 
   function handleDelete() {
+    if (props.disabled) return;
     removeFood(food.id);
   }
 
   function toggleItemExpansion() {
-    setIsItemExpanded((prevState) => !prevState);
+    if (props.disabled) return;
+    toggleItemExpantion(food.id);
   }
 
   return (
@@ -59,7 +63,12 @@ export function MealItem(props: MealItemProps) {
       <Animated.View
         style={[styles.innerContainer, { height: containerHeight }]}
       >
-        <View style={styles.foodDetails}>
+        <View
+          style={[
+            styles.foodDetails,
+            props.disabled ? styles.containerDisabled : null,
+          ]}
+        >
           <View style={styles.itemBoxWrapper}>
             <View style={[styles.itemBox, styles.itemHeader]}>
               <ScrollView
@@ -77,12 +86,15 @@ export function MealItem(props: MealItemProps) {
                 <TouchableOpacity
                   style={food.quantity <= 1 && styles.buttonDisabled}
                   onPress={hadleDecrement}
-                  disabled={food.quantity <= 1}
+                  disabled={food.quantity <= 1 || props.disabled}
                 >
                   <DecrementIcon />
                 </TouchableOpacity>
                 <Text style={styles.text}>{food.quantity}</Text>
-                <TouchableOpacity onPress={handleIncrement}>
+                <TouchableOpacity
+                  onPress={handleIncrement}
+                  disabled={props.disabled}
+                >
                   <IncrementIcon />
                 </TouchableOpacity>
               </View>
@@ -100,15 +112,17 @@ export function MealItem(props: MealItemProps) {
           </View>
           <TouchableOpacity
             onPress={toggleItemExpansion}
+            disabled={props.disabled}
             style={styles.toggleItemButton}
           >
-            <Animated.View style={isItemExpanded && styles.chvronIconDown}>
+            <Animated.View style={!food.isExpanded && styles.chvronIconDown}>
               <ChevronUpIcon />
             </Animated.View>
           </TouchableOpacity>
         </View>
         <TouchableOpacity
           onPress={handleDelete}
+          disabled={props.disabled}
           style={styles.removeFoodButton}
         >
           <TrashIcon width={18} height={18} />

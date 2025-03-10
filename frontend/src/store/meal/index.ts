@@ -1,6 +1,5 @@
 import { create } from "zustand";
 import { MealStore, MealStoreState } from "./types";
-import { MealFoodProps } from "../../@core/entities/meal/type";
 
 const initialState: MealStoreState = {
   date: new Date().toISOString(),
@@ -15,42 +14,53 @@ export const useMealStore = create<MealStore>((set, get) => {
     setMeal(type, date) {
       set(() => ({ type, date: date.toISOString() }));
     },
+    resetMeal: () => {
+      set(() => ({ ...initialState, date: new Date().toISOString() }));
+    },
     addFood: (food) => {
       const prevState = get();
       const existingFood = prevState.foodMap[`${food.id}`];
 
+      const newFoodMap: MealStoreState["foodMap"] = {};
+
+      for (const foodId of prevState.foodIds) {
+        const prevFoodState = prevState.foodMap[`${foodId}`];
+
+        newFoodMap[`${foodId}`] = prevFoodState.isExpanded
+          ? { ...prevState.foodMap[`${foodId}`], isExpanded: false }
+          : prevFoodState;
+      }
+
       if (!existingFood) {
+        newFoodMap[`${food.id}`] = { ...food, quantity: 1, isExpanded: true };
+
         return set(() => ({
           foodIds: [food.id, ...prevState.foodIds],
-          foodMap: {
-            ...prevState.foodMap,
-            [food.id]: { ...food, quantity: 1 },
-          },
+          foodMap: newFoodMap,
         }));
       }
 
-      return set(() => {
-        const finalQuantity = existingFood.quantity + 1;
-        return {
-          foodMap: {
-            ...prevState.foodMap,
-            [`${food.id}`]: {
-              ...existingFood,
-              quantity: finalQuantity >= 99 ? 99 : finalQuantity,
-            },
-          },
-        };
-      });
+      const finalQuantity = existingFood.quantity + 1;
+      newFoodMap[`${food.id}`] = {
+        ...existingFood,
+        quantity: finalQuantity >= 99 ? 99 : finalQuantity,
+        isExpanded: true,
+      };
+      return set(() => ({ foodMap: newFoodMap }));
     },
-    resetMeal: () => {
-      set(() => {
-        return { ...initialState, date: new Date().toISOString() };
+    collapseAllItems: () => {
+      set((prevState) => {
+        return {
+          foodMap: prevState.foodIds.reduce((acc, id) => {
+            acc[`${id}`] = { ...prevState.foodMap[`${id}`], isExpanded: false };
+            return acc;
+          }, {} as MealStoreState["foodMap"]),
+        };
       });
     },
     removeFood(foodId) {
       const prevState = get();
-
-      const newFoodMap: Record<string, MealFoodProps> = {};
+      const newFoodMap: MealStoreState["foodMap"] = {};
 
       for (const key in prevState.foodMap) {
         if (prevState.foodMap[key].id !== foodId) {
@@ -63,6 +73,24 @@ export const useMealStore = create<MealStore>((set, get) => {
           foodMap: newFoodMap,
         };
       });
+    },
+    incrementFoodQuantity: (foodId) => {
+      const prevState = get();
+      const existingFood = prevState.foodMap[`${foodId}`];
+
+      if (!existingFood) return;
+
+      const finalQuantity = existingFood.quantity + 1;
+
+      return set(() => ({
+        foodMap: {
+          ...prevState.foodMap,
+          [`${foodId}`]: {
+            ...existingFood,
+            quantity: finalQuantity >= 99 ? 99 : finalQuantity,
+          },
+        },
+      }));
     },
     decrementFoodQuantity(foodId) {
       const prevState = get();
@@ -83,6 +111,22 @@ export const useMealStore = create<MealStore>((set, get) => {
           };
         });
       }
+    },
+    toggleItemExpansion(foodId) {
+      const prevState = get();
+      const existingFood = prevState.foodMap[`${foodId}`];
+
+      if (!existingFood) return;
+
+      return set(() => ({
+        foodMap: {
+          ...prevState.foodMap,
+          [`${foodId}`]: {
+            ...existingFood,
+            isExpanded: !existingFood.isExpanded,
+          },
+        },
+      }));
     },
   };
 });

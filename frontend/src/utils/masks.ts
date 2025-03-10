@@ -38,7 +38,3 @@ export function maskHeight(value: string) {
   const maskedHeight = maskedNumbers.replace(/(\d{1})(\d{1,2})/, "$1.$2");
   return maskedHeight;
 }
-
-export function parseHeight(value: string) {
-  return parseFloat(value.replace(",", "."));
-}

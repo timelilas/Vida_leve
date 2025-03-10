@@ -1,5 +1,5 @@
 import { DatabaseException } from "../../@core/exception/infrastructure/DatabaseException";
-import Progress from "../../database/models/Progress";
+import { Progress } from "../../database/associations";
 import { SetCaloriePlanDTO, UpsertProgressDTO } from "./types";
 
 export default class ProgressService {

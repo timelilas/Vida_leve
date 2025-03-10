@@ -62,13 +62,13 @@ export function getWeekdayFromIndex(index: number) {
   }
 
   const weekdays = [
+    "domingo",
     "segunda-feira",
     "terça-feira",
     "quarta-feira",
     "quinta-feira",
     "sexta-feira",
     "sábado",
-    "domingo",
   ];
 
   return weekdays[index] || "";

@@ -10,7 +10,7 @@ import { ScreenTitle } from "../../../components/ScreenTitle";
 import { Paragraph } from "../../../components/Paragraph/Paragraph";
 import { SubmitButton } from "../../../components/SubmitButton";
 import { ReloadIcon } from "../../../components/Icons/ReloadIcon";
-import { useAppNavigation } from "../../../hooks/useAppNavigation";
+import { useAppNavigation } from "../../../hooks/common/useAppNavigation";
 import { styles } from "./styles";
 
 const ConnectionErrorScreen = () => {

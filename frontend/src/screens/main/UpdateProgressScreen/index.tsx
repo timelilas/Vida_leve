@@ -1,22 +1,21 @@
 import { ScreenWrapper } from "../../../components/ScreenWrapper";
 import { ScreenTitle } from "../../../components/ScreenTitle";
 import { Paragraph } from "../../../components/Paragraph/Paragraph";
-import { useUserStore } from "../../../store/user";
-import { useProgressStore } from "../../../store/progress";
 import { ConnectionError } from "../../../@core/errors/connectionError";
-import { useAppNavigation } from "../../../hooks/useAppNavigation";
+import { useAppNavigation } from "../../../hooks/common/useAppNavigation";
 import { RouteConstants } from "../../../routes/types";
-import { useSnackbar } from "../../../hooks/useSnackbar";
+import { useSnackbar } from "../../../hooks/common/useSnackbar";
 import { ProgressForm } from "../../../components/ProgressForm";
 import { OnProgressSubmitData } from "../../../components/ProgressForm/types";
 import { NavigationHeader } from "../../../components/NavigationHeader";
 import { styles } from "./styles";
+import { useUser } from "../../../hooks/user/useUser";
+import { useProgress } from "../../../hooks/progress/useProgress";
 
 const UpdateProgressScreen = () => {
   const { Snackbar, showSnackbar } = useSnackbar();
-  const progress = useProgressStore((state) => state.data);
-  const gender = useUserStore((state) => state.data.gender);
-  const birthDate = useUserStore((state) => state.data.birthDate);
+  const { progress } = useProgress({ refetchOnMount: false });
+  const { user } = useUser({ refetchOnMount: false });
   const navigation = useAppNavigation();
 
   const initialFormData = {
@@ -24,8 +23,8 @@ const UpdateProgressScreen = () => {
     weight: `${progress?.weight ?? ""}`,
     goalWeight: `${progress?.goalWeight ?? ""}`,
     activityFrequency: progress?.activityFrequency ?? null,
-    gender: gender,
-    birthDate: birthDate ?? "",
+    gender: user.gender,
+    birthDate: user.birthDate ?? "",
   };
 
   function goBack() {
