@@ -9,9 +9,6 @@ import Sequelize from "sequelize";
 import { MealEntity } from "../../@core/entity/meal/enitys";
 import { allowedTypeMeals, TypeMeal } from "../../@core/entity/@shared";
 import { TableNames } from "../constants";
-import User from "./User";
-import ConsumedFood from "./ConsumedFood";
-import Food from "./Food";
 
 class Meal
   extends Model<InferAttributes<Meal>, InferCreationAttributes<Meal>>
@@ -72,11 +69,5 @@ Meal.init(
     freezeTableName: true,
   }
 );
-
-User.hasMany(Meal, { foreignKey: "userId" });
-Meal.belongsTo(User, { foreignKey: "userId" });
-
-Meal.belongsToMany(Food, { through: ConsumedFood, foreignKey: "mealId" });
-Food.belongsToMany(Meal, { through: ConsumedFood, foreignKey: "foodId" });
 
 export default Meal;

@@ -1,5 +1,5 @@
 import { Request, Response } from "express";
-import MealService from "../../service/Meal/MealService";
+import MealService from "../../service/meal/MealService";
 import { exceptionResponseAdapter } from "../../utils/express/helpers";
 
 export default class MealController {

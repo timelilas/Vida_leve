@@ -2,7 +2,6 @@ import { NextFunction, Request, Response } from "express";
 import { verifyToken } from "../../utils/jwt/helpers";
 import { UnauthorizedException } from "../../@core/exception/http/UnauthorizedException";
 import { exceptionResponseAdapter } from "../../utils/express/helpers";
-import User from "../../database/models/User";
 import UserService from "../../service/user/UserService";
 
 class AuthorizationMiddleware {
