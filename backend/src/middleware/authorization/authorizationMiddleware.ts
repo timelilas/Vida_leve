@@ -35,7 +35,7 @@ class AuthorizationMiddleware {
         );
       }
 
-      req.user = { id: tokenPayload.userId, email: tokenPayload.email };
+      req.user = { id: tokenPayload.userId };
 
       return next();
     } catch (error: any) {

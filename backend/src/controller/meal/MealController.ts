@@ -1,15 +1,29 @@
 import { Request, Response } from "express";
 import MealService from "../../service/Meal/MealService";
+import { exceptionResponseAdapter } from "../../utils/express/helpers";
 
 export default class MealController {
-    private _mealService = new MealService();
+  private _mealService = new MealService();
 
-    async getAll(req: Request, res: Response): Promise<Response> {
-        try {
-            const meals = await this._mealService.getAll();
-            return res.status(200).json({ data: meals });
-        } catch (error: any) {
-            return res.status(500).json({ message: error.message });
-        }
+  async createMeal(req: Request, res: Response): Promise<Response> {
+    const { date, mealType, foods } = req.body;
+
+    try {
+      const cratedMeal = await this._mealService.create({
+        userId: req.user.id,
+        date: new Date(date),
+        mealType,
+        foods,
+      });
+
+      return res.status(200).json({ data: cratedMeal });
+    } catch (error: any) {
+      return exceptionResponseAdapter({
+        req,
+        res,
+        exception: error,
+        alternativeMsg: "Erro durante a criação da refeição",
+      });
     }
+  }
 }
