@@ -5,7 +5,6 @@ import {
   CreationOptional,
 } from "sequelize";
 import { sequelize } from "../index";
-import User from "./User";
 import Sequelize from "sequelize";
 import { CaloriePlanEntity } from "../../@core/entity/caloriePlan/entity";
 import { allowedPlans, PlanType } from "../../@core/entity/@shared";
@@ -71,8 +70,5 @@ CaloriePlan.init(
     freezeTableName: true,
   }
 );
-
-User.hasMany(CaloriePlan, { foreignKey: "userId" });
-CaloriePlan.belongsTo(User, { foreignKey: "userId" });
 
 export default CaloriePlan;

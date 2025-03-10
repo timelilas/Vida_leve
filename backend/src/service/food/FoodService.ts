@@ -1,6 +1,6 @@
 import { FindOptions, InferAttributes, Op } from "sequelize";
 import { DatabaseException } from "../../@core/exception/infrastructure/DatabaseException";
-import Food from "../../database/models/Food";
+import { Food } from "../../database/associations";
 import { GetFoodsDTO } from "./types";
 import { transformNameIntoSlug } from "../../utils/postgres/helpers";
 

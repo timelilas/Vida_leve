@@ -2,32 +2,29 @@ import { ScreenWrapper } from "../../../components/ScreenWrapper";
 import { NavigationHeader } from "../../../components/NavigationHeader";
 import { ScreenTitle } from "../../../components/ScreenTitle";
 import { Paragraph } from "../../../components/Paragraph/Paragraph";
-import { useUserStore } from "../../../store/user";
-import { useProgressStore } from "../../../store/progress";
 import { ConnectionError } from "../../../@core/errors/connectionError";
-import { useCaloriePlanStore } from "../../../store/caloriePlan";
-import { useAppNavigation } from "../../../hooks/useAppNavigation";
+import { useAppNavigation } from "../../../hooks/common/useAppNavigation";
 import { RouteConstants } from "../../../routes/types";
-import { httpProgressService } from "../../../services/progress";
-import { useSnackbar } from "../../../hooks/useSnackbar";
+import { useSnackbar } from "../../../hooks/common/useSnackbar";
 import { ProgressForm } from "../../../components/ProgressForm";
 import { OnProgressSubmitData } from "../../../components/ProgressForm/types";
 import { useState } from "react";
 import { styles } from "./styles";
+import { useUser } from "../../../hooks/user/useUser";
+import { useProgress } from "../../../hooks/progress/useProgress";
+import { useCaloriePlans } from "../../../hooks/caloriePlan/useCaloriePlans";
 
 const CreateProgressScreen = () => {
   const { Snackbar, showSnackbar } = useSnackbar();
-  const setProgress = useProgressStore((state) => state.setProgress);
-  const setPlans = useCaloriePlanStore((state) => state.setPlans);
-  const progress = useProgressStore((state) => state.data);
-  const gender = useUserStore((state) => state.data.gender);
-  const birthDate = useUserStore((state) => state.data.birthDate);
+  const { updateLocalPlans } = useCaloriePlans({ refetchOnMount: false });
+  const { user } = useUser({ refetchOnMount: false });
+  const { progress, upsertProgress } = useProgress({ refetchOnMount: false });
   const [isSubmitting, setIsSubmitting] = useState(false);
   const navigation = useAppNavigation({ preventGoBack: isSubmitting });
 
   const initialFormData = {
-    gender: gender,
-    birthDate: birthDate || "",
+    gender: user.gender,
+    birthDate: user.birthDate ?? "",
     weight: `${progress?.weight ?? ""}`,
     height: progress?.height ? progress.height.toFixed(2) : "",
     goalWeight: `${progress?.goalWeight ?? ""}`,
@@ -41,18 +38,15 @@ const CreateProgressScreen = () => {
   async function onSubmit(data: OnProgressSubmitData) {
     setIsSubmitting(true);
     const { formData, newCaloriePlans } = data;
-    const { data: responseData } = await httpProgressService.upsertProgress(
-      formData
-    );
+    const progressData = await upsertProgress({ ...formData });
 
-    setProgress(responseData);
-    setPlans(newCaloriePlans);
+    updateLocalPlans(newCaloriePlans);
     setIsSubmitting(false);
 
     navigation.navigate(RouteConstants.PlanSelection, {
       nextRoute: RouteConstants.GoalGuidance,
       plans: newCaloriePlans,
-      curentPlan: responseData.currentCaloriePlan,
+      curentPlan: progressData.currentCaloriePlan,
     });
   }
 

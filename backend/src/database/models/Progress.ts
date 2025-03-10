@@ -6,7 +6,6 @@ import {
 } from "sequelize";
 import { ProgressEntity } from "../../@core/entity/progress/entity";
 import { sequelize } from "../index";
-import User from "./User";
 import Sequelize from "sequelize";
 import {
   ActivityFrequency,
@@ -92,8 +91,5 @@ Progress.init(
     freezeTableName: true,
   }
 );
-
-User.hasOne(Progress, { foreignKey: "userId" });
-Progress.belongsTo(User, { foreignKey: "userId" });
 
 export default Progress;

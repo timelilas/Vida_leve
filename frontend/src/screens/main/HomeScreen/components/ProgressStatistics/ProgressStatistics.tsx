@@ -5,18 +5,17 @@ import { FreshFruitsIcon } from "../../../../../components/Icons/FreshFruitsIcon
 import { CookieIcon } from "../../../../../components/Icons/CookieIcon";
 import { SoupIcon } from "../../../../../components/Icons/SoupIcon";
 import { ProgressBar } from "../../../../../components/ProgressBar/ProgressBar";
-import { useProgressStore } from "../../../../../store/progress";
-import { useCaloriePlanStore } from "../../../../../store/caloriePlan";
-import { useAppNavigation } from "../../../../../hooks/useAppNavigation";
+import { useAppNavigation } from "../../../../../hooks/common/useAppNavigation";
 import { RouteConstants } from "../../../../../routes/types";
 import { styles } from "./styles";
 
-export function ProgressStatistics() {
+interface ProgressStatisticsProps {
+  targetCalories: number;
+  consumedCalories: number;
+}
+
+export function ProgressStatistics(props: ProgressStatisticsProps) {
   const navigation = useAppNavigation();
-  const planType = useProgressStore((state) => state.data?.currentCaloriePlan);
-  const currentPlan = useCaloriePlanStore((state) =>
-    state.data.find(({ type }) => type === planType)
-  );
 
   function navigateToCreateMealScreen() {
     navigation.navigate(RouteConstants.CreateMeal);
@@ -34,8 +33,8 @@ export function ProgressStatistics() {
           <SoupIcon />
         </View>
         <ProgressBar
-          total={currentPlan?.dailyCalorieIntake || 0}
-          achieved={850} //Dado mockado
+          total={props.targetCalories}
+          achieved={props.consumedCalories}
         />
       </View>
       <View style={styles.buttonWrapper}>

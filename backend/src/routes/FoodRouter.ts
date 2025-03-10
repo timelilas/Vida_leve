@@ -1,4 +1,4 @@
-import { Request, Response, Router } from "express";
+import { Router } from "express";
 import { FoodController } from "../controller/food/FoodController";
 import { getFoodsQuerySchema } from "../controller/food/schemas";
 import { validationMiddleware } from "../middleware/validation/validationMiddleware";
@@ -9,7 +9,7 @@ const foodController = new FoodController();
 foodRouter.get(
   "/",
   validationMiddleware(getFoodsQuerySchema, "query"),
-  (req: Request, res: Response) => foodController.getFoods(req, res)
+  (req, res) => foodController.getFoods(req, res)
 );
 
 export default foodRouter;

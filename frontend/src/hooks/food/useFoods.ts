@@ -1,23 +1,23 @@
 import { queryOptions, useQuery } from "@tanstack/react-query";
-import { QueryKeys } from "../../../../constants/reactQueryKeys";
-import { FoodProps } from "../../../../@core/entities/food/type";
-import { httpFoodService } from "../../../../services/food";
-import { queryClient } from "../../../../libs/react-query/queryClient";
+import { FoodProps } from "../../@core/entities/food/type";
+import { transformFoodNameIntoSlug } from "../../utils/helpers";
+import { QueryKeys } from "../../constants/reactQueryKeys";
 import { useCallback, useDeferredValue } from "react";
-import { transformFoodNameIntoSlug } from "../../../../utils/helpers";
+import { queryClient } from "../../libs/react-query/queryClient";
+import { httpFoodService } from "../../services/food";
 
 interface FoodDataState {
   hasMore: boolean;
   foods: FoodProps[];
 }
 
-interface UseFoodParams {
+interface UseFoodsParams {
   limit: number;
   foodName: string;
   enabled: boolean;
 }
 
-export function useSearchFoods(params: UseFoodParams) {
+export function useFoods(params: UseFoodsParams) {
   const foodSlug = transformFoodNameIntoSlug(params.foodName);
   const queryKey = QueryKeys.DATABASE.FOODS(foodSlug);
 
@@ -26,7 +26,6 @@ export function useSearchFoods(params: UseFoodParams) {
     refetchIntervalInBackground: false,
     enabled: params.enabled,
     staleTime: Infinity,
-    gcTime: 5 * 60 * 1000,
     refetchOnMount: false,
     refetchOnWindowFocus: false,
     refetchInterval: false,
@@ -47,9 +46,7 @@ export function useSearchFoods(params: UseFoodParams) {
   const fetchMoreFoods = useCallback(async () => {
     const currentState = queryClient.getQueryData<FoodDataState>(queryKey);
 
-    if (currentState?.hasMore === false) {
-      return;
-    }
+    if (currentState?.hasMore === false) return;
 
     await queryClient.fetchQuery<FoodDataState>({
       queryKey,

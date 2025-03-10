@@ -1,6 +1,6 @@
 import { Transaction } from "sequelize";
 import { sequelize } from "../../database";
-import CaloriePlan from "../../database/models/CaloriePlan";
+import { CaloriePlan } from "../../database/associations";
 import { UpsertPlansDTO } from "./types";
 import { DatabaseException } from "../../@core/exception/infrastructure/DatabaseException";
 

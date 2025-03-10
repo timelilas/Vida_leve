@@ -1,7 +1,7 @@
 import { View } from "react-native";
 import { NavigationHeader } from "../../../components/NavigationHeader";
 import { ScreenWrapper } from "../../../components/ScreenWrapper";
-import { useAppNavigation } from "../../../hooks/useAppNavigation";
+import { useAppNavigation } from "../../../hooks/common/useAppNavigation";
 import { ScreenTitle } from "../../../components/ScreenTitle";
 import { MealButton } from "./components/MealButton";
 import { mealButtonsData } from "./utils";
@@ -9,19 +9,37 @@ import { useEffect, useState } from "react";
 import { MealType } from "../../../@core/entities/@shared/mealType/type";
 import { DayPicker } from "../../../components/DayPicker";
 import { DateData } from "../../../components/DayPicker/types";
-import { RouteConstants } from "../../../routes/types";
+import { RouteConstants, RouteParamsList } from "../../../routes/types";
 import { styles } from "./styles";
 import {
   convertDateToLocalDateData,
   formatDateToLabel,
 } from "../../../utils/helpers";
 import { useMealStore } from "../../../store/meal";
+import { useMeal } from "../../../hooks/meal/useMeal";
+import { SubmitButton } from "../../../components/SubmitButton";
+import { RouteProp } from "@react-navigation/native";
 
-const CreateMealScreen = () => {
+type CreateMealScreenRouteProp = RouteProp<
+  RouteParamsList,
+  RouteConstants.CreateMeal
+>;
+
+interface CreateMealScreenProps {
+  route: CreateMealScreenRouteProp;
+}
+
+const CreateMealScreen = (props: CreateMealScreenProps) => {
   const setMeal = useMealStore((state) => state.setMeal);
-  const resetMeal = useMealStore((state) => state.resetMeal);
+
+  const withSubmitButton = props.route.params?.withSubmitButton;
+  const existingFoods = useMealStore((state) => state.foodIds.length);
   const navigation = useAppNavigation();
   const currentLocalDate = convertDateToLocalDateData(new Date());
+  const { dailyCalorieConsumption } = useMeal({
+    calorieConsumption: { date: new Date() },
+  });
+
   const [selectedDate, setSelectedDate] = useState<DateData>(currentLocalDate);
   const [selectedMealType, setSelectedMealType] = useState<MealType | null>(
     null
@@ -31,13 +49,16 @@ const CreateMealScreen = () => {
     if (selectedDate && selectedMealType) {
       const { year, month, day } = selectedDate;
       setMeal(selectedMealType, new Date(year, month, day));
-      navigation.navigate(RouteConstants.SearchFoods);
+      navigation.navigate(
+        existingFoods
+          ? RouteConstants.MealRegistration
+          : RouteConstants.SearchFoods
+      );
     }
   }, [selectedDate, selectedMealType, navigation, setMeal]);
 
   function goBack() {
     navigation.goBack();
-    resetMeal();
   }
 
   function handleMealSelection(mealType: MealType) {
@@ -54,7 +75,7 @@ const CreateMealScreen = () => {
     selectedDate.day
   );
   const shortDateLabel = formatDateToLabel(currentDate, "short");
-  const longDateLAbel = formatDateToLabel(currentDate, "long");
+  const longDateLabel = formatDateToLabel(currentDate, "long");
 
   return (
     <ScreenWrapper>
@@ -65,7 +86,7 @@ const CreateMealScreen = () => {
         onBack={goBack}
       />
       <ScreenTitle
-        title={longDateLAbel}
+        title={longDateLabel}
         style={[styles.title, styles.dayTitle]}
       />
       <View style={styles.dayPicker}>
@@ -78,7 +99,9 @@ const CreateMealScreen = () => {
         title="Agora me conta qual refeição você quer registrar:"
         style={styles.title}
       />
-      <View style={styles.mealButtons}>
+      <View
+        style={[styles.mealButtons, withSubmitButton && styles.marginBottom]}
+      >
         {mealButtonsData.map((meal) => (
           <MealButton
             onPress={() => handleMealSelection(meal.type)}
@@ -86,9 +109,13 @@ const CreateMealScreen = () => {
             icon={meal.icon}
             title={meal.name}
             selected={meal.type === selectedMealType}
+            caloriesConsumed={dailyCalorieConsumption.data[`${meal.type}`]}
           />
         ))}
       </View>
+      {withSubmitButton ? (
+        <SubmitButton type="primary" title="Voltar para home" />
+      ) : null}
     </ScreenWrapper>
   );
 };

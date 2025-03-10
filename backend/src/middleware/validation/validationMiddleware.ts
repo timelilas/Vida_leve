@@ -6,13 +6,19 @@ import { exceptionResponseAdapter } from "../../utils/express/helpers";
 
 export function validationMiddleware(
   zodSchema: ZodSchema,
-  target: "body" | "query"
+  target: "body" | "query" | "params"
 ) {
   const resource = "ValidationMiddleware";
 
   return (req: Request, res: Response, next: NextFunction) => {
     try {
-      const validationTarget = target === "body" ? req.body : req.query;
+      const validationTarget =
+        target === "body"
+          ? req.body
+          : target === "params"
+          ? req.params
+          : req.query;
+
       const validationResult = zodSchema.safeParse(validationTarget);
 
       if (!validationResult.success) {
