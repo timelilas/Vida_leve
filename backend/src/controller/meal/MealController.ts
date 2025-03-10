@@ -26,4 +26,25 @@ export default class MealController {
       });
     }
   }
+
+  async getCalorieConsumption(req: Request, res: Response) {
+    const date = req.params.date;
+    const userId = req.user.id;
+
+    try {
+      const dailyCalorieConsumption =
+        await this._mealService.getCalorieConsumption({
+          date: new Date(date),
+          userId,
+        });
+      return res.status(200).json({ data: dailyCalorieConsumption });
+    } catch (error: any) {
+      return exceptionResponseAdapter({
+        req,
+        res,
+        exception: error,
+        alternativeMsg: "Erro ao obter o consumo de calorias diário",
+      });
+    }
+  }
 }

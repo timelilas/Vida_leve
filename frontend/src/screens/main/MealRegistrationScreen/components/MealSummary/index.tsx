@@ -31,7 +31,7 @@ export function MealSummary(props: MealSummaryProps) {
     }));
 
     try {
-      await props.onSubmit({ date: mealDate, mealType, foods });
+      await props.onSubmit({ date: new Date(mealDate), mealType, foods });
     } catch (error: any) {
       props.onError(error);
     }

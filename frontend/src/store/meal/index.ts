@@ -14,6 +14,9 @@ export const useMealStore = create<MealStore>((set, get) => {
     setMeal(type, date) {
       set(() => ({ type, date: date.toISOString() }));
     },
+    resetMeal: () => {
+      set(() => ({ ...initialState, date: new Date().toISOString() }));
+    },
     addFood: (food) => {
       const prevState = get();
       const existingFood = prevState.foodMap[`${food.id}`];

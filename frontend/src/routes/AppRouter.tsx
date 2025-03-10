@@ -16,8 +16,6 @@ import UpdateProgressScreen from "../screens/main/UpdateProgressScreen";
 import CreateMealScreen from "../screens/main/CreateMealScreen";
 import SearchFoodsScreen from "../screens/main/SearchFoodsScreen";
 import MealRegistrationScreen from "../screens/main/MealRegistrationScreen";
-import BarChartScreen from "../screens/@shared/BarChartScreen";
-import LineChartScreen from "../screens/@shared/LineChartScreen";
 
 const AppRouter = () => {
   return (
@@ -100,16 +98,6 @@ const AppRouter = () => {
         <Stack.Screen
           name={RouteConstants.ConnectionError}
           component={ConnectionErrorScreen}
-          options={{ headerShown: false }}
-        />
-        <Stack.Screen
-          name={RouteConstants.BarChart}
-          component={BarChartScreen}
-          options={{ headerShown: false }}
-        />
-        <Stack.Screen
-          name={RouteConstants.LineChart}
-          component={LineChartScreen}
           options={{ headerShown: false }}
         />
       </Stack.Navigator>

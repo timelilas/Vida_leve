@@ -35,7 +35,7 @@ export function useMeal(params?: UseMealParams) {
     refetchOnMount: params?.calorieConsumption?.refetchOnMount,
     retry: false,
     queryFn: async () => {
-      if (!params?.calorieConsumption?.date) return;
+      if (!params?.calorieConsumption?.date) return { ...initialData };
       return (await httpMealService.getDailyCalorieConsumption(isoDate)).data;
     },
   });

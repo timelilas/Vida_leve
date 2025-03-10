@@ -9,7 +9,7 @@ import { useEffect, useState } from "react";
 import { MealType } from "../../../@core/entities/@shared/mealType/type";
 import { DayPicker } from "../../../components/DayPicker";
 import { DateData } from "../../../components/DayPicker/types";
-import { RouteConstants } from "../../../routes/types";
+import { RouteConstants, RouteParamsList } from "../../../routes/types";
 import { styles } from "./styles";
 import {
   convertDateToLocalDateData,
@@ -17,15 +17,27 @@ import {
 } from "../../../utils/helpers";
 import { useMealStore } from "../../../store/meal";
 import { useMeal } from "../../../hooks/meal/useMeal";
+import { SubmitButton } from "../../../components/SubmitButton";
+import { RouteProp } from "@react-navigation/native";
 
-const CreateMealScreen = () => {
+type CreateMealScreenRouteProp = RouteProp<
+  RouteParamsList,
+  RouteConstants.CreateMeal
+>;
+
+interface CreateMealScreenProps {
+  route: CreateMealScreenRouteProp;
+}
+
+const CreateMealScreen = (props: CreateMealScreenProps) => {
   const setMeal = useMealStore((state) => state.setMeal);
 
+  const withSubmitButton = props.route.params?.withSubmitButton;
   const existingFoods = useMealStore((state) => state.foodIds.length);
   const navigation = useAppNavigation();
   const currentLocalDate = convertDateToLocalDateData(new Date());
   const { dailyCalorieConsumption } = useMeal({
-    calorieConsumption: { date: new Date()},
+    calorieConsumption: { date: new Date() },
   });
 
   const [selectedDate, setSelectedDate] = useState<DateData>(currentLocalDate);
@@ -63,7 +75,7 @@ const CreateMealScreen = () => {
     selectedDate.day
   );
   const shortDateLabel = formatDateToLabel(currentDate, "short");
-  const longDateLAbel = formatDateToLabel(currentDate, "long");
+  const longDateLabel = formatDateToLabel(currentDate, "long");
 
   return (
     <ScreenWrapper>
@@ -74,7 +86,7 @@ const CreateMealScreen = () => {
         onBack={goBack}
       />
       <ScreenTitle
-        title={longDateLAbel}
+        title={longDateLabel}
         style={[styles.title, styles.dayTitle]}
       />
       <View style={styles.dayPicker}>
@@ -87,7 +99,9 @@ const CreateMealScreen = () => {
         title="Agora me conta qual refeição você quer registrar:"
         style={styles.title}
       />
-      <View style={styles.mealButtons}>
+      <View
+        style={[styles.mealButtons, withSubmitButton && styles.marginBottom]}
+      >
         {mealButtonsData.map((meal) => (
           <MealButton
             onPress={() => handleMealSelection(meal.type)}
@@ -99,6 +113,9 @@ const CreateMealScreen = () => {
           />
         ))}
       </View>
+      {withSubmitButton ? (
+        <SubmitButton type="primary" title="Voltar para home" />
+      ) : null}
     </ScreenWrapper>
   );
 };

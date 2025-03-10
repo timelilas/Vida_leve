@@ -2,7 +2,7 @@ import { MealType } from "../../@core/entities/@shared/mealType/type";
 import { MealFoodProps } from "../../@core/entities/meal/type";
 
 export interface HttpCreateMealInputDTO {
-  date: string;
+  date: Date;
   mealType: MealType;
   foods: Array<{ foodId: number; quantity: number }>;
 }

@@ -1,7 +1,7 @@
 import { MealType } from "../../@core/entities/@shared/mealType/type";
 
 export interface CreateMealParams {
-  date: string;
+  date: Date;
   mealType: MealType;
   foods: Array<{ foodId: number; quantity: number }>;
 }

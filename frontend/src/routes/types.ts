@@ -38,10 +38,8 @@ export type RouteParamsList = {
   [RouteConstants.Home]: undefined;
   [RouteConstants.GoalSettings]: undefined;
   [RouteConstants.UpdateProgress]: undefined;
-  [RouteConstants.CreateMeal]: undefined;
+  [RouteConstants.CreateMeal]?: { withSubmitButton?: boolean };
   [RouteConstants.SearchFoods]?: { foodName: string };
   [RouteConstants.MealRegistration]: undefined;
   [RouteConstants.ConnectionError]: undefined;
-  [RouteConstants.BarChart]: undefined;
-  [RouteConstants.LineChart]: undefined;
 };

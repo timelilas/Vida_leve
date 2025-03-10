@@ -12,11 +12,17 @@ export const styles = StyleSheet.create({
   },
   dayTitle: {
     color: colors.text.secondary,
-    marginTop: 32,
+    marginTop: 24,
     marginInline: "auto",
   },
   mealButtons: {
     marginTop: 16,
     gap: 16,
+  },
+  marginBottom: {
+    marginBottom: 40,
+  },
+  submitButton: {
+    marginTop: "auto",
   },
 });
