@@ -18,7 +18,7 @@ import {
 import { useMealStore } from "../../../store/meal";
 import { useMeal } from "../../../hooks/meal/useMeal";
 import { SubmitButton } from "../../../components/SubmitButton";
-import { RouteProp } from "@react-navigation/native";
+import { CommonActions, RouteProp } from "@react-navigation/native";
 
 type CreateMealScreenRouteProp = RouteProp<
   RouteParamsList,
@@ -30,14 +30,18 @@ interface CreateMealScreenProps {
 }
 
 const CreateMealScreen = (props: CreateMealScreenProps) => {
-  const setMeal = useMealStore((state) => state.setMeal);
-
-  const withSubmitButton = props.route.params?.withSubmitButton;
-  const existingFoods = useMealStore((state) => state.foodIds.length);
   const navigation = useAppNavigation();
-  const currentLocalDate = convertDateToLocalDateData(new Date());
+  const withSubmitButton = props.route.params?.withSubmitButton;
+
+  const mealDate = useMealStore((state) => state.date);
+  const existingFoods = useMealStore((state) => state.foodIds.length);
+  const currentLocalDate = convertDateToLocalDateData(new Date(mealDate));
+
+  const setMeal = useMealStore((state) => state.setMeal);
+  const resetMeal = useMealStore((state) => state.resetMeal);
+
   const { dailyCalorieConsumption } = useMeal({
-    calorieConsumption: { date: new Date() },
+    calorieConsumption: { date: new Date(), refetchOnMount: false },
   });
 
   const [selectedDate, setSelectedDate] = useState<DateData>(currentLocalDate);
@@ -67,6 +71,15 @@ const CreateMealScreen = (props: CreateMealScreenProps) => {
 
   function handleDaySelection(dateData: DateData) {
     setSelectedDate(dateData);
+  }
+
+  function resetNavigationToHome() {
+    resetMeal();
+    navigation.dispatch(
+      CommonActions.reset({
+        routes: [{ name: RouteConstants.Home }],
+      })
+    );
   }
 
   const currentDate = new Date(
@@ -114,7 +127,11 @@ const CreateMealScreen = (props: CreateMealScreenProps) => {
         ))}
       </View>
       {withSubmitButton ? (
-        <SubmitButton type="primary" title="Voltar para home" />
+        <SubmitButton
+          type="primary"
+          title="Voltar para home"
+          onPress={resetNavigationToHome}
+        />
       ) : null}
     </ScreenWrapper>
   );

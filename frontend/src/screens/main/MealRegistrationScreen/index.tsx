@@ -16,7 +16,7 @@ import {
 import { RouteConstants } from "../../../routes/types";
 import { ConnectionError } from "../../../@core/errors/connectionError";
 import { useSnackbar } from "../../../hooks/common/useSnackbar";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { CreateMealParams } from "../../../hooks/meal/types";
 import { useMeal } from "../../../hooks/meal/useMeal";
 import { CommonActions } from "@react-navigation/native";
@@ -38,9 +38,38 @@ const MealRegistrationScreen = () => {
     calorieConsumption: { refetchOnMount: false },
   });
 
+  useEffect(() => {
+    if (!foodIds.length) {
+      navigation.dispatch(
+        CommonActions.reset({
+          routes: [
+            { name: RouteConstants.Home },
+            { name: RouteConstants.CreateMeal },
+            { name: RouteConstants.SearchFoods },
+          ],
+        })
+      );
+    }
+  }, [foodIds.length, navigation]);
+
   function goBack() {
     if (isSubmitting) return;
     navigation.goBack();
+  }
+
+  function resetNavigationToHome() {
+    navigation.dispatch(
+      CommonActions.reset({
+        index: 1,
+        routes: [
+          { name: RouteConstants.Home },
+          {
+            name: RouteConstants.CreateMeal,
+            params: { withSubmitButton: true },
+          },
+        ],
+      })
+    );
   }
 
   function handleError(error: Error) {
@@ -64,22 +93,7 @@ const MealRegistrationScreen = () => {
 
     setIsModalVisible(true);
     setIsSubmitting(false);
-    resetMeal();
-  }
-
-  function resetNavigationToHome() {
-    navigation.dispatch(
-      CommonActions.reset({
-        index: 1,
-        routes: [
-          { name: RouteConstants.Home },
-          {
-            name: RouteConstants.CreateMeal,
-            params: { withSubmitButton: true },
-          },
-        ],
-      })
-    );
+    resetMeal(date);
   }
 
   function closeModalAndResetNavigation() {

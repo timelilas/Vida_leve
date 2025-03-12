@@ -34,6 +34,7 @@ export function PlanSelectionForm(props: PlanSelectionFormProps) {
   }
 
   async function handleSubmit() {
+    if (isSubmitting) return;
     setIsSubmitting(true);
     try {
       if (selectedPlan) {
