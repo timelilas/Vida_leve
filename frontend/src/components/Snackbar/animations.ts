@@ -4,6 +4,7 @@ import {
   useRef,
   useLayoutEffect,
   MutableRefObject,
+  useMemo,
 } from "react";
 import { Animated, View } from "react-native";
 
@@ -15,14 +16,31 @@ interface SnackbarAnimationParams {
 export function useSnackbarAnimation(params: SnackbarAnimationParams) {
   const { duration, snackbarRef } = params;
   const [isVisible, setIsVisible] = useState(true);
-  const animtedValue = useRef(new Animated.Value(0));
+  const translateAnimatedValue = useRef(new Animated.Value(0));
+  const opacityAnimatedValue = useRef(new Animated.Value(0));
   const snackbarHeight = useRef(0);
-  const baseAnimatedProps = { useNativeDriver: true, bounciness: 3, speed: 14 };
+
+  const translateAnimationProps = useMemo(
+    () => ({
+      useNativeDriver: true,
+      bounciness: 2,
+      speed: 14,
+    }),
+    []
+  );
+
+  const opacityAnimationProps = useMemo(
+    () => ({
+      duration: 0,
+      useNativeDriver: true,
+    }),
+    []
+  );
 
   useLayoutEffect(() => {
     snackbarRef.current?.measure((...rects) => {
       snackbarHeight.current = rects[3];
-      animtedValue.current = new Animated.Value(rects[3]);
+      translateAnimatedValue.current.setValue(rects[3]);
     });
   }, []);
 
@@ -33,19 +51,36 @@ export function useSnackbarAnimation(params: SnackbarAnimationParams) {
 
   useEffect(() => {
     if (isVisible) {
-      Animated.spring(animtedValue.current, {
-        ...baseAnimatedProps,
+      Animated.sequence([
+        Animated.timing(opacityAnimatedValue.current, {
+          ...opacityAnimationProps,
+          toValue: 1,
+        }),
+        Animated.spring(translateAnimatedValue.current, {
+          ...translateAnimationProps,
+          toValue: 0,
+        }),
+      ]).start();
+      Animated.spring(translateAnimatedValue.current, {
+        ...translateAnimationProps,
         toValue: 0,
       }).start();
     } else {
-      Animated.spring(animtedValue.current, {
-        ...baseAnimatedProps,
-        toValue: snackbarHeight.current,
-      }).start();
+      Animated.sequence([
+        Animated.spring(translateAnimatedValue.current, {
+          ...translateAnimationProps,
+          toValue: snackbarHeight.current,
+        }),
+        Animated.timing(opacityAnimatedValue.current, {
+          ...opacityAnimationProps,
+          toValue: 0,
+        }),
+      ]).start();
     }
-  }, [isVisible]);
+  }, [isVisible, opacityAnimationProps, translateAnimationProps]);
 
   return {
-    animtedValue: animtedValue.current,
+    translateAnimatedValue: translateAnimatedValue.current,
+    opacityAnimatedValue: opacityAnimatedValue.current,
   };
 }
