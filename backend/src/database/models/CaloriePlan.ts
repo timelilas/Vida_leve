@@ -3,12 +3,14 @@ import {
   InferAttributes,
   InferCreationAttributes,
   CreationOptional,
+  ForeignKey,
 } from "sequelize";
 import { sequelize } from "../index";
 import Sequelize from "sequelize";
 import { CaloriePlanEntity } from "../../@core/entity/caloriePlan/entity";
 import { allowedPlans, PlanType } from "../../@core/entity/@shared";
 import { TableNames } from "../constants";
+import User from "./User";
 
 class CaloriePlan
   extends Model<
@@ -17,7 +19,7 @@ class CaloriePlan
   >
   implements CaloriePlanEntity
 {
-  declare userId: number;
+  declare userId: ForeignKey<User["id"]>;
   declare type: PlanType;
   declare durationInDays: number;
   declare dailyCalorieIntake: number;

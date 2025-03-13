@@ -1,11 +1,28 @@
 import { TypeMeal } from "../../@core/entity/@shared";
 import { MealEntity } from "../../@core/entity/meal/enitys";
 
-export interface CreateMealDTO {
+export interface UpsertMealDTO {
+  id?: number;
   userId: number;
   date: Date;
   mealType: TypeMeal;
   foods: Array<{ foodId: number; quantity: number }>;
+}
+
+export interface SearchMealDTO {
+  userId: number;
+  date: Date;
+  mealType: TypeMeal;
+}
+
+export interface GetMealByIdDTO {
+  userId: number;
+  id: number;
+}
+
+export interface GetMealsDTO {
+  userId: number;
+  date?: Date;
 }
 
 export interface CalorieConsumtionQueryResult {

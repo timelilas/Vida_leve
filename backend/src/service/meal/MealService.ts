@@ -1,55 +1,131 @@
 import { QueryTypes } from "sequelize";
 import { DatabaseException } from "../../@core/exception/infrastructure/DatabaseException";
 import { sequelize } from "../../database";
-import { ConsumedFood, Food, Meal } from "../../database/associations";
+import { ConsumedFood, Meal } from "../../database/associations";
 import {
   CalorieConsumtionQueryResult,
-  CreateMealDTO,
+  UpsertMealDTO,
   GetCalorieConsumptionDTO,
+  GetMealByIdDTO,
   MealQueryResult,
+  SearchMealDTO,
+  GetMealsDTO,
 } from "./types";
 import { TableNames } from "../../database/constants";
-import { MealEntity } from "../../@core/entity/meal/enitys";
 import { TypeMeal } from "../../@core/entity/@shared";
+import { MealEntity } from "../../@core/entity/meal/enitys";
+
+type By = "ID" | "DATE" | "DATE_TYPE";
 
 export default class MealService {
-  public create = async (params: CreateMealDTO) => {
+  public getById = async (params: GetMealByIdDTO) => {
+    const { id, userId } = params;
+    const queryString = this.getMealQueryString("ID");
+
+    try {
+      const foundMeal = await sequelize.query<MealQueryResult>(queryString, {
+        type: QueryTypes.SELECT,
+        replacements: [id, userId],
+      });
+
+      const mealEntity: MealEntity | null = foundMeal[0]
+        ? { ...foundMeal[0], date: new Date(foundMeal[0].date) }
+        : null;
+
+      return mealEntity;
+    } catch (error: any) {
+      throw new DatabaseException(
+        `Erro na busca da refeição com id: '${id}'`,
+        MealService.name,
+        error.message
+      );
+    }
+  };
+
+  public getMeals = async (params: GetMealsDTO) => {
+    const isoDate = params.date?.toISOString().split("T")[0];
+    const queryString = this.getMealQueryString(
+      params.date ? "DATE" : undefined
+    );
+    try {
+      const queryResult = await sequelize.query<MealQueryResult>(queryString, {
+        replacements: [params.userId, isoDate],
+        type: QueryTypes.SELECT,
+      });
+
+      const mealEntities: MealEntity[] = queryResult.map((meal) => ({
+        ...meal,
+        date: new Date(meal.date),
+      }));
+
+      return mealEntities;
+    } catch (error: any) {
+      const errorMessage = `Ocorreu um erro ao tentar obter as refeições do usuaŕio com id: '${params.userId}'`;
+      throw new DatabaseException(
+        errorMessage,
+        MealService.name,
+        error.message
+      );
+    }
+  };
+
+  public searchMeal = async (params: SearchMealDTO) => {
+    const { date, mealType, userId } = params;
+    const isoDateString = date.toISOString().split("T")[0];
+    const queryString = this.getMealQueryString("DATE_TYPE");
+
+    try {
+      const foundMeal = await sequelize.query<MealQueryResult>(queryString, {
+        type: QueryTypes.SELECT,
+        replacements: [isoDateString, mealType, userId],
+      });
+
+      const mealEntity: MealEntity | null = foundMeal[0]
+        ? { ...foundMeal[0], date: new Date(foundMeal[0].date) }
+        : null;
+      return mealEntity;
+    } catch (error: any) {
+      const errorMessage = `Ocorreu um erro ao buscar na busca da refeição do tipo '${mealType}' referente a data '${date}'`;
+      throw new DatabaseException(
+        errorMessage,
+        MealService.name,
+        error.message
+      );
+    }
+  };
+
+  public upsert = async (params: UpsertMealDTO) => {
+    const { id, userId, date, foods, mealType } = params;
     let transaction = null;
 
     try {
       transaction = await sequelize.transaction();
 
-      const createdMeal = await Meal.create(
+      const [createdMeal] = await Meal.upsert(
         {
-          date: params.date.toISOString().split("T")[0],
-          type: params.mealType,
-          userId: params.userId,
+          id,
+          userId,
+          date: date.toISOString().split("T")[0],
+          type: mealType,
         },
-        { transaction }
+        { transaction, returning: true }
       );
 
       await ConsumedFood.bulkCreate(
-        params.foods.map(({ foodId, quantity }) => {
+        foods.map(({ foodId, quantity }) => {
           return { mealId: createdMeal.id, foodId, quantity };
         }),
-        { transaction }
+        { transaction, updateOnDuplicate: ["quantity"] }
       );
 
       await transaction.commit();
 
-      const queryResult = await sequelize.query<MealQueryResult>(
-        this.getMealQueryString(),
-        {
-          type: QueryTypes.SELECT,
-          replacements: [createdMeal.id, params.userId],
-        }
-      );
-
-      return { ...queryResult[0], date: new Date(queryResult[0].date) };
+      const mealEntity = await this.getById({ id: createdMeal.id, userId });
+      return mealEntity as MealEntity;
     } catch (error: any) {
       await transaction?.rollback();
       throw new DatabaseException(
-        `Erro durante a criação da refeição do usuário com id: ${params.userId}.`,
+        `Ocorreu um erro durante a criação da refeição.`,
         MealService.name,
         error.message
       );
@@ -84,18 +160,27 @@ export default class MealService {
 
       return calorieConsumptionMap;
     } catch (error: any) {
+      const errorMessage = `Erro ao obter o consumo de calorias do usuário: ${params.userId}, referente a data: ${isoDate}`;
       throw new DatabaseException(
-        `Erro ao obter o consumo de calorias do usuário: ${params.userId}, referente a data: ${isoDate}`,
+        errorMessage,
         MealService.name,
         error.message
       );
     }
   };
 
-  private getMealQueryString = () => {
+  private getMealQueryString = (by?: By) => {
     const meal = TableNames.Meal;
     const consumedFood = TableNames.ConsumedFood;
     const food = TableNames.Food;
+
+    const whereClauseMap: Record<By, string> = {
+      ID: `${meal}."userId" = ? AND ${meal}.id = ?`,
+      DATE: `${meal}."userId" = ? AND ${meal}.date = ?`,
+      DATE_TYPE: `${meal}."userId" = ? AND ${meal}.date = ? AND ${meal}.type = ?`,
+    };
+
+    const whereClause = by ? whereClauseMap[by] : `${meal}."userId" = ?`;
 
     return `
       SELECT 
@@ -112,9 +197,9 @@ export default class MealService {
           )
         ) as foods
       FROM ${meal}
-      INNER JOIN "${consumedFood}" on meal.id = "${consumedFood}"."mealId"
-      INNER JOIN ${food} on "${consumedFood}"."foodId" = ${food}.id
-      WHERE ${meal}.id = ? AND ${meal}."userId" = ?
+      LEFT OUTER JOIN "${consumedFood}" on meal.id = "${consumedFood}"."mealId"
+      LEFT OUTER JOIN ${food} on "${consumedFood}"."foodId" = ${food}.id
+      WHERE ${whereClause}
       GROUP BY ${meal}.id;
     `;
   };
@@ -127,7 +212,7 @@ export default class MealService {
     return `
       SELECT 
         COALESCE(${meal}."type"::VARCHAR, 'total') as type, 
-        SUM(food.calories * "${consumedFood}".quantity) as calories 
+        COALESCE(SUM(food.calories * "${consumedFood}".quantity), 0)::INTEGER as calories 
       FROM ${meal}
       INNER JOIN "${consumedFood}" on ${meal}.id = "${consumedFood}"."mealId"
       INNER JOIN ${food} on "${consumedFood}"."foodId" = ${food}.id

@@ -3,6 +3,7 @@ import {
   InferAttributes,
   InferCreationAttributes,
   CreationOptional,
+  ForeignKey,
 } from "sequelize";
 import { ProgressEntity } from "../../@core/entity/progress/entity";
 import { sequelize } from "../index";
@@ -14,12 +15,13 @@ import {
   PlanType,
 } from "../../@core/entity/@shared";
 import { TableNames } from "../constants";
+import User from "./User";
 
 class Progress
   extends Model<InferAttributes<Progress>, InferCreationAttributes<Progress>>
   implements ProgressEntity
 {
-  declare userId: number;
+  declare userId: ForeignKey<User["id"]>;
   declare height: number;
   declare weight: number;
   declare goalWeight: number;
