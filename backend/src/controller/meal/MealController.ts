@@ -43,27 +43,29 @@ export default class MealController {
   }
 
   async updateMeal(req: Request, res: Response): Promise<Response> {
-    const { id, foods } = req.body;
+    const { foods } = req.body;
+    const mealId = parseInt(req.params.id);
     const userId = req.user.id;
 
     try {
-      const foundMeal = await this._mealService.getById({ id, userId });
+      const foundMeal = await this._mealService.getById({ id: mealId, userId });
 
       if (!foundMeal) {
         throw new NotFoundException(
-          `Refeição com id: '${id}' não foi encontrada`,
+          `Refeição com id: '${mealId}' não foi encontrada`,
           MealController.name
         );
       }
 
-      // const updatedMeal = await this._mealService.upsert({
-      //   userId: req.user.id,
-      //   date: foundMeal.date,
-      //   mealType: foundMeal.type,
-      //   foods,
-      // });
+      const updatedMeal = await this._mealService.upsert({
+        id: mealId,
+        userId: req.user.id,
+        mealType: foundMeal.type,
+        date: foundMeal.date,
+        foods,
+      });
 
-      return res.status(200).json({ data: foundMeal });
+      return res.status(200).json({ data: updatedMeal });
     } catch (error: any) {
       return exceptionResponseAdapter({
         req,
@@ -76,11 +78,11 @@ export default class MealController {
 
   async getMeals(req: Request, res: Response): Promise<Response> {
     const userId = req.user.id;
-    const mealDate = req.query.date as string;
+    const mealDate = req.query.date as string | undefined;
     try {
       const meals = await this._mealService.getMeals({
         userId: userId,
-        date: new Date(mealDate),
+        date: mealDate ? new Date(mealDate) : undefined,
       });
 
       return res.status(200).json({ data: meals });
@@ -110,7 +112,7 @@ export default class MealController {
         req,
         res,
         exception: error,
-        alternativeMsg: "Erro ao obter o consumo de calorias diário",
+        alternativeMsg: `Erro ao obter o consumo de calorias diário para o usuário: '${userId}' na data: ${date}`,
       });
     }
   }

@@ -46,12 +46,20 @@ const mealSchema = z
         invalid_type_error: "O campo de alimentos deve ser do tipo array",
       })
       .min(1, {
-        message: "O array de alimentos deve conter pelo menos 1 item.",
+        message: "A refeição deve conter ao menos 1 alimento.",
       }),
   })
   .strict();
 
-export const updateMealSchema = mealSchema.pick({ foods: true, id: true });
+export const updateMealSchema = mealSchema.pick({ foods: true });
+
+export const updateMealIdSchema = z
+  .object({
+    id: z.string().refine((id) => !!id.match(/^\d+$/), {
+      message: "Id deve ser um número inteiro",
+    }),
+  })
+  .strict();
 
 export const createMealSchema = mealSchema.pick({
   date: true,

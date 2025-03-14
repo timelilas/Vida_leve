@@ -6,6 +6,7 @@ import {
   createMealSchema,
   getCalorieConsumptionSchema,
   getMealsSchema,
+  updateMealIdSchema,
   updateMealSchema,
 } from "../controller/meal/schemas";
 
@@ -27,8 +28,9 @@ mealRouter.post(
 );
 
 mealRouter.put(
-  "/",
+  "/:id",
   (req, res, next) => authorizationMiddleware.execute(req, res, next),
+  validationMiddleware(updateMealIdSchema, "params"),
   validationMiddleware(updateMealSchema, "body"),
   (req, res) => mealController.updateMeal(req, res)
 );

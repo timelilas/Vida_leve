@@ -1,4 +1,4 @@
-import { QueryTypes } from "sequelize";
+import { Op, QueryTypes } from "sequelize";
 import { DatabaseException } from "../../@core/exception/infrastructure/DatabaseException";
 import { sequelize } from "../../database";
 import { ConsumedFood, Meal } from "../../database/associations";
@@ -25,7 +25,7 @@ export default class MealService {
     try {
       const foundMeal = await sequelize.query<MealQueryResult>(queryString, {
         type: QueryTypes.SELECT,
-        replacements: [id, userId],
+        replacements: [userId, id],
       });
 
       const mealEntity: MealEntity | null = foundMeal[0]
@@ -35,7 +35,7 @@ export default class MealService {
       return mealEntity;
     } catch (error: any) {
       throw new DatabaseException(
-        `Erro na busca da refeição com id: '${id}'`,
+        `Ocorreu um erro durante a busca da reifeição com id: '${id}'`,
         MealService.name,
         error.message
       );
@@ -77,7 +77,7 @@ export default class MealService {
     try {
       const foundMeal = await sequelize.query<MealQueryResult>(queryString, {
         type: QueryTypes.SELECT,
-        replacements: [isoDateString, mealType, userId],
+        replacements: [userId, isoDateString, mealType],
       });
 
       const mealEntity: MealEntity | null = foundMeal[0]
@@ -85,7 +85,7 @@ export default class MealService {
         : null;
       return mealEntity;
     } catch (error: any) {
-      const errorMessage = `Ocorreu um erro ao buscar na busca da refeição do tipo '${mealType}' referente a data '${date}'`;
+      const errorMessage = `Ocorreu um erro durante a buscada refeição do tipo '${mealType}' referente a data '${date}'`;
       throw new DatabaseException(
         errorMessage,
         MealService.name,
@@ -96,6 +96,7 @@ export default class MealService {
 
   public upsert = async (params: UpsertMealDTO) => {
     const { id, userId, date, foods, mealType } = params;
+    const foodIds = foods.map((food) => food.foodId);
     let transaction = null;
 
     try {
@@ -110,6 +111,16 @@ export default class MealService {
         },
         { transaction, returning: true }
       );
+
+      if (id) {
+        await ConsumedFood.destroy({
+          where: {
+            foodId: { [Op.notIn]: foodIds },
+            mealId: id,
+          },
+          transaction: transaction,
+        });
+      }
 
       await ConsumedFood.bulkCreate(
         foods.map(({ foodId, quantity }) => {
@@ -160,7 +171,7 @@ export default class MealService {
 
       return calorieConsumptionMap;
     } catch (error: any) {
-      const errorMessage = `Erro ao obter o consumo de calorias do usuário: ${params.userId}, referente a data: ${isoDate}`;
+      const errorMessage = `Ocorreu um erro ao obter consumo de calorias do usuário: ${params.userId}, referente a data: ${isoDate}`;
       throw new DatabaseException(
         errorMessage,
         MealService.name,
