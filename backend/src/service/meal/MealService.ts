@@ -101,13 +101,15 @@ export default class MealService {
 
     try {
       transaction = await sequelize.transaction();
-
-      const [createdMeal] = await Meal.upsert(
+      const operationTimestamp = new Date();
+      const [upsertedMeal] = await Meal.upsert(
         {
           id,
           userId,
           date: date.toISOString().split("T")[0],
           type: mealType,
+          updatedAt: operationTimestamp,
+          createdAt: id ? undefined : operationTimestamp,
         },
         { transaction, returning: true }
       );
@@ -124,14 +126,14 @@ export default class MealService {
 
       await ConsumedFood.bulkCreate(
         foods.map(({ foodId, quantity }) => {
-          return { mealId: createdMeal.id, foodId, quantity };
+          return { mealId: upsertedMeal.id, foodId, quantity };
         }),
         { transaction, updateOnDuplicate: ["quantity"] }
       );
 
       await transaction.commit();
 
-      const mealEntity = await this.getById({ id: createdMeal.id, userId });
+      const mealEntity = await this.getById({ id: upsertedMeal.id, userId });
       return mealEntity as MealEntity;
     } catch (error: any) {
       await transaction?.rollback();

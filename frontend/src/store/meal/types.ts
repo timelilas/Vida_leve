@@ -16,7 +16,6 @@ export interface MealStoreState {
 }
 
 export interface MealStoreActions {
-  resetMeal: (date?: Date, type?: MealType) => void;
   setMeal: (data: SetMealParams) => void;
   addFood: (food: FoodProps) => void;
   removeFood: (foodId: number) => void;

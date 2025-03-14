@@ -33,7 +33,6 @@ const MealRegistrationScreen = () => {
   const [isSubmitting, setIsSubmitting] = useState(false);
 
   const collapseAllItems = useMealStore((state) => state.collapseAllItems);
-  const resetMeal = useMealStore((state) => state.resetMeal);
   const { Snackbar, showSnackbar } = useSnackbar();
 
   const { createMeal, updateMeal } = useMeal({
@@ -41,7 +40,7 @@ const MealRegistrationScreen = () => {
   });
 
   useEffect(() => {
-    if (!foodIds.length && !isSubmitted) {
+    if (!foodIds.length) {
       navigation.dispatch(
         CommonActions.reset({
           index: 2,
@@ -53,7 +52,7 @@ const MealRegistrationScreen = () => {
         })
       );
     }
-  }, [foodIds.length, navigation]);
+  }, [foodIds.length, isSubmitted, navigation]);
 
   function goBack() {
     if (isSubmitting) return;
@@ -102,7 +101,6 @@ const MealRegistrationScreen = () => {
     setIsModalVisible(true);
     setIsSubmitting(false);
     setIsSubmitted(true);
-    resetMeal(date, mealType);
   }
 
   function closeModalAndResetNavigation() {
@@ -144,6 +142,7 @@ const MealRegistrationScreen = () => {
         ))}
       </View>
       <MealSummary
+        isSubmitted={isSubmitted}
         isSubmitting={isSubmitting}
         onSubmit={handleSubmit}
         onError={handleError}

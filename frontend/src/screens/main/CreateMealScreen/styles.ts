@@ -25,4 +25,7 @@ export const styles = StyleSheet.create({
   submitButton: {
     marginTop: "auto",
   },
+  skeletonLoaderContainer: {
+    gap: 16,
+  },
 });

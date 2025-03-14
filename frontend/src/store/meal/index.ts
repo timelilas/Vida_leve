@@ -24,13 +24,6 @@ export const useMealStore = create<MealStore>((set, get) => {
         return { id, type, date: date.toISOString(), foodIds, foodMap };
       });
     },
-    resetMeal: (date, type) => {
-      set(() => ({
-        ...initialState,
-        date: (date || new Date()).toISOString(),
-        type: type || null,
-      }));
-    },
     addFood: (food) => {
       const prevState = get();
       const existingFood = prevState.foodMap[`${food.id}`];
@@ -45,13 +38,14 @@ export const useMealStore = create<MealStore>((set, get) => {
           : prevFoodState;
       }
 
+      const newFoodIds = [
+        food.id,
+        ...prevState.foodIds.filter((id) => id !== food.id),
+      ];
+
       if (!existingFood) {
         newFoodMap[`${food.id}`] = { ...food, quantity: 1, isExpanded: true };
-
-        return set(() => ({
-          foodIds: [food.id, ...prevState.foodIds],
-          foodMap: newFoodMap,
-        }));
+        return set(() => ({ foodIds: newFoodIds, foodMap: newFoodMap }));
       }
 
       const finalQuantity = existingFood.quantity + 1;
@@ -60,7 +54,7 @@ export const useMealStore = create<MealStore>((set, get) => {
         quantity: finalQuantity >= 99 ? 99 : finalQuantity,
         isExpanded: true,
       };
-      return set(() => ({ foodMap: newFoodMap }));
+      return set(() => ({ foodMap: newFoodMap, foodIds: newFoodIds }));
     },
     collapseAllItems: () => {
       set((prevState) => {

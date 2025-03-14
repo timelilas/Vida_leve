@@ -145,6 +145,7 @@ const CreateMealScreen = (props: CreateMealScreenProps) => {
         subtitle={shortDateLabel}
         onBack={goBack}
       />
+
       <ScreenTitle
         title={longDateLabel}
         style={[styles.title, styles.dayTitle]}
@@ -171,6 +172,8 @@ const CreateMealScreen = (props: CreateMealScreenProps) => {
             key={meal.type}
             icon={meal.icon}
             title={meal.name}
+            disabled={!!error}
+            isLoading={isLoading}
             selected={meal.type === selectedMealType}
             caloriesConsumed={calorieConsumption[`${meal.type}`]}
           />

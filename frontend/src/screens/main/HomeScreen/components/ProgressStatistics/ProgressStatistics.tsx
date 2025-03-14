@@ -8,10 +8,12 @@ import { ProgressBar } from "../../../../../components/ProgressBar/ProgressBar";
 import { useAppNavigation } from "../../../../../hooks/common/useAppNavigation";
 import { RouteConstants } from "../../../../../routes/types";
 import { styles } from "./styles";
+import { Skeleton } from "moti/skeleton";
 
 interface ProgressStatisticsProps {
   targetCalories: number;
   consumedCalories: number;
+  isLoading?: boolean;
 }
 
 export function ProgressStatistics(props: ProgressStatisticsProps) {
@@ -32,10 +34,18 @@ export function ProgressStatistics(props: ProgressStatisticsProps) {
           <CookieIcon />
           <SoupIcon />
         </View>
-        <ProgressBar
-          total={props.targetCalories}
-          achieved={props.consumedCalories}
-        />
+        <Skeleton
+          show={props.isLoading}
+          height={20}
+          radius={20}
+          width="100%"
+          colorMode="light"
+        >
+          <ProgressBar
+            total={props.targetCalories}
+            achieved={props.consumedCalories}
+          />
+        </Skeleton>
       </View>
       <View style={styles.buttonWrapper}>
         <TouchableOpacity>
