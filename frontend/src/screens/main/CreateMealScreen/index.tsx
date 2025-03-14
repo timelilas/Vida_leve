@@ -5,7 +5,7 @@ import { useAppNavigation } from "../../../hooks/common/useAppNavigation";
 import { ScreenTitle } from "../../../components/ScreenTitle";
 import { MealButton } from "./components/MealButton";
 import { mealButtonsData } from "./utils";
-import { useEffect, useState } from "react";
+import { useCallback, useEffect, useState } from "react";
 import { MealType } from "../../../@core/entities/@shared/mealType/type";
 import { DayPicker } from "../../../components/DayPicker";
 import { DateData } from "../../../components/DayPicker/types";
@@ -13,12 +13,18 @@ import { RouteConstants, RouteParamsList } from "../../../routes/types";
 import { styles } from "./styles";
 import {
   convertDateToLocalDateData,
+  dateToPTBR,
   formatDateToLabel,
 } from "../../../utils/helpers";
 import { useMealStore } from "../../../store/meal";
 import { useMeal } from "../../../hooks/meal/useMeal";
 import { SubmitButton } from "../../../components/SubmitButton";
-import { CommonActions, RouteProp } from "@react-navigation/native";
+import {
+  CommonActions,
+  RouteProp,
+  useFocusEffect,
+} from "@react-navigation/native";
+import { useSnackbar } from "../../../hooks/common/useSnackbar";
 
 type CreateMealScreenRouteProp = RouteProp<
   RouteParamsList,
@@ -31,50 +37,96 @@ interface CreateMealScreenProps {
 
 const CreateMealScreen = (props: CreateMealScreenProps) => {
   const navigation = useAppNavigation();
-  const withSubmitButton = props.route.params?.withSubmitButton;
-
-  const mealDate = useMealStore((state) => state.date);
-  const existingFoods = useMealStore((state) => state.foodIds.length);
-  const currentLocalDate = convertDateToLocalDateData(new Date(mealDate));
+  const routeParams = props.route.params;
+  const currentDate = new Date(routeParams?.date || Date.now());
 
   const setMeal = useMealStore((state) => state.setMeal);
-  const resetMeal = useMealStore((state) => state.resetMeal);
+  const { Snackbar, showSnackbar } = useSnackbar();
 
-  const { dailyCalorieConsumption } = useMeal({
-    calorieConsumption: { date: new Date(), refetchOnMount: false },
+  const [mealDetails, setMealDetails] = useState<{
+    selectedDate: DateData;
+    selectedMealType: MealType | null;
+  }>({
+    selectedDate: convertDateToLocalDateData(currentDate),
+    selectedMealType: null,
   });
 
-  const [selectedDate, setSelectedDate] = useState<DateData>(currentLocalDate);
-  const [selectedMealType, setSelectedMealType] = useState<MealType | null>(
-    null
+  const { selectedDate, selectedMealType } = mealDetails;
+
+  const localDate = new Date(
+    selectedDate.year,
+    selectedDate.month,
+    selectedDate.day
   );
+
+  const { meals, calorieConsumption, error, isLoading } = useMeal({
+    date: localDate,
+    meals: { refetchOnMount: false },
+  });
+
+  const dateString = dateToPTBR(localDate);
 
   useEffect(() => {
     if (selectedDate && selectedMealType) {
       const { year, month, day } = selectedDate;
-      setMeal(selectedMealType, new Date(year, month, day));
+      const foundMeal = meals.find((meal) => meal.type === selectedMealType);
+
+      setMeal({
+        id: foundMeal?.id,
+        date: new Date(year, month, day),
+        type: selectedMealType,
+        foods: foundMeal?.foods ? foundMeal.foods : [],
+      });
       navigation.navigate(
-        existingFoods
+        foundMeal?.foods.length
           ? RouteConstants.MealRegistration
           : RouteConstants.SearchFoods
       );
     }
   }, [selectedDate, selectedMealType, navigation, setMeal]);
 
+  useEffect(() => {
+    if (error && !isLoading) {
+      const errorMessage = `Desculpe, ocorreu um erro ao obter as informações atualizadas do seu consumo de calorias para o dia ${dateString}`;
+      showSnackbar({
+        duration: 5000,
+        message: errorMessage,
+        variant: "error",
+      });
+    }
+  }, [dateString, isLoading, showSnackbar]);
+
+  useFocusEffect(
+    useCallback(() => {
+      setMealDetails((prevState) => ({ ...prevState, selectedMealType: null }));
+    }, [])
+  );
+
   function goBack() {
     navigation.goBack();
   }
 
   function handleMealSelection(mealType: MealType) {
-    setSelectedMealType(mealType === selectedMealType ? null : mealType);
+    setMealDetails((prevState) => {
+      return {
+        ...prevState,
+        selectedMealType: mealType === selectedMealType ? null : mealType,
+      };
+    });
   }
 
   function handleDaySelection(dateData: DateData) {
-    setSelectedDate(dateData);
+    setMealDetails((prevState) => {
+      const { selectedDate, selectedMealType } = prevState;
+      return {
+        selectedMealType:
+          selectedDate.id === dateData.id ? selectedMealType : null,
+        selectedDate: dateData,
+      };
+    });
   }
 
   function resetNavigationToHome() {
-    resetMeal();
     navigation.dispatch(
       CommonActions.reset({
         routes: [{ name: RouteConstants.Home }],
@@ -82,16 +134,11 @@ const CreateMealScreen = (props: CreateMealScreenProps) => {
     );
   }
 
-  const currentDate = new Date(
-    selectedDate.year,
-    selectedDate.month,
-    selectedDate.day
-  );
-  const shortDateLabel = formatDateToLabel(currentDate, "short");
-  const longDateLabel = formatDateToLabel(currentDate, "long");
+  const shortDateLabel = formatDateToLabel(localDate, "short");
+  const longDateLabel = formatDateToLabel(localDate, "long");
 
   return (
-    <ScreenWrapper>
+    <ScreenWrapper snackbar={<Snackbar />}>
       <NavigationHeader
         variant="titled"
         title="Registrar Refeição"
@@ -113,7 +160,10 @@ const CreateMealScreen = (props: CreateMealScreenProps) => {
         style={styles.title}
       />
       <View
-        style={[styles.mealButtons, withSubmitButton && styles.marginBottom]}
+        style={[
+          styles.mealButtons,
+          routeParams?.withSubmitButton && styles.marginBottom,
+        ]}
       >
         {mealButtonsData.map((meal) => (
           <MealButton
@@ -122,11 +172,11 @@ const CreateMealScreen = (props: CreateMealScreenProps) => {
             icon={meal.icon}
             title={meal.name}
             selected={meal.type === selectedMealType}
-            caloriesConsumed={dailyCalorieConsumption.data[`${meal.type}`]}
+            caloriesConsumed={calorieConsumption[`${meal.type}`]}
           />
         ))}
       </View>
-      {withSubmitButton ? (
+      {routeParams?.withSubmitButton ? (
         <SubmitButton
           type="primary"
           title="Voltar para home"

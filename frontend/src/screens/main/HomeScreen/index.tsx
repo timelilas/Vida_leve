@@ -10,8 +10,10 @@ import { useCaloriePlans } from "../../../hooks/caloriePlan/useCaloriePlans";
 import { useMeal } from "../../../hooks/meal/useMeal";
 import { useEffect } from "react";
 import { useSnackbar } from "../../../hooks/common/useSnackbar";
+import { convertDateToLocalDateData } from "../../../utils/helpers";
 
 const HomeScreen = () => {
+  const { year, month, day } = convertDateToLocalDateData(new Date());
   const { progress } = useProgress({ refetchOnMount: false });
   const { plans } = useCaloriePlans({ refetchOnMount: false });
   const { Snackbar, showSnackbar } = useSnackbar();
@@ -19,12 +21,12 @@ const HomeScreen = () => {
   const currentPlan = plans.find(
     ({ type }) => type === progress?.currentCaloriePlan
   );
-  const { dailyCalorieConsumption } = useMeal({
-    calorieConsumption: { date: new Date() },
+  const { calorieConsumption, error } = useMeal({
+    date: new Date(year, month, day),
   });
 
   useEffect(() => {
-    if (dailyCalorieConsumption.error) {
+    if (error) {
       showSnackbar({
         variant: "error",
         duration: 7000,
@@ -32,7 +34,7 @@ const HomeScreen = () => {
           "Desculpe, ocorreu um erro ao buscar as informações do seu consumo de calorias diário, por favor, tente novamente mais tarde.",
       });
     }
-  }, [dailyCalorieConsumption.error]);
+  }, [error]);
 
   return (
     <ScreenWrapper snackbar={<Snackbar />}>
@@ -44,7 +46,7 @@ const HomeScreen = () => {
           <PlanInformation />
           <ProgressStatistics
             targetCalories={currentPlan?.dailyCalorieIntake || 0}
-            consumedCalories={dailyCalorieConsumption.data.total}
+            consumedCalories={calorieConsumption.total}
           />
         </View>
       </View>

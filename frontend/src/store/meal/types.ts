@@ -1,10 +1,14 @@
 import { MealType } from "../../@core/entities/@shared/mealType/type";
 import { FoodProps } from "../../@core/entities/food/type";
-import { MealFoodProps } from "../../@core/entities/meal/type";
+import { MealFoodProps, MealProps } from "../../@core/entities/meal/type";
+import { Optional } from "../../@types";
 
 type MealFoodState = MealFoodProps & { isExpanded: boolean };
 
+type SetMealParams = Optional<MealProps, "id">;
+
 export interface MealStoreState {
+  id?: number;
   type: MealType | null;
   date: string;
   foodIds: number[];
@@ -12,8 +16,8 @@ export interface MealStoreState {
 }
 
 export interface MealStoreActions {
-  resetMeal: (date?: Date) => void;
-  setMeal: (type: MealType, date: Date) => void;
+  resetMeal: (date?: Date, type?: MealType) => void;
+  setMeal: (data: SetMealParams) => void;
   addFood: (food: FoodProps) => void;
   removeFood: (foodId: number) => void;
   incrementFoodQuantity: (foodId: number) => void;

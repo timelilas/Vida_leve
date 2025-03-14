@@ -6,4 +6,7 @@ export interface CreateMealParams {
   foods: Array<{ foodId: number; quantity: number }>;
 }
 
-export type CalorieConsumptionQueryState = Record<MealType | "total", number>;
+export interface UpdateMealParams {
+  mealId: number;
+  foods: Array<{ foodId: number; quantity: number }>;
+}

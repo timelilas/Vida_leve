@@ -6,17 +6,25 @@ import { useMealStore } from "../../../../../store/meal";
 import { calculateMealCalories } from "../../../../../@core/entities/meal/helpers";
 import { RouteConstants } from "../../../../../routes/types";
 import { useAppNavigation } from "../../../../../hooks/common/useAppNavigation";
-import { CreateMealParams } from "../../../../../hooks/meal/types";
+import { MealType } from "../../../../../@core/entities/@shared/mealType/type";
+
+export interface MealRegistrationData {
+  id?: number;
+  date: Date;
+  mealType: MealType;
+  foods: Array<{ foodId: number; quantity: number }>;
+}
 
 interface MealSummaryProps {
   isSubmitting: boolean;
   onError: (error: Error) => void;
-  onSubmit: (data: CreateMealParams) => Promise<void>;
+  onSubmit: (data: MealRegistrationData) => Promise<void>;
 }
 
 export function MealSummary(props: MealSummaryProps) {
   const navigation = useAppNavigation();
   const foodMap = useMealStore((state) => state.foodMap);
+  const mealId = useMealStore((state) => state.id);
   const mealDate = useMealStore((state) => state.date);
   const mealType = useMealStore((state) => state.type);
 
@@ -31,7 +39,12 @@ export function MealSummary(props: MealSummaryProps) {
     }));
 
     try {
-      await props.onSubmit({ date: new Date(mealDate), mealType, foods });
+      await props.onSubmit({
+        id: mealId,
+        date: new Date(mealDate),
+        mealType,
+        foods,
+      });
     } catch (error: any) {
       props.onError(error);
     }

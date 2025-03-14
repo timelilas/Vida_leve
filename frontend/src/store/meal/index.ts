@@ -11,13 +11,24 @@ const initialState: MealStoreState = {
 export const useMealStore = create<MealStore>((set, get) => {
   return {
     ...initialState,
-    setMeal(type, date) {
-      set(() => ({ type, date: date.toISOString() }));
+    setMeal(data) {
+      const { id, type, date, foods } = data;
+      let foodIds: number[] = [];
+      let foodMap: MealStoreState["foodMap"] = {};
+
+      for (const food of foods) {
+        foodIds.push(food.id);
+        foodMap[`${food.id}`] = { ...food, isExpanded: false };
+      }
+      set(() => {
+        return { id, type, date: date.toISOString(), foodIds, foodMap };
+      });
     },
-    resetMeal: (date?: Date) => {
+    resetMeal: (date, type) => {
       set(() => ({
         ...initialState,
         date: (date || new Date()).toISOString(),
+        type: type || null,
       }));
     },
     addFood: (food) => {
