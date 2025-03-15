@@ -4,4 +4,5 @@ export interface SnackbarProps {
   message: string;
   duration: number;
   variant: SnackbarVariant;
+  isVisible: boolean;
 }

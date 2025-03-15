@@ -1,15 +1,23 @@
-import { InferAttributes, InferCreationAttributes, Model } from "sequelize";
+import {
+  ForeignKey,
+  InferAttributes,
+  InferCreationAttributes,
+  Model,
+} from "sequelize";
 import { sequelize } from "../index";
 import Sequelize from "sequelize";
 import { TableNames } from "../constants";
+import Meal from "./Meal";
+import Food from "./Food";
 
 class ConsumedFood extends Model<
   InferAttributes<ConsumedFood>,
   InferCreationAttributes<ConsumedFood>
 > {
-  declare mealId: number;
-  declare foodId: number;
+  declare mealId: ForeignKey<Meal["id"]>;
+  declare foodId: ForeignKey<Food["id"]>;
   declare quantity: number;
+  declare position: number;
 
   public toJSON() {
     const props = super.toJSON();
@@ -30,6 +38,10 @@ ConsumedFood.init(
       primaryKey: true,
     },
     quantity: {
+      type: Sequelize.INTEGER,
+      allowNull: false,
+    },
+    position: {
       type: Sequelize.INTEGER,
       allowNull: false,
     },

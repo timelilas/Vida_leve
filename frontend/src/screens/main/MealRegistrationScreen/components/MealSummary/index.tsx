@@ -6,32 +6,48 @@ import { useMealStore } from "../../../../../store/meal";
 import { calculateMealCalories } from "../../../../../@core/entities/meal/helpers";
 import { RouteConstants } from "../../../../../routes/types";
 import { useAppNavigation } from "../../../../../hooks/common/useAppNavigation";
-import { CreateMealParams } from "../../../../../hooks/meal/types";
+import { MealType } from "../../../../../@core/entities/@shared/mealType/type";
+
+export interface MealRegistrationData {
+  id?: number;
+  date: Date;
+  mealType: MealType;
+  foods: Array<{ foodId: number; quantity: number }>;
+}
 
 interface MealSummaryProps {
   isSubmitting: boolean;
+  isSubmitted: boolean;
   onError: (error: Error) => void;
-  onSubmit: (data: CreateMealParams) => Promise<void>;
+  onSubmit: (data: MealRegistrationData) => Promise<void>;
 }
 
 export function MealSummary(props: MealSummaryProps) {
   const navigation = useAppNavigation();
   const foodMap = useMealStore((state) => state.foodMap);
+  const mealId = useMealStore((state) => state.id);
   const mealDate = useMealStore((state) => state.date);
   const mealType = useMealStore((state) => state.type);
+  const foodIds = useMealStore((state) => state.foodIds);
+  const existigFoods = useMealStore((state) => state.foodIds.length);
 
   const totalCalories = calculateMealCalories(Object.values(foodMap));
 
   async function handleMealRegistration() {
-    if (totalCalories <= 0 || !mealType) return;
+    if (!existigFoods || !mealType || props.isSubmitting) return;
 
-    const foods = Object.values(foodMap).map(({ id, quantity }) => ({
-      foodId: id,
-      quantity,
+    const foods = foodIds.map((id) => ({
+      foodId: foodMap[`${id}`].id,
+      quantity: foodMap[`${id}`].quantity,
     }));
 
     try {
-      await props.onSubmit({ date: new Date(mealDate), mealType, foods });
+      await props.onSubmit({
+        id: mealId,
+        date: new Date(mealDate),
+        mealType,
+        foods,
+      });
     } catch (error: any) {
       props.onError(error);
     }
@@ -45,7 +61,7 @@ export function MealSummary(props: MealSummaryProps) {
     <View style={styles.container}>
       <SubmitButton
         type="highlighted"
-        disabled={props.isSubmitting}
+        disabled={props.isSubmitting || props.isSubmitted}
         onPress={navigateToSearchFood}
         title={
           <View style={styles.addFoodButtonContainer}>
@@ -64,7 +80,9 @@ export function MealSummary(props: MealSummaryProps) {
       <SubmitButton
         type="primary"
         title="Registrar refeição"
-        disabled={totalCalories <= 0 || props.isSubmitting}
+        disabled={
+          !existigFoods || !mealType || props.isSubmitting || props.isSubmitted
+        }
         onPress={handleMealRegistration}
       />
     </View>

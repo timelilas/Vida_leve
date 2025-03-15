@@ -80,7 +80,7 @@ export function convertDateToLocalDateData(date: Date): DateData {
     day: date.getDate(),
     month: date.getMonth(),
     year: date.getFullYear(),
-    weekDay: date.getUTCDay(),
+    weekDay: date.getDay(),
   };
 }
 

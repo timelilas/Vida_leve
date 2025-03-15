@@ -1,4 +1,4 @@
-import { Animated, Text, View } from "react-native";
+import { Animated, Image, Text, View } from "react-native";
 import { styles } from "./styles";
 import { useProgressBarAnimation } from "./animations";
 
@@ -16,17 +16,31 @@ export function ProgressBar(props: ProgressBarProps) {
     barWidthFraction: normalizedFraction,
   });
 
+  const isExceedTotal = props.achieved >= props.total;
+
   return (
     <View style={styles.progressBar}>
       <View style={styles.preventBarOverflow}>
         <Animated.View
           style={[styles.prgressBarColored, { width: progressPercentage }]}
         >
-          <Text numberOfLines={1} style={styles.innerBarText}>
+          <Text
+            numberOfLines={1}
+            style={[
+              styles.innerBarText,
+              isExceedTotal && styles.innerBarTextBold,
+            ]}
+          >
             {props.achieved} kcal
           </Text>
         </Animated.View>
       </View>
+      {isExceedTotal ? (
+        <Image
+          style={{ width: 14, height: 14 }}
+          source={require("../../assets/images/fear-emoji.png")}
+        />
+      ) : null}
     </View>
   );
 }

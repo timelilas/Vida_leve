@@ -1,42 +1,32 @@
 import { useMutation, useQuery } from "@tanstack/react-query";
-import { CalorieConsumptionQueryState, CreateMealParams } from "./types";
+import { CreateMealParams, UpdateMealParams } from "./types";
 import { httpMealService } from "../../services/meal";
 import { useCallback } from "react";
 import { QueryKeys } from "../../constants/reactQueryKeys";
 import { queryClient } from "../../libs/react-query/queryClient";
-import { convertDateToLocalDateData } from "../../utils/helpers";
+import { calculateMealCalories } from "../../@core/entities/meal/helpers";
+import { MealType } from "../../@core/entities/@shared/mealType/type";
 
 interface UseMealParams {
-  calorieConsumption?: {
-    date?: Date;
+  date?: Date;
+  meals?: {
     refetchOnMount?: boolean;
+    disabled?: boolean;
   };
 }
 
-const initialData: CalorieConsumptionQueryState = {
-  "cafe-da-manha": 0,
-  lanche: 0,
-  almoco: 0,
-  jantar: 0,
-  outro: 0,
-  total: 0,
-};
-
 export function useMeal(params?: UseMealParams) {
-  const { year, month, day } = convertDateToLocalDateData(
-    params?.calorieConsumption?.date || new Date()
-  );
-  const localDatetime = new Date(year, month, day);
-  const isoDate = localDatetime.toISOString().split("T")[0];
+  const isoDate = (params?.date || new Date()).toISOString().split("T")[0];
 
-  const { data, isLoading, error } = useQuery({
-    queryKey: QueryKeys.DATABASE.CALORIE_CONSUMPTION(isoDate),
-    enabled: params?.calorieConsumption?.date ? true : false,
-    refetchOnMount: params?.calorieConsumption?.refetchOnMount,
+  const mealsQuery = useQuery({
+    queryKey: QueryKeys.DATABASE.MEALS(isoDate),
+    enabled: !params?.meals?.disabled,
+    refetchOnMount: params?.meals?.refetchOnMount,
     retry: false,
+    staleTime: Infinity,
     queryFn: async () => {
-      if (!params?.calorieConsumption?.date) return { ...initialData };
-      return (await httpMealService.getDailyCalorieConsumption(isoDate)).data;
+      const { data } = await httpMealService.getMeals(isoDate);
+      return data;
     },
   });
 
@@ -48,7 +38,23 @@ export function useMeal(params?: UseMealParams) {
     onSuccess: (createdMeal) => {
       const isoDate = createdMeal.date.split("T")[0];
       queryClient.invalidateQueries({
-        queryKey: QueryKeys.DATABASE.CALORIE_CONSUMPTION(isoDate),
+        queryKey: QueryKeys.DATABASE.MEALS(isoDate),
+      });
+    },
+  });
+
+  const updateMealMutaiton = useMutation({
+    mutationFn: async (params: UpdateMealParams) => {
+      const { data: updatedMeal } = await httpMealService.updateMeal({
+        id: params.mealId,
+        foods: params.foods,
+      });
+      return updatedMeal;
+    },
+    onSuccess: (updatedMeal) => {
+      const isoDate = updatedMeal.date.split("T")[0];
+      queryClient.invalidateQueries({
+        queryKey: QueryKeys.DATABASE.MEALS(isoDate),
       });
     },
   });
@@ -61,12 +67,39 @@ export function useMeal(params?: UseMealParams) {
     [createMealMutation]
   );
 
-  return {
-    dailyCalorieConsumption: {
-      data: data || initialData,
-      isLoading,
-      error,
+  const updateMeal = useCallback(
+    async (params: UpdateMealParams) => {
+      const updatedMeal = await updateMealMutaiton.mutateAsync(params);
+      return updatedMeal;
     },
+    [updateMealMutaiton]
+  );
+
+  const calculateCalorieConsumption = () => {
+    const calorieConsumption: Record<MealType | "total", number> = {
+      "cafe-da-manha": 0,
+      lanche: 0,
+      almoco: 0,
+      jantar: 0,
+      outro: 0,
+      total: 0,
+    };
+
+    for (const meal of mealsQuery.data || []) {
+      const caloiresConsumed = calculateMealCalories(meal.foods);
+      calorieConsumption[`${meal.type}`] += caloiresConsumed;
+      calorieConsumption.total += caloiresConsumed;
+    }
+
+    return calorieConsumption;
+  };
+
+  return {
+    meals: mealsQuery.data || [],
+    isLoading: mealsQuery.isLoading,
+    error: mealsQuery.error,
+    calorieConsumption: calculateCalorieConsumption(),
     createMeal,
+    updateMeal,
   };
 }

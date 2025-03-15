@@ -7,6 +7,7 @@ interface SnackbarState {
   message: string;
   duration: number;
   variant: SnackbarVariant;
+  isVisible: boolean;
 }
 
 type SnackbarOptions = Pick<
@@ -22,16 +23,18 @@ export function useSnackbar() {
     duration: 0,
     message: "",
     variant: "neutral",
+    isVisible: false,
   });
 
   const showSnackbar = useCallback((options: SnackbarOptions) => {
-    setSnackbarState({ id: Date.now(), ...options });
+    setSnackbarState({ id: Date.now(), ...options, isVisible: true });
   }, []);
 
   const renderSnackbar = useCallback(() => {
     return (
       <Snackbar
         key={snackbarState.id}
+        isVisible={snackbarState.isVisible}
         duration={snackbarState.duration}
         message={snackbarState.message}
         variant={snackbarState.variant}
