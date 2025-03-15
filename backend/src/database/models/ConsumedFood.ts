@@ -17,6 +17,7 @@ class ConsumedFood extends Model<
   declare mealId: ForeignKey<Meal["id"]>;
   declare foodId: ForeignKey<Food["id"]>;
   declare quantity: number;
+  declare position: number;
 
   public toJSON() {
     const props = super.toJSON();
@@ -37,6 +38,10 @@ ConsumedFood.init(
       primaryKey: true,
     },
     quantity: {
+      type: Sequelize.INTEGER,
+      allowNull: false,
+    },
+    position: {
       type: Sequelize.INTEGER,
       allowNull: false,
     },

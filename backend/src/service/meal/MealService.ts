@@ -125,10 +125,15 @@ export default class MealService {
       }
 
       await ConsumedFood.bulkCreate(
-        foods.map(({ foodId, quantity }) => {
-          return { mealId: upsertedMeal.id, foodId, quantity };
+        foods.map(({ foodId, quantity }, i) => {
+          return {
+            mealId: upsertedMeal.id,
+            foodId,
+            quantity,
+            position: i + 1,
+          };
         }),
-        { transaction, updateOnDuplicate: ["quantity"] }
+        { transaction, updateOnDuplicate: ["quantity", "position"] }
       );
 
       await transaction.commit();
@@ -195,26 +200,42 @@ export default class MealService {
 
     const whereClause = by ? whereClauseMap[by] : `${meal}."userId" = ?`;
 
-    return `
+    const subQuery = `
       SELECT 
-        ${meal}.id,
-        ${meal}.type,
-        ${meal}."date",
-        json_agg(
-          json_build_object(
-            'id', ${food}.id,
-            'name', ${food}.name,
-            'measurementUnit', ${food}."measurementUnit",
-            'calories', ${food}.calories,
-            'quantity', "${consumedFood}".quantity 
-          )
-        ) as foods
+        ${meal}.id as id,
+        ${meal}.type as type,
+        ${meal}.date as date,
+        "${consumedFood}"."foodId" as "foodId",
+        "${consumedFood}".quantity as "foodQuantity",
+        ${food}.slug as "foodSlug",
+        ${food}."name"  as "foodName",
+        ${food}."measurementUnit"  as "measurementUnit",
+        ${food}.calories as "foodCalories"
       FROM ${meal}
-      LEFT OUTER JOIN "${consumedFood}" on meal.id = "${consumedFood}"."mealId"
-      LEFT OUTER JOIN ${food} on "${consumedFood}"."foodId" = ${food}.id
+      LEFT OUTER JOIN "${consumedFood}" on "${consumedFood}"."mealId" = ${meal}.id
+      LEFT OUTER JOIN ${food} ON "${consumedFood}"."foodId" = ${food}.id
       WHERE ${whereClause}
-      GROUP BY ${meal}.id;
+      ORDER BY ${meal}.id ASC, "${consumedFood}"."position" ASC
     `;
+
+    const mainQuery = `
+      SELECT 
+        id, date, type,
+        json_agg(
+            CASE WHEN "foodId" is not null THEN 
+              json_build_object(
+                'id', "foodId",
+                'name', "foodName",
+                'measurementUnit', "measurementUnit",
+                'calories', "foodCalories",
+                'quantity', "foodQuantity" 
+                )
+            END
+        ) as foods
+      FROM (${subQuery}) as "temporary"
+      GROUP BY id, date, type
+    `;
+    return mainQuery;
   };
 
   private createCalorieConsumptionQueryString = () => {

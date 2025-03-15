@@ -52,7 +52,7 @@ const MealRegistrationScreen = () => {
         })
       );
     }
-  }, [foodIds.length, isSubmitted, navigation]);
+  }, [foodIds.length, navigation]);
 
   function goBack() {
     if (isSubmitting) return;

@@ -28,6 +28,7 @@ export function MealSummary(props: MealSummaryProps) {
   const mealId = useMealStore((state) => state.id);
   const mealDate = useMealStore((state) => state.date);
   const mealType = useMealStore((state) => state.type);
+  const foodIds = useMealStore((state) => state.foodIds);
   const existigFoods = useMealStore((state) => state.foodIds.length);
 
   const totalCalories = calculateMealCalories(Object.values(foodMap));
@@ -35,9 +36,9 @@ export function MealSummary(props: MealSummaryProps) {
   async function handleMealRegistration() {
     if (!existigFoods || !mealType || props.isSubmitting) return;
 
-    const foods = Object.values(foodMap).map(({ id, quantity }) => ({
-      foodId: id,
-      quantity,
+    const foods = foodIds.map((id) => ({
+      foodId: foodMap[`${id}`].id,
+      quantity: foodMap[`${id}`].quantity,
     }));
 
     try {
