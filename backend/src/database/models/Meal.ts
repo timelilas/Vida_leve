@@ -79,7 +79,7 @@ Meal.init(
     freezeTableName: true,
     indexes: [
       {
-        fields: ["date", "type"],
+        fields: ["userId", "date", "type"],
         unique: true,
         using: "BTREE",
       },
