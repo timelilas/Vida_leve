@@ -10,6 +10,9 @@ export const styles = StyleSheet.create({
     paddingBlock: 14,
     paddingInline: 6,
   },
+  containerDisabled: {
+    opacity: 0.5,
+  },
   title: {
     fontSize: 16,
     lineHeight: 16,

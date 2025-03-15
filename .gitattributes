@@ -1,0 +1,12 @@
+# Define LF as the EOL for all text files
+* text=auto
+
+# Set LF for specific file types
+*.json text eol=lf
+*.ts text eol=lf
+*.tsx text eol=lf
+*.js text eol=lf
+*.jsx text eol=lf
+*.css text eol=lf
+*.html text eol=lf
+*.md text eol=lf

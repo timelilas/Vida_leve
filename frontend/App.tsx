@@ -7,7 +7,18 @@ import { SafeAreaProvider } from "react-native-safe-area-context";
 import { QueryClientProvider } from "@tanstack/react-query";
 import { queryClient } from "./src/libs/react-query/queryClient";
 import { LoadSkiaWeb } from "@shopify/react-native-skia/lib/module/web";
+
 import "@expo/metro-runtime";
+import "react-native-reanimated";
+import "react-native-gesture-handler";
+
+if (Platform.OS === "web") {
+  global._WORKLET = false;
+  // @ts-expect-error
+  global._log = console.log;
+  // @ts-expect-error
+  global._getAnimationTimestamp = () => performance.now();
+}
 
 SplashScreen.preventAutoHideAsync();
 LogBox.ignoreAllLogs(true);

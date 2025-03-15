@@ -4,8 +4,12 @@ import { fonts } from "../../styles/fonts";
 
 export const styles = StyleSheet.create({
   progressBar: {
+    flexDirection: "row",
+    alignItems: "center",
     backgroundColor: colors.common.white,
     padding: 2,
+    gap: 4,
+    paddingRight: 6,
     borderRadius: 20,
     height: 20,
     overflow: "hidden",
@@ -29,5 +33,8 @@ export const styles = StyleSheet.create({
     lineHeight: 14,
     fontFamily: fonts.robotoRegular,
     color: colors.text.secondary,
+  },
+  innerBarTextBold: {
+    fontFamily: fonts.robotoBold,
   },
 });

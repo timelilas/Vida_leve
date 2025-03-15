@@ -38,7 +38,7 @@ export type RouteParamsList = {
   [RouteConstants.Home]: undefined;
   [RouteConstants.GoalSettings]: undefined;
   [RouteConstants.UpdateProgress]: undefined;
-  [RouteConstants.CreateMeal]?: { withSubmitButton?: boolean };
+  [RouteConstants.CreateMeal]?: { withSubmitButton?: boolean; date?: string };
   [RouteConstants.SearchFoods]?: { foodName: string };
   [RouteConstants.MealRegistration]: undefined;
   [RouteConstants.ConnectionError]: undefined;

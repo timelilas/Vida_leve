@@ -11,11 +11,18 @@ const initialState: MealStoreState = {
 export const useMealStore = create<MealStore>((set, get) => {
   return {
     ...initialState,
-    setMeal(type, date) {
-      set(() => ({ type, date: date.toISOString() }));
-    },
-    resetMeal: () => {
-      set(() => ({ ...initialState, date: new Date().toISOString() }));
+    setMeal(data) {
+      const { id, type, date, foods } = data;
+      let foodIds: number[] = [];
+      let foodMap: MealStoreState["foodMap"] = {};
+
+      for (const food of foods) {
+        foodIds.push(food.id);
+        foodMap[`${food.id}`] = { ...food, isExpanded: false };
+      }
+      set(() => {
+        return { id, type, date: date.toISOString(), foodIds, foodMap };
+      });
     },
     addFood: (food) => {
       const prevState = get();
@@ -31,13 +38,14 @@ export const useMealStore = create<MealStore>((set, get) => {
           : prevFoodState;
       }
 
+      const newFoodIds = [
+        food.id,
+        ...prevState.foodIds.filter((id) => id !== food.id),
+      ];
+
       if (!existingFood) {
         newFoodMap[`${food.id}`] = { ...food, quantity: 1, isExpanded: true };
-
-        return set(() => ({
-          foodIds: [food.id, ...prevState.foodIds],
-          foodMap: newFoodMap,
-        }));
+        return set(() => ({ foodIds: newFoodIds, foodMap: newFoodMap }));
       }
 
       const finalQuantity = existingFood.quantity + 1;
@@ -46,7 +54,7 @@ export const useMealStore = create<MealStore>((set, get) => {
         quantity: finalQuantity >= 99 ? 99 : finalQuantity,
         isExpanded: true,
       };
-      return set(() => ({ foodMap: newFoodMap }));
+      return set(() => ({ foodMap: newFoodMap, foodIds: newFoodIds }));
     },
     collapseAllItems: () => {
       set((prevState) => {
@@ -118,15 +126,21 @@ export const useMealStore = create<MealStore>((set, get) => {
 
       if (!existingFood) return;
 
-      return set(() => ({
-        foodMap: {
-          ...prevState.foodMap,
-          [`${foodId}`]: {
-            ...existingFood,
-            isExpanded: !existingFood.isExpanded,
-          },
-        },
-      }));
+      const newFoodMap: MealStoreState["foodMap"] = {};
+
+      for (const id of prevState.foodIds) {
+        let currentFood = prevState.foodMap[`${id}`];
+
+        if (foodId === id) {
+          currentFood = { ...currentFood, isExpanded: !currentFood.isExpanded };
+        } else if (foodId !== id && currentFood.isExpanded) {
+          currentFood = { ...currentFood, isExpanded: false };
+        }
+
+        newFoodMap[`${id}`] = currentFood;
+      }
+
+      return set(() => ({ foodMap: newFoodMap }));
     },
   };
 });
