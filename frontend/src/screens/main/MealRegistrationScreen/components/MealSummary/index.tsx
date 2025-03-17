@@ -24,13 +24,15 @@ interface MealSummaryProps {
 
 export function MealSummary(props: MealSummaryProps) {
   const navigation = useAppNavigation();
-  const foodMap = useMealStore((state) => state.foodMap);
-  const mealId = useMealStore((state) => state.id);
-  const mealDate = useMealStore((state) => state.date);
-  const mealType = useMealStore((state) => state.type);
-  const foodIds = useMealStore((state) => state.foodIds);
-  const existigFoods = useMealStore((state) => state.foodIds.length);
+  const {
+    foodMap,
+    foodIds,
+    date: mealDate,
+    type: mealType,
+    id: mealId,
+  } = useMealStore((state) => state);
 
+  const existigFoods = foodIds.length;
   const totalCalories = calculateMealCalories(Object.values(foodMap));
 
   async function handleMealRegistration() {

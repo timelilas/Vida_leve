@@ -20,15 +20,7 @@ interface MealItemProps {
 }
 
 export function MealItem(props: MealItemProps) {
-  const removeFood = useMealStore((state) => state.removeFood);
-  const incrementFood = useMealStore((state) => state.incrementFoodQuantity);
-  const toggleItemExpantion = useMealStore(
-    (state) => state.toggleItemExpansion
-  );
-  const decrementFoodQuantity = useMealStore(
-    (state) => state.decrementFoodQuantity
-  );
-
+  const mealActions = useMealStore((state) => state.actions);
   const food = useMealStore((state) => state.foodMap[props.foodId]);
   const totalCalories = food.calories * food.quantity;
 
@@ -40,22 +32,22 @@ export function MealItem(props: MealItemProps) {
 
   function handleIncrement() {
     if (props.disabled) return;
-    incrementFood(food.id);
+    mealActions.incrementFoodQuantity(food.id);
   }
 
   function hadleDecrement() {
     if (props.disabled) return;
-    decrementFoodQuantity(food.id);
+    mealActions.decrementFoodQuantity(food.id);
   }
 
   function handleDelete() {
     if (props.disabled) return;
-    removeFood(food.id);
+    mealActions.removeFood(food.id);
   }
 
   function toggleItemExpansion() {
     if (props.disabled) return;
-    toggleItemExpantion(food.id);
+    mealActions.toggleItemExpansion(food.id);
   }
 
   return (

@@ -25,4 +25,4 @@ export interface MealStoreActions {
   collapseAllItems: () => void;
 }
 
-export type MealStore = MealStoreState & MealStoreActions;
+export type MealStore = MealStoreState & { actions: MealStoreActions };
