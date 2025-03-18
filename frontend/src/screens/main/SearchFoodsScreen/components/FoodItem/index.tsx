@@ -10,11 +10,13 @@ interface FoodItemProps extends Pick<FoodProps, "name"> {
 export function FoodItem(props: FoodItemProps) {
   const { name, action } = props;
   return (
-    <View style={styles.container}>
+    <TouchableOpacity
+      activeOpacity={0.5}
+      onPress={action}
+      style={styles.container}
+    >
       <Text style={styles.text}>{name}</Text>
-      <TouchableOpacity hitSlop={2} onPress={action}>
-        <ArrowUpLeftIcon />
-      </TouchableOpacity>
-    </View>
+      <ArrowUpLeftIcon />
+    </TouchableOpacity>
   );
 }

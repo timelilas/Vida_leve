@@ -22,7 +22,6 @@ interface MealItemProps {
 export function MealItem(props: MealItemProps) {
   const mealActions = useMealStore((state) => state.actions);
   const food = useMealStore((state) => state.foodMap[props.foodId]);
-  const totalCalories = food.calories * food.quantity;
 
   const { animatedValue } = useAnimation({ isItemExpanded: food.isExpanded });
   const containerHeight = animatedValue.interpolate({
@@ -71,7 +70,7 @@ export function MealItem(props: MealItemProps) {
               >
                 <Text style={styles.text}>{food.name}</Text>
               </ScrollView>
-              <Text style={styles.calorieText}>{totalCalories} kcal</Text>
+              <Text style={styles.calorieText}>{food.calories} kcal</Text>
             </View>
             <View style={styles.measurementControl}>
               <View style={[styles.itemBox, styles.counter]}>

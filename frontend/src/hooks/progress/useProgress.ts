@@ -24,12 +24,8 @@ export function useProgress(params?: UseProgressParams) {
 
   const updateProgressMutation = useMutation({
     mutationFn: async (params: UpdateProgressParams) => {
-      const { height, weight, goalWeight, activityFrequency } = params;
       const { data: progressData } = await httpProgressService.upsertProgress({
-        height,
-        weight,
-        goalWeight,
-        activityFrequency,
+        ...params,
       });
       return progressData;
     },

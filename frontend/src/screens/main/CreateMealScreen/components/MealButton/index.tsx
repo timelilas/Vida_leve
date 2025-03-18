@@ -33,7 +33,11 @@ export function MealButton(props: MealButtonProps & PressableProps) {
       disableExitAnimation
       show={isLoading}
     >
-      <ToggleButton selected={selected} disabled={disabled} {...propsRest}>
+      <ToggleButton
+        selected={selected}
+        disabled={disabled || isLoading}
+        {...propsRest}
+      >
         <View style={[styles.container, disabled && styles.containerDisabled]}>
           {icon}
           <Text style={styles.title}>{title}</Text>
