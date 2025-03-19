@@ -5,7 +5,6 @@ import { fonts } from "../../../styles/fonts";
 export const styles = StyleSheet.create({
   container: {
     padding: 0,
-    paddingBottom: 24,
     paddingTop: 24,
   },
   body: {
@@ -28,7 +27,8 @@ export const styles = StyleSheet.create({
   inputBox: {
     marginTop: 24,
   },
-  activityIndicator: {
-    marginTop: 16,
+  activityIndicatorContainer: {
+    height: 60,
+    justifyContent: "center",
   },
 });
