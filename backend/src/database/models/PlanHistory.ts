@@ -22,7 +22,6 @@ class PlanHistory
     declare PlanType: PlanType;
     declare date: Date;
 
-
     public toJSON(): PlanHistoryEntity {
         const props = super.get();
         return {
@@ -46,7 +45,6 @@ PlanHistory.init(
             type: Sequelize.INTEGER,
             allowNull: false,
         },
-
         dailyCalorieIntake: {
             type: Sequelize.INTEGER,
             allowNull: false,
@@ -69,6 +67,7 @@ PlanHistory.init(
             {
                 unique: true,
                 fields: ["userId", "date"],
+                using: "BTREE",
             },
         ],
     }
