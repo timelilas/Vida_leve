@@ -37,7 +37,7 @@ module.exports = {
         },
         {
           uniqueKeys: {
-            unique_user_date_meal_type: { fields: ["userId", "date"] },
+            unique_user_id_date: { fields: ["userId", "date"] },
           },
         }
       )
