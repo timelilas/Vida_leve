@@ -28,8 +28,6 @@ module.exports = {
             model: "user",
             key: "id",
           },
-          onUpdate: "CASCADE",
-          onDelete: "CASCADE",
           references: { model: "user", key: "id" },
         },
         date: {
