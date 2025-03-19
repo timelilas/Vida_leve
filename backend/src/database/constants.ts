@@ -5,4 +5,5 @@ export enum TableNames {
   Food = "food",
   Meal = "meal",
   ConsumedFood = "consumedFood",
+  PlanHistory = "planHistory",
 }
