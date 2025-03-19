@@ -22,7 +22,7 @@ module.exports = {
             onDelete: "CASCADE",
             references: { model: "user", key: "id" },
           },
-          kcal: {
+          dailyCalorieIntake: {
             type: Sequelize.INTEGER,
             allowNull: false,
           },
@@ -33,6 +33,11 @@ module.exports = {
           date: {
             type: Sequelize.DATEONLY,
             allowNull: false,
+          },
+        },
+        {
+          uniqueKeys: {
+            unique_user_date_meal_type: { fields: ["userId", "date"] },
           },
         }
       )

@@ -10,6 +10,7 @@ import { sequelize } from "../index";
 import { PlanHistoryEntity } from "../../@core/entity/plan-history/entity";
 import User from "./User";
 import { TableNames } from "../constants";
+import { PlanType } from "../../@core/entity/@shared";
 
 class PlanHistory 
     extends Model<InferAttributes<PlanHistory>, InferCreationAttributes<PlanHistory>>
@@ -17,8 +18,8 @@ class PlanHistory
 {
     declare id : CreationOptional<number>;
     declare userId: ForeignKey<User["id"]>;
-    declare kcalDay: number;
-    declare PlanType: "gradual" | "moderado" | "acelerado";
+    declare dailyCalorieIntake: number;
+    declare PlanType: PlanType;
     declare date: Date;
 
 
@@ -27,7 +28,7 @@ class PlanHistory
         return {
             id: props.id,
             userId: props.userId,
-            kcalDay: props.kcalDay,
+            dailyCalorieIntake: props.dailyCalorieIntake,
             PlanType: props.PlanType,
             date: props.date,
         };
@@ -46,7 +47,7 @@ PlanHistory.init(
             allowNull: false,
         },
 
-        kcalDay: {
+        dailyCalorieIntake: {
             type: Sequelize.INTEGER,
             allowNull: false,
         },
@@ -64,6 +65,12 @@ PlanHistory.init(
         tableName:  TableNames.PlanHistory,
         timestamps: false,
         freezeTableName: true,
+        indexes: [
+            {
+                unique: true,
+                fields: ["userId", "date"],
+            },
+        ],
     }
 )
 
