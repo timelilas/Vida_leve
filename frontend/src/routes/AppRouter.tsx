@@ -23,8 +23,6 @@ const AppRouter = () => {
       <Stack.Navigator
         initialRouteName={RouteConstants.Welcome}
         screenOptions={{
-          animation: "simple_push",
-          animationDuration: 300,
           orientation: "all",
           statusBarStyle: "dark",
           statusBarColor: colors.background.primary,

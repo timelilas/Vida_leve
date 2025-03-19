@@ -23,16 +23,17 @@ import { SuccessModal } from "../../../components/SuccessModal";
 
 const MealRegistrationScreen = () => {
   const navigation = useAppNavigation();
-  const mealDate = useMealStore((state) => state.date);
-  const mealType = useMealStore((state) => state.type);
-  const foodIds = useMealStore((state) => state.foodIds);
-  const mealId = useMealStore((state) => state.foodIds);
 
   const [isModalVisible, setIsModalVisible] = useState(false);
   const [isSubmitted, setIsSubmitted] = useState(false);
   const [isSubmitting, setIsSubmitting] = useState(false);
 
-  const collapseAllItems = useMealStore((state) => state.collapseAllItems);
+  const mealDate = useMealStore((state) => state.date);
+  const mealType = useMealStore((state) => state.type);
+  const foodIds = useMealStore((state) => state.foodIds);
+  const mealId = useMealStore((state) => state.foodIds);
+
+  const { collapseAllItems } = useMealStore((state) => state.actions);
   const { Snackbar, showSnackbar } = useSnackbar();
 
   const { createMeal, updateMeal } = useMeal({

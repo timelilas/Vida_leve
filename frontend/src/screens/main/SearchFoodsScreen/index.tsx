@@ -42,6 +42,7 @@ const SearchFoodsScreen = ({ route }: SearchFoodsScreenProps) => {
 
   const mealDate = useMealStore((state) => state.date);
   const mealType = useMealStore((state) => state.type);
+
   const [foodName, setFoodName] = useState("");
   const [bodyHeight, setBodyHeight] = useState<number | null>(null);
 
@@ -110,7 +111,7 @@ const SearchFoodsScreen = ({ route }: SearchFoodsScreenProps) => {
     return verticalOffset + layoutHeight >= contentHeight - VERTICAL_THRESHOLD;
   }
 
-  function handleSceenScroll(e: NativeSyntheticEvent<NativeScrollEvent>) {
+  function handleScreenScroll(e: NativeSyntheticEvent<NativeScrollEvent>) {
     if (!foodName.length) return;
     if (!hasMore) return;
 
@@ -128,7 +129,7 @@ const SearchFoodsScreen = ({ route }: SearchFoodsScreenProps) => {
   return (
     <ScreenWrapper
       contentContainerStyle={styles.container}
-      onScroll={handleSceenScroll}
+      onScroll={handleScreenScroll}
       snackbar={<Snackbar />}
     >
       <View style={styles.body} onLayout={getBodyHeight}>
@@ -154,13 +155,11 @@ const SearchFoodsScreen = ({ route }: SearchFoodsScreenProps) => {
         </View>
       </View>
       <FoodList foods={foods} />
-      {isFetching ? (
-        <ActivityIndicator
-          style={styles.activityIndicator}
-          color={colors.primary}
-          size="large"
-        />
-      ) : null}
+      <View style={styles.activityIndicatorContainer}>
+        {isFetching ? (
+          <ActivityIndicator color={colors.primary} size="large" />
+        ) : null}
+      </View>
     </ScreenWrapper>
   );
 };

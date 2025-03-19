@@ -40,7 +40,7 @@ const CreateMealScreen = (props: CreateMealScreenProps) => {
   const routeParams = props.route.params;
   const currentDate = new Date(routeParams?.date || Date.now());
 
-  const setMeal = useMealStore((state) => state.setMeal);
+  const { setMeal } = useMealStore((state) => state.actions);
   const { Snackbar, showSnackbar } = useSnackbar();
 
   const [mealDetails, setMealDetails] = useState<{

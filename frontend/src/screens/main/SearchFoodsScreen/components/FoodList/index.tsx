@@ -13,7 +13,7 @@ interface FoodListProps {
 
 export const FoodList = memo(({ foods }: FoodListProps) => {
   const navigation = useAppNavigation();
-  const addFood = useMealStore((state) => state.addFood);
+  const { addFood } = useMealStore((state) => state.actions);
 
   function handleFoodSelection(food: FoodProps) {
     addFood(food);
