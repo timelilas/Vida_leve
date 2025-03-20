@@ -76,7 +76,7 @@ export function getWeekdayFromIndex(index: number) {
 
 export function convertDateToLocalDateData(date: Date): DateData {
   return {
-    id: `${date.getDate()}-${date.getMonth()}-${date.getFullYear()}`,
+    id: `${date.getFullYear()}-${date.getMonth()}-${date.getDate()}`,
     day: date.getDate(),
     month: date.getMonth(),
     year: date.getFullYear(),
