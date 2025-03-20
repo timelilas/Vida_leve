@@ -18,7 +18,7 @@ class PlanHistory extends Model<
   declare id: CreationOptional<number>;
   declare userId: ForeignKey<User["id"]>;
   declare dailyCalorieIntake: number;
-  declare PlanType: PlanType;
+  declare planType: PlanType;
   declare date: Date;
 
   public toJSON() {
@@ -27,7 +27,7 @@ class PlanHistory extends Model<
       id: props.id,
       userId: props.userId,
       dailyCalorieIntake: props.dailyCalorieIntake,
-      PlanType: props.PlanType,
+      planType: props.planType,
       date: props.date,
     };
   }
@@ -48,7 +48,7 @@ PlanHistory.init(
       type: Sequelize.INTEGER,
       allowNull: false,
     },
-    PlanType: {
+    planType: {
       type: Sequelize.ENUM("gradual", "moderado", "acelerado"),
       allowNull: false,
     },
