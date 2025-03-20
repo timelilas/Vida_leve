@@ -23,6 +23,8 @@ export interface GetMealByIdDTO {
 export interface GetMealsDTO {
   userId: number;
   date?: Date;
+  limit?: number;
+  offset?: number;
 }
 
 export interface CalorieConsumtionQueryResult {

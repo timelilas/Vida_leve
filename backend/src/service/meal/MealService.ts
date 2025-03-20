@@ -15,12 +15,18 @@ import { TableNames } from "../../database/constants";
 import { TypeMeal } from "../../@core/entity/@shared";
 import { MealEntity } from "../../@core/entity/meal/enitys";
 
-type By = "ID" | "DATE" | "DATE_TYPE";
+type By = "ID" | "DATE" | "DATE_AND_TYPE";
+
+interface MealQueryOptions {
+  by?: By;
+  withLimit?: boolean;
+  withOffset?: boolean;
+}
 
 export default class MealService {
   public getById = async (params: GetMealByIdDTO) => {
     const { id, userId } = params;
-    const queryString = this.getMealQueryString("ID");
+    const queryString = this.getMealQueryString({ by: "ID" });
 
     try {
       const foundMeal = await sequelize.query<MealQueryResult>(queryString, {
@@ -43,22 +49,36 @@ export default class MealService {
   };
 
   public getMeals = async (params: GetMealsDTO) => {
-    const isoDate = params.date?.toISOString().split("T")[0];
-    const queryString = this.getMealQueryString(
-      params.date ? "DATE" : undefined
-    );
-    try {
-      const queryResult = await sequelize.query<MealQueryResult>(queryString, {
-        replacements: [params.userId, isoDate],
-        type: QueryTypes.SELECT,
-      });
+    const { userId, date, limit, offset } = params;
+    const isoDate = date?.toISOString().split("T")[0];
+    const mealQueryString = this.getMealQueryString({
+      by: date ? "DATE" : undefined,
+      withLimit: !!limit,
+      withOffset: !!offset,
+    });
 
-      const mealEntities: MealEntity[] = queryResult.map((meal) => ({
-        ...meal,
-        date: new Date(meal.date),
+    const replacements = [userId, isoDate, limit, offset].filter(
+      (replacement) => typeof replacement !== "undefined"
+    );
+
+    try {
+      const [rawMeals, total] = await Promise.all([
+        await sequelize.query<MealQueryResult>(mealQueryString, {
+          type: QueryTypes.SELECT,
+          replacements,
+        }),
+        await Meal.count({
+          where: isoDate ? { userId, date: isoDate } : { userId },
+        }),
+      ]);
+
+      const hasMore = (limit || rawMeals.length) + (offset || 0) < total;
+      const meals: MealEntity[] = rawMeals.map((rawMeal) => ({
+        ...rawMeal,
+        date: new Date(rawMeal.date),
       }));
 
-      return mealEntities;
+      return { meals, hasMore };
     } catch (error: any) {
       const errorMessage = `Ocorreu um erro ao tentar obter as refeições do usuaŕio com id: '${params.userId}'`;
       throw new DatabaseException(
@@ -72,7 +92,7 @@ export default class MealService {
   public searchMeal = async (params: SearchMealDTO) => {
     const { date, mealType, userId } = params;
     const isoDateString = date.toISOString().split("T")[0];
-    const queryString = this.getMealQueryString("DATE_TYPE");
+    const queryString = this.getMealQueryString({ by: "DATE_AND_TYPE" });
 
     try {
       const foundMeal = await sequelize.query<MealQueryResult>(queryString, {
@@ -187,7 +207,11 @@ export default class MealService {
     }
   };
 
-  private getMealQueryString = (by?: By) => {
+  private getMealQueryString = ({
+    by,
+    withLimit,
+    withOffset,
+  }: MealQueryOptions) => {
     const meal = TableNames.Meal;
     const consumedFood = TableNames.ConsumedFood;
     const food = TableNames.Food;
@@ -195,10 +219,12 @@ export default class MealService {
     const whereClauseMap: Record<By, string> = {
       ID: `${meal}."userId" = ? AND ${meal}.id = ?`,
       DATE: `${meal}."userId" = ? AND ${meal}.date = ?`,
-      DATE_TYPE: `${meal}."userId" = ? AND ${meal}.date = ? AND ${meal}.type = ?`,
+      DATE_AND_TYPE: `${meal}."userId" = ? AND ${meal}.date = ? AND ${meal}.type = ?`,
     };
 
     const whereClause = by ? whereClauseMap[by] : `${meal}."userId" = ?`;
+    const limitClause = withLimit ? "LIMIT ?" : "";
+    const offsetClause = withOffset ? "OFFSET ?" : "";
 
     const subQuery = `
       SELECT 
@@ -234,7 +260,9 @@ export default class MealService {
         ) as foods
       FROM (${subQuery}) as "temporary"
       GROUP BY id, date, type
+      ${`${limitClause} ${offsetClause}`.trim()}
     `;
+
     return mainQuery;
   };
 

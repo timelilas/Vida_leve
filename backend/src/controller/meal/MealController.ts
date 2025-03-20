@@ -3,6 +3,7 @@ import MealService from "../../service/meal/MealService";
 import { exceptionResponseAdapter } from "../../utils/express/helpers";
 import { ConflictException } from "../../@core/exception/http/ConflictException";
 import { NotFoundException } from "../../@core/exception/http/NotFoundException";
+import { DEFAULT_MEAL_LIMIT } from "./constants";
 
 export default class MealController {
   private _mealService = new MealService();
@@ -77,15 +78,22 @@ export default class MealController {
   }
 
   async getMeals(req: Request, res: Response): Promise<Response> {
+    const query = req.query as {
+      date?: string;
+      limit?: number;
+      offset?: number;
+    };
     const userId = req.user.id;
-    const mealDate = req.query.date as string | undefined;
+
     try {
-      const meals = await this._mealService.getMeals({
+      const { meals, hasMore } = await this._mealService.getMeals({
         userId: userId,
-        date: mealDate ? new Date(mealDate) : undefined,
+        date: query.date ? new Date(query.date) : undefined,
+        limit: query.limit || DEFAULT_MEAL_LIMIT,
+        offset: query.offset,
       });
 
-      return res.status(200).json({ data: meals });
+      return res.status(200).json({ data: { meals, hasMore } });
     } catch (error: any) {
       return exceptionResponseAdapter({
         req,

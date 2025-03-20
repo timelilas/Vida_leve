@@ -1,6 +1,7 @@
 import z from "zod";
 import { ZodHelper } from "../../utils/zod/helpers";
 import { allowedTypeMeals } from "../../@core/entity/@shared";
+import { defaultQueryParamsZodSchema } from "../../utils/zod/schemas/query";
 
 const dateOnlyISOSchema = z
   .string({ required_error: "A data é um campo obrigatório" })
@@ -69,6 +70,8 @@ export const createMealSchema = mealSchema.pick({
 
 export const getMealsSchema = z.object({
   date: dateOnlyISOSchema.optional(),
+  limit: defaultQueryParamsZodSchema.shape.limit,
+  offset: defaultQueryParamsZodSchema.shape.offset,
 });
 
 export const getCalorieConsumptionSchema = z

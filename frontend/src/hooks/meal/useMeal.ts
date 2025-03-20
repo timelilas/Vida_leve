@@ -26,7 +26,7 @@ export function useMeal(params?: UseMealParams) {
     staleTime: Infinity,
     queryFn: async () => {
       const { data } = await httpMealService.getMeals(isoDate);
-      return data;
+      return data.meals;
     },
   });
 

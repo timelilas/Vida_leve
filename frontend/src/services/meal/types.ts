@@ -16,12 +16,10 @@ export interface HttpCreateMealInputDTO {
 
 export type HttpCreateMealOutputDTO = MealOutputDTO;
 
-export type HttpGetMealsOutputDTO = Array<{
-  id: number;
-  type: MealType;
-  date: string;
-  foods: MealFoodProps[];
-}>;
+export interface HttpGetMealsOutputDTO {
+  meals: MealOutputDTO[];
+  hasMore: boolean;
+}
 
 export interface HttpUpdateMealInputDTO {
   id: number;
