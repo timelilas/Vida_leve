@@ -6,16 +6,16 @@ import { transformNameIntoSlug } from "../../utils/postgres/helpers";
 
 export default class FoodService {
   public get = async (params: GetFoodsDTO) => {
-    const { filter } = params;
+    const { name, limit, offset } = params;
 
-    const whereQuery = filter?.name
-      ? { slug: { [Op.like]: `%${transformNameIntoSlug(filter.name)}%` } }
+    const whereQuery = name
+      ? { slug: { [Op.like]: `%${transformNameIntoSlug(name)}%` } }
       : undefined;
 
     const findFoodsQuery: FindOptions<InferAttributes<Food, { omit: never }>> =
       {
-        limit: filter?.limit,
-        offset: filter?.offset,
+        limit,
+        offset,
         order: [["slug", "ASC"]],
         attributes: { exclude: ["createdAt", "updatedAt"] },
         where: whereQuery,
@@ -27,15 +27,13 @@ export default class FoodService {
         Food.count({ where: whereQuery }),
       ]);
 
-      const hasMore =
-        (filter?.limit || foods.length) + (filter?.offset || 0) < total;
+      const hasMore = (limit || foods.length) + (offset || 0) < total;
 
       return { foods: foods.map((food) => food.toJSON()), hasMore };
     } catch (error: any) {
-      const foodName = filter?.name;
-      const errorMessage = foodName
-        ? `Erro na busca de alimentos com nome: ${foodName}.`
-        : `Erro durante a busca de alimentos.`;
+      const errorMessage = name
+        ? `Erro na obtençao de alimentos com nome: '${name}'.`
+        : `Erro na obteção da lista de alimentos.`;
 
       throw new DatabaseException(
         errorMessage,
