@@ -4,6 +4,7 @@ import Meal from "../models/Meal";
 import Progress from "../models/Progress";
 import CaloriePlan from "../models/CaloriePlan";
 import ConsumedFood from "../models/ConsumedFood";
+import PlanHistory from "../models/PlanHistory";
 
 User.hasOne(Progress, { foreignKey: "userId" });
 Progress.belongsTo(User, { foreignKey: "userId" });
@@ -22,4 +23,7 @@ Food.belongsToMany(Meal, { through: ConsumedFood, foreignKey: "foodId" });
 Food.hasMany(ConsumedFood, { foreignKey: "foodId" });
 ConsumedFood.belongsTo(Food, { foreignKey: "foodId" });
 
-export { User, Food, Meal, Progress, CaloriePlan, ConsumedFood };
+User.hasMany(PlanHistory, { foreignKey: "userId" });
+PlanHistory.belongsTo(User, { foreignKey: "userId" });
+
+export { User, Food, Meal, Progress, CaloriePlan, ConsumedFood, PlanHistory };

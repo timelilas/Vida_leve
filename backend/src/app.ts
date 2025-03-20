@@ -7,6 +7,7 @@ import caloriePlanRouter from "./routes/CaloriePlanRouter";
 import helmet from "helmet";
 import foodRouter from "./routes/FoodRouter";
 import mealRouter from "./routes/MealRouter";
+import planHistoryRouter from "./routes/PlanHistoryRouter";
 
 class App {
   public app: Application = express();
@@ -39,6 +40,7 @@ class App {
     this.app.use("/plans", caloriePlanRouter);
     this.app.use("/foods", foodRouter);
     this.app.use("/meals", mealRouter);
+    this.app.use("/history", planHistoryRouter);
   }
 
   public start(PORT: string | number): void {
