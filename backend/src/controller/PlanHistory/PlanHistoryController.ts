@@ -19,12 +19,29 @@ export default class PlanHistoryController {
         }
     }
 
+    async getByDate (req: Request, res: Response): Promise<Response> {
+        const { date } = req.params;
+        const { id } = req.user;
+
+        try {
+            const plan = await this._planHistoryService.getByDate(id, date);
+            return res.status(200).json({ data: plan });
+        } catch (error: any) {
+            return exceptionResponseAdapter({
+                req,
+                res,
+                exception: error,
+                alternativeMsg: "Erro ao obter o plano.",
+            });
+        }
+    }
+
     async post (req: Request, res: Response): Promise<Response> {
-        const { dailyCalorieIntake, PlanType, date } = req.body;
+        const { dailyCalorieIntake, planType, date } = req.body;
         const { id } = req.user;
         
         try {
-            const plan = await this._planHistoryService.post({ dailyCalorieIntake, date, PlanType, userId: id });
+            const plan = await this._planHistoryService.post({ dailyCalorieIntake, date, planType, userId: id });
             return res.status(201).json({ data: plan });
         } catch (error: any) {
             return exceptionResponseAdapter({
@@ -37,11 +54,12 @@ export default class PlanHistoryController {
     }
 
     async put (req: Request, res: Response): Promise<Response> {
-        const { dailyCalorieIntake, PlanType, date } = req.body;
+        const { dailyCalorieIntake, planType, date } = req.body;
         const { id } = req.user;
 
         try {
-            const plan = await this._planHistoryService.put({ dailyCalorieIntake, date, PlanType, userId: id });
+            const plan = await this._planHistoryService.put({ dailyCalorieIntake, date, planType, userId: id });
+            
             return res.status(200).json({ data: plan });
         } catch (error: any) {
             return exceptionResponseAdapter({

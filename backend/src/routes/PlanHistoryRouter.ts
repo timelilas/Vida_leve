@@ -10,6 +10,11 @@ planHistoryRouter.get("/",
     (req, res) => planHistoryController.get(req, res)
 );
 
+planHistoryRouter.get("/:date", 
+    (req, res, next) => authorizationMiddleware.execute(req, res, next),
+    (req, res) => planHistoryController.getByDate(req, res)
+);
+
 planHistoryRouter.post("/", 
     (req, res, next) => authorizationMiddleware.execute(req, res, next),
     (req, res) => planHistoryController.post(req, res)
