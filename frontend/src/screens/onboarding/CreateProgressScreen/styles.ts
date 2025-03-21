@@ -2,10 +2,10 @@ import { StyleSheet } from "react-native";
 
 export const styles = StyleSheet.create({
   title: {
-    marginTop: 40,
+    marginTop: 32,
   },
   description: {
     marginTop: 8,
-    marginBottom: 40,
+    marginBottom: 32,
   },
 });

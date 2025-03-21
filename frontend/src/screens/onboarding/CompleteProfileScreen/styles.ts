@@ -3,17 +3,14 @@ import { fonts } from "../../../styles/fonts";
 import { colors } from "../../../styles/colors";
 
 export const styles = StyleSheet.create({
-  header: {
-    marginBottom: 40,
-  },
   title: {
-    marginTop: 40,
+    marginTop: 32,
   },
   text: {
     marginTop: 8,
   },
   form: {
-    marginTop: 40,
+    marginTop: 32,
     gap: 16,
     marginBottom: 56,
   },
