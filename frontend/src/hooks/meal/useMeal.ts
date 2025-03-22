@@ -75,8 +75,8 @@ export function useMeal(params?: UseMealParams) {
     [updateMealMutaiton]
   );
 
-  const calculateCalorieConsumption = () => {
-    const calorieConsumption: Record<MealType | "total", number> = {
+  const calculateDailyConsumption = () => {
+    const dailyConsumption: Record<MealType | "total", number> = {
       "cafe-da-manha": 0,
       lanche: 0,
       almoco: 0,
@@ -87,18 +87,18 @@ export function useMeal(params?: UseMealParams) {
 
     for (const meal of mealsQuery.data || []) {
       const caloiresConsumed = calculateMealCalories(meal.foods);
-      calorieConsumption[`${meal.type}`] += caloiresConsumed;
-      calorieConsumption.total += caloiresConsumed;
+      dailyConsumption[`${meal.type}`] += caloiresConsumed;
+      dailyConsumption.total += caloiresConsumed;
     }
 
-    return calorieConsumption;
+    return dailyConsumption;
   };
 
   return {
     meals: mealsQuery.data || [],
     isLoading: mealsQuery.isLoading,
     error: mealsQuery.error,
-    calorieConsumption: calculateCalorieConsumption(),
+    dailyConsumption: calculateDailyConsumption(),
     createMeal,
     updateMeal,
   };

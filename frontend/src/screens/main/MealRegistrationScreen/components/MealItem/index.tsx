@@ -1,18 +1,17 @@
-import {
-  Animated,
-  ScrollView,
-  Text,
-  TouchableOpacity,
-  View,
-} from "react-native";
+import { ScrollView, Text, TouchableOpacity, View } from "react-native";
 import { ITEM_HEIGHT_EXPANDED, ITEM_HEIGHT_SHRINKED } from "./constants";
 import { ChevronUpIcon } from "../../../../../components/Icons/ChevronUpIcon";
 import { IncrementIcon } from "../../../../../components/Icons/IncrementIcon";
 import { DecrementIcon } from "../../../../../components/Icons/DecrementIcon";
 import { TrashIcon } from "../../../../../components/Icons/TrashIcon";
 import { useMealStore } from "../../../../../store/meal";
-import { useAnimation } from "./animation";
+import { useExpansionAnimation } from "./animations";
 import { styles } from "./styles";
+
+import Reanimated, {
+  interpolate,
+  useAnimatedStyle,
+} from "react-native-reanimated";
 
 interface MealItemProps {
   foodId: string;
@@ -22,12 +21,15 @@ interface MealItemProps {
 export function MealItem(props: MealItemProps) {
   const mealActions = useMealStore((state) => state.actions);
   const food = useMealStore((state) => state.foodMap[props.foodId]);
+  const { value } = useExpansionAnimation({ isItemExpanded: food.isExpanded });
 
-  const { animatedValue } = useAnimation({ isItemExpanded: food.isExpanded });
-  const containerHeight = animatedValue.interpolate({
-    inputRange: [0, 1],
-    outputRange: [ITEM_HEIGHT_SHRINKED, ITEM_HEIGHT_EXPANDED],
-  });
+  const animatedStyle = useAnimatedStyle(() => ({
+    height: interpolate(
+      value.value,
+      [0, 1],
+      [ITEM_HEIGHT_SHRINKED, ITEM_HEIGHT_EXPANDED]
+    ),
+  }));
 
   function handleIncrement() {
     if (props.disabled) return;
@@ -51,9 +53,7 @@ export function MealItem(props: MealItemProps) {
 
   return (
     <View style={styles.container}>
-      <Animated.View
-        style={[styles.innerContainer, { height: containerHeight }]}
-      >
+      <Reanimated.View style={[styles.innerContainer, animatedStyle]}>
         <View
           style={[
             styles.foodDetails,
@@ -106,9 +106,7 @@ export function MealItem(props: MealItemProps) {
             disabled={props.disabled}
             style={styles.toggleItemButton}
           >
-            <Animated.View style={!food.isExpanded && styles.chvronIconDown}>
-              <ChevronUpIcon />
-            </Animated.View>
+            <ChevronUpIcon style={!food.isExpanded && styles.chvronIconDown} />
           </TouchableOpacity>
         </View>
         <TouchableOpacity
@@ -119,7 +117,7 @@ export function MealItem(props: MealItemProps) {
           <TrashIcon width={18} height={18} />
           <Text style={styles.text}>Excluir</Text>
         </TouchableOpacity>
-      </Animated.View>
+      </Reanimated.View>
     </View>
   );
 }

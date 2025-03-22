@@ -21,7 +21,7 @@ const HomeScreen = () => {
   const currentPlan = plans.find(
     ({ type }) => type === progress?.currentCaloriePlan
   );
-  const { calorieConsumption, error, isLoading } = useMeal({
+  const { dailyConsumption, error, isLoading } = useMeal({
     date: new Date(year, month, day),
   });
 
@@ -46,7 +46,7 @@ const HomeScreen = () => {
           <PlanInformation />
           <ProgressStatistics
             targetCalories={currentPlan?.dailyCalorieIntake || 0}
-            consumedCalories={calorieConsumption.total}
+            consumedCalories={dailyConsumption.total}
             isLoading={isLoading}
           />
         </View>

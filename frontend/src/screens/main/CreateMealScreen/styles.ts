@@ -28,4 +28,7 @@ export const styles = StyleSheet.create({
   skeletonLoaderContainer: {
     gap: 16,
   },
+  backHomeButton: {
+    marginTop: "auto",
+  },
 });

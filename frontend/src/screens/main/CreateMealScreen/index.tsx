@@ -59,7 +59,7 @@ const CreateMealScreen = (props: CreateMealScreenProps) => {
     selectedDate.day
   );
 
-  const { meals, calorieConsumption, error, isLoading } = useMeal({
+  const { meals, dailyConsumption, error, isLoading } = useMeal({
     date: localDate,
     meals: { refetchOnMount: false },
   });
@@ -175,7 +175,7 @@ const CreateMealScreen = (props: CreateMealScreenProps) => {
             disabled={!!error}
             isLoading={isLoading}
             selected={meal.type === selectedMealType}
-            caloriesConsumed={calorieConsumption[`${meal.type}`]}
+            caloriesConsumed={dailyConsumption[`${meal.type}`]}
           />
         ))}
       </View>
@@ -183,6 +183,7 @@ const CreateMealScreen = (props: CreateMealScreenProps) => {
         <SubmitButton
           type="primary"
           title="Voltar para home"
+          style={styles.backHomeButton}
           onPress={resetNavigationToHome}
         />
       ) : null}
