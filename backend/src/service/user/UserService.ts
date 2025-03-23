@@ -99,22 +99,4 @@ export default class UserService {
       );
     }
   };
-
-  public delete = async (id: number) => {
-    try {
-      const deletedCount = await User.destroy({ where: { id } });
-
-      if (deletedCount === 0) {
-        return false;
-      }
-
-      return true;
-    } catch (error: any) {
-      throw new DatabaseException(
-        `Erro ao deletar o usuário com id: ${id}.`,
-        UserService.name,
-        error.message
-      );
-    }
-  };
 }

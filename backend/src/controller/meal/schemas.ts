@@ -19,7 +19,7 @@ const dateOnlyISOSchema = z
       );
     },
     {
-      message: "Data inválida. A data precisa seguir o padrão ISO AAAA-MM-DD",
+      message: "Data inválida. A data precisa seguir o padrão ISO AAAA-MM-DD.",
     }
   );
 
