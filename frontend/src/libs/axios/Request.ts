@@ -3,6 +3,8 @@ import { HttpError } from "../../@core/errors/httpError";
 import { ConnectionError } from "../../@core/errors/connectionError";
 import {
   INTERNAL_SERVER_ERROR,
+  NETWORK_ERROR_MESSAGE,
+  UNAUTHORIZED_ERROR_MESSAGE,
   UNEXPECTED_ERROR_MESSAGE,
 } from "../../constants/errorMessages";
 
@@ -33,11 +35,15 @@ export const request = async <T>(
     if (axios.isAxiosError(error)) {
       if (error.response) {
         const errorParams = error.response.data;
+        let errorMessage = errorParams.error || INTERNAL_SERVER_ERROR;
 
-        const errorMessage =
-          error.status && error.status >= 500
-            ? INTERNAL_SERVER_ERROR
-            : errorParams.error;
+        if (error.status && error.status === 401) {
+          errorMessage = UNAUTHORIZED_ERROR_MESSAGE;
+        }
+
+        if (error.status && error.status >= 500) {
+          errorMessage = INTERNAL_SERVER_ERROR;
+        }
 
         throw new HttpError({
           field: errorParams.field,
@@ -48,9 +54,7 @@ export const request = async <T>(
         });
       }
 
-      throw new ConnectionError(
-        "Falha na conexão, tente novamente mais tarde."
-      );
+      throw new ConnectionError(NETWORK_ERROR_MESSAGE);
     }
 
     const unexpectedError = error;

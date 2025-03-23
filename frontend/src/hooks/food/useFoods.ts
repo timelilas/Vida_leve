@@ -30,6 +30,7 @@ export function useFoods(params: UseFoodsParams) {
     refetchOnWindowFocus: false,
     refetchInterval: false,
     refetchOnReconnect: false,
+    retry: 2,
     queryFn: async () => {
       const { data } = await httpFoodService.searchFoods({
         name: foodSlug,
@@ -40,7 +41,7 @@ export function useFoods(params: UseFoodsParams) {
     },
   });
 
-  const { data, isFetching, error, isError } = useQuery<FoodDataState>(options);
+  const { data, isFetching, error } = useQuery<FoodDataState>(options);
   const deferredData = useDeferredValue(data);
 
   const fetchMoreFoods = useCallback(async () => {
@@ -72,7 +73,6 @@ export function useFoods(params: UseFoodsParams) {
     foods: deferredData?.foods || [],
     hasMore: deferredData?.hasMore ?? true,
     isFetching,
-    isError,
     error,
     fetchMoreFoods,
   };

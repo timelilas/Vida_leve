@@ -1,7 +1,6 @@
 import { ScreenWrapper } from "../../../components/ScreenWrapper";
 import { ScreenTitle } from "../../../components/ScreenTitle";
 import { Paragraph } from "../../../components/Paragraph/Paragraph";
-import { ConnectionError } from "../../../@core/errors/connectionError";
 import { useAppNavigation } from "../../../hooks/common/useAppNavigation";
 import { RouteConstants } from "../../../routes/types";
 import { useSnackbar } from "../../../hooks/common/useSnackbar";
@@ -47,9 +46,6 @@ const UpdateProgressScreen = () => {
   }
 
   function onError(error: Error) {
-    if (error instanceof ConnectionError) {
-      return navigation.navigate(RouteConstants.ConnectionError);
-    }
     if (!(error as any).field) {
       showErrorSnackbar(error.message);
     }
