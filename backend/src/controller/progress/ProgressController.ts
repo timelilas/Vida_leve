@@ -9,20 +9,25 @@ import { CaloriePlanService } from "../../service/caloriePlan/CaloriePlanService
 import { BadRequestException } from "../../@core/exception/http/BadRequestException";
 import { NotFoundException } from "../../@core/exception/http/NotFoundException";
 import { exceptionResponseAdapter } from "../../utils/express/helpers";
+import PlanHistoryService from "../../service/PlanHistory/PlanHistoryService";
+import { getDateFromTimezone } from "../../utils/common/helpers";
 
 export default class ProgressController {
   private _CaloriePlanService = new CaloriePlanService();
+  private _PlanHistoryService = new PlanHistoryService();
   private _ProgressService = new ProgressService();
   private _UserService = new UserService();
 
   async upsert(req: Request, res: Response): Promise<Response> {
     const { id: userId } = req.user;
     const { height, weight, goalWeight, activityFrequency } = req.body;
+    const userTimezone = (req.headers["x-timezone"] || "UTC") as string;
 
-    const userProfile = await this._UserService.get(userId);
     let transaction = null;
 
     try {
+      const userProfile = await this._UserService.get(userId);
+
       if (!userProfile?.birthDate) {
         throw new BadRequestException(
           "É necessário ter uma data de nascimento cadastrada para continuar.",
@@ -69,10 +74,25 @@ export default class ProgressController {
         transaction,
       });
 
+      const planCalorieIntake = newCaloriePlans.find(
+        ({ type }) => type === req.body.currentCaloriePlan
+      );
+
       await this._CaloriePlanService.upsertPlans({
         data: { userId, plans: newCaloriePlans },
         transaction,
       });
+
+      await this._PlanHistoryService.upsert(
+        {
+          date: getDateFromTimezone(userTimezone),
+          planType: req.body.currentCaloriePlan,
+          strategy: goalWeight < weight ? "deficit" : "superavit",
+          dailyCalorieIntake: planCalorieIntake?.dailyCalorieIntake!,
+          userId: userId,
+        },
+        transaction
+      );
 
       await transaction.commit();
       return res.status(200).json({ data: createdProgress });
@@ -107,22 +127,48 @@ export default class ProgressController {
   async setCaloriePlan(req: Request, res: Response): Promise<Response> {
     const userId = req.user.id;
     const { currentCaloriePlan } = req.body;
+    const userTimezone = (req.headers["x-timezone"] || "UTC") as string;
+
+    let transaction = null;
 
     try {
-      const updatedProgress = await this._ProgressService.setCaloriePlan({
+      transaction = await sequelize.transaction();
+
+      const currentPlan = await this._CaloriePlanService.getByType({
         userId,
-        caloriePlan: currentCaloriePlan,
+        type: currentCaloriePlan,
       });
 
-      if (!updatedProgress) {
+      const updatedProgress = await this._ProgressService.setCaloriePlan({
+        data: { userId, caloriePlan: currentCaloriePlan },
+        transaction,
+      });
+
+      if (!updatedProgress || !currentPlan) {
+        await transaction.rollback();
         throw new NotFoundException(
           "Este usuário não possui um progresso cadastrado.",
           ProgressController.name
         );
       }
+      const { weight, goalWeight } = updatedProgress;
+
+      await this._PlanHistoryService.upsert(
+        {
+          date: getDateFromTimezone(userTimezone),
+          planType: currentCaloriePlan,
+          strategy: goalWeight < weight ? "deficit" : "superavit",
+          dailyCalorieIntake: currentPlan.dailyCalorieIntake,
+          userId: userId,
+        },
+        transaction
+      );
+
+      await transaction.commit();
 
       return res.status(200).json({ data: updatedProgress });
     } catch (error: any) {
+      await transaction?.rollback();
       return exceptionResponseAdapter({
         req,
         res,
