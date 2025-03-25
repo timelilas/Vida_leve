@@ -1,4 +1,3 @@
-import { PlanHistoryEntity } from "../../@core/entity/plan-history/entity";
 import PlanHistory from "../../database/models/PlanHistory";
 import {
     PlanHistoryDTO
@@ -37,9 +36,10 @@ export default class PlanHistoryService {
     }
 
     public post = async (planHistory: PlanHistoryDTO) => {
+        const date = planHistory.date.toISOString().split("T")[0]
         try {
-            const createdPlanHistory = await PlanHistory.create(planHistory, {
-            });
+          const createdPlanHistory = await PlanHistory.create({...planHistory, date}, {
+          });
 
             const newData = {
                 dailyCalorieIntake: createdPlanHistory.dailyCalorieIntake,
@@ -55,6 +55,7 @@ export default class PlanHistoryService {
     }
 
     public put = async (planHistory: PlanHistoryDTO) => {
+      const date = planHistory.date.toISOString().split("T")[0]
         const exist = await PlanHistory.findOne({
             where: { userId: planHistory.userId, date: planHistory.date }
         });
@@ -63,8 +64,8 @@ export default class PlanHistoryService {
             throw new Error(`Histórico de plano com id: '${planHistory.userId}' não encontrado.`);
         }
         try {
-            const updatedPlanHistory = await PlanHistory.update(planHistory, {
-                where: { userId: planHistory.userId, date: planHistory.date },
+          const updatedPlanHistory = await PlanHistory.update({...planHistory, date}, {
+            where: { userId: planHistory.userId, date: planHistory.date },
                 returning: true
             });
 
@@ -82,3 +83,4 @@ export default class PlanHistoryService {
         }
     }
 }
+
