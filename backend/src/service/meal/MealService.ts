@@ -3,16 +3,15 @@ import { DatabaseException } from "../../@core/exception/infrastructure/Database
 import { sequelize } from "../../database";
 import { ConsumedFood, Meal } from "../../database/associations";
 import {
-  CalorieConsumtionQueryResult,
+  CalorieStatisticsQueryResult,
   UpsertMealDTO,
-  GetCalorieConsumptionDTO,
+  GetCalorieStatisticsDTO,
   GetMealByIdDTO,
   MealQueryResult,
   SearchMealDTO,
   GetMealsDTO,
 } from "./types";
 import { TableNames } from "../../database/constants";
-import { TypeMeal } from "../../@core/entity/@shared";
 import { MealEntity } from "../../@core/entity/meal/enitys";
 
 type By = "ID" | "DATE" | "DATE_AND_TYPE";
@@ -41,7 +40,7 @@ export default class MealService {
       return mealEntity;
     } catch (error: any) {
       throw new DatabaseException(
-        `Ocorreu um erro durante a busca da reifeição com id: '${id}'`,
+        `Ocorreu um erro durante a busca da reifeição com id: '${id}'.`,
         MealService.name,
         error.message
       );
@@ -80,7 +79,7 @@ export default class MealService {
 
       return { meals, hasMore };
     } catch (error: any) {
-      const errorMessage = `Ocorreu um erro ao tentar obter as refeições do usuaŕio com id: '${params.userId}'`;
+      const errorMessage = `Ocorreu um erro ao tentar obter as refeições do usuaŕio com id: '${params.userId}'.`;
       throw new DatabaseException(
         errorMessage,
         MealService.name,
@@ -105,7 +104,7 @@ export default class MealService {
         : null;
       return mealEntity;
     } catch (error: any) {
-      const errorMessage = `Ocorreu um erro durante a buscada refeição do tipo '${mealType}' referente a data '${date}'`;
+      const errorMessage = `Ocorreu um erro durante a buscada refeição do tipo '${mealType}' referente a data '${isoDateString}'.`;
       throw new DatabaseException(
         errorMessage,
         MealService.name,
@@ -170,35 +169,25 @@ export default class MealService {
     }
   };
 
-  public getCalorieConsumption = async (params: GetCalorieConsumptionDTO) => {
-    const isoDate = params.date.toISOString().split("T")[0];
-    const queryString = this.createCalorieConsumptionQueryString();
+  public getCalorieStatistics = async (params: GetCalorieStatisticsDTO) => {
+    const from = params.from.toISOString().split("T")[0];
+    const to = params.to.toISOString().split("T")[0];
+    const userId = params.userId;
+    const queryString = this.getCalorieStatisticsQuery();
 
     try {
-      const queryResult = await sequelize.query<CalorieConsumtionQueryResult>(
+      const queryResult = await sequelize.query<CalorieStatisticsQueryResult>(
         queryString,
-        {
-          type: QueryTypes.SELECT,
-          replacements: [params.userId, isoDate],
-        }
+        { type: QueryTypes.SELECT, replacements: [from, to, userId, userId] }
       );
 
-      const calorieConsumptionMap: Record<TypeMeal | "total", number> = {
-        "cafe-da-manha": 0,
-        lanche: 0,
-        almoco: 0,
-        outro: 0,
-        jantar: 0,
-        total: 0,
-      };
+      const parsedResult = queryResult.map(({ date, ...rest }) => {
+        return { ...rest, date: new Date(date) };
+      });
 
-      for (const value of queryResult) {
-        calorieConsumptionMap[value.type] = value.calories;
-      }
-
-      return calorieConsumptionMap;
+      return parsedResult;
     } catch (error: any) {
-      const errorMessage = `Ocorreu um erro ao obter consumo de calorias do usuário: ${params.userId}, referente a data: ${isoDate}`;
+      const errorMessage = `Erro na consulta das estatisticas do consumo de calorias entre os dias, '${from}' e '${to}' do usuário com id: '${userId}'`;
       throw new DatabaseException(
         errorMessage,
         MealService.name,
@@ -266,20 +255,36 @@ export default class MealService {
     return mainQuery;
   };
 
-  private createCalorieConsumptionQueryString = () => {
+  private getCalorieStatisticsQuery = () => {
     const meal = TableNames.Meal;
     const consumedFood = TableNames.ConsumedFood;
     const food = TableNames.Food;
+    const planHistory = TableNames.PlanHistory;
 
     return `
-      SELECT 
-        COALESCE(${meal}."type"::VARCHAR, 'total') as type, 
-        COALESCE(SUM(food.calories * "${consumedFood}".quantity), 0)::INTEGER as calories 
-      FROM ${meal}
-      INNER JOIN "${consumedFood}" on ${meal}.id = "${consumedFood}"."mealId"
-      INNER JOIN ${food} on "${consumedFood}"."foodId" = ${food}.id
-      WHERE ${meal}."userId" = ? AND ${meal}."date" = ?
-      GROUP BY ROLLUP (${meal}.type);
+      SELECT
+        date("generatedDate") as date,
+        "dailyCalorieIntake" as target,
+        COALESCE("dailyConsumption", 0)::INT as consumption,
+        "planType",
+        strategy
+      FROM GENERATE_SERIES(? ::DATE, ? ::DATE, interval '1 day') as "generatedDate"
+      LEFT JOIN LATERAL (
+        SELECT *
+        FROM "${planHistory}"
+        WHERE "${planHistory}"."userId" = ? and "${planHistory}".date <= "generatedDate".date
+        ORDER BY "${planHistory}".date DESC
+        LIMIT 1
+      ) ON true
+      LEFT JOIN (
+        SELECT date, sum(quantity * calories) as "dailyConsumption"
+        FROM ${meal} 
+        INNER JOIN "${consumedFood}" ON ${meal}.id = "${consumedFood}"."mealId" 
+        INNER JOIN ${food} ON "${consumedFood}"."foodId"  = ${food}.id 
+        WHERE "userId" = ?
+        group by ${meal}.date
+      ) as "calorieConsumption" ON "calorieConsumption"."date" = "generatedDate"
+      WHERE id IS NOT NULL;
     `;
   };
 }

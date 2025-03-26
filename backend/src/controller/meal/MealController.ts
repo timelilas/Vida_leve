@@ -21,7 +21,7 @@ export default class MealController {
 
       if (foundMeal) {
         throw new ConflictException(
-          `Já existe uma refeição do tipo '${mealType}' na data: '${date}' cadastrada para este usuário`,
+          `Já existe uma refeição do tipo '${mealType}' na data: '${date}' cadastrada para este usuário.`,
           MealController.name
         );
       }
@@ -38,7 +38,7 @@ export default class MealController {
         req,
         res,
         exception: error,
-        alternativeMsg: "Erro durante a criação da refeição",
+        alternativeMsg: "Erro durante a criação da refeição.",
       });
     }
   }
@@ -53,7 +53,7 @@ export default class MealController {
 
       if (!foundMeal) {
         throw new NotFoundException(
-          `Refeição com id: '${mealId}' não foi encontrada`,
+          `Refeição com id: '${mealId}' não foi encontrada.`,
           MealController.name
         );
       }
@@ -72,7 +72,7 @@ export default class MealController {
         req,
         res,
         exception: error,
-        alternativeMsg: "Erro durante a atualização da refeição",
+        alternativeMsg: "Erro durante a atualização da refeição.",
       });
     }
   }
@@ -99,28 +99,41 @@ export default class MealController {
         req,
         res,
         exception: error,
-        alternativeMsg: `Erro ao obter as refeições do usuário com id: ${userId}`,
+        alternativeMsg: `Erro ao obter as refeições do usuário com id: '${userId}'.`,
       });
     }
   }
 
-  async getCalorieConsumption(req: Request, res: Response) {
-    const date = req.params.date;
+  async getCalorieStatistics(req: Request, res: Response) {
     const userId = req.user.id;
+    const query = req.query as { from?: string; to?: string };
+
+    const currentDate = new Date();
+    const currentMonth = currentDate.getUTCMonth();
+    const currentYear = currentDate.getUTCFullYear();
+
+    const from = query.from
+      ? new Date(query.from)
+      : new Date(currentYear, currentMonth, 1);
+
+    const to = query.to
+      ? new Date(query.to)
+      : new Date(currentYear, currentMonth + 1, 0);
 
     try {
-      const dailyCalorieConsumption =
-        await this._mealService.getCalorieConsumption({
-          date: new Date(date),
-          userId,
-        });
-      return res.status(200).json({ data: dailyCalorieConsumption });
+      const calorieStatistics = await this._mealService.getCalorieStatistics({
+        userId,
+        from,
+        to,
+      });
+
+      return res.status(200).json({ data: calorieStatistics });
     } catch (error: any) {
       return exceptionResponseAdapter({
         req,
         res,
         exception: error,
-        alternativeMsg: `Erro ao obter o consumo de calorias diário para o usuário: '${userId}' na data: ${date}`,
+        alternativeMsg: `Erro na obtenção das estatisticas do consumo de calorias do usuário com id: '${userId}'.`,
       });
     }
   }

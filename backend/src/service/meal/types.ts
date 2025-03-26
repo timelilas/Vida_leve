@@ -1,4 +1,4 @@
-import { TypeMeal } from "../../@core/entity/@shared";
+import { StrategyType, TypeMeal } from "../../@core/entity/@shared";
 import { MealEntity } from "../../@core/entity/meal/enitys";
 
 export interface UpsertMealDTO {
@@ -27,16 +27,20 @@ export interface GetMealsDTO {
   offset?: number;
 }
 
-export interface CalorieConsumtionQueryResult {
-  type: TypeMeal | "total";
-  calories: number;
+export interface GetCalorieStatisticsDTO {
+  userId: number;
+  from: Date;
+  to: Date;
+}
+
+export interface CalorieStatisticsQueryResult {
+  date: string;
+  type: TypeMeal;
+  strategy: StrategyType;
+  target: number;
+  consumption: number;
 }
 
 export interface MealQueryResult extends Omit<MealEntity, "date"> {
   date: string;
-}
-
-export interface GetCalorieConsumptionDTO {
-  date: Date;
-  userId: number;
 }

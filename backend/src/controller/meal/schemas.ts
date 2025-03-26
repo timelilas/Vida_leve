@@ -70,10 +70,21 @@ export const createMealSchema = mealSchema.pick({
 
 export const getMealsSchema = z.object({
   date: dateOnlyISOSchema.optional(),
-  limit: defaultQueryParamsZodSchema.shape.limit,
   offset: defaultQueryParamsZodSchema.shape.offset,
+  limit: defaultQueryParamsZodSchema.shape.limit,
 });
 
-export const getCalorieConsumptionSchema = z
-  .object({ date: dateOnlyISOSchema })
-  .strict();
+export const getCalorieStatisticsSchema = z
+  .object({
+    from: dateOnlyISOSchema.optional(),
+    to: dateOnlyISOSchema.optional(),
+  })
+  .refine(({ to, from }) => (to && from) || (!from && !to), {
+    message: "Os parâmetros 'from' e 'to' devem ser passados em conjunto",
+    path: ["root"],
+  })
+  .refine(({ to, from }) => new Date(to!) > new Date(from!), {
+    message:
+      "O parâmetro 'from' deve ser uma data superior à data do parâmetro 'to'",
+    path: ["root"],
+  });
