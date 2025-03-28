@@ -139,7 +139,7 @@ const CreateMealScreen = (props: CreateMealScreenProps) => {
 
   useEffect(() => {
     if (error && !isLoading) handleQueryError(error);
-  }, [dateString, isLoading, showSnackbar]);
+  }, [error, isLoading, handleQueryError]);
 
   useFocusEffect(
     useCallback(() => {

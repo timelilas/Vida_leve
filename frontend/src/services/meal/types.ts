@@ -1,4 +1,6 @@
 import { MealType } from "../../@core/entities/@shared/mealType/type";
+import { PlanStrategy } from "../../@core/entities/@shared/panStrategy/type";
+import { PlanType } from "../../@core/entities/@shared/planType/type";
 import { MealFoodProps } from "../../@core/entities/meal/type";
 
 interface MealOutputDTO {
@@ -28,7 +30,15 @@ export interface HttpUpdateMealInputDTO {
 
 export type HttpUpdateMealOutputDTO = MealOutputDTO;
 
-export type HttpCalorieConsumptionOutputDTO = Record<
-  MealType | "total",
-  number
->;
+export type HttpGetCalorieStatisticsOutputDTO = Array<{
+  target: number;
+  consumption: number;
+  planType: PlanType;
+  strategy: PlanStrategy;
+  date: string;
+}>;
+
+export interface HttpGetCalorieStatisticsInputDTO {
+  from: string;
+  to: string;
+}

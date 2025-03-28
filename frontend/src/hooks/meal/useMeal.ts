@@ -22,7 +22,7 @@ export function useMeal(params?: UseMealParams) {
     queryKey: QueryKeys.DATABASE.MEALS(isoDate),
     enabled: !params?.meals?.disabled,
     refetchOnMount: params?.meals?.refetchOnMount,
-    retry: false,
+    retry: 1,
     staleTime: Infinity,
     queryFn: async () => {
       const { data } = await httpMealService.getMeals(isoDate);
@@ -30,12 +30,30 @@ export function useMeal(params?: UseMealParams) {
     },
   });
 
+  const invalidateCalorieStatistics = (mealDateISO: string) => {
+    queryClient.invalidateQueries({
+      predicate: (query) => {
+        const baseKey = QueryKeys.DATABASE.CALORIE_STATISTICS("", "")[0];
+
+        if (!Array.isArray(query.queryKey)) return false;
+        if (query.queryKey[0] !== baseKey) return false;
+
+        const from = new Date(query.queryKey[1]);
+        const to = new Date(query.queryKey[2]);
+        const mealDate = new Date(mealDateISO);
+
+        return mealDate <= to && mealDate >= from;
+      },
+    });
+  };
+
   const createMealMutation = useMutation({
     mutationFn: async (params: CreateMealParams) => {
       const { data: CreatedMeal } = await httpMealService.createMeal(params);
       return CreatedMeal;
     },
     onSuccess: (createdMeal) => {
+      invalidateCalorieStatistics(createdMeal.date);
       const isoDate = createdMeal.date.split("T")[0];
       queryClient.invalidateQueries({
         queryKey: QueryKeys.DATABASE.MEALS(isoDate),
@@ -52,6 +70,7 @@ export function useMeal(params?: UseMealParams) {
       return updatedMeal;
     },
     onSuccess: (updatedMeal) => {
+      invalidateCalorieStatistics(updatedMeal.date);
       const isoDate = updatedMeal.date.split("T")[0];
       queryClient.invalidateQueries({
         queryKey: QueryKeys.DATABASE.MEALS(isoDate),

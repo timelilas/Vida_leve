@@ -30,7 +30,7 @@ export function useFoods(params: UseFoodsParams) {
     refetchOnWindowFocus: false,
     refetchInterval: false,
     refetchOnReconnect: false,
-    retry: 2,
+    retry: 1,
     queryFn: async () => {
       const { data } = await httpFoodService.searchFoods({
         name: foodSlug,
