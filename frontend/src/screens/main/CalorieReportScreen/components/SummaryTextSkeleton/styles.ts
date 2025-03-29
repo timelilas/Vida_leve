@@ -7,5 +7,6 @@ export const styles = StyleSheet.create({
   },
   textSkeletonWrapper: {
     gap: 10,
+    width: "100%",
   },
 });

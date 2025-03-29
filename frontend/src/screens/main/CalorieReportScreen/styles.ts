@@ -46,6 +46,7 @@ export const styles = StyleSheet.create({
   feedbackMessage: {
     alignSelf: "center",
     fontSize: 14,
+    lineHeight: 18,
     fontFamily: fonts.robotoRegular,
     color: colors.common.black,
   },

@@ -9,9 +9,13 @@ interface ChartLabelProps {
 export function ChartLabel(props: ChartLabelProps) {
   return (
     <View style={styles.container}>
-      <Text style={styles.title}>{props.title}</Text>
+      <Text numberOfLines={1} style={styles.title}>
+        {props.title}
+      </Text>
       {props.subtitle ? (
-        <Text style={styles.subtitle}>{props.subtitle}</Text>
+        <Text numberOfLines={1} style={styles.subtitle}>
+          {props.subtitle}
+        </Text>
       ) : null}
     </View>
   );
