@@ -11,6 +11,9 @@ export const defaultQueryParamsZodSchema = z.object({
     .refine((limit) => (limit ? parseInt(limit) > 0 : true), {
       message: "Limit deve ser maior do que 0",
     })
+    .refine((limit) => (limit ? parseInt(limit) <= 20 : true), {
+      message: "Limit deve ser menor ou igual a 20",
+    })
     .transform((Limit) => (Limit ? parseInt(Limit) : Limit)),
   offset: z
     .string({ invalid_type_error: "Offset deve ser um número." })
