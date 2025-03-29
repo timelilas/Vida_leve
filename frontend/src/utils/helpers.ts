@@ -1,4 +1,5 @@
 import { MealType } from "../@core/entities/@shared/mealType/type";
+import { DateIntervalType, PlainDate } from "../@types";
 import { DateData } from "../components/DayPicker/types";
 
 export function toCapitalized(input: string): string {
@@ -129,4 +130,29 @@ export function getTitleFromMealType(type: MealType | null) {
     default:
       return "";
   }
+}
+
+export function generateLocalDateRange(
+  intervalType: DateIntervalType,
+  dateData: PlainDate | Date
+) {
+  const { day, month, weekDay, year } =
+    dateData instanceof Date
+      ? {
+          year: dateData.getFullYear(),
+          month: dateData.getMonth(),
+          day: dateData.getDate(),
+          weekDay: dateData.getDay(),
+        }
+      : dateData;
+
+  return intervalType === "monthly"
+    ? {
+        from: new Date(year, month, 1),
+        to: new Date(year, month + 1, 0),
+      }
+    : {
+        from: new Date(year, month, day - weekDay),
+        to: new Date(year, month, day + 6 - weekDay),
+      };
 }

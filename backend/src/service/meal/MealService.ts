@@ -275,7 +275,7 @@ export default class MealService {
         WHERE "${planHistory}"."userId" = ? and "${planHistory}".date <= "generatedDate".date
         ORDER BY "${planHistory}".date DESC
         LIMIT 1
-      ) ON true
+      ) as "userPlanHistory" ON true
       LEFT JOIN (
         SELECT date, sum(quantity * calories) as "dailyConsumption"
         FROM ${meal} 
