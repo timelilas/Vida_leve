@@ -1,7 +1,7 @@
 import { Transaction } from "sequelize";
 import { sequelize } from "../../database";
 import { CaloriePlan } from "../../database/associations";
-import { UpsertPlansDTO } from "./types";
+import { GetPlanByTypeDTO, UpsertPlansDTO } from "./types";
 import { DatabaseException } from "../../@core/exception/infrastructure/DatabaseException";
 
 export class CaloriePlanService {
@@ -15,7 +15,24 @@ export class CaloriePlanService {
       return plans.map((plan) => plan.toJSON());
     } catch (error: any) {
       throw new DatabaseException(
-        `Erro na busca dos planos de calorias para o usuário com id: ${userId}.`,
+        `Erro na busca dos planos de calorias para o usuário com id: '${userId}'.`,
+        CaloriePlanService.name,
+        error.message
+      );
+    }
+  }
+
+  public async getByType(params: GetPlanByTypeDTO) {
+    const { userId, type } = params;
+
+    try {
+      const foundPlan = await CaloriePlan.findOne({
+        where: { userId: params.userId, type: params.type },
+      });
+      return foundPlan?.toJSON() || null;
+    } catch (error: any) {
+      throw new DatabaseException(
+        `Erro na busca do plano de calorias do tipo '${type}' do usuário com id: '${userId}'.`,
         CaloriePlanService.name,
         error.message
       );
@@ -52,7 +69,7 @@ export class CaloriePlanService {
       }
     } catch (error: any) {
       throw new DatabaseException(
-        `Erro na tentativa de atualizar os planos de caloria do usuário com id: ${userId}.`,
+        `Erro na tentativa de atualizar os planos de caloria do usuário com id: '${userId}'.`,
         CaloriePlanService.name,
         error.message
       );

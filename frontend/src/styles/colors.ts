@@ -16,6 +16,8 @@ export const colors = {
   },
   gray: {
     medium: "#B7B7B7",
+    mediumDark: "#a7a7a7",
+    dark: "#585858",
   },
   blue: "#0000FF",
   error: "#F95D4D",

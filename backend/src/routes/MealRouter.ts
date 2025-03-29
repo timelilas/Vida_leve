@@ -4,7 +4,7 @@ import { authorizationMiddleware } from "../middleware/authorization/authorizati
 import { validationMiddleware } from "../middleware/validation/validationMiddleware";
 import {
   createMealSchema,
-  getCalorieConsumptionSchema,
+  getCalorieStatisticsSchema,
   getMealsSchema,
   updateMealIdSchema,
   updateMealSchema,
@@ -36,10 +36,10 @@ mealRouter.put(
 );
 
 mealRouter.get(
-  "/calorie-consumption/:date",
+  "/calorie-statistics",
   (req, res, next) => authorizationMiddleware.execute(req, res, next),
-  validationMiddleware(getCalorieConsumptionSchema, "params"),
-  (req, res) => mealController.getCalorieConsumption(req, res)
+  validationMiddleware(getCalorieStatisticsSchema, "query"),
+  (req, res) => mealController.getCalorieStatistics(req, res)
 );
 
 export default mealRouter;

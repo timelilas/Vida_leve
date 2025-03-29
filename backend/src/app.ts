@@ -35,7 +35,7 @@ class App {
 
   private routes(): void {
     this.app.use("/auth", authRouter);
-    this.app.use("/user", userRouter);
+    this.app.use("/users", userRouter);
     this.app.use("/progress", progressRouter);
     this.app.use("/plans", caloriePlanRouter);
     this.app.use("/foods", foodRouter);

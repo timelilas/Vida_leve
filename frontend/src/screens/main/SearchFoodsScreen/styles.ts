@@ -25,7 +25,7 @@ export const styles = StyleSheet.create({
     color: colors.text.secondary,
   },
   inputBox: {
-    marginTop: 24,
+    marginTop: 32,
   },
   activityIndicatorContainer: {
     height: 60,

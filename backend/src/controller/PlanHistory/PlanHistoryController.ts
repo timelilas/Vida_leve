@@ -37,11 +37,11 @@ export default class PlanHistoryController {
     }
 
     async post (req: Request, res: Response): Promise<Response> {
-        const { dailyCalorieIntake, planType, date } = req.body;
+        const { dailyCalorieIntake, planType, date, strategy } = req.body;
         const { id } = req.user;
         
         try {
-            const plan = await this._planHistoryService.post({ dailyCalorieIntake, date, planType, userId: id });
+            const plan = await this._planHistoryService.post({ dailyCalorieIntake, strategy, date, planType, userId: id });
             return res.status(201).json({ data: plan });
         } catch (error: any) {
             return exceptionResponseAdapter({
@@ -54,11 +54,11 @@ export default class PlanHistoryController {
     }
 
     async put (req: Request, res: Response): Promise<Response> {
-        const { dailyCalorieIntake, planType, date } = req.body;
+        const { dailyCalorieIntake, planType, date, strategy } = req.body;
         const { id } = req.user;
 
         try {
-            const plan = await this._planHistoryService.put({ dailyCalorieIntake, date, planType, userId: id });
+            const plan = await this._planHistoryService.put({ dailyCalorieIntake, strategy, date, planType, userId: id });
             
             return res.status(200).json({ data: plan });
         } catch (error: any) {

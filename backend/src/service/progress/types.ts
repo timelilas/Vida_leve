@@ -10,6 +10,9 @@ export interface UpsertProgressDTO {
 }
 
 export interface SetCaloriePlanDTO {
-  userId: number;
-  caloriePlan: PlanType;
+  transaction?: Transaction;
+  data: {
+    userId: number;
+    caloriePlan: PlanType;
+  };
 }

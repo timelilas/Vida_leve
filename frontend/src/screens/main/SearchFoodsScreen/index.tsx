@@ -14,7 +14,7 @@ import {
 } from "react-native";
 import { Paragraph } from "../../../components/Paragraph/Paragraph";
 import SearchInput from "./components/SearchInput";
-import { useEffect, useState } from "react";
+import { useCallback, useEffect, useState } from "react";
 import { FOOD_ITEM_HEIGHT } from "./components/FoodItem/constants";
 import {
   formatDateToLabel,
@@ -27,6 +27,8 @@ import { styles } from "./styles";
 import { colors } from "../../../styles/colors";
 import { useMealStore } from "../../../store/meal";
 import { useFoods } from "../../../hooks/food/useFoods";
+import { HttpError } from "../../../@core/errors/httpError";
+import { NETWORK_ERROR_MESSAGE } from "../../../constants/errorMessages";
 
 type SearchFoodsScreenRouteProp = RouteProp<
   RouteParamsList,
@@ -53,32 +55,11 @@ const SearchFoodsScreen = ({ route }: SearchFoodsScreenProps) => {
   const limit = calculateTotalFoodsToFetch();
   const shortDateLabel = formatDateToLabel(new Date(mealDate), "short");
 
-  const { foods, hasMore, isError, isFetching, fetchMoreFoods } = useFoods({
+  const { foods, hasMore, error, isFetching, fetchMoreFoods } = useFoods({
     foodName,
     enabled: isQueryEnabled,
     limit,
   });
-
-  useEffect(() => {
-    const unsubscribe = navigation.addListener("focus", () => {
-      if (route.params?.foodName !== undefined) {
-        setFoodName(route.params.foodName);
-      }
-    });
-    return () => unsubscribe();
-  }, [route.params?.foodName]);
-
-  useEffect(() => {
-    if (isError) {
-      showSnackbar({
-        id: Math.floor(Math.random() * 2),
-        variant: "error",
-        duration: 5000,
-        message:
-          "Desculpe, não conseguimos encontrar as informações solicitadas, por favor, tente novamente mais tarde.",
-      });
-    }
-  }, [isError, isFetching]);
 
   function goBack() {
     navigation.goBack();
@@ -125,6 +106,39 @@ const SearchFoodsScreen = ({ route }: SearchFoodsScreenProps) => {
   function getBodyHeight(e: LayoutChangeEvent) {
     setBodyHeight(e.nativeEvent.layout.height);
   }
+
+  const handleQueryError = useCallback(
+    (error: Error) => {
+      const foodsErrorMessage =
+        "Desculpe, não conseguimos encontrar as informações solicitadas, por favor, tente novamente mais tarde.";
+
+      const errorMessage =
+        error instanceof HttpError ? foodsErrorMessage : NETWORK_ERROR_MESSAGE;
+
+      showSnackbar({
+        id: Math.floor(Math.random() * 2),
+        variant: "error",
+        duration: 5000,
+        message: errorMessage,
+      });
+    },
+    [showSnackbar]
+  );
+
+  useEffect(() => {
+    const unsubscribe = navigation.addListener("focus", () => {
+      if (route.params?.foodName !== undefined) {
+        setFoodName(route.params.foodName);
+      }
+    });
+    return () => unsubscribe();
+  }, [route.params?.foodName]);
+
+  useEffect(() => {
+    if (error && !isFetching) {
+      handleQueryError(error);
+    }
+  }, [error, isFetching]);
 
   return (
     <ScreenWrapper

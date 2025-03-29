@@ -22,13 +22,30 @@ export function useMeal(params?: UseMealParams) {
     queryKey: QueryKeys.DATABASE.MEALS(isoDate),
     enabled: !params?.meals?.disabled,
     refetchOnMount: params?.meals?.refetchOnMount,
-    retry: false,
+    retry: 1,
     staleTime: Infinity,
     queryFn: async () => {
       const { data } = await httpMealService.getMeals(isoDate);
-      return data;
+      return data.meals;
     },
   });
+
+  const invalidateCalorieStatistics = (mealDateISO: string) => {
+    queryClient.invalidateQueries({
+      predicate: (query) => {
+        const baseKey = QueryKeys.DATABASE.CALORIE_STATISTICS("", "")[0];
+
+        if (!Array.isArray(query.queryKey)) return false;
+        if (query.queryKey[0] !== baseKey) return false;
+
+        const from = new Date(query.queryKey[1]);
+        const to = new Date(query.queryKey[2]);
+        const mealDate = new Date(mealDateISO);
+
+        return mealDate <= to && mealDate >= from;
+      },
+    });
+  };
 
   const createMealMutation = useMutation({
     mutationFn: async (params: CreateMealParams) => {
@@ -36,6 +53,7 @@ export function useMeal(params?: UseMealParams) {
       return CreatedMeal;
     },
     onSuccess: (createdMeal) => {
+      invalidateCalorieStatistics(createdMeal.date);
       const isoDate = createdMeal.date.split("T")[0];
       queryClient.invalidateQueries({
         queryKey: QueryKeys.DATABASE.MEALS(isoDate),
@@ -52,6 +70,7 @@ export function useMeal(params?: UseMealParams) {
       return updatedMeal;
     },
     onSuccess: (updatedMeal) => {
+      invalidateCalorieStatistics(updatedMeal.date);
       const isoDate = updatedMeal.date.split("T")[0];
       queryClient.invalidateQueries({
         queryKey: QueryKeys.DATABASE.MEALS(isoDate),
@@ -75,8 +94,8 @@ export function useMeal(params?: UseMealParams) {
     [updateMealMutaiton]
   );
 
-  const calculateCalorieConsumption = () => {
-    const calorieConsumption: Record<MealType | "total", number> = {
+  const calculateDailyConsumption = () => {
+    const dailyConsumption: Record<MealType | "total", number> = {
       "cafe-da-manha": 0,
       lanche: 0,
       almoco: 0,
@@ -87,18 +106,18 @@ export function useMeal(params?: UseMealParams) {
 
     for (const meal of mealsQuery.data || []) {
       const caloiresConsumed = calculateMealCalories(meal.foods);
-      calorieConsumption[`${meal.type}`] += caloiresConsumed;
-      calorieConsumption.total += caloiresConsumed;
+      dailyConsumption[`${meal.type}`] += caloiresConsumed;
+      dailyConsumption.total += caloiresConsumed;
     }
 
-    return calorieConsumption;
+    return dailyConsumption;
   };
 
   return {
     meals: mealsQuery.data || [],
     isLoading: mealsQuery.isLoading,
     error: mealsQuery.error,
-    calorieConsumption: calculateCalorieConsumption(),
+    dailyConsumption: calculateDailyConsumption(),
     createMeal,
     updateMeal,
   };

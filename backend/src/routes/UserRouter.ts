@@ -22,6 +22,5 @@ userRouter.put(
 
 //Rotas utilizada em desenvolvimento apenas. Não requerem autorização
 userRouter.get("/profile/all", (req, res) => userController.getAll(req, res));
-userRouter.delete("/:id", (req, res) => userController.delete(req, res));
 
 export default userRouter;

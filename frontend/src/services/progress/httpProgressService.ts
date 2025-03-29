@@ -15,6 +15,7 @@ export class HttpProgressService extends HttpService {
       body: params,
       headers: {
         Authorization: `Bearer ${accessToken}`,
+        "X-Timezone": Intl.DateTimeFormat().resolvedOptions().timeZone,
       },
     });
   }
@@ -28,6 +29,7 @@ export class HttpProgressService extends HttpService {
       body: { currentCaloriePlan: plan },
       headers: {
         Authorization: `Bearer ${accessToken}`,
+        "X-Timezone": Intl.DateTimeFormat().resolvedOptions().timeZone,
       },
     });
   }

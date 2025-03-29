@@ -2,7 +2,6 @@ import { ScreenWrapper } from "../../../components/ScreenWrapper";
 import { NavigationHeader } from "../../../components/NavigationHeader";
 import { ScreenTitle } from "../../../components/ScreenTitle";
 import { Paragraph } from "../../../components/Paragraph/Paragraph";
-import { ConnectionError } from "../../../@core/errors/connectionError";
 import { useAppNavigation } from "../../../hooks/common/useAppNavigation";
 import { RouteConstants } from "../../../routes/types";
 import { useSnackbar } from "../../../hooks/common/useSnackbar";
@@ -13,6 +12,7 @@ import { styles } from "./styles";
 import { useUser } from "../../../hooks/user/useUser";
 import { useProgress } from "../../../hooks/progress/useProgress";
 import { useCaloriePlans } from "../../../hooks/caloriePlan/useCaloriePlans";
+import { HttpError } from "../../../@core/errors/httpError";
 
 const CreateProgressScreen = () => {
   const { Snackbar, showSnackbar } = useSnackbar();
@@ -51,10 +51,7 @@ const CreateProgressScreen = () => {
   }
 
   function onError(error: Error) {
-    if (error instanceof ConnectionError) {
-      return navigation.navigate(RouteConstants.ConnectionError);
-    }
-    if (!(error as any).field) {
+    if (!(error as HttpError).field) {
       showSnackbar({
         duration: 4000,
         message: error.message,

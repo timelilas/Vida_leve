@@ -76,29 +76,4 @@ export default class UserController {
       });
     }
   }
-
-  async delete(req: Request, res: Response): Promise<Response> {
-    const { id } = req.params;
-
-    try {
-      const deletedUser = await this._userService.delete(Number(id));
-
-      if (!deletedUser) {
-        throw new NotFoundException(
-          `Usuário com id ${id} não encontrado`,
-          UserController.name,
-          "id"
-        );
-      }
-
-      return res.status(200).json({ data: "Usuário exluído com sucesso." });
-    } catch (error: any) {
-      return exceptionResponseAdapter({
-        req,
-        res,
-        exception: error,
-        alternativeMsg: "Erro na tentativa de exluir o usuário.",
-      });
-    }
-  }
 }

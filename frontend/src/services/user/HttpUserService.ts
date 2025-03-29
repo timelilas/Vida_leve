@@ -13,7 +13,7 @@ export class HttpUserService extends HttpService {
 
     return await this.submit<HttpUpdateUserProfileOutputDTO>({
       method: "PUT",
-      path: "/user/profile",
+      path: "/users/profile",
       body: params,
       headers: {
         Authorization: `Bearer ${accessToken}`,
@@ -26,7 +26,7 @@ export class HttpUserService extends HttpService {
 
     return await this.submit<HttpGetUserProfileOutputDTO>({
       method: "GET",
-      path: "/user/profile",
+      path: "/users/profile",
       headers: {
         Authorization: `Bearer ${accessToken}`,
       },

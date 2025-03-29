@@ -2,9 +2,10 @@ import { HttpService } from "../HttpService";
 import { STORAGE_ACCESS_TOKEN } from "../../constants/localStorageConstants";
 import { SecureStorage } from "../secureStorage/SecureStorage";
 import {
-  HttpCalorieConsumptionOutputDTO,
+  HttpGetCalorieStatisticsInputDTO,
   HttpCreateMealInputDTO,
   HttpCreateMealOutputDTO,
+  HttpGetCalorieStatisticsOutputDTO,
   HttpGetMealsOutputDTO,
   HttpUpdateMealInputDTO,
   HttpUpdateMealOutputDTO,
@@ -36,12 +37,13 @@ export class HttpMealService extends HttpService {
     });
   }
 
-  public async getDailyCalorieConsumption(date: string) {
+  public async getCalorieStatistics(params: HttpGetCalorieStatisticsInputDTO) {
+    const { from, to } = params;
     const accessToken = await SecureStorage.getItem(STORAGE_ACCESS_TOKEN);
 
-    return await this.submit<HttpCalorieConsumptionOutputDTO>({
+    return await this.submit<HttpGetCalorieStatisticsOutputDTO>({
       method: "GET",
-      path: `/meals/calorie-consumption/${date}`,
+      path: `/meals/calorie-statistics?from=${from}&to=${to}`,
       headers: {
         Authorization: `Bearer ${accessToken}`,
       },

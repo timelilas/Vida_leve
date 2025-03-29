@@ -25,6 +25,8 @@ import {
   useFocusEffect,
 } from "@react-navigation/native";
 import { useSnackbar } from "../../../hooks/common/useSnackbar";
+import { HttpError } from "../../../@core/errors/httpError";
+import { NETWORK_ERROR_MESSAGE } from "../../../constants/errorMessages";
 
 type CreateMealScreenRouteProp = RouteProp<
   RouteParamsList,
@@ -59,48 +61,14 @@ const CreateMealScreen = (props: CreateMealScreenProps) => {
     selectedDate.day
   );
 
-  const { meals, calorieConsumption, error, isLoading } = useMeal({
+  const { meals, dailyConsumption, error, isLoading } = useMeal({
     date: localDate,
     meals: { refetchOnMount: false },
   });
 
   const dateString = dateToPTBR(localDate);
-
-  useEffect(() => {
-    if (selectedDate && selectedMealType) {
-      const { year, month, day } = selectedDate;
-      const foundMeal = meals.find((meal) => meal.type === selectedMealType);
-
-      setMeal({
-        id: foundMeal?.id,
-        date: new Date(year, month, day),
-        type: selectedMealType,
-        foods: foundMeal?.foods ? foundMeal.foods : [],
-      });
-      navigation.navigate(
-        foundMeal?.foods.length
-          ? RouteConstants.MealRegistration
-          : RouteConstants.SearchFoods
-      );
-    }
-  }, [selectedDate, selectedMealType, navigation, setMeal]);
-
-  useEffect(() => {
-    if (error && !isLoading) {
-      const errorMessage = `Desculpe, ocorreu um erro ao obter as informações atualizadas do seu consumo de calorias para o dia ${dateString}`;
-      showSnackbar({
-        duration: 5000,
-        message: errorMessage,
-        variant: "error",
-      });
-    }
-  }, [dateString, isLoading, showSnackbar]);
-
-  useFocusEffect(
-    useCallback(() => {
-      setMealDetails((prevState) => ({ ...prevState, selectedMealType: null }));
-    }, [])
-  );
+  const shortDateLabel = formatDateToLabel(localDate, "short");
+  const longDateLabel = formatDateToLabel(localDate, "long");
 
   function goBack() {
     navigation.goBack();
@@ -134,8 +102,53 @@ const CreateMealScreen = (props: CreateMealScreenProps) => {
     );
   }
 
-  const shortDateLabel = formatDateToLabel(localDate, "short");
-  const longDateLabel = formatDateToLabel(localDate, "long");
+  const handleQueryError = useCallback(
+    (error: Error) => {
+      const mealsError = `Desculpe, ocorreu um erro ao obter as informações do seu consumo de calorias para o dia ${dateString}.`;
+
+      const errorMessage =
+        error instanceof HttpError ? mealsError : NETWORK_ERROR_MESSAGE;
+
+      showSnackbar({
+        variant: "error",
+        duration: 5000,
+        message: errorMessage,
+      });
+    },
+    [showSnackbar, dateString]
+  );
+
+  useEffect(() => {
+    if (selectedDate && selectedMealType) {
+      const { year, month, day } = selectedDate;
+      const foundMeal = meals.find((meal) => meal.type === selectedMealType);
+
+      setMeal({
+        id: foundMeal?.id,
+        date: new Date(year, month, day),
+        type: selectedMealType,
+        foods: foundMeal?.foods ? foundMeal.foods : [],
+      });
+      navigation.navigate(
+        foundMeal?.foods.length
+          ? RouteConstants.MealRegistration
+          : RouteConstants.SearchFoods
+      );
+    }
+  }, [selectedDate, selectedMealType, navigation, setMeal]);
+
+  useEffect(() => {
+    if (error && !isLoading) handleQueryError(error);
+  }, [error, isLoading, handleQueryError]);
+
+  useFocusEffect(
+    useCallback(() => {
+      setMealDetails((prevState) => ({
+        ...prevState,
+        selectedMealType: null,
+      }));
+    }, [])
+  );
 
   return (
     <ScreenWrapper snackbar={<Snackbar />}>
@@ -175,7 +188,7 @@ const CreateMealScreen = (props: CreateMealScreenProps) => {
             disabled={!!error}
             isLoading={isLoading}
             selected={meal.type === selectedMealType}
-            caloriesConsumed={calorieConsumption[`${meal.type}`]}
+            caloriesConsumed={dailyConsumption[`${meal.type}`]}
           />
         ))}
       </View>
@@ -183,6 +196,7 @@ const CreateMealScreen = (props: CreateMealScreenProps) => {
         <SubmitButton
           type="primary"
           title="Voltar para home"
+          style={styles.backHomeButton}
           onPress={resetNavigationToHome}
         />
       ) : null}
