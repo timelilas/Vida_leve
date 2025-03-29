@@ -68,10 +68,6 @@ const PlanSelectionScreen = ({ route }: PlanSelectionScreenProps) => {
   }
 
   async function handleError(error: Error) {
-    if (error instanceof ConnectionError) {
-      return navigation.navigate(RouteConstants.ConnectionError);
-    }
-
     return showSnackbar({
       duration: 4000,
       message: error.message,

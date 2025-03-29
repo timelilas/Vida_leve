@@ -1,6 +1,7 @@
 import z from "zod";
 import { ZodHelper } from "../../utils/zod/helpers";
 import { allowedTypeMeals } from "../../@core/entity/@shared";
+import { defaultQueryParamsZodSchema } from "../../utils/zod/schemas/query";
 
 const dateOnlyISOSchema = z
   .string({ required_error: "A data é um campo obrigatório" })
@@ -18,7 +19,7 @@ const dateOnlyISOSchema = z
       );
     },
     {
-      message: "Data inválida. A data precisa seguir o padrão ISO AAAA-MM-DD",
+      message: "Data inválida. A data precisa seguir o padrão ISO AAAA-MM-DD.",
     }
   );
 
@@ -69,8 +70,21 @@ export const createMealSchema = mealSchema.pick({
 
 export const getMealsSchema = z.object({
   date: dateOnlyISOSchema.optional(),
+  offset: defaultQueryParamsZodSchema.shape.offset,
+  limit: defaultQueryParamsZodSchema.shape.limit,
 });
 
-export const getCalorieConsumptionSchema = z
-  .object({ date: dateOnlyISOSchema })
-  .strict();
+export const getCalorieStatisticsSchema = z
+  .object({
+    from: dateOnlyISOSchema.optional(),
+    to: dateOnlyISOSchema.optional(),
+  })
+  .refine(({ to, from }) => (to && from) || (!from && !to), {
+    message: "Os parâmetros 'from' e 'to' devem ser passados em conjunto",
+    path: ["root"],
+  })
+  .refine(({ to, from }) => new Date(to!) > new Date(from!), {
+    message:
+      "O parâmetro 'from' deve ser uma data superior à data do parâmetro 'to'",
+    path: ["root"],
+  });

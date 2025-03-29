@@ -15,7 +15,6 @@ import {
 } from "../../../utils/masks";
 import { dateToPTBR, delay, formatDateToISO } from "../../../utils/helpers";
 import { HttpError } from "../../../@core/errors/httpError";
-import { ConnectionError } from "../../../@core/errors/connectionError";
 import { useAppNavigation } from "../../../hooks/common/useAppNavigation";
 import { RouteConstants } from "../../../routes/types";
 import { useSnackbar } from "../../../hooks/common/useSnackbar";
@@ -108,9 +107,6 @@ const CompleteProfileScreen = () => {
   }
 
   async function handleApiError(error: Error) {
-    if (error instanceof ConnectionError) {
-      return navigation.navigate(RouteConstants.ConnectionError);
-    }
     if (error instanceof HttpError && error.field) {
       return setError(error.field as any, { message: error.message });
     }

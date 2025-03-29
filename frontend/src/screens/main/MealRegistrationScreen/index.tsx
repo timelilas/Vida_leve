@@ -14,7 +14,6 @@ import {
   getTitleFromMealType,
 } from "../../../utils/helpers";
 import { RouteConstants } from "../../../routes/types";
-import { ConnectionError } from "../../../@core/errors/connectionError";
 import { useSnackbar } from "../../../hooks/common/useSnackbar";
 import { useEffect, useState } from "react";
 import { useMeal } from "../../../hooks/meal/useMeal";
@@ -77,10 +76,6 @@ const MealRegistrationScreen = () => {
 
   function handleError(error: Error) {
     setIsSubmitting(false);
-
-    if (error instanceof ConnectionError) {
-      return navigation.navigate(RouteConstants.ConnectionError);
-    }
     showSnackbar({ duration: 5000, message: error.message, variant: "error" });
   }
 

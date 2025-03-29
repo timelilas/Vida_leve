@@ -7,7 +7,7 @@ export function createMockedDays(count: number) {
     const weekDay = date.getDay();
     const month = date.getMonth();
     const year = date.getFullYear();
-    const id = `${day}-${month}-${year}`;
+    const id = `${year}-${month}-${day}`;
 
     const dateData = { id, day, weekDay, month, year };
     return dateData;

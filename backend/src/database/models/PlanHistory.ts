@@ -9,7 +9,12 @@ import Sequelize from "sequelize";
 import { sequelize } from "../index";
 import User from "./User";
 import { TableNames } from "../constants";
-import { PlanType } from "../../@core/entity/@shared";
+import {
+  allowedPlans,
+  PlanType,
+  StrategyType,
+} from "../../@core/entity/@shared";
+import { PlanHistoryEntity } from "../../@core/entity/planHistory/entity";
 
 class PlanHistory extends Model<
   InferAttributes<PlanHistory>,
@@ -18,17 +23,19 @@ class PlanHistory extends Model<
   declare id: CreationOptional<number>;
   declare userId: ForeignKey<User["id"]>;
   declare dailyCalorieIntake: number;
-  declare PlanType: PlanType;
-  declare date: Date;
+  declare planType: PlanType;
+  declare date: string;
+  declare strategy: StrategyType;
 
-  public toJSON() {
+  public toJSON(): PlanHistoryEntity {
     const props = super.get();
     return {
       id: props.id,
       userId: props.userId,
       dailyCalorieIntake: props.dailyCalorieIntake,
-      PlanType: props.PlanType,
-      date: props.date,
+      planType: props.planType,
+      date: new Date(props.date),
+      strategy: props.strategy,
     };
   }
 }
@@ -48,8 +55,12 @@ PlanHistory.init(
       type: Sequelize.INTEGER,
       allowNull: false,
     },
-    PlanType: {
-      type: Sequelize.ENUM("gradual", "moderado", "acelerado"),
+    planType: {
+      type: Sequelize.ENUM(...allowedPlans),
+      allowNull: false,
+    },
+    strategy: {
+      type: Sequelize.ENUM("deficit", "superavit"),
       allowNull: false,
     },
     date: {

@@ -23,6 +23,10 @@ export function ProgressStatistics(props: ProgressStatisticsProps) {
     navigation.navigate(RouteConstants.CreateMeal);
   }
 
+  function navigateToCalorieReportScreen() {
+    navigation.navigate(RouteConstants.CalorieReport);
+  }
+
   return (
     <View style={styles.container}>
       <Text style={styles.title}>Foram registradas:</Text>
@@ -48,7 +52,7 @@ export function ProgressStatistics(props: ProgressStatisticsProps) {
         </Skeleton>
       </View>
       <View style={styles.buttonWrapper}>
-        <TouchableOpacity>
+        <TouchableOpacity onPress={navigateToCalorieReportScreen}>
           <Text style={styles.buttonText}>Relatórios</Text>
         </TouchableOpacity>
         <TouchableOpacity onPress={navigateToCreateMealScreen}>

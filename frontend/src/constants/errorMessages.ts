@@ -6,3 +6,6 @@ export const UNAUTHORIZED_ERROR_MESSAGE =
 
 export const INTERNAL_SERVER_ERROR =
   "Desculpe, ocorreu um erro inesperado. Por favor, tente novamente mais tarde, ou contate o suporte para mais informações.";
+
+export const NETWORK_ERROR_MESSAGE =
+  "Parece que você está sem internet. Verifique sua conexão e tente novamente.";

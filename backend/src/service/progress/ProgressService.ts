@@ -15,7 +15,7 @@ export default class ProgressService {
       return (updatedProgress as Progress).toJSON();
     } catch (error: any) {
       throw new DatabaseException(
-        `Erro na atualização das informações de progresso do usuário com id: ${data.userId}.`,
+        `Erro na atualização das informações de progresso do usuário com id: '${data.userId}'.`,
         ProgressService.name,
         error.message
       );
@@ -35,7 +35,7 @@ export default class ProgressService {
       return userProgress.toJSON();
     } catch (error: any) {
       throw new DatabaseException(
-        `Erro ao buscar as informações de progresso do usuário com id: ${userId}.`,
+        `Erro ao buscar as informações de progresso do usuário com id: '${userId}'.`,
         ProgressService.name,
         error.message
       );
@@ -43,12 +43,12 @@ export default class ProgressService {
   };
 
   public setCaloriePlan = async (params: SetCaloriePlanDTO) => {
-    const { userId, caloriePlan } = params;
+    const { userId, caloriePlan } = params.data;
 
     try {
       const [updatedCount, updatedProgress] = await Progress.update(
         { currentCaloriePlan: caloriePlan, updatedAt: new Date() },
-        { where: { userId }, returning: true }
+        { where: { userId }, returning: true, transaction: params.transaction }
       );
 
       if (updatedCount === 0) {
@@ -58,7 +58,7 @@ export default class ProgressService {
       return (updatedProgress[0] as Progress).toJSON();
     } catch (error: any) {
       throw new DatabaseException(
-        `Erro na seleção do plano de calorias para o usuário com id: ${userId}.`,
+        `Erro na seleção do plano de calorias para o usuário com id: '${userId}'.`,
         ProgressService.name,
         error.message
       );

@@ -5,5 +5,7 @@ export const QueryKeys = {
     MEALS: (date: string) => [`"db-meals-date-${date}"`],
     CALORIE_PLANS: ["db-calorie-plans"],
     FOODS: (foodName: string) => [`db-foods-${foodName}`] as const,
+    CALORIE_STATISTICS: (from: string, to: string) =>
+      ["db-calorie-statistics", from, to] as const,
   },
 };

@@ -8,9 +8,11 @@ import { styles } from "./styles";
 import { useProgress } from "../../../hooks/progress/useProgress";
 import { useCaloriePlans } from "../../../hooks/caloriePlan/useCaloriePlans";
 import { useMeal } from "../../../hooks/meal/useMeal";
-import { useEffect } from "react";
+import { useCallback, useEffect } from "react";
 import { useSnackbar } from "../../../hooks/common/useSnackbar";
 import { convertDateToLocalDateData } from "../../../utils/helpers";
+import { HttpError } from "../../../@core/errors/httpError";
+import { NETWORK_ERROR_MESSAGE } from "../../../constants/errorMessages";
 
 const HomeScreen = () => {
   const { year, month, day } = convertDateToLocalDateData(new Date());
@@ -21,20 +23,32 @@ const HomeScreen = () => {
   const currentPlan = plans.find(
     ({ type }) => type === progress?.currentCaloriePlan
   );
-  const { calorieConsumption, error, isLoading } = useMeal({
+  const { dailyConsumption, error, isLoading } = useMeal({
     date: new Date(year, month, day),
   });
 
-  useEffect(() => {
-    if (error) {
+  const handleQueryError = useCallback(
+    (error: Error) => {
+      const dailyConsumptionErrorMessage =
+        "Desculpe, ocorreu um erro na busca das informações do seu consumo de calorias diário, por favor, tente novamente mais tarde.";
+
+      const errorMessage =
+        error instanceof HttpError
+          ? dailyConsumptionErrorMessage
+          : NETWORK_ERROR_MESSAGE;
+
       showSnackbar({
         variant: "error",
         duration: 7000,
-        message:
-          "Desculpe, ocorreu um erro ao buscar as informações do seu consumo de calorias diário, por favor, tente novamente mais tarde.",
+        message: errorMessage,
       });
-    }
-  }, [error]);
+    },
+    [showSnackbar]
+  );
+
+  useEffect(() => {
+    if (error) handleQueryError(error);
+  }, [handleQueryError]);
 
   return (
     <ScreenWrapper snackbar={<Snackbar />}>
@@ -46,7 +60,7 @@ const HomeScreen = () => {
           <PlanInformation />
           <ProgressStatistics
             targetCalories={currentPlan?.dailyCalorieIntake || 0}
-            consumedCalories={calorieConsumption.total}
+            consumedCalories={dailyConsumption.total}
             isLoading={isLoading}
           />
         </View>

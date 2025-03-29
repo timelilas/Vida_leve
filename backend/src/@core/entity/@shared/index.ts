@@ -6,6 +6,9 @@ export type Gender = (typeof allowedGenders)[number];
 export const allowedPlans = ["gradual", "moderado", "acelerado"] as const;
 export type PlanType = (typeof allowedPlans)[number];
 
+export const allowedStrategies = ["deficit", "superavit"] as const;
+export type StrategyType = (typeof allowedStrategies)[number];
+
 export const allowedActivityFrequencies = [
   "pouca",
   "leve",
