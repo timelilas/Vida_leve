@@ -9,14 +9,10 @@ interface TimeRangeNavigatorProps {
   onChange: (date: Date) => void;
 }
 
-function generateMidnightDate(date: Date) {
-  return new Date(date.getUTCFullYear(), date.getUTCMonth(), date.getUTCDate());
-}
-
 export function TimeRangeNavigator(props: TimeRangeNavigatorProps) {
   const { intervalType } = props;
   const firstRender = useRef(true);
-  const todayDate = generateMidnightDate(new Date());
+  const todayDate = new Date();
 
   const [dateData, setDateData] = useState({
     year: todayDate.getUTCFullYear(),
@@ -27,40 +23,58 @@ export function TimeRangeNavigator(props: TimeRangeNavigatorProps) {
   useEffect(() => {
     if (!firstRender.current) {
       const { year, month, day } = dateData;
-      props.onChange(new Date(year, month, day));
+      const currentDate = new Date(todayDate.toISOString());
+      currentDate.setUTCFullYear(year);
+      currentDate.setUTCMonth(month);
+      currentDate.setUTCDate(day);
+      props.onChange(currentDate);
     } else {
       firstRender.current = false;
     }
   }, [dateData, props.onChange]);
 
   function getMaxDate() {
+    const currentDate = new Date(todayDate.toISOString());
     const day = todayDate.getUTCDate();
-    const month = todayDate.getUTCMonth();
-    const year = todayDate.getUTCFullYear();
     const weekDay = todayDate.getUTCDay();
-    return intervalType === "monthly"
-      ? new Date(year, month, 1)
-      : new Date(year, month, day + 6 - weekDay);
+
+    if (intervalType === "monthly") currentDate.setUTCDate(1);
+    if (intervalType === "weekly") currentDate.setUTCDate(day - weekDay);
+
+    return currentDate;
   }
 
   function getMinDate() {
-    const month = todayDate.getUTCMonth();
+    const currentDate = new Date(todayDate.toISOString());
     const year = todayDate.getUTCFullYear();
-    return intervalType === "monthly"
-      ? new Date(year - 1, month + 1, 1)
-      : new Date(year - 1, month + 1, 1);
+
+    currentDate.setFullYear(year - 1);
+    currentDate.setUTCDate(1);
+
+    return currentDate;
   }
 
   function decrementDate() {
     setDateData((prev) => {
       const { year, month, day } = prev;
-      const nextDate = new Date(
-        year,
-        intervalType === "monthly" ? month - 1 : month,
-        intervalType === "monthly" ? 1 : day - 7
-      );
-      return nextDate < getMinDate()
-        ? prev
+      const minDate = getMinDate();
+      const nextDate = new Date(year, month, day);
+
+      nextDate.setUTCFullYear(year);
+      if (intervalType === "monthly") {
+        nextDate.setUTCMonth(month - 1);
+        nextDate.setUTCDate(2);
+      }
+      if (intervalType === "weekly") {
+        nextDate.setUTCMonth(month);
+        nextDate.setUTCDate(day - 7);
+      }
+      return nextDate <= minDate
+        ? {
+            year: minDate.getUTCFullYear(),
+            month: minDate.getUTCMonth(),
+            day: minDate.getUTCDate(),
+          }
         : {
             year: nextDate.getUTCFullYear(),
             month: nextDate.getUTCMonth(),
@@ -72,13 +86,23 @@ export function TimeRangeNavigator(props: TimeRangeNavigatorProps) {
   function incrementDate() {
     setDateData((prev) => {
       const { year, month, day } = prev;
-      const nextDate = new Date(
-        year,
-        intervalType === "monthly" ? month + 1 : month,
-        intervalType === "monthly" ? 1 : day + 7
-      );
+      const nextDate = new Date(todayDate.toISOString());
+      nextDate.setUTCFullYear(year);
+      if (intervalType === "monthly") {
+        nextDate.setUTCMonth(month + 1);
+        nextDate.setUTCDate(2);
+      }
+      if (intervalType === "weekly") {
+        nextDate.setUTCMonth(month);
+        nextDate.setUTCDate(day + 7);
+      }
+
       return nextDate > getMaxDate()
-        ? prev
+        ? {
+            year: todayDate.getUTCFullYear(),
+            month: todayDate.getUTCMonth(),
+            day: todayDate.getUTCDate(),
+          }
         : {
             year: nextDate.getUTCFullYear(),
             month: nextDate.getUTCMonth(),
@@ -87,23 +111,38 @@ export function TimeRangeNavigator(props: TimeRangeNavigatorProps) {
     });
   }
 
-  function getWeekRangeFromWeekOffset() {
+  function getWeekRangeLocaWeekRange() {
     const { year, month, day } = dateData;
-    const date = new Date(year, month, day);
-    const weekDay = date.getUTCDay();
 
-    const startDayOffset = day - weekDay;
-    const endDayOffset = day + 6 - weekDay;
+    const currentDate = new Date(todayDate.toISOString());
+    currentDate.setUTCFullYear(year);
+    currentDate.setUTCMonth(month);
+    currentDate.setUTCDate(day);
 
-    return {
-      start: new Date(year, month, startDayOffset),
-      end: new Date(year, month, endDayOffset),
+    const localYear = currentDate.getFullYear();
+    const localMonth = currentDate.getMonth();
+    const localDay = currentDate.getDate();
+    const localWeekDay = currentDate.getDay();
+
+    const startDayOffset = localDay - localWeekDay;
+    const endDayOffset = localDay + 6 - localWeekDay;
+
+    const weekRange = {
+      start: new Date(localYear, localMonth, startDayOffset),
+      end: new Date(localYear, localMonth, endDayOffset),
     };
+
+    return weekRange;
   }
 
   function createMonthlyLabel() {
     const { year, month, day } = dateData;
-    const localMonthIndex = new Date(year, month, day).getMonth();
+    const currentDate = new Date(todayDate.toISOString());
+    currentDate.setUTCFullYear(year);
+    currentDate.setUTCMonth(month);
+    currentDate.setUTCDate(day);
+
+    const localMonthIndex = currentDate.getMonth();
     const localMonthName = getMonthNameFromIndex(localMonthIndex);
     return `${toCapitalized(localMonthName)} - ${dateData.year}`;
   }
@@ -111,41 +150,56 @@ export function TimeRangeNavigator(props: TimeRangeNavigatorProps) {
   function createWeeklyLabel(range: { start: Date; end: Date }) {
     const { start, end } = range;
 
-    const startMonthName = getMonthNameFromIndex(start.getMonth());
-    const startDay = `0${start.getDate()}`.slice(-2);
+    const startMonthName = getMonthNameFromIndex(start.getUTCMonth());
+    const startDay = `0${start.getUTCDate()}`.slice(-2);
     const startLabel = `${startDay} de ${toCapitalized(startMonthName)}`;
 
-    const endMonthName = getMonthNameFromIndex(end.getMonth());
-    const endDay = `0${end.getDate()}`.slice(-2);
+    const endMonthName = getMonthNameFromIndex(end.getUTCMonth());
+    const endDay = `0${end.getUTCDate()}`.slice(-2);
     const endLabel = `${endDay} de ${toCapitalized(endMonthName)}`;
 
     return `${startLabel} - ${endLabel}`;
   }
 
-  const offsettedWeekRange = getWeekRangeFromWeekOffset();
+  function isIncrementDisabled() {
+    const maxDate = getMaxDate();
+    const currentDate = new Date(dateData.year, dateData.month, dateData.day);
+    const maxDateYear = maxDate.getUTCFullYear();
+    const maxDateMonth = maxDate.getUTCMonth();
+    const maxDateDay = maxDate.getUTCDate();
+    return (
+      new Date(
+        dateData.year,
+        dateData.month,
+        intervalType === "monthly"
+          ? 1
+          : dateData.day + 6 - currentDate.getUTCDay()
+      ) >= new Date(maxDateYear, maxDateMonth, maxDateDay)
+    );
+  }
+
+  function isDecrementDisabled() {
+    const minDate = getMinDate();
+    const currentDate = new Date(dateData.year, dateData.month, dateData.day);
+    const minDateYear = minDate.getUTCFullYear();
+    const minDateMonth = minDate.getUTCMonth();
+    const minDateDay = minDate.getUTCDate();
+
+    return (
+      new Date(
+        dateData.year,
+        dateData.month,
+        intervalType === "monthly" ? 1 : dateData.day - currentDate.getUTCDay()
+      ) <= new Date(minDateYear, minDateMonth, minDateDay)
+    );
+  }
+
+  const offsettedWeekRange = getWeekRangeLocaWeekRange();
   const weeklyLabel = createWeeklyLabel(offsettedWeekRange);
   const monthlyLabel = createMonthlyLabel();
 
-  const maxDate = getMaxDate();
-  const minDate = getMinDate();
-
-  const currentDate = new Date(dateData.year, dateData.month, dateData.day);
-
-  const incrementDisabled =
-    new Date(
-      dateData.year,
-      dateData.month,
-      intervalType === "monthly"
-        ? 1
-        : dateData.day + 6 - currentDate.getUTCDay()
-    ) >= maxDate;
-
-  const decrementDisabled =
-    new Date(
-      dateData.year,
-      dateData.month,
-      intervalType === "monthly" ? 1 : dateData.day - currentDate.getUTCDay()
-    ) <= minDate;
+  const incrementDisabled = isIncrementDisabled();
+  const decrementDisabled = isDecrementDisabled();
 
   return (
     <View style={styles.container}>

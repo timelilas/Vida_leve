@@ -19,6 +19,7 @@ export default function Select(props: SelectProps) {
   return (
     <Dropdown
       confirmSelectItem
+      mode="auto"
       value={defaultValue}
       style={styles.container}
       placeholderStyle={styles.selectedItemText}
