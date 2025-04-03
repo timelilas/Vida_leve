@@ -9,7 +9,6 @@ import { MealItem } from "./components/MealItem";
 import { useMealStore } from "../../../store/meal";
 import { MealRegistrationData, MealSummary } from "./components/MealSummary";
 import {
-  delay,
   formatDateToLabel,
   getTitleFromMealType,
 } from "../../../utils/helpers";
@@ -84,7 +83,6 @@ const MealRegistrationScreen = () => {
 
     collapseAllItems();
     setIsSubmitting(true);
-    await delay(250);
 
     const { id, date, foods, mealType } = data;
 

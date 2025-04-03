@@ -6,6 +6,7 @@ import { QueryKeys } from "../../constants/reactQueryKeys";
 import { queryClient } from "../../libs/react-query/queryClient";
 import { calculateMealCalories } from "../../@core/entities/meal/helpers";
 import { MealType } from "../../@core/entities/@shared/mealType/type";
+import { invalidateCalorieStatistics } from "../../libs/react-query/helpers";
 
 interface UseMealParams {
   date?: Date;
@@ -29,23 +30,6 @@ export function useMeal(params?: UseMealParams) {
       return data.meals;
     },
   });
-
-  const invalidateCalorieStatistics = (mealDateISO: string) => {
-    queryClient.invalidateQueries({
-      predicate: (query) => {
-        const baseKey = QueryKeys.DATABASE.CALORIE_STATISTICS("", "")[0];
-
-        if (!Array.isArray(query.queryKey)) return false;
-        if (query.queryKey[0] !== baseKey) return false;
-
-        const from = new Date(query.queryKey[1]);
-        const to = new Date(query.queryKey[2]);
-        const mealDate = new Date(mealDateISO);
-
-        return mealDate <= to && mealDate >= from;
-      },
-    });
-  };
 
   const createMealMutation = useMutation({
     mutationFn: async (params: CreateMealParams) => {

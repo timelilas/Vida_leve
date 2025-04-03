@@ -9,7 +9,7 @@ export const styles = StyleSheet.create({
     height: 34,
   },
   labelContainer: {
-    borderWidth: 2,
+    borderWidth: 3,
     borderColor: colors.secondary,
     borderRadius: 8,
     flex: 1,

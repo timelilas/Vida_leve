@@ -16,7 +16,8 @@ import UpdateProgressScreen from "../screens/main/UpdateProgressScreen";
 import CreateMealScreen from "../screens/main/CreateMealScreen";
 import SearchFoodsScreen from "../screens/main/SearchFoodsScreen";
 import MealRegistrationScreen from "../screens/main/MealRegistrationScreen";
-import CalorieReportScreen from "../screens/main/CalorieReportScreen";
+import ReportDetailsScreen from "../screens/main/ReportDetailsScreen";
+import ReportScreen from "../screens/main/ReportScreen";
 
 const AppRouter = () => {
   return (
@@ -95,8 +96,13 @@ const AppRouter = () => {
           options={{ headerShown: false }}
         />
         <Stack.Screen
-          name={RouteConstants.CalorieReport}
-          component={CalorieReportScreen}
+          name={RouteConstants.Report}
+          component={ReportScreen}
+          options={{ headerShown: false }}
+        />
+        <Stack.Screen
+          name={RouteConstants.ReportDetails}
+          component={ReportDetailsScreen}
           options={{ headerShown: false }}
         />
         <Stack.Screen
