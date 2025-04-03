@@ -17,6 +17,7 @@ export const colors = {
   gray: {
     medium: "#B7B7B7",
     mediumDark: "#a7a7a7",
+    light: "#CCCCCC",
     dark: "#585858",
   },
   blue: "#0000FF",

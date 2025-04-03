@@ -83,8 +83,8 @@ export const getCalorieStatisticsSchema = z
     message: "Os parâmetros 'from' e 'to' devem ser passados em conjunto",
     path: ["root"],
   })
-  .refine(({ to, from }) => new Date(to!) > new Date(from!), {
+  .refine(({ to, from }) => new Date(to!) >= new Date(from!), {
     message:
-      "O parâmetro 'from' deve ser uma data superior à data do parâmetro 'to'",
+      "O parâmetro 'from' deve ser uma data igual ou superiors à data do parâmetro 'to'",
     path: ["root"],
   });
