@@ -138,7 +138,7 @@ const SearchFoodsScreen = ({ route }: SearchFoodsScreenProps) => {
     if (error && !isFetching) {
       handleQueryError(error);
     }
-  }, [error, isFetching]);
+  }, [error, isFetching, handleQueryError]);
 
   return (
     <ScreenWrapper

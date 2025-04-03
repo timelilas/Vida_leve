@@ -125,27 +125,37 @@ export function LineChart(props: LineChartProps) {
     });
   }
 
+  function getTooltipePositionWEB(e: PointerEvent) {
+    return {
+      posX: Math.trunc(e.nativeEvent.offsetX) - canvas.paddingLeft,
+      posY:
+        canvas.height -
+        canvas.paddingBottom -
+        Math.trunc(e.nativeEvent.offsetY),
+    };
+  }
+
+  function getTooltipPositionMOBILE(e: GestureResponderEvent) {
+    return {
+      posX: Math.trunc(e.nativeEvent.locationX) - canvas.paddingLeft,
+      posY:
+        canvas.height -
+        canvas.paddingBottom -
+        Math.trunc(e.nativeEvent.locationY),
+    };
+  }
+
   function handleTooltipPosition(e: GestureResponderEvent | PointerEvent) {
     let posX = 0;
     let posY = 0;
-    let platformEvent = e;
 
-    if (Platform.OS === "web") {
-      platformEvent = e as PointerEvent;
-      posX = Math.trunc(platformEvent.nativeEvent.offsetX) - canvas.paddingLeft;
-      posY =
-        canvas.height -
-        canvas.paddingBottom -
-        Math.trunc(platformEvent.nativeEvent.offsetY);
-    } else {
-      platformEvent = e as GestureResponderEvent;
-      posX =
-        Math.trunc(platformEvent.nativeEvent.locationX) - canvas.paddingLeft;
-      posY =
-        canvas.height -
-        canvas.paddingBottom -
-        Math.trunc(platformEvent.nativeEvent.locationY);
-    }
+    const tooltipPlataformPosition =
+      Platform.OS === "web"
+        ? getTooltipePositionWEB(e as PointerEvent)
+        : getTooltipPositionMOBILE(e as GestureResponderEvent);
+
+    posX = tooltipPlataformPosition.posX;
+    posY = tooltipPlataformPosition.posY;
 
     for (const position of allowedTooltipPositions) {
       const diffX = Math.abs(position.x - posX);
@@ -155,14 +165,13 @@ export function LineChart(props: LineChartProps) {
         setTooltip((prev) => {
           const nextPosX = canvas.paddingLeft + position.x;
           const nextPosY = canvas.height - canvas.paddingBottom - position.y;
+          const samePosition =
+            prev?.posX === nextPosX && prev.posY === nextPosY;
           return {
             posX: nextPosX,
             posY: nextPosY,
             value: position.value,
-            visible:
-              prev?.posX === nextPosX && prev.posY === nextPosY
-                ? !prev.visible
-                : true,
+            visible: samePosition ? !prev.visible : true,
           };
         });
       }

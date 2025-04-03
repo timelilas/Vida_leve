@@ -23,7 +23,7 @@ class App {
   private config(): void {
     const corsOptions: cors.CorsOptions = {
       methods: ["GET", "POST", "PATCH", "DELETE", "OPTIONS", "PUT"],
-      allowedHeaders: ["Content-Type", "Authorization"],
+      allowedHeaders: ["Content-Type", "Authorization", "X-Timezone"],
       credentials: false,
       origin: process.env.WEB_ORIGIN,
     };

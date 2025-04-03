@@ -23,7 +23,6 @@ import {
   calculateAvgCarlorieConsumption,
   getCalorieStatisticsSummary,
 } from "../../../@core/entities/calorieStatistic/helpers";
-import { EmptyChartPlaceHolder } from "./components/EmptyChartPlaceholder";
 import { NETWORK_ERROR_MESSAGE } from "../../../constants/errorMessages";
 import { HttpError } from "../../../@core/errors/httpError";
 import { useSnackbar } from "../../../hooks/common/useSnackbar";
@@ -33,8 +32,11 @@ import { useThrottle } from "../../../hooks/common/useThrottle ";
 import { DateIntervalType, PlainDate } from "../../../@types";
 import { queryClient } from "../../../libs/react-query/queryClient";
 import { QueryKeys } from "../../../constants/reactQueryKeys";
+import { ChartLabel } from "../../../components/ChartLabel";
+import { EmptyDataPlaceholder } from "../../../components/EmptyDataPlaceholder";
+import { PizzaChartIcon } from "../../../components/Icons/PizzaChartIcon";
 
-const CalorieReportScreen = () => {
+const ReportDetailsScreen = () => {
   const { Snackbar, showSnackbar } = useSnackbar();
   const navigation = useAppNavigation();
   const dateData = convertDateToLocalDateData(new Date());
@@ -49,10 +51,11 @@ const CalorieReportScreen = () => {
     weekDay: dateData.weekDay,
   });
 
-  const datelRange = generateLocalDateRange(intervalType, dateFilter);
+  const dateRange = generateLocalDateRange(intervalType, dateFilter);
 
   const { statistics, isLoading, isFetching, error } = useCalorieStatistics({
-    ...datelRange,
+    from: dateRange.from,
+    to: dateRange.to > localDate ? localDate : dateRange.to,
     disabled: isThrottling,
   });
 
@@ -82,9 +85,11 @@ const CalorieReportScreen = () => {
   const handleTimeRangeChange = useCallback(
     (date: Date) => {
       const { from, to } = generateLocalDateRange(intervalType, date);
+      const sanitizedTo = to > localDate ? localDate : to;
+
       const queryKey = QueryKeys.DATABASE.CALORIE_STATISTICS(
         from.toISOString().split("T")[0],
-        to.toISOString().split("T")[0]
+        sanitizedTo.toISOString().split("T")[0]
       );
       if (queryClient.getQueryData(queryKey) === undefined) {
         startThrottler();
@@ -96,7 +101,7 @@ const CalorieReportScreen = () => {
         weekDay: date.getDay(),
       });
     },
-    [setDateFilter]
+    [setDateFilter, intervalType]
   );
 
   const handleQueryError = useCallback(
@@ -228,29 +233,24 @@ const CalorieReportScreen = () => {
             Cumprimento do plano de execução:
           </Text>
           <View style={styles.labelsWrapper}>
-            <View style={styles.labelItem}>
-              <View
-                style={[
-                  styles.labelMarker,
-                  { backgroundColor: colors.secondary },
-                ]}
-              />
-              <Text style={styles.labelText}>Meta alcançada</Text>
-            </View>
-            <View style={styles.labelItem}>
-              <View
-                style={[
-                  styles.labelMarker,
-                  { backgroundColor: colors.primary },
-                ]}
-              />
-              <Text style={styles.labelText}>Meta não alcançada</Text>
-            </View>
+            <ChartLabel color={colors.secondary} label="Meta alcançada" />
+            <ChartLabel color={colors.primary} label="Meta não alcançada" />
           </View>
           {daysWithData > 0 ? (
             <PizzaChart style={styles.chart} data={chartData} />
           ) : (
-            <EmptyChartPlaceHolder />
+            <EmptyDataPlaceholder
+              title="Sem dados disponíveis"
+              text="Parece que você não possui dados registrados para esse período."
+              icon={
+                <PizzaChartIcon
+                  strokeWidth={1.5}
+                  width="100%"
+                  height="100%"
+                  stroke={colors.gray.mediumDark}
+                />
+              }
+            />
           )}
         </View>
       </PizzaChartSkeleton>
@@ -264,4 +264,4 @@ const CalorieReportScreen = () => {
   );
 };
 
-export default CalorieReportScreen;
+export default ReportDetailsScreen;
