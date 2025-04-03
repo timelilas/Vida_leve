@@ -5,6 +5,7 @@ import { httpProgressService } from "../../services/progress";
 import { useCallback } from "react";
 import { queryClient } from "../../libs/react-query/queryClient";
 import { PlanType } from "../../@core/entities/@shared/planType/type";
+import { invalidateCalorieStatistics } from "../../libs/react-query/helpers";
 
 interface UseProgressParams {
   queryEnabled?: boolean;
@@ -30,6 +31,7 @@ export function useProgress(params?: UseProgressParams) {
       return progressData;
     },
     onSuccess: (progressData) => {
+      invalidateCalorieStatistics();
       queryClient.setQueryData<ProgressQueryState>(
         QueryKeys.DATABASE.PROGRESS,
         (old) => {
@@ -47,6 +49,7 @@ export function useProgress(params?: UseProgressParams) {
       return progressData;
     },
     onSuccess: (progressData) => {
+      invalidateCalorieStatistics();
       queryClient.setQueryData<ProgressQueryState>(
         QueryKeys.DATABASE.PROGRESS,
         (old) => {
