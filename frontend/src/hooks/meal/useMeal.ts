@@ -100,6 +100,10 @@ export function useMeal(params?: UseMealParams) {
   return {
     meals: mealsQuery.data || [],
     isLoading: mealsQuery.isLoading,
+    isCreatingMeal: createMealMutation.isPending,
+    isUpdatingMeal: updateMealMutaiton.isPending,
+    isMealCreated: createMealMutation.isSuccess,
+    isMealUpdated: updateMealMutaiton.isSuccess,
     error: mealsQuery.error,
     dailyConsumption: calculateDailyConsumption(),
     createMeal,

@@ -72,5 +72,6 @@ export function useUser(params?: UseUserParams) {
     user: data || initialData,
     isLoading,
     error,
+    isUpdatingProfile: updateUserProfileMutation.isPending,
   };
 }
