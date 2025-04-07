@@ -47,8 +47,8 @@ const HomeScreen = () => {
   );
 
   useEffect(() => {
-    if (error) handleQueryError(error);
-  }, [handleQueryError]);
+    if (error && !isLoading) handleQueryError(error);
+  }, [error, isLoading, handleQueryError]);
 
   return (
     <ScreenWrapper snackbar={<Snackbar />}>

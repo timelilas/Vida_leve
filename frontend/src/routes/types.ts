@@ -12,12 +12,13 @@ export enum RouteConstants {
   GoalGuidance = "SCREEN_Onboarding_GoalGuidance",
   Home = "SCREEN_Main_Home",
   GoalSettings = "SCREEN_Main_GoalSettings",
-  UpdateProgress = "SCREEN_MAIN_UpdateProgress",
-  CreateMeal = "SCREEN_MAIN_CreateMeal",
-  SearchFoods = "SCREEN_MAIN_SearchFoods",
-  MealRegistration = "SCREEN_MealRegistration",
-  Report = "SCREEN_ReportScreen",
-  ReportDetails = "SCREEN_ReportDetailsScreen",
+  UpdateProgress = "SCREEN_Main_UpdateProgress",
+  UpdateProfile = "SCREEN_Main_UpdateProfile",
+  CreateMeal = "SCREEN_Main_CreateMeal",
+  SearchFoods = "SCREEN_Main_SearchFoods",
+  MealRegistration = "SCREEN_Main_MealRegistration",
+  Report = "SCREEN_Main_ReportScreen",
+  ReportDetails = "SCREEN_Main_ReportDetailsScreen",
   ConnectionError = "SCREEN_Error_ConnectionError",
 }
 
@@ -38,6 +39,7 @@ export type RouteParamsList = {
   [RouteConstants.Home]: undefined;
   [RouteConstants.GoalSettings]: undefined;
   [RouteConstants.UpdateProgress]: undefined;
+  [RouteConstants.UpdateProfile]: undefined;
   [RouteConstants.CreateMeal]?: { withSubmitButton?: boolean; date?: string };
   [RouteConstants.SearchFoods]?: { foodName: string };
   [RouteConstants.MealRegistration]: undefined;
