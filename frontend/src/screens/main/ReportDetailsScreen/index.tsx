@@ -7,12 +7,13 @@ import {
   convertDateToLocalDateData,
   formatDateToLabel,
   generateLocalDateRange,
+  toCapitalized,
 } from "../../../utils/helpers";
 import { ScreenTitle } from "../../../components/ScreenTitle";
 import { Paragraph } from "../../../components/Paragraph/Paragraph";
 import Select, { SelectEvent } from "../../../components/Select";
 import { TimeRangeNavigator } from "../../../components/TimeRangeNavigator";
-import { useCallback, useEffect, useState } from "react";
+import { ReactNode, useCallback, useEffect, useState } from "react";
 import { colors } from "../../../styles/colors";
 import { SubmitButton } from "../../../components/SubmitButton";
 import { CommonActions } from "@react-navigation/native";
@@ -35,6 +36,7 @@ import { QueryKeys } from "../../../constants/reactQueryKeys";
 import { ChartLabel } from "../../../components/ChartLabel";
 import { EmptyDataPlaceholder } from "../../../components/EmptyDataPlaceholder";
 import { PizzaChartIcon } from "../../../components/Icons/PizzaChartIcon";
+import { PlanStrategy } from "../../../@core/entities/@shared/panStrategy/type";
 
 const ReportDetailsScreen = () => {
   const { Snackbar, showSnackbar } = useSnackbar();
@@ -120,21 +122,58 @@ const ReportDetailsScreen = () => {
     [showSnackbar]
   );
 
+  function createSuccessFeedbackMessage(
+    targetConsumption: number,
+    planName: string
+  ) {
+    const textStyle = [styles.feedbackMessage, styles.feedbackMessageBold];
+    return (
+      <>
+        ✅ Seu consumo médio está dentro da recomendação do{" "}
+        <Text style={textStyle}>Plano {planName}</Text> que é de{" "}
+        <Text style={textStyle}>{targetConsumption} kcal/dia</Text>.
+      </>
+    );
+  }
+
+  function createWarningFeedbackMessage(
+    targetConsumption: number,
+    planName: string,
+    strategy: PlanStrategy
+  ) {
+    const textStyle = [styles.feedbackMessage, styles.feedbackMessageBold];
+
+    return (
+      <>
+        🚨 Seu consumo médio está {strategy === "deficit" ? "acima" : "abaixo"}{" "}
+        da recomendação do <Text style={textStyle}>Plano {planName}</Text> que é
+        de <Text style={textStyle}>{targetConsumption} kcal/dia</Text>.
+      </>
+    );
+  }
+
   function generateConsumptionFeedback() {
     const latestStatistic = statistics[statistics.length - 1];
-    let feedbakMessage =
+    let feedbakMessage: ReactNode =
       "⚠️ Você ainda não registrou nenhuma refeição no período. Adicione refeições para acompanhar sua alimentação corretamente.";
 
     if (!latestStatistic || avgConsumption <= 0) return feedbakMessage;
 
-    const currentPlanLabel = latestStatistic.planType;
-    const successMessage = `✅ Seu consumo médio está dentro da recomendação do plano ${currentPlanLabel} de ${latestStatistic.target} kcal/dia.`;
+    const currentPlanLabel = toCapitalized(latestStatistic.planType);
+    const successMessage = createSuccessFeedbackMessage(
+      latestStatistic.target,
+      currentPlanLabel
+    );
 
     if (latestStatistic.strategy === "deficit") {
       if (avgConsumption <= latestStatistic.target) {
         feedbakMessage = successMessage;
       } else {
-        feedbakMessage = `🚨 Seu consumo médio está acima da recomendação do plano ${currentPlanLabel} de ${latestStatistic.target} kcal/dia`;
+        feedbakMessage = createWarningFeedbackMessage(
+          latestStatistic.target,
+          currentPlanLabel,
+          "deficit"
+        );
       }
     }
 
@@ -142,7 +181,11 @@ const ReportDetailsScreen = () => {
       if (avgConsumption >= latestStatistic.target) {
         feedbakMessage = successMessage;
       } else {
-        feedbakMessage = `🚨 Seu consumo médio está abaixo da recomendação do plano ${currentPlanLabel} de ${latestStatistic.target} kcal/dia`;
+        feedbakMessage = feedbakMessage = createWarningFeedbackMessage(
+          latestStatistic.target,
+          currentPlanLabel,
+          "superavit"
+        );
       }
     }
 
@@ -214,7 +257,7 @@ const ReportDetailsScreen = () => {
         style={styles.summaryContainerSkeleton}
       >
         <View style={styles.summaryContainer}>
-          <Text style={styles.sectionTitle}>Media de consumo:</Text>
+          <Text style={styles.sectionTitle}>Média de consumo:</Text>
           <Text style={styles.avgCalorieConsumption}>
             {Math.round(avgConsumption)} KCAL
           </Text>
