@@ -10,10 +10,7 @@ interface SnackbarState {
   isVisible: boolean;
 }
 
-type SnackbarOptions = Pick<
-  SnackbarState,
-  "message" | "variant" | "duration"
-> & {
+type SnackbarOptions = Pick<SnackbarState, "message" | "variant" | "duration"> & {
   id?: number;
 };
 
@@ -23,7 +20,7 @@ export function useSnackbar() {
     duration: 0,
     message: "",
     variant: "neutral",
-    isVisible: false,
+    isVisible: false
   });
 
   const showSnackbar = useCallback((options: SnackbarOptions) => {
@@ -45,10 +42,11 @@ export function useSnackbar() {
     snackbarState.duration,
     snackbarState.message,
     snackbarState.variant,
+    snackbarState.isVisible
   ]);
 
   return {
     showSnackbar,
-    Snackbar: renderSnackbar,
+    Snackbar: renderSnackbar
   };
 }

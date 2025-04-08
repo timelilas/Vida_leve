@@ -35,10 +35,10 @@ export function useFoods(params: UseFoodsParams) {
       const { data } = await httpFoodService.searchFoods({
         name: foodSlug,
         limit: Math.max(params.limit, 10),
-        offset: 0,
+        offset: 0
       });
       return data;
-    },
+    }
   });
 
   const { data, isFetching, error } = useQuery<FoodDataState>(options);
@@ -56,24 +56,24 @@ export function useFoods(params: UseFoodsParams) {
         const { data: newData } = await httpFoodService.searchFoods({
           name: foodSlug,
           limit: 10,
-          offset: currentState?.foods.length || 0,
+          offset: currentState?.foods.length || 0
         });
 
         if (!currentState) return newData;
 
         return {
           hasMore: newData.hasMore,
-          foods: [...currentState.foods, ...newData.foods],
+          foods: [...currentState.foods, ...newData.foods]
         };
-      },
+      }
     });
-  }, [queryKey]);
+  }, [queryKey, options.gcTime, foodSlug]);
 
   return {
     foods: deferredData?.foods || [],
     hasMore: deferredData?.hasMore ?? true,
     isFetching,
     error,
-    fetchMoreFoods,
+    fetchMoreFoods
   };
 }

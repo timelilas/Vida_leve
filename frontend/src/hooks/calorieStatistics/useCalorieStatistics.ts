@@ -12,10 +12,7 @@ export function useCalorieStatistics(params: UseCalorieStatisticsParams) {
   const { from, to } = params;
   const isoDateFrom = from.toISOString().split("T")[0];
   const isoDateTo = to.toISOString().split("T")[0];
-  const queryKey = QueryKeys.DATABASE.CALORIE_STATISTICS(
-    isoDateFrom,
-    isoDateTo
-  );
+  const queryKey = QueryKeys.DATABASE.CALORIE_STATISTICS(isoDateFrom, isoDateTo);
 
   const calorieStatisticsQuery = useQuery({
     queryKey,
@@ -25,16 +22,16 @@ export function useCalorieStatistics(params: UseCalorieStatisticsParams) {
     queryFn: async () => {
       const { data: statistics } = await httpMealService.getCalorieStatistics({
         from: isoDateFrom,
-        to: isoDateTo,
+        to: isoDateTo
       });
       return statistics;
-    },
+    }
   });
 
   return {
     statistics: calorieStatisticsQuery.data || [],
     isLoading: calorieStatisticsQuery.isLoading,
     isFetching: calorieStatisticsQuery.isFetching,
-    error: calorieStatisticsQuery.error,
+    error: calorieStatisticsQuery.error
   };
 }

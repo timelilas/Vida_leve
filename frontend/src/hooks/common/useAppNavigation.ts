@@ -10,20 +10,17 @@ export function useAppNavigation(options?: UseAppNavigationOptions) {
   const navigation = useNavigation<NavigationProp<RouteParamsList>>();
 
   useEffect(() => {
-    const beforeRemoveUnsubscription = navigation.addListener(
-      "beforeRemove",
-      (e) => {
-        const isGoingBack = e.data.action.type === "GO_BACK";
-        if (isGoingBack && options?.preventGoBack) {
-          return e.preventDefault();
-        }
+    const beforeRemoveUnsubscription = navigation.addListener("beforeRemove", (e) => {
+      const isGoingBack = e.data.action.type === "GO_BACK";
+      if (isGoingBack && options?.preventGoBack) {
+        return e.preventDefault();
       }
-    );
+    });
 
     return () => {
       beforeRemoveUnsubscription();
     };
-  }, [options?.preventGoBack]);
+  }, [options?.preventGoBack, navigation]);
 
   return navigation;
 }

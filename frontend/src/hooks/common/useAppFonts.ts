@@ -7,7 +7,7 @@ export function useAppFonts() {
     "Roboto-Medium": require("../../assets/fonts/Roboto-Medium.ttf"),
     "Roboto-Regular": require("../../assets/fonts/Roboto-Regular.ttf"),
     "Roboto-Light": require("../../assets/fonts/Roboto-Light.ttf"),
-    "Ruda-Bold": require("../../assets/fonts/Ruda-Bold.ttf"),
+    "Ruda-Bold": require("../../assets/fonts/Ruda-Bold.ttf")
   });
 
   return { isFontsLoaded, error };

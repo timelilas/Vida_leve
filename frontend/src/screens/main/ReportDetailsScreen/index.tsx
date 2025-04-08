@@ -7,13 +7,13 @@ import {
   convertDateToLocalDateData,
   formatDateToLabel,
   generateLocalDateRange,
-  toCapitalized,
+  toCapitalized
 } from "../../../utils/helpers";
 import { ScreenTitle } from "../../../components/ScreenTitle";
 import { Paragraph } from "../../../components/Paragraph/Paragraph";
 import Select, { SelectEvent } from "../../../components/Select";
 import { TimeRangeNavigator } from "../../../components/TimeRangeNavigator";
-import { ReactNode, useCallback, useEffect, useState } from "react";
+import { ReactNode, useCallback, useEffect, useMemo, useState } from "react";
 import { colors } from "../../../styles/colors";
 import { SubmitButton } from "../../../components/SubmitButton";
 import { CommonActions } from "@react-navigation/native";
@@ -22,14 +22,14 @@ import { PizzaChart, PizzaChartProps } from "../../../components/PizzaChart";
 import { useCalorieStatistics } from "../../../hooks/calorieStatistics/useCalorieStatistics";
 import {
   calculateAvgCarlorieConsumption,
-  getCalorieStatisticsSummary,
+  getCalorieStatisticsSummary
 } from "../../../@core/entities/calorieStatistic/helpers";
 import { NETWORK_ERROR_MESSAGE } from "../../../constants/errorMessages";
 import { HttpError } from "../../../@core/errors/httpError";
 import { useSnackbar } from "../../../hooks/common/useSnackbar";
 import { PizzaChartSkeleton } from "./components/PizzaChartSkeleton";
 import { SummaryTextSkeleton } from "./components/SummaryTextSkeleton";
-import { useThrottle } from "../../../hooks/common/useThrottle ";
+import { useDebounce } from "../../../hooks/common/useDebounce";
 import { DateIntervalType, PlainDate } from "../../../@types";
 import { queryClient } from "../../../libs/react-query/queryClient";
 import { QueryKeys } from "../../../constants/reactQueryKeys";
@@ -41,16 +41,19 @@ import { PlanStrategy } from "../../../@core/entities/@shared/panStrategy/type";
 const ReportDetailsScreen = () => {
   const { Snackbar, showSnackbar } = useSnackbar();
   const navigation = useAppNavigation();
-  const dateData = convertDateToLocalDateData(new Date());
-  const localDate = new Date(dateData.year, dateData.month, dateData.day);
+  const dateData = useMemo(() => convertDateToLocalDateData(new Date()), []);
+  const localDate = useMemo(
+    () => new Date(dateData.year, dateData.month, dateData.day),
+    [dateData]
+  );
 
-  const { isThrottling, startThrottler } = useThrottle(300);
+  const { isDebouncing, startDebounce } = useDebounce(300);
   const [intervalType, setIntervalType] = useState<DateIntervalType>("monthly");
   const [dateFilter, setDateFilter] = useState<PlainDate>({
     year: dateData.year,
     month: dateData.month,
     day: dateData.day,
-    weekDay: dateData.weekDay,
+    weekDay: dateData.weekDay
   });
 
   const dateRange = generateLocalDateRange(intervalType, dateFilter);
@@ -58,11 +61,10 @@ const ReportDetailsScreen = () => {
   const { statistics, isLoading, isFetching, error } = useCalorieStatistics({
     from: dateRange.from,
     to: dateRange.to > localDate ? localDate : dateRange.to,
-    disabled: isThrottling,
+    disabled: isDebouncing
   });
 
-  const { daysOffTarget, daysWithinTarget } =
-    getCalorieStatisticsSummary(statistics);
+  const { daysOffTarget, daysWithinTarget } = getCalorieStatisticsSummary(statistics);
 
   const avgConsumption = calculateAvgCarlorieConsumption(statistics);
   const daysWithData = daysOffTarget + daysWithinTarget;
@@ -75,7 +77,7 @@ const ReportDetailsScreen = () => {
     navigation.dispatch(
       CommonActions.reset({
         index: 0,
-        routes: [{ name: RouteConstants.Home }],
+        routes: [{ name: RouteConstants.Home }]
       })
     );
   }
@@ -94,38 +96,34 @@ const ReportDetailsScreen = () => {
         sanitizedTo.toISOString().split("T")[0]
       );
       if (queryClient.getQueryData(queryKey) === undefined) {
-        startThrottler();
+        startDebounce();
       }
       setDateFilter({
         year: date.getFullYear(),
         month: date.getMonth(),
         day: date.getDate(),
-        weekDay: date.getDay(),
+        weekDay: date.getDay()
       });
     },
-    [setDateFilter, intervalType]
+    [setDateFilter, startDebounce, intervalType, localDate]
   );
 
   const handleQueryError = useCallback(
     (error: Error) => {
       const mealsError = `Desculpe, não foi possível obter as informações para o período selecionado. contate o suporte para mais informações.`;
 
-      const errorMessage =
-        error instanceof HttpError ? mealsError : NETWORK_ERROR_MESSAGE;
+      const errorMessage = error instanceof HttpError ? mealsError : NETWORK_ERROR_MESSAGE;
 
       showSnackbar({
         variant: "error",
         duration: 5000,
-        message: errorMessage,
+        message: errorMessage
       });
     },
     [showSnackbar]
   );
 
-  function createSuccessFeedbackMessage(
-    targetConsumption: number,
-    planName: string
-  ) {
+  function createSuccessFeedbackMessage(targetConsumption: number, planName: string) {
     const textStyle = [styles.feedbackMessage, styles.feedbackMessageBold];
     return (
       <>
@@ -145,9 +143,9 @@ const ReportDetailsScreen = () => {
 
     return (
       <>
-        🚨 Seu consumo médio está {strategy === "deficit" ? "acima" : "abaixo"}{" "}
-        da recomendação do <Text style={textStyle}>Plano {planName}</Text> que é
-        de <Text style={textStyle}>{targetConsumption} kcal/dia</Text>.
+        🚨 Seu consumo médio está {strategy === "deficit" ? "acima" : "abaixo"} da recomendação
+        do <Text style={textStyle}>Plano {planName}</Text> que é de{" "}
+        <Text style={textStyle}>{targetConsumption} kcal/dia</Text>.
       </>
     );
   }
@@ -198,21 +196,17 @@ const ReportDetailsScreen = () => {
       color: colors.primary,
       label: {
         title: `${Math.round((daysOffTarget * 100) / daysWithData)}%`,
-        subtitle:
-          daysOffTarget > 1 ? `${daysOffTarget} dias` : `${daysOffTarget} dia`,
-      },
+        subtitle: daysOffTarget > 1 ? `${daysOffTarget} dias` : `${daysOffTarget} dia`
+      }
     },
     {
       value: daysWithinTarget,
       color: colors.secondary,
       label: {
         title: `${Math.round((daysWithinTarget * 100) / daysWithData)}%`,
-        subtitle:
-          daysWithinTarget > 1
-            ? `${daysWithinTarget} dias`
-            : `${daysWithinTarget} dia`,
-      },
-    },
+        subtitle: daysWithinTarget > 1 ? `${daysWithinTarget} dias` : `${daysWithinTarget} dia`
+      }
+    }
   ];
 
   useEffect(() => {
@@ -229,13 +223,10 @@ const ReportDetailsScreen = () => {
       />
 
       <View style={styles.textWrapper}>
-        <ScreenTitle
-          title="Consumo de calorias por período "
-          style={styles.title}
-        />
+        <ScreenTitle title="Consumo de calorias por período " style={styles.title} />
         <Paragraph style={styles.text}>
-          Visualize seu consumo calórico ao longo dos dias e mantenha uma
-          alimentação equilibrada.
+          Visualize seu consumo calórico ao longo dos dias e mantenha uma alimentação
+          equilibrada.
         </Paragraph>
       </View>
       <View style={styles.inputWrapper}>
@@ -243,38 +234,27 @@ const ReportDetailsScreen = () => {
           defaultValue={intervalType}
           data={[
             { label: "Mensal", value: "monthly" },
-            { label: "Semanal", value: "weekly" },
+            { label: "Semanal", value: "weekly" }
           ]}
           onChange={handleIntervalTypeSelect}
         />
-        <TimeRangeNavigator
-          onChange={handleTimeRangeChange}
-          intervalType={intervalType}
-        />
+        <TimeRangeNavigator onChange={handleTimeRangeChange} intervalType={intervalType} />
       </View>
       <SummaryTextSkeleton
-        show={isLoading || isThrottling || isFetching || !!error}
-        style={styles.summaryContainerSkeleton}
-      >
+        show={isLoading || isDebouncing || isFetching || !!error}
+        style={styles.summaryContainerSkeleton}>
         <View style={styles.summaryContainer}>
           <Text style={styles.sectionTitle}>Média de consumo:</Text>
-          <Text style={styles.avgCalorieConsumption}>
-            {Math.round(avgConsumption)} KCAL
-          </Text>
-          <Text style={styles.feedbackMessage}>
-            {generateConsumptionFeedback()}
-          </Text>
+          <Text style={styles.avgCalorieConsumption}>{Math.round(avgConsumption)} KCAL</Text>
+          <Text style={styles.feedbackMessage}>{generateConsumptionFeedback()}</Text>
         </View>
       </SummaryTextSkeleton>
       <View style={styles.separatorLine} />
       <PizzaChartSkeleton
-        show={isLoading || isThrottling || isFetching || !!error}
-        style={styles.chartContainerSkeleton}
-      >
+        show={isLoading || isDebouncing || isFetching || !!error}
+        style={styles.chartContainerSkeleton}>
         <View style={styles.chartContainer}>
-          <Text style={styles.sectionTitle}>
-            Cumprimento do plano de execução:
-          </Text>
+          <Text style={styles.sectionTitle}>Cumprimento do plano de execução:</Text>
           <View style={styles.labelsWrapper}>
             <ChartLabel color={colors.secondary} label="Meta alcançada" />
             <ChartLabel color={colors.primary} label="Meta não alcançada" />

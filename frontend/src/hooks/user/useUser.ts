@@ -16,7 +16,7 @@ const initialData: UserQueryState = {
   name: "",
   phone: "",
   birthDate: "",
-  gender: null,
+  gender: null
 };
 
 export function useUser(params?: UseUserParams) {
@@ -27,7 +27,7 @@ export function useUser(params?: UseUserParams) {
     queryFn: async () => {
       const { data } = await httpUserService.getProfile();
       return data;
-    },
+    }
   });
 
   const updateUserProfileMutation = useMutation({
@@ -37,25 +37,20 @@ export function useUser(params?: UseUserParams) {
         name,
         phone,
         gender,
-        birthDate,
+        birthDate
       });
       return updatedUser;
     },
     onSuccess: (updatedUser) => {
-      queryClient.setQueryData<UserQueryState>(
-        QueryKeys.DATABASE.USER,
-        (old) => {
-          return old ? { ...old, ...updatedUser } : updatedUser;
-        }
-      );
-    },
+      queryClient.setQueryData<UserQueryState>(QueryKeys.DATABASE.USER, (old) => {
+        return old ? { ...old, ...updatedUser } : updatedUser;
+      });
+    }
   });
 
   const updateUserProfile = useCallback(
     async (params: UpdateUserProfileParams) => {
-      const updatedProfile = await updateUserProfileMutation.mutateAsync(
-        params
-      );
+      const updatedProfile = await updateUserProfileMutation.mutateAsync(params);
       return updatedProfile;
     },
     [updateUserProfileMutation]
@@ -64,7 +59,7 @@ export function useUser(params?: UseUserParams) {
   const getUserProfile = useCallback(async () => {
     const user = await refetch({ throwOnError: true });
     return user.data as UserQueryState;
-  }, []);
+  }, [refetch]);
 
   return {
     getUserProfile,
@@ -72,6 +67,6 @@ export function useUser(params?: UseUserParams) {
     user: data || initialData,
     isLoading,
     error,
-    isUpdatingProfile: updateUserProfileMutation.isPending,
+    isUpdatingProfile: updateUserProfileMutation.isPending
   };
 }
