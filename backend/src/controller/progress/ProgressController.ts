@@ -83,16 +83,18 @@ export default class ProgressController {
         transaction,
       });
 
-      await this._PlanHistoryService.upsert(
-        {
-          date: getDateFromTimezone(userTimezone),
-          planType: req.body.currentCaloriePlan,
-          strategy: goalWeight < weight ? "deficit" : "superavit",
-          dailyCalorieIntake: planCalorieIntake?.dailyCalorieIntake!,
-          userId: userId,
-        },
-        transaction
-      );
+      if (planCalorieIntake) {
+        await this._PlanHistoryService.upsert(
+          {
+            date: getDateFromTimezone(userTimezone),
+            planType: req.body.currentCaloriePlan,
+            strategy: goalWeight < weight ? "deficit" : "superavit",
+            dailyCalorieIntake: planCalorieIntake?.dailyCalorieIntake!,
+            userId: userId,
+          },
+          transaction
+        );
+      }
 
       await transaction.commit();
       return res.status(200).json({ data: createdProgress });

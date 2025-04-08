@@ -4,7 +4,7 @@ import {
   useRef,
   useLayoutEffect,
   MutableRefObject,
-  useMemo,
+  useMemo
 } from "react";
 import { Animated, View } from "react-native";
 
@@ -24,7 +24,7 @@ export function useSnackbarAnimation(params: SnackbarAnimationParams) {
     () => ({
       useNativeDriver: true,
       bounciness: 2,
-      speed: 14,
+      speed: 14
     }),
     []
   );
@@ -32,7 +32,7 @@ export function useSnackbarAnimation(params: SnackbarAnimationParams) {
   const opacityAnimationProps = useMemo(
     () => ({
       duration: 0,
-      useNativeDriver: true,
+      useNativeDriver: true
     }),
     []
   );
@@ -42,45 +42,45 @@ export function useSnackbarAnimation(params: SnackbarAnimationParams) {
       snackbarHeight.current = rects[3];
       translateAnimatedValue.current.setValue(rects[3]);
     });
-  }, []);
+  }, [snackbarRef]);
 
   useEffect(() => {
     const timerRef = setTimeout(() => setIsVisible(false), duration);
     return () => clearTimeout(timerRef);
-  }, [setIsVisible]);
+  }, [duration]);
 
   useEffect(() => {
     if (isVisible) {
       Animated.sequence([
         Animated.timing(opacityAnimatedValue.current, {
           ...opacityAnimationProps,
-          toValue: 1,
+          toValue: 1
         }),
         Animated.spring(translateAnimatedValue.current, {
           ...translateAnimationProps,
-          toValue: 0,
-        }),
+          toValue: 0
+        })
       ]).start();
       Animated.spring(translateAnimatedValue.current, {
         ...translateAnimationProps,
-        toValue: 0,
+        toValue: 0
       }).start();
     } else {
       Animated.sequence([
         Animated.spring(translateAnimatedValue.current, {
           ...translateAnimationProps,
-          toValue: snackbarHeight.current,
+          toValue: snackbarHeight.current
         }),
         Animated.timing(opacityAnimatedValue.current, {
           ...opacityAnimationProps,
-          toValue: 0,
-        }),
+          toValue: 0
+        })
       ]).start();
     }
   }, [isVisible, opacityAnimationProps, translateAnimationProps]);
 
   return {
     translateAnimatedValue: translateAnimatedValue.current,
-    opacityAnimatedValue: opacityAnimatedValue.current,
+    opacityAnimatedValue: opacityAnimatedValue.current
   };
 }

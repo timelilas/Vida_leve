@@ -50,6 +50,9 @@ export const styles = StyleSheet.create({
     fontFamily: fonts.robotoRegular,
     color: colors.common.black,
   },
+  feedbackMessageBold: {
+    fontFamily: fonts.robotoBold,
+  },
   separatorLine: {
     marginTop: 40,
     marginBottom: 40,

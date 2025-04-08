@@ -1,5 +1,5 @@
 import { useMutation, useQuery } from "@tanstack/react-query";
-import { ProgressQueryState, UpdateProgressParams } from "./types";
+import { ProgressQueryState, upsertProgressParams } from "./types";
 import { QueryKeys } from "../../constants/reactQueryKeys";
 import { httpProgressService } from "../../services/progress";
 import { useCallback } from "react";
@@ -23,8 +23,8 @@ export function useProgress(params?: UseProgressParams) {
     },
   });
 
-  const updateProgressMutation = useMutation({
-    mutationFn: async (params: UpdateProgressParams) => {
+  const upsertProgressMutation = useMutation({
+    mutationFn: async (params: upsertProgressParams) => {
       const { data: progressData } = await httpProgressService.upsertProgress({
         ...params,
       });
@@ -60,11 +60,11 @@ export function useProgress(params?: UseProgressParams) {
   });
 
   const upsertProgress = useCallback(
-    async (params: UpdateProgressParams) => {
-      const progressData = await updateProgressMutation.mutateAsync(params);
+    async (params: upsertProgressParams) => {
+      const progressData = await upsertProgressMutation.mutateAsync(params);
       return progressData;
     },
-    [updateProgressMutation]
+    [upsertProgressMutation]
   );
 
   const setCaloriePlan = useCallback(
@@ -86,6 +86,7 @@ export function useProgress(params?: UseProgressParams) {
     setCaloriePlan,
     progress: data || null,
     isLoading,
+    isUpsertingProgress: upsertProgressMutation.isPending,
     error,
   };
 }

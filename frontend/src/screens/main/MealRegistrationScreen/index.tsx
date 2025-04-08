@@ -21,10 +21,7 @@ import { SuccessModal } from "../../../components/SuccessModal";
 
 const MealRegistrationScreen = () => {
   const navigation = useAppNavigation();
-
   const [isModalVisible, setIsModalVisible] = useState(false);
-  const [isSubmitted, setIsSubmitted] = useState(false);
-  const [isSubmitting, setIsSubmitting] = useState(false);
 
   const mealDate = useMealStore((state) => state.date);
   const mealType = useMealStore((state) => state.type);
@@ -34,7 +31,14 @@ const MealRegistrationScreen = () => {
   const { collapseAllItems } = useMealStore((state) => state.actions);
   const { Snackbar, showSnackbar } = useSnackbar();
 
-  const { createMeal, updateMeal } = useMeal({
+  const {
+    isCreatingMeal,
+    isUpdatingMeal,
+    isMealCreated,
+    isMealUpdated,
+    createMeal,
+    updateMeal,
+  } = useMeal({
     meals: { refetchOnMount: false },
   });
 
@@ -54,7 +58,7 @@ const MealRegistrationScreen = () => {
   }, [foodIds.length, navigation]);
 
   function goBack() {
-    if (isSubmitting) return;
+    if (isCreatingMeal || isUpdatingMeal) return;
     navigation.goBack();
   }
 
@@ -74,27 +78,21 @@ const MealRegistrationScreen = () => {
   }
 
   function handleError(error: Error) {
-    setIsSubmitting(false);
     showSnackbar({ duration: 5000, message: error.message, variant: "error" });
   }
 
   async function handleSubmit(data: MealRegistrationData) {
-    if (isSubmitting) return;
+    if (isCreatingMeal || isUpdatingMeal) return;
 
     collapseAllItems();
-    setIsSubmitting(true);
 
     const { id, date, foods, mealType } = data;
-
     if (id) {
       await updateMeal({ mealId: id, foods });
     } else {
       await createMeal({ date, mealType, foods });
     }
-
     setIsModalVisible(true);
-    setIsSubmitting(false);
-    setIsSubmitted(true);
   }
 
   function closeModalAndResetNavigation() {
@@ -132,12 +130,16 @@ const MealRegistrationScreen = () => {
       </View>
       <View>
         {foodIds.map((id) => (
-          <MealItem key={`${id}`} foodId={`${id}`} disabled={isSubmitting} />
+          <MealItem
+            key={`${id}`}
+            foodId={`${id}`}
+            disabled={isCreatingMeal || isUpdatingMeal}
+          />
         ))}
       </View>
       <MealSummary
-        isSubmitted={isSubmitted}
-        isSubmitting={isSubmitting}
+        isSubmitted={isMealCreated || isMealUpdated}
+        isSubmitting={isCreatingMeal || isUpdatingMeal}
         onSubmit={handleSubmit}
         onError={handleError}
       />
