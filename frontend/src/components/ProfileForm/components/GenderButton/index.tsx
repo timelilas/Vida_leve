@@ -1,5 +1,5 @@
 import { PressableProps, View } from "react-native";
-import { ToggleButton } from "../../../../../components/ToggleButton";
+import { ToggleButton } from "../../../ToggleButton";
 import { styles } from "./styles";
 import { PropsWithChildren } from "react";
 

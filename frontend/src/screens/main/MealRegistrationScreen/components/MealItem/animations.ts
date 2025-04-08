@@ -1,10 +1,5 @@
 import { useEffect } from "react";
-import {
-  useSharedValue,
-  withTiming,
-  Easing,
-  ReduceMotion,
-} from "react-native-reanimated";
+import { useSharedValue, withTiming, Easing, ReduceMotion } from "react-native-reanimated";
 
 export function useExpansionAnimation(props: { isItemExpanded: boolean }) {
   const { isItemExpanded } = props;
@@ -15,12 +10,12 @@ export function useExpansionAnimation(props: { isItemExpanded: boolean }) {
       withTiming(isItemExpanded ? 1 : 0, {
         easing: Easing.out(Easing.ease),
         duration: 300,
-        reduceMotion: ReduceMotion.System,
+        reduceMotion: ReduceMotion.System
       })
     );
-  }, [isItemExpanded]);
+  }, [isItemExpanded, sharedValue]);
 
   return {
-    value: sharedValue,
+    value: sharedValue
   };
 }

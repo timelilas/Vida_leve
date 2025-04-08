@@ -11,6 +11,7 @@ import { styles } from "./styles";
 interface SubmitButtonProps {
   type: "primary" | "outlined" | "highlighted";
   title: ReactNode;
+  testId?: string;
   disabled?: boolean;
   style?: StyleProp<ViewStyle>;
   onPress?: () => void;
@@ -22,6 +23,7 @@ export function SubmitButton(props: SubmitButtonProps) {
       disabled={props.disabled}
       activeOpacity={0.5}
       onPress={props.onPress}
+      testID={props.testId}
       style={[
         styles.container,
         props.style,

@@ -6,14 +6,14 @@ import { useSnackbar } from "../../../hooks/common/useSnackbar";
 import {
   convertDateToLocalDateData,
   formatDateToLabel,
-  generateLocalDateRange,
+  generateLocalDateRange
 } from "../../../utils/helpers";
 import { ScreenTitle } from "../../../components/ScreenTitle";
 import { Paragraph } from "../../../components/Paragraph/Paragraph";
 import { styles } from "./styles";
 import Select, { SelectEvent } from "../../../components/Select";
-import { useThrottle } from "../../../hooks/common/useThrottle ";
-import { useCallback, useEffect, useState } from "react";
+import { useDebounce } from "../../../hooks/common/useDebounce";
+import { useCallback, useEffect, useMemo, useState } from "react";
 import { DateIntervalType, PlainDate } from "../../../@types";
 import { QueryKeys } from "../../../constants/reactQueryKeys";
 import { queryClient } from "../../../libs/react-query/queryClient";
@@ -33,16 +33,19 @@ import { LineChartSkeleton } from "./components/LineChartSkeleton/inde";
 const ReportScreen = () => {
   const { Snackbar, showSnackbar } = useSnackbar();
   const navigation = useAppNavigation();
-  const dateData = convertDateToLocalDateData(new Date());
-  const localDate = new Date(dateData.year, dateData.month, dateData.day);
+  const dateData = useMemo(() => convertDateToLocalDateData(new Date()), []);
+  const localDate = useMemo(
+    () => new Date(dateData.year, dateData.month, dateData.day),
+    [dateData]
+  );
 
-  const { isThrottling, startThrottler } = useThrottle(300);
+  const { isDebouncing, startDebounce } = useDebounce(300);
   const [intervalType, setIntervalType] = useState<DateIntervalType>("monthly");
   const [dateFilter, setDateFilter] = useState<PlainDate>({
     year: dateData.year,
     month: dateData.month,
     day: dateData.day,
-    weekDay: dateData.weekDay,
+    weekDay: dateData.weekDay
   });
 
   const dateRange = generateLocalDateRange(intervalType, dateFilter);
@@ -50,7 +53,7 @@ const ReportScreen = () => {
   const { statistics, isLoading, isFetching, error } = useCalorieStatistics({
     from: dateRange.from,
     to: dateRange.to > localDate ? localDate : dateRange.to,
-    disabled: isThrottling,
+    disabled: isDebouncing
   });
 
   const chartDataAndLabels = statistics.reduce(
@@ -90,29 +93,28 @@ const ReportScreen = () => {
         sanitizedTo.toISOString().split("T")[0]
       );
       if (queryClient.getQueryData(queryKey) === undefined) {
-        startThrottler();
+        startDebounce();
       }
       setDateFilter({
         year: date.getFullYear(),
         month: date.getMonth(),
         day: date.getDate(),
-        weekDay: date.getDay(),
+        weekDay: date.getDay()
       });
     },
-    [setDateFilter, intervalType]
+    [setDateFilter, startDebounce, intervalType, localDate]
   );
 
   const handleQueryError = useCallback(
     (error: Error) => {
       const mealsError = `Desculpe, não foi possível obter as informações para o período selecionado. contate o suporte para mais informações.`;
 
-      const errorMessage =
-        error instanceof HttpError ? mealsError : NETWORK_ERROR_MESSAGE;
+      const errorMessage = error instanceof HttpError ? mealsError : NETWORK_ERROR_MESSAGE;
 
       showSnackbar({
         variant: "error",
         duration: 5000,
-        message: errorMessage,
+        message: errorMessage
       });
     },
     [showSnackbar]
@@ -131,13 +133,10 @@ const ReportScreen = () => {
         onBack={goBack}
       />
       <View style={styles.textWrapper}>
-        <ScreenTitle
-          title="Consumo de calorias por período "
-          style={styles.title}
-        />
+        <ScreenTitle title="Consumo de calorias por período " style={styles.title} />
         <Paragraph style={styles.text}>
-          Visualize seu consumo calórico ao longo dos dias e mantenha uma
-          alimentação equilibrada.
+          Visualize seu consumo calórico ao longo dos dias e mantenha uma alimentação
+          equilibrada.
         </Paragraph>
       </View>
       <View style={styles.inputWrapper}>
@@ -145,19 +144,14 @@ const ReportScreen = () => {
           defaultValue={intervalType}
           data={[
             { label: "Mensal", value: "monthly" },
-            { label: "Semanal", value: "weekly" },
+            { label: "Semanal", value: "weekly" }
           ]}
           onChange={handleIntervalTypeSelect}
         />
-        <TimeRangeNavigator
-          onChange={handleTimeRangeChange}
-          intervalType={intervalType}
-        />
+        <TimeRangeNavigator onChange={handleTimeRangeChange} intervalType={intervalType} />
       </View>
       <View style={styles.chartContainer}>
-        <LineChartSkeleton
-          show={isLoading || isThrottling || isFetching || !!error}
-        >
+        <LineChartSkeleton show={isLoading || isDebouncing || isFetching || !!error}>
           <View style={styles.labelsWrapper}>
             <ChartLabel color={colors.secondary} label="Plano de execução" />
             <ChartLabel color={colors.primary} label="Calorias consumidas" />
@@ -171,14 +165,14 @@ const ReportScreen = () => {
                   color: colors.primary,
                   values: chartDataAndLabels.dailyConsumption,
                   withTooltip: true,
-                  withDots: true,
+                  withDots: true
                 },
                 {
                   color: colors.secondary,
                   values: chartDataAndLabels.dailyTarget,
                   withYLabel: true,
-                  withDots: chartDataAndLabels.dailyTarget.length === 1,
-                },
+                  withDots: chartDataAndLabels.dailyTarget.length === 1
+                }
               ]}
             />
           ) : (
@@ -197,10 +191,7 @@ const ReportScreen = () => {
           )}
         </LineChartSkeleton>
       </View>
-      <TouchableOpacity
-        style={styles.linkButton}
-        onPress={navigateToReportDetailsScreen}
-      >
+      <TouchableOpacity style={styles.linkButton} onPress={navigateToReportDetailsScreen}>
         <Text style={styles.linkButtonText}>Saiba mais</Text>
       </TouchableOpacity>
     </ScreenWrapper>

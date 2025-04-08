@@ -4,7 +4,7 @@ import {
   TextInputProps,
   TouchableOpacity,
   TouchableOpacityProps,
-  View,
+  View
 } from "react-native";
 import { SearchIcon } from "../../../../../components/Icons/SearchIcon";
 import { ClearInputIcon } from "../ClearInputIcon";
@@ -21,9 +21,7 @@ export default function SearchInput(props: TextInputProps & SearchInputProps) {
 
   return (
     <View style={[styles.container, props.value && styles.containerFilled]}>
-      {props.value?.length ? (
-        <ClearInputButton onPress={onClearInput} hitSlop={4} />
-      ) : null}
+      {props.value?.length ? <ClearInputButton onPress={onClearInput} hitSlop={4} /> : null}
       <TextInput
         style={styles.input}
         placeholderTextColor={colors.gray.medium}
@@ -38,14 +36,14 @@ function ClearInputButton(props: TouchableOpacityProps) {
   const animatedValue = useRef(new Animated.Value(0));
   const interpolatedScale = animatedValue.current.interpolate({
     inputRange: [0, 1],
-    outputRange: [0.25, 1],
+    outputRange: [0.25, 1]
   });
 
   useEffect(() => {
     Animated.timing(animatedValue.current, {
       duration: 200,
       useNativeDriver: true,
-      toValue: 1,
+      toValue: 1
     }).start();
   }, []);
 
@@ -53,9 +51,8 @@ function ClearInputButton(props: TouchableOpacityProps) {
     <TouchableOpacity {...props}>
       <Animated.View
         style={{
-          transform: [{ scale: interpolatedScale }],
-        }}
-      >
+          transform: [{ scale: interpolatedScale }]
+        }}>
         <ClearInputIcon />
       </Animated.View>
     </TouchableOpacity>

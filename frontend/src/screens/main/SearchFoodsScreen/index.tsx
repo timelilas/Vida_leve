@@ -10,17 +10,14 @@ import {
   NativeScrollEvent,
   NativeSyntheticEvent,
   useWindowDimensions,
-  View,
+  View
 } from "react-native";
 import { Paragraph } from "../../../components/Paragraph/Paragraph";
 import SearchInput from "./components/SearchInput";
 import { useCallback, useEffect, useState } from "react";
 import { FOOD_ITEM_HEIGHT } from "./components/FoodItem/constants";
-import {
-  formatDateToLabel,
-  getTitleFromMealType,
-} from "../../../utils/helpers";
-import { useThrottle } from "../../../hooks/common/useThrottle ";
+import { formatDateToLabel, getTitleFromMealType } from "../../../utils/helpers";
+import { useDebounce } from "../../../hooks/common/useDebounce";
 import { useSnackbar } from "../../../hooks/common/useSnackbar";
 import { FoodList } from "./components/FoodList";
 import { styles } from "./styles";
@@ -30,10 +27,7 @@ import { useFoods } from "../../../hooks/food/useFoods";
 import { HttpError } from "../../../@core/errors/httpError";
 import { NETWORK_ERROR_MESSAGE } from "../../../constants/errorMessages";
 
-type SearchFoodsScreenRouteProp = RouteProp<
-  RouteParamsList,
-  RouteConstants.SearchFoods
->;
+type SearchFoodsScreenRouteProp = RouteProp<RouteParamsList, RouteConstants.SearchFoods>;
 
 interface SearchFoodsScreenProps {
   route: SearchFoodsScreenRouteProp;
@@ -48,17 +42,17 @@ const SearchFoodsScreen = ({ route }: SearchFoodsScreenProps) => {
   const [foodName, setFoodName] = useState("");
   const [bodyHeight, setBodyHeight] = useState<number | null>(null);
 
-  const { isThrottling, startThrottler } = useThrottle(350);
+  const { isDebouncing, startDebounce } = useDebounce(350);
   const { showSnackbar, Snackbar } = useSnackbar();
 
-  const isQueryEnabled = foodName.length > 0 && !!bodyHeight && !isThrottling;
+  const isQueryEnabled = foodName.length > 0 && !!bodyHeight && !isDebouncing;
   const limit = calculateTotalFoodsToFetch();
   const shortDateLabel = formatDateToLabel(new Date(mealDate), "short");
 
   const { foods, hasMore, error, isFetching, fetchMoreFoods } = useFoods({
     foodName,
     enabled: isQueryEnabled,
-    limit,
+    limit
   });
 
   function goBack() {
@@ -75,7 +69,7 @@ const SearchFoodsScreen = ({ route }: SearchFoodsScreenProps) => {
   }
 
   function handleInputChange(text: string) {
-    startThrottler();
+    startDebounce();
     setFoodName(text);
   }
 
@@ -119,7 +113,7 @@ const SearchFoodsScreen = ({ route }: SearchFoodsScreenProps) => {
         id: Math.floor(Math.random() * 2),
         variant: "error",
         duration: 5000,
-        message: errorMessage,
+        message: errorMessage
       });
     },
     [showSnackbar]
@@ -132,7 +126,7 @@ const SearchFoodsScreen = ({ route }: SearchFoodsScreenProps) => {
       }
     });
     return () => unsubscribe();
-  }, [route.params?.foodName]);
+  }, [route.params?.foodName, navigation]);
 
   useEffect(() => {
     if (error && !isFetching) {
@@ -144,8 +138,7 @@ const SearchFoodsScreen = ({ route }: SearchFoodsScreenProps) => {
     <ScreenWrapper
       contentContainerStyle={styles.container}
       onScroll={handleScreenScroll}
-      snackbar={<Snackbar />}
-    >
+      snackbar={<Snackbar />}>
       <View style={styles.body} onLayout={getBodyHeight}>
         <NavigationHeader
           variant="titled"
@@ -153,10 +146,7 @@ const SearchFoodsScreen = ({ route }: SearchFoodsScreenProps) => {
           subtitle={shortDateLabel}
           onBack={goBack}
         />
-        <ScreenTitle
-          style={styles.title}
-          title="Encontre o que você vai comer!"
-        />
+        <ScreenTitle style={styles.title} title="Encontre o que você vai comer!" />
         <Paragraph style={styles.text}>
           Digite o nome do alimento para encontrar o que procura.
         </Paragraph>
@@ -170,9 +160,7 @@ const SearchFoodsScreen = ({ route }: SearchFoodsScreenProps) => {
       </View>
       <FoodList foods={foods} />
       <View style={styles.activityIndicatorContainer}>
-        {isFetching ? (
-          <ActivityIndicator color={colors.primary} size="large" />
-        ) : null}
+        {isFetching ? <ActivityIndicator color={colors.primary} size="large" /> : null}
       </View>
     </ScreenWrapper>
   );

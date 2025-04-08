@@ -2,7 +2,7 @@ import { Text, TouchableOpacity, View } from "react-native";
 import { ArrowIcon } from "../Icons/ArrowIcon";
 import { styles } from "./styles";
 import { getMonthNameFromIndex, toCapitalized } from "../../utils/helpers";
-import { useEffect, useRef, useState } from "react";
+import { useEffect, useMemo, useRef, useState } from "react";
 
 interface TimeRangeNavigatorProps {
   intervalType: "monthly" | "weekly";
@@ -10,14 +10,14 @@ interface TimeRangeNavigatorProps {
 }
 
 export function TimeRangeNavigator(props: TimeRangeNavigatorProps) {
-  const { intervalType } = props;
+  const { intervalType, onChange } = props;
   const firstRender = useRef(true);
-  const todayDate = new Date();
+  const todayDate = useMemo(() => new Date(), []);
 
   const [dateData, setDateData] = useState({
     year: todayDate.getUTCFullYear(),
     month: todayDate.getUTCMonth(),
-    day: todayDate.getUTCDate(),
+    day: todayDate.getUTCDate()
   });
 
   useEffect(() => {
@@ -27,11 +27,11 @@ export function TimeRangeNavigator(props: TimeRangeNavigatorProps) {
       currentDate.setUTCFullYear(year);
       currentDate.setUTCMonth(month);
       currentDate.setUTCDate(day);
-      props.onChange(currentDate);
+      onChange(currentDate);
     } else {
       firstRender.current = false;
     }
-  }, [dateData, props.onChange]);
+  }, [todayDate, dateData, onChange]);
 
   function getMaxDate() {
     const currentDate = new Date(todayDate.toISOString());
@@ -73,12 +73,12 @@ export function TimeRangeNavigator(props: TimeRangeNavigatorProps) {
         ? {
             year: minDate.getUTCFullYear(),
             month: minDate.getUTCMonth(),
-            day: minDate.getUTCDate(),
+            day: minDate.getUTCDate()
           }
         : {
             year: nextDate.getUTCFullYear(),
             month: nextDate.getUTCMonth(),
-            day: nextDate.getUTCDate(),
+            day: nextDate.getUTCDate()
           };
     });
   }
@@ -101,12 +101,12 @@ export function TimeRangeNavigator(props: TimeRangeNavigatorProps) {
         ? {
             year: todayDate.getUTCFullYear(),
             month: todayDate.getUTCMonth(),
-            day: todayDate.getUTCDate(),
+            day: todayDate.getUTCDate()
           }
         : {
             year: nextDate.getUTCFullYear(),
             month: nextDate.getUTCMonth(),
-            day: nextDate.getUTCDate(),
+            day: nextDate.getUTCDate()
           };
     });
   }
@@ -129,7 +129,7 @@ export function TimeRangeNavigator(props: TimeRangeNavigatorProps) {
 
     const weekRange = {
       start: new Date(localYear, localMonth, startDayOffset),
-      end: new Date(localYear, localMonth, endDayOffset),
+      end: new Date(localYear, localMonth, endDayOffset)
     };
 
     return weekRange;
@@ -171,9 +171,7 @@ export function TimeRangeNavigator(props: TimeRangeNavigatorProps) {
       new Date(
         dateData.year,
         dateData.month,
-        intervalType === "monthly"
-          ? 1
-          : dateData.day + 6 - currentDate.getUTCDay()
+        intervalType === "monthly" ? 1 : dateData.day + 6 - currentDate.getUTCDay()
       ) >= new Date(maxDateYear, maxDateMonth, maxDateDay)
     );
   }
@@ -206,8 +204,7 @@ export function TimeRangeNavigator(props: TimeRangeNavigatorProps) {
       <TouchableOpacity
         style={decrementDisabled && styles.buttonDisabled}
         disabled={decrementDisabled}
-        onPress={decrementDate}
-      >
+        onPress={decrementDate}>
         <ArrowIcon />
       </TouchableOpacity>
       <View style={styles.labelContainer}>
@@ -218,8 +215,7 @@ export function TimeRangeNavigator(props: TimeRangeNavigatorProps) {
       <TouchableOpacity
         style={incrementDisabled && styles.buttonDisabled}
         disabled={incrementDisabled}
-        onPress={incrementDate}
-      >
+        onPress={incrementDate}>
         <ArrowIcon style={styles.rightIcon} />
       </TouchableOpacity>
     </View>

@@ -1,8 +1,8 @@
 import z from "zod";
-import { zodPhoneSchema } from "../../../libs/zod/schemas/phone";
-import { zodDateStringSchema } from "../../../libs/zod/schemas/date";
-import { validateUserAge } from "../../../@core/entities/user/helpers";
-import { zodGenderSchema } from "../../../libs/zod/schemas/gender";
+import { zodPhoneSchema } from "../../libs/zod/schemas/phone";
+import { zodDateStringSchema } from "../../libs/zod/schemas/date";
+import { validateUserAge } from "../../@core/entities/user/helpers";
+import { zodGenderSchema } from "../../libs/zod/schemas/gender";
 
 const zodNameSchema = z
   .string({

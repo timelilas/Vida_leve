@@ -10,7 +10,7 @@ export function useProgressBarAnimation(params: UseProgressBarAnimationParams) {
   const animatedValue = useRef(new Animated.Value(0));
   const progressPercentage = animatedValue.current.interpolate({
     inputRange: [0.0, 1.0],
-    outputRange: ["0%", "100%"],
+    outputRange: ["0%", "100%"]
   });
 
   useEffect(() => {
@@ -18,11 +18,11 @@ export function useProgressBarAnimation(params: UseProgressBarAnimationParams) {
       toValue: params.barWidthFraction,
       useNativeDriver: false,
       easing: Easing.out(Easing.ease),
-      duration: params.duration,
+      duration: params.duration
     }).start();
-  }, [params.barWidthFraction]);
+  }, [params.barWidthFraction, params.duration]);
 
   return {
-    progressPercentage,
+    progressPercentage
   };
 }

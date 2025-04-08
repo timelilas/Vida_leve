@@ -18,9 +18,10 @@ const CreateProgressScreen = () => {
   const { Snackbar, showSnackbar } = useSnackbar();
   const { updateLocalPlans } = useCaloriePlans({ refetchOnMount: false });
   const { user } = useUser({ refetchOnMount: false });
-  const { progress, upsertProgress } = useProgress({ refetchOnMount: false });
-  const [isSubmitting, setIsSubmitting] = useState(false);
-  const navigation = useAppNavigation({ preventGoBack: isSubmitting });
+  const { progress, isUpsertingProgress, upsertProgress } = useProgress({
+    refetchOnMount: false,
+  });
+  const navigation = useAppNavigation({ preventGoBack: isUpsertingProgress });
 
   const initialFormData = {
     gender: user.gender,
@@ -36,12 +37,12 @@ const CreateProgressScreen = () => {
   }
 
   async function onSubmit(data: OnProgressSubmitData) {
-    setIsSubmitting(true);
+    if (isUpsertingProgress) return;
+
     const { formData, newCaloriePlans } = data;
     const progressData = await upsertProgress({ ...formData });
 
     updateLocalPlans(newCaloriePlans);
-    setIsSubmitting(false);
 
     navigation.navigate(RouteConstants.PlanSelection, {
       nextRoute: RouteConstants.GoalGuidance,
@@ -58,7 +59,6 @@ const CreateProgressScreen = () => {
         variant: "error",
       });
     }
-    setIsSubmitting(false);
   }
 
   return (
