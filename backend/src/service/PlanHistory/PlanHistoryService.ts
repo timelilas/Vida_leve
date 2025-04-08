@@ -106,7 +106,7 @@ export default class PlanHistoryService {
       );
     } catch (error: any) {
       throw new DatabaseException(
-        `Ocorreu um erro durante a atualização do histórico de planos.`,
+        `Ocorreu um erro durante a atualização do histórico de planos do usuário com id: '${planHistory.userId}'`,
         PlanHistoryService.name,
         error.message
       );
