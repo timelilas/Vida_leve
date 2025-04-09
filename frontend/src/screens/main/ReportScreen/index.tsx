@@ -83,6 +83,12 @@ const ReportScreen = () => {
     setIntervalType(e.value as "monthly" | "weekly");
   }
 
+  function isTooltipEnabledHadler(value: number, index: number) {
+    const previousValue = chartDataAndLabels.dailyTarget[index - 1];
+    const nextValue = chartDataAndLabels.dailyTarget[index + 1];
+    return previousValue !== value || nextValue !== value;
+  }
+
   const handleTimeRangeChange = useCallback(
     (date: Date) => {
       const { from, to } = generateLocalDateRange(intervalType, date);
@@ -159,19 +165,21 @@ const ReportScreen = () => {
           {statistics.length > 0 ? (
             <LineChart
               key={dateFilter.day}
+              lineStrokeWidth={3}
               labels={chartDataAndLabels.labels}
               data={[
                 {
                   color: colors.primary,
+                  fillColor: colors.primary,
                   values: chartDataAndLabels.dailyConsumption,
-                  withTooltip: true,
+                  tooltip: { color: colors.primary, enabled: true },
                   withDots: true
                 },
                 {
                   color: colors.secondary,
                   values: chartDataAndLabels.dailyTarget,
-                  withYLabel: true,
-                  withDots: chartDataAndLabels.dailyTarget.length === 1
+                  withDots: isTooltipEnabledHadler,
+                  tooltip: { color: colors.secondary, enabled: isTooltipEnabledHadler }
                 }
               ]}
             />
