@@ -2,7 +2,7 @@ import { useEffect, useRef, useState } from "react";
 import { Animated, Text, View } from "react-native";
 import { styles } from "./styles";
 
-export function ToolTip(props: { value: String; posX: number; posY: number }) {
+export function ToolTip(props: { value: string; posX: number; posY: number; color: string }) {
   const [isFirstRender, setIsFirstRender] = useState(true);
   const animatedPosition = useRef(new Animated.ValueXY({ x: 0, y: 0 }));
   const animatedOpacity = useRef(new Animated.Value(0));
@@ -12,13 +12,13 @@ export function ToolTip(props: { value: String; posX: number; posY: number }) {
       Animated.timing(animatedOpacity.current, {
         useNativeDriver: false,
         duration: 100,
-        toValue: 1,
+        toValue: 1
       }),
       Animated.timing(animatedPosition.current, {
         useNativeDriver: false,
         duration: isFirstRender ? 0 : 180,
-        toValue: { x: props.posX, y: props.posY },
-      }),
+        toValue: { x: props.posX, y: props.posY }
+      })
     ]).start();
 
     setIsFirstRender(false);
@@ -32,12 +32,13 @@ export function ToolTip(props: { value: String; posX: number; posY: number }) {
         top: animatedPosition.current.y,
         left: animatedPosition.current.x,
         transform: [{ translateX: "-50%" }, { translateY: -36 }],
-      }}
-    >
+        backgroundColor: props.color
+      }}>
       <Text numberOfLines={1} style={styles.text}>
         {props.value} kcal
       </Text>
-      <View style={styles.arrow} />
+      <View style={[styles.arrowBorder]} />
+      <View style={[styles.arrow, { borderBottomColor: props.color }]} />
     </Animated.View>
   );
 }

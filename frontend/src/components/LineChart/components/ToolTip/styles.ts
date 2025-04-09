@@ -7,14 +7,15 @@ export const styles = StyleSheet.create({
     zIndex: 20,
     paddingHorizontal: 6,
     paddingVertical: 3,
-    backgroundColor: colors.primary,
     borderRadius: 6,
     position: "absolute",
+    borderWidth: 1,
+    borderColor: "#2e2e2e"
   },
   text: {
     fontSize: 12,
     fontFamily: fonts.robotoMedium,
-    color: colors.common.white,
+    color: colors.common.white
   },
   arrow: {
     position: "absolute",
@@ -27,14 +28,34 @@ export const styles = StyleSheet.create({
     borderLeftWidth: 4,
     borderTopColor: "transparent",
     borderRightColor: "transparent",
-    borderBottomColor: colors.primary,
     borderLeftColor: "transparent",
     bottom: 0,
     left: "50%",
     transform: [
       { rotate: "180deg" },
       { translateY: "-100%" },
-      { translateX: Platform.OS === "web" ? "50%" : "-25%" },
-    ],
+      { translateX: Platform.OS === "web" ? "50%" : "-25%" }
+    ]
   },
+  arrowBorder: {
+    position: "absolute",
+    width: 0,
+    height: 0,
+    backgroundColor: "transparent",
+    borderTopWidth: 0,
+    borderRightWidth: 5,
+    borderBottomWidth: 8,
+    borderLeftWidth: 5,
+    borderTopColor: "transparent",
+    borderRightColor: "transparent",
+    borderLeftColor: "transparent",
+    borderBottomColor: "#2e2e2e",
+    bottom: 0,
+    left: "50%",
+    transform: [
+      { rotate: "180deg" },
+      { translateY: "-100%" },
+      { translateX: Platform.OS === "web" ? "50%" : "-10%" }
+    ]
+  }
 });
