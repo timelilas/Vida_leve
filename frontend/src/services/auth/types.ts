@@ -6,7 +6,11 @@ export interface HttpSignupInputDTO {
   passwordConfirmation: string;
 }
 
-export type HttpSignupOutputDTO = Omit<UserProps, "password">;
+export interface HttpSignupOutputDTO
+  extends Omit<UserProps, "password" | "registrationDate" | "birthDate"> {
+  birthDate: string | null;
+  registrationDate: string;
+}
 
 export interface HttpLoginInputDTO {
   email: string;

@@ -16,7 +16,8 @@ const initialData: UserQueryState = {
   name: "",
   phone: "",
   birthDate: "",
-  gender: null
+  gender: null,
+  registrationDate: ""
 };
 
 export function useUser(params?: UseUserParams) {
@@ -25,6 +26,7 @@ export function useUser(params?: UseUserParams) {
     enabled: params?.queryEnabled ?? true,
     refetchOnMount: params?.refetchOnMount,
     queryFn: async () => {
+      console.log("fetching");
       const { data } = await httpUserService.getProfile();
       return data;
     }
@@ -58,7 +60,7 @@ export function useUser(params?: UseUserParams) {
 
   const getUserProfile = useCallback(async () => {
     const user = await refetch({ throwOnError: true });
-    return user.data as UserQueryState;
+    return user.data;
   }, [refetch]);
 
   return {
