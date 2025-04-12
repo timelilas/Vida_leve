@@ -26,7 +26,6 @@ export function useUser(params?: UseUserParams) {
     enabled: params?.queryEnabled ?? true,
     refetchOnMount: params?.refetchOnMount,
     queryFn: async () => {
-      console.log("fetching");
       const { data } = await httpUserService.getProfile();
       return data;
     }

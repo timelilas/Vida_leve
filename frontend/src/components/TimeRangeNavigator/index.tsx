@@ -1,7 +1,11 @@
 import { Text, TouchableOpacity, View } from "react-native";
 import { ArrowIcon } from "../Icons/ArrowIcon";
 import { styles } from "./styles";
-import { getMonthNameFromIndex, toCapitalized } from "../../utils/helpers";
+import {
+  convertDateToLocalDateData,
+  getMonthNameFromIndex,
+  toCapitalized
+} from "../../utils/helpers";
 import { useEffect, useMemo, useRef, useState } from "react";
 
 interface TimeRangeNavigatorProps {
@@ -119,17 +123,14 @@ export function TimeRangeNavigator(props: TimeRangeNavigatorProps) {
     currentDate.setUTCMonth(month);
     currentDate.setUTCDate(day);
 
-    const localYear = currentDate.getFullYear();
-    const localMonth = currentDate.getMonth();
-    const localDay = currentDate.getDate();
-    const localWeekDay = currentDate.getDay();
+    const localDateData = convertDateToLocalDateData(currentDate);
 
-    const startDayOffset = localDay - localWeekDay;
-    const endDayOffset = localDay + 6 - localWeekDay;
+    const startDayOffset = localDateData.day - localDateData.weekDay;
+    const endDayOffset = localDateData.day + 6 - localDateData.weekDay;
 
     const weekRange = {
-      start: new Date(localYear, localMonth, startDayOffset),
-      end: new Date(localYear, localMonth, endDayOffset)
+      start: new Date(localDateData.year, localDateData.month, startDayOffset),
+      end: new Date(localDateData.year, localDateData.month, endDayOffset)
     };
 
     return weekRange;

@@ -51,7 +51,7 @@ export function getMonthNameFromIndex(index: number) {
     "setembro",
     "outubro",
     "novembro",
-    "dezembro",
+    "dezembro"
   ];
 
   return monthNames[index] || "";
@@ -69,7 +69,7 @@ export function getWeekdayFromIndex(index: number) {
     "quarta-feira",
     "quinta-feira",
     "sexta-feira",
-    "sábado",
+    "sábado"
   ];
 
   return weekdays[index] || "";
@@ -81,7 +81,7 @@ export function convertDateToLocalDateData(date: Date): DateData {
     day: date.getDate(),
     month: date.getMonth(),
     year: date.getFullYear(),
-    weekDay: date.getDay(),
+    weekDay: date.getDay()
   };
 }
 
@@ -142,17 +142,22 @@ export function generateLocalDateRange(
           year: dateData.getFullYear(),
           month: dateData.getMonth(),
           day: dateData.getDate(),
-          weekDay: dateData.getDay(),
+          weekDay: dateData.getDay()
         }
       : dateData;
 
   return intervalType === "monthly"
     ? {
         from: new Date(year, month, 1),
-        to: new Date(year, month + 1, 0),
+        to: new Date(year, month + 1, 0)
       }
     : {
         from: new Date(year, month, day - weekDay),
-        to: new Date(year, month, day + 6 - weekDay),
+        to: new Date(year, month, day + 6 - weekDay)
       };
+}
+
+export function getLocalDateOnly(date?: Date) {
+  const currentDate = date || new Date();
+  return new Date(currentDate.getFullYear(), currentDate.getMonth(), currentDate.getDate());
 }
