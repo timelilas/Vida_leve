@@ -12,7 +12,7 @@ import Sequelize from "sequelize";
 
 class User
   extends Model<InferAttributes<User>, InferCreationAttributes<User>>
-  implements Omit<UserEntity, "birthDate">
+  implements Omit<UserEntity, "birthDate" | "registrationDate">
 {
   declare id: CreationOptional<number>;
   declare email: string;
@@ -33,6 +33,21 @@ class User
       phone: props.phone,
       gender: props.gender,
       birthDate: props.birthDate ? new Date(props.birthDate) : null,
+      registrationDate: new Date(props.createdAt),
+    };
+  }
+
+  public toJSON(): UserEntity {
+    const props = super.toJSON();
+    return {
+      id: props.id,
+      name: props.name,
+      email: props.email,
+      password: props.password,
+      phone: props.phone,
+      gender: props.gender,
+      birthDate: props.birthDate ? new Date(props.birthDate) : null,
+      registrationDate: new Date(props.createdAt),
     };
   }
 }
