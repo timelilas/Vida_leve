@@ -4,9 +4,12 @@ import { exceptionResponseAdapter } from "../../utils/express/helpers";
 import { ConflictException } from "../../@core/exception/http/ConflictException";
 import { NotFoundException } from "../../@core/exception/http/NotFoundException";
 import { DEFAULT_MEAL_LIMIT } from "./constants";
+import UserService from "../../service/user/UserService";
+import { BadRequestException } from "../../@core/exception/http/BadRequestException";
 
 export default class MealController {
   private _mealService = new MealService();
+  private _userService = new UserService();
 
   async createMeal(req: Request, res: Response): Promise<Response> {
     const { date, mealType, foods } = req.body;
@@ -25,6 +28,28 @@ export default class MealController {
           MealController.name
         );
       }
+
+      const user = await this._userService.get(userId);
+
+      if (user?.registrationDate) {
+        const mealDate = new Date(date);
+        mealDate.setUTCHours(3);
+
+        const registrationDateOnly = new Date(
+          user.registrationDate.getFullYear(),
+          user.registrationDate.getMonth(),
+          user.registrationDate.getDate()
+        );
+
+        if (mealDate.getTime() < registrationDateOnly.getTime()) {
+          throw new BadRequestException(
+            `A data da refeição deve ser maior ou igual a data de registro do usuário.`,
+            MealController.name,
+            "date"
+          );
+        }
+      }
+
       const cratedMeal = await this._mealService.upsert({
         userId: req.user.id,
         date: new Date(date),

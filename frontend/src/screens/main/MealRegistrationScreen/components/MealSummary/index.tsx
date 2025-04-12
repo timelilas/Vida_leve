@@ -12,7 +12,7 @@ export interface MealRegistrationData {
   id?: number;
   date: Date;
   mealType: MealType;
-  foods: Array<{ foodId: number; quantity: number }>;
+  foods: { foodId: number; quantity: number }[];
 }
 
 interface MealSummaryProps {
@@ -29,7 +29,7 @@ export function MealSummary(props: MealSummaryProps) {
     foodIds,
     date: mealDate,
     type: mealType,
-    id: mealId,
+    id: mealId
   } = useMealStore((state) => state);
 
   const existigFoods = foodIds.length;
@@ -40,7 +40,7 @@ export function MealSummary(props: MealSummaryProps) {
 
     const foods = foodIds.map((id) => ({
       foodId: foodMap[`${id}`].id,
-      quantity: foodMap[`${id}`].quantity,
+      quantity: foodMap[`${id}`].quantity
     }));
 
     try {
@@ -48,7 +48,7 @@ export function MealSummary(props: MealSummaryProps) {
         id: mealId,
         date: new Date(mealDate),
         mealType,
-        foods,
+        foods
       });
     } catch (error: any) {
       props.onError(error);
@@ -73,18 +73,14 @@ export function MealSummary(props: MealSummaryProps) {
         }
       />
       <View style={styles.addFoodTextWrapper}>
-        <Text style={styles.mealCalorieText}>
-          A sua refeição até agora está em
-        </Text>
+        <Text style={styles.mealCalorieText}>A sua refeição até agora está em</Text>
         <Text style={styles.mealCalorieTextBold}>{totalCalories}</Text>
         <Text style={styles.mealCalorieText}>kcal</Text>
       </View>
       <SubmitButton
         type="primary"
         title="Registrar refeição"
-        disabled={
-          !existigFoods || !mealType || props.isSubmitting || props.isSubmitted
-        }
+        disabled={!existigFoods || !mealType || props.isSubmitting || props.isSubmitted}
         onPress={handleMealRegistration}
       />
     </View>
