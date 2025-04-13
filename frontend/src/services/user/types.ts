@@ -7,6 +7,7 @@ export interface HttpGetUserProfileOutputDTO {
   phone: string | null;
   gender: GenderType | null;
   birthDate: string | null;
+  registrationDate: string;
 }
 
 export interface HttpUpdateUserProfileOutputDTO {
@@ -16,6 +17,7 @@ export interface HttpUpdateUserProfileOutputDTO {
   phone: string;
   gender: GenderType;
   birthDate: string;
+  registrationDate: string;
 }
 
 export interface HttpUpdateUserProfileInputDTO {

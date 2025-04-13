@@ -18,12 +18,11 @@ export function YAxis(props: YAxisProps) {
   const fontSize = props.fontSize;
   const domain = props.yAxis.domain();
   const step = Math.ceil(domain[domain.length - 1] / 4);
-  const subDomain =
-    props.subdomain || Array.from({ length: 5 }, (_, i) => step * i);
+  const subDomain = Array.from({ length: 5 }, (_, i) => step * i);
 
   const measures = useChartMeasures({
     canvasWidth: props.canvasWidth,
-    canvasHeight: props.canvasHeight,
+    canvasHeight: props.canvasHeight
   });
 
   const font = useFont(robotoLight, fontSize);
@@ -31,31 +30,29 @@ export function YAxis(props: YAxisProps) {
   const AXIS_LABEL_MARGIN_RIGHT = 8;
   const AXIS_LABEL_TEXT_WIDTH = calculateTextWidth(props.axisLabel, font!);
   const AXIS_LABEL_POS_Y = 25;
-  const AXIS_LABEL_POS_X =
-    measures.chart.x - AXIS_LABEL_TEXT_WIDTH - AXIS_LABEL_MARGIN_RIGHT;
+  const AXIS_LABEL_POS_X = measures.chart.x - AXIS_LABEL_TEXT_WIDTH - AXIS_LABEL_MARGIN_RIGHT;
 
   return (
     <Group>
+      <Rect width={1} height={measures.chart.height + 1} x={measures.canvas.paddingLeft - 1} />
       {subDomain.map((value, i) => {
         const label = `${value}`;
         const labelWidth = font ? calculateTextWidth(label, font) : 0;
         const baseHeight =
-          measures.canvas.height -
-          measures.canvas.paddingBottom -
-          props.yAxis(value);
-        return !props.subdomain && i === subDomain.length - 1 ? null : (
+          measures.canvas.height - measures.canvas.paddingBottom - props.yAxis(value);
+        return i === subDomain.length - 1 ? null : (
           <Group key={label}>
             <Rect
-              color={colors.gray.light}
+              color={colors.common.black}
               height={measures.yAxis.tickHeight}
               width={measures.yAxis.tickWidth}
               x={measures.canvas.paddingLeft - measures.yAxis.tickWidth}
-              y={baseHeight - (i === 0 ? measures.yAxis.tickHeight / 2 : 0)}
+              y={baseHeight}
             />
             <Text
               text={label}
               font={font}
-              color={colors.text.primary}
+              color={colors.common.black}
               x={
                 measures.chart.x -
                 labelWidth -
@@ -75,11 +72,11 @@ export function YAxis(props: YAxisProps) {
           { translateY: fontSize * 1.25 },
           { rotate: -Math.PI / 2 },
           { translateX: -(AXIS_LABEL_POS_X + AXIS_LABEL_TEXT_WIDTH / 2) },
-          { translateY: -(fontSize + fontSize / 2) },
+          { translateY: -(fontSize + fontSize / 2) }
         ]}
         x={AXIS_LABEL_POS_X}
         y={AXIS_LABEL_POS_Y}
-        color={colors.text.primary}
+        color={colors.common.black}
       />
     </Group>
   );

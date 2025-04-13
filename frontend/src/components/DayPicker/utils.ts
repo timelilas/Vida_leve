@@ -1,17 +1,33 @@
+import { getLocalDateOnly } from "../../utils/helpers";
 import { DateData } from "./types";
 
-export function createMockedDays(count: number) {
-  const mockedDays: DateData[] = Array.from({ length: count }, (_, index) => {
-    const date = new Date(Date.now() - 3600 * 24 * 1000 * (-1 + index));
-    const day = date.getDate();
-    const weekDay = date.getDay();
-    const month = date.getMonth();
-    const year = date.getFullYear();
-    const id = `${year}-${month}-${day}`;
+export function createMockedDays(limit: number, startDate?: Date) {
+  let mockedDays: DateData[] = [];
 
-    const dateData = { id, day, weekDay, month, year };
-    return dateData;
-  });
+  const startDateOnly = startDate ? getLocalDateOnly(startDate) : null;
+
+  const startDateSlice = startDateOnly
+    ? new Date(startDateOnly.getTime() - 3600 * 24 * 1000)
+    : null;
+
+  for (let i = 0; i < limit; i++) {
+    const currentDate = new Date();
+    const currentDateOnly = getLocalDateOnly(currentDate);
+    const currentDateOnlySlice = new Date(
+      currentDateOnly.getTime() - 3600 * 24 * 1000 * (-1 + i)
+    );
+
+    if (!startDate || (startDateSlice && currentDateOnlySlice >= startDateSlice)) {
+      const day = currentDateOnlySlice.getUTCDate();
+      const weekDay = currentDateOnlySlice.getUTCDay();
+      const month = currentDateOnlySlice.getUTCMonth();
+      const year = currentDateOnlySlice.getUTCFullYear();
+      const id = `${year}-${month}-${day}`;
+      const dateData = { id, day, weekDay, month, year };
+
+      mockedDays.push(dateData);
+    }
+  }
 
   return mockedDays;
 }

@@ -23,6 +23,7 @@ import { CommonActions, RouteProp, useFocusEffect } from "@react-navigation/nati
 import { useSnackbar } from "../../../hooks/common/useSnackbar";
 import { HttpError } from "../../../@core/errors/httpError";
 import { NETWORK_ERROR_MESSAGE } from "../../../constants/errorMessages";
+import { useUser } from "../../../hooks/user/useUser";
 
 type CreateMealScreenRouteProp = RouteProp<RouteParamsList, RouteConstants.CreateMeal>;
 
@@ -37,6 +38,7 @@ const CreateMealScreen = (props: CreateMealScreenProps) => {
 
   const { setMeal } = useMealStore((state) => state.actions);
   const { Snackbar, showSnackbar } = useSnackbar();
+  const { user } = useUser({ queryEnabled: false });
 
   const [mealDetails, setMealDetails] = useState<{
     selectedDate: DateData;
@@ -47,9 +49,7 @@ const CreateMealScreen = (props: CreateMealScreenProps) => {
   });
 
   const { selectedDate, selectedMealType } = mealDetails;
-
   const localDate = new Date(selectedDate.year, selectedDate.month, selectedDate.day);
-
   const { meals, dailyConsumption, error, isLoading } = useMeal({
     date: localDate,
     meals: { refetchOnMount: false }
@@ -145,7 +145,11 @@ const CreateMealScreen = (props: CreateMealScreenProps) => {
 
       <ScreenTitle title={longDateLabel} style={[styles.title, styles.dayTitle]} />
       <View style={styles.dayPicker}>
-        <DayPicker currentDate={selectedDate} onSelectDate={handleDaySelection} />
+        <DayPicker
+          currentDate={selectedDate}
+          onSelectDate={handleDaySelection}
+          startDate={new Date(user.registrationDate)}
+        />
       </View>
       <ScreenTitle
         title="Agora me conta qual refeição você quer registrar:"

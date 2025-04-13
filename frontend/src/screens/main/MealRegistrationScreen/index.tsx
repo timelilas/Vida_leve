@@ -8,10 +8,7 @@ import { Paragraph } from "../../../components/Paragraph/Paragraph";
 import { MealItem } from "./components/MealItem";
 import { useMealStore } from "../../../store/meal";
 import { MealRegistrationData, MealSummary } from "./components/MealSummary";
-import {
-  formatDateToLabel,
-  getTitleFromMealType,
-} from "../../../utils/helpers";
+import { formatDateToLabel, getTitleFromMealType } from "../../../utils/helpers";
 import { RouteConstants } from "../../../routes/types";
 import { useSnackbar } from "../../../hooks/common/useSnackbar";
 import { useEffect, useState } from "react";
@@ -37,9 +34,9 @@ const MealRegistrationScreen = () => {
     isMealCreated,
     isMealUpdated,
     createMeal,
-    updateMeal,
+    updateMeal
   } = useMeal({
-    meals: { refetchOnMount: false },
+    meals: { refetchOnMount: false }
   });
 
   useEffect(() => {
@@ -50,8 +47,8 @@ const MealRegistrationScreen = () => {
           routes: [
             { name: RouteConstants.Home },
             { name: RouteConstants.CreateMeal },
-            { name: RouteConstants.SearchFoods },
-          ],
+            { name: RouteConstants.SearchFoods }
+          ]
         })
       );
     }
@@ -71,8 +68,8 @@ const MealRegistrationScreen = () => {
         index: 1,
         routes: [
           { name: RouteConstants.Home },
-          { name: RouteConstants.CreateMeal, params: createMealRouteParams },
-        ],
+          { name: RouteConstants.CreateMeal, params: createMealRouteParams }
+        ]
       })
     );
   }
@@ -105,10 +102,7 @@ const MealRegistrationScreen = () => {
   const shortDateLabel = formatDateToLabel(new Date(mealDate), "short");
 
   return (
-    <ScreenWrapper
-      contentContainerStyle={styles.container}
-      snackbar={<Snackbar />}
-    >
+    <ScreenWrapper contentContainerStyle={styles.container} snackbar={<Snackbar />}>
       <View style={styles.body}>
         <NavigationHeader
           variant="titled"
@@ -117,14 +111,11 @@ const MealRegistrationScreen = () => {
           onBack={goBack}
         />
         <View style={styles.textWrapper}>
-          <ScreenTitle
-            title="Aqui está sua refeição até agora"
-            style={styles.title}
-          />
+          <ScreenTitle title="Aqui está sua refeição até agora" style={styles.title} />
           <Paragraph style={styles.text}>
-            Confira os alimentos que você adicionou. Precisa incluir mais? Toque
-            em “Adicionar Alimento”. Se já tiver tudo certo, finalize
-            registrando sua refeição e acompanhe seu progresso diário.
+            Confira os alimentos que você adicionou. Precisa incluir mais? Toque em “Adicionar
+            Alimento”. Se já tiver tudo certo, finalize registrando sua refeição e acompanhe
+            seu progresso diário.
           </Paragraph>
         </View>
       </View>

@@ -1,7 +1,7 @@
 import {
   HttpGetUserProfileOutputDTO,
   HttpUpdateUserProfileInputDTO,
-  HttpUpdateUserProfileOutputDTO,
+  HttpUpdateUserProfileOutputDTO
 } from "./types";
 import { HttpService } from "../HttpService";
 import { STORAGE_ACCESS_TOKEN } from "../../constants/localStorageConstants";
@@ -16,8 +16,8 @@ export class HttpUserService extends HttpService {
       path: "/users/profile",
       body: params,
       headers: {
-        Authorization: `Bearer ${accessToken}`,
-      },
+        Authorization: `Bearer ${accessToken}`
+      }
     });
   }
 
@@ -28,8 +28,8 @@ export class HttpUserService extends HttpService {
       method: "GET",
       path: "/users/profile",
       headers: {
-        Authorization: `Bearer ${accessToken}`,
-      },
+        Authorization: `Bearer ${accessToken}`
+      }
     });
   }
 }

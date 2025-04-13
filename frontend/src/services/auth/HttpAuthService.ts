@@ -2,7 +2,7 @@ import {
   HttpLoginInputDTO,
   HttpLoginOutputDTO,
   HttpSignupInputDTO,
-  HttpSignupOutputDTO,
+  HttpSignupOutputDTO
 } from "./types";
 import { HttpService } from "../HttpService";
 
@@ -11,7 +11,7 @@ export class HttpAuthService extends HttpService {
     return await this.submit<HttpSignupOutputDTO>({
       method: "POST",
       path: "/auth/signup",
-      body: data,
+      body: data
     });
   }
 
@@ -19,7 +19,7 @@ export class HttpAuthService extends HttpService {
     return await this.submit<HttpLoginOutputDTO>({
       method: "POST",
       path: "/auth/login",
-      body: data,
+      body: data
     });
   }
 }

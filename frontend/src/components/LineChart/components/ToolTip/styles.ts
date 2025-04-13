@@ -7,34 +7,20 @@ export const styles = StyleSheet.create({
     zIndex: 20,
     paddingHorizontal: 6,
     paddingVertical: 3,
-    backgroundColor: colors.primary,
     borderRadius: 6,
     position: "absolute",
+    borderWidth: 1,
+    borderColor: "#000000"
   },
   text: {
     fontSize: 12,
     fontFamily: fonts.robotoMedium,
-    color: colors.common.white,
+    color: colors.common.white
   },
-  arrow: {
+  arrowIcon: {
     position: "absolute",
-    width: 0,
-    height: 0,
-    backgroundColor: "transparent",
-    borderTopWidth: 0,
-    borderRightWidth: 4,
-    borderBottomWidth: 6,
-    borderLeftWidth: 4,
-    borderTopColor: "transparent",
-    borderRightColor: "transparent",
-    borderBottomColor: colors.primary,
-    borderLeftColor: "transparent",
-    bottom: 0,
     left: "50%",
-    transform: [
-      { rotate: "180deg" },
-      { translateY: "-100%" },
-      { translateX: Platform.OS === "web" ? "50%" : "-25%" },
-    ],
-  },
+    bottom: "0%",
+    transform: [{ translateX: Platform.OS === "web" ? "-50%" : "25%" }, { translateY: "100%" }]
+  }
 });
