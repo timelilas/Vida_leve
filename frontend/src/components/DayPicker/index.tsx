@@ -3,7 +3,7 @@ import {
   NativeScrollEvent,
   NativeSyntheticEvent,
   TouchableOpacity,
-  View,
+  View
 } from "react-native";
 import { ArrowIcon } from "../Icons/ArrowIcon";
 import { styles } from "./styles";
@@ -11,30 +11,36 @@ import { DayItemButton } from "./DayItemButton";
 import { createMockedDays } from "./utils";
 import { useEffect, useMemo, useRef } from "react";
 import { DateData } from "./types";
-import { delay } from "../../utils/helpers";
+import { delay, getLocalDateOnly } from "../../utils/helpers";
 
 interface DayPickerProps {
-  currentDate: DateData | null;
   onSelectDate: (dateData: DateData) => void;
+  currentDate: DateData | null;
+  startDate?: Date;
 }
 
 export function DayPicker(props: DayPickerProps) {
-  const dayList = useRef(createMockedDays(31));
+  const dayList = useRef(createMockedDays(31, props.startDate));
   const indexRef = useRef<number>(0);
   const listRef = useRef<FlatList | null>(null);
+  const firstRender = useRef<boolean>(true);
 
   const currentDateIndex = useMemo(() => {
     return dayList.current.findIndex(({ id }) => id === props.currentDate?.id);
-  }, []);
+  }, [props.currentDate?.id]);
 
   const initialNumToRender = currentDateIndex > 10 ? currentDateIndex + 1 : 10;
 
   useEffect(() => {
+    if (!firstRender.current) return;
+
+    firstRender.current = false;
+
     delay(200).then(() => {
       if (currentDateIndex > 1) {
         listRef.current?.scrollToIndex({
           index: currentDateIndex,
-          animated: false,
+          animated: false
         });
       }
     });
@@ -48,13 +54,12 @@ export function DayPicker(props: DayPickerProps) {
 
       if (direction === "left") {
         const maxIndex = dayList.current.length - 1;
-        indexRef.current =
-          indexRef.current >= maxIndex ? maxIndex : indexRef.current + 1;
+        indexRef.current = indexRef.current >= maxIndex ? maxIndex : indexRef.current + 1;
       }
 
       listRef.current?.scrollToIndex({
         index: indexRef.current,
-        animated: true,
+        animated: true
       });
     };
   }
@@ -70,14 +75,19 @@ export function DayPicker(props: DayPickerProps) {
 
   function shouldDisable(dateData: DateData) {
     const todayDate = new Date();
-    const todayLocalDate = new Date(
-      todayDate.getFullYear(),
-      todayDate.getMonth(),
-      todayDate.getDate()
-    );
+    const todayLocalDateOnly = getLocalDateOnly(todayDate);
     const targetDate = new Date(dateData.year, dateData.month, dateData.day);
 
-    return targetDate.getTime() > todayLocalDate.getTime();
+    if (props.startDate) {
+      const startLocalDateOnly = getLocalDateOnly(props.startDate);
+
+      return (
+        targetDate.getTime() < startLocalDateOnly.getTime() ||
+        targetDate.getTime() > todayLocalDateOnly.getTime()
+      );
+    }
+
+    return targetDate.getTime() > todayLocalDateOnly.getTime();
   }
 
   const itemSeparator = () => <View style={styles.listItemSeparator} />;

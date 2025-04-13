@@ -11,8 +11,7 @@ export function calculateAge(birthDate: Date) {
   const isAfterBirthMonth = parseInt(currentMonth) > parseInt(birthMonth);
   const isEqualBirthMonth = parseInt(currentMonth) === parseInt(birthMonth);
   const isAfterBirthDay = parseInt(currentDay) >= parseInt(birthDay);
-  const decrementFactor =
-    isAfterBirthMonth || (isEqualBirthMonth && isAfterBirthDay) ? 0 : 1;
+  const decrementFactor = isAfterBirthMonth || (isEqualBirthMonth && isAfterBirthDay) ? 0 : 1;
 
   const age = parseInt(currentYear) - parseInt(birthYear) - decrementFactor;
   return age;

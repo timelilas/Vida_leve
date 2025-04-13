@@ -4,6 +4,7 @@ import { UserProps } from "../../@core/entities/user/type";
 export interface UserQueryState
   extends Pick<UserProps, "id" | "email" | "name" | "gender" | "phone"> {
   birthDate: string | null;
+  registrationDate: string;
 }
 
 export interface UpdateUserProfileParams {

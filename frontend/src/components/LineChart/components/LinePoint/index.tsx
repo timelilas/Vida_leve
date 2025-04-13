@@ -15,8 +15,7 @@ export function LinePoint(props: LinePointProps) {
       color={props.color}
       r={props.size}
       cx={props.x}
-      cy={props.y}
-    >
+      cy={props.y}>
       <Paint color={colors.common.white} />
     </Circle>
   );

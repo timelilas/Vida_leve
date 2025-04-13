@@ -2,7 +2,6 @@ import { Request, Response } from "express";
 import UserService from "../../service/user/UserService";
 import { NotFoundException } from "../../@core/exception/http/NotFoundException";
 import { exceptionResponseAdapter } from "../../utils/express/helpers";
-import { InternalServerException } from "../../@core/exception/http/InternalServerException";
 
 export default class UserController {
   private _userService = new UserService();
@@ -36,8 +35,8 @@ export default class UserController {
       const foundUser = await this._userService.update(updateUserParams);
 
       if (!foundUser) {
-        throw new InternalServerException(
-          `Usuário com id ${id} não encontrado.`,
+        throw new NotFoundException(
+          `Usuário com id '${id}' não encontrado.`,
           UserController.name
         );
       }
@@ -60,8 +59,8 @@ export default class UserController {
       const foundUser = await this._userService.get(req.user.id);
 
       if (!foundUser) {
-        throw new InternalServerException(
-          `Usuário com id ${userId} não encontrado.`,
+        throw new NotFoundException(
+          `Usuário com id '${userId}' não encontrado.`,
           UserController.name
         );
       }

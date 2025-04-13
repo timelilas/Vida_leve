@@ -40,7 +40,7 @@ export default class UserService {
     try {
       const foundUser = await User.findOne({
         where: { id },
-        attributes: { exclude: ["senha", "createdAt", "updatedAt"] },
+        attributes: { exclude: ["password", "updatedAt"] },
       });
 
       if (!foundUser) {
@@ -60,7 +60,7 @@ export default class UserService {
   public getUserByEmail = async (email: string) => {
     try {
       const foundUser = await User.findOne({ where: { email } });
-      return foundUser?.toJSON();
+      return foundUser?.toJSON() || null;
     } catch (error: any) {
       throw new DatabaseException(
         `Erro na busca das informações do usuário com email: '${email}'.`,

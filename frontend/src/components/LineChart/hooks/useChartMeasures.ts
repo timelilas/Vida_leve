@@ -25,17 +25,19 @@ export function useChartMeasures(params?: UseChartMeasuresParams) {
     paddingLeft: PADDING_LEFT,
     paddingRight: PADDING_RIGHT,
     paddingBottom: PADDING_BOTTOM,
-    paddingTop: PADDING_TOP,
+    paddingTop: PADDING_TOP
   };
 
   const xAxis = {
-    margintTop: 4,
+    margintTop: 8,
+    tickWidth: 1,
+    tickHeight: 8
   };
 
   const yAxis = {
     tickWidth: 8,
     tickHeight: 1,
-    labelMarginRight: 2,
+    labelMarginRight: 2
   };
 
   const chart = {
@@ -43,11 +45,11 @@ export function useChartMeasures(params?: UseChartMeasuresParams) {
     height: canvas.height - canvas.paddingTop - canvas.paddingBottom,
     strokeWidth: CHART_STROKE_WIDTH,
     x: canvas.paddingLeft - CHART_STROKE_WIDTH / 2,
-    y: canvas.paddingTop,
+    y: canvas.paddingTop
   };
 
   const linePoint = {
-    r: LINE_POINT_RADIUS,
+    r: LINE_POINT_RADIUS
   };
 
   return {
@@ -55,6 +57,6 @@ export function useChartMeasures(params?: UseChartMeasuresParams) {
     chart,
     xAxis,
     yAxis,
-    linePoint,
+    linePoint
   };
 }

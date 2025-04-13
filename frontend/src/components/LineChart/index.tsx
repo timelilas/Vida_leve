@@ -1,6 +1,5 @@
 import { Dimensions, Platform, View } from "react-native";
-import { Canvas, Color, Group, Rect } from "@shopify/react-native-skia";
-import { colors } from "../../styles/colors";
+import { Canvas, Color, Group } from "@shopify/react-native-skia";
 import { useEffect, useState } from "react";
 import { GestureResponderEvent } from "react-native";
 import { PointerEvent } from "react-native";
@@ -8,7 +7,7 @@ import { useChartMeasures } from "./hooks/useChartMeasures";
 import { ToolTip } from "./components/ToolTip";
 import { XAxis } from "./components/XAxis";
 import { YAxis } from "./components/YAxis";
-import { ChartLinePath } from "./components/LinePath";
+import { ChartLinePath } from "./components/ChartLinePath";
 import { LinePoint } from "./components/LinePoint";
 import { useChartDomain } from "./hooks/useChartDomain";
 
@@ -16,17 +15,22 @@ interface TooltipState {
   value: number;
   posX: number;
   posY: number;
+  color: string;
   visible: boolean;
 }
 
 interface LineChartProps {
   labels: string[];
+  lineStrokeWidth?: number;
   data: {
     values: number[];
     color: Color;
-    withDots?: boolean;
-    withTooltip?: boolean;
-    withYLabel?: boolean;
+    fillColor?: Color;
+    withDots?: boolean | ((value: number, index: number) => boolean);
+    tooltip?: {
+      color: string;
+      enabled: boolean | ((value: number, index: number) => boolean);
+    };
   }[];
 }
 
@@ -35,65 +39,19 @@ export function LineChart(props: LineChartProps) {
 
   const XAXIS_FONT_SIZE = 14;
   const YAXIS_FONT_SIZE = 14;
-  const LINE_PATH_STROKE_WIDTH = 3;
 
   const { canvas, chart, linePoint } = useChartMeasures();
 
   const { xAxis, yAxis } = useChartDomain({
     xLabels: props.labels,
     yData: props.data.map(({ values }) => values).flat(1),
-    chart: { width: chart.width, height: chart.height },
+    chart: { width: chart.width, height: chart.height }
   });
 
-  const yStep = Math.ceil(yAxis.domain()[yAxis.domain().length - 1] / 4);
-  const ySubDomain = props.data.reduce((acc, { values, withYLabel }) => {
-    if (withYLabel) acc.push(...values);
-    return acc;
-  }, [] as number[]);
-
-  const allowedTooltipPositions = props.data.reduce((acc, dataItem) => {
-    if (dataItem.withTooltip) {
-      const positions = dataItem.values.map((value, i) => {
-        return {
-          x: Math.trunc(xAxis(props.labels[i])!),
-          y: Math.trunc(yAxis(value)),
-          value,
-        };
-      });
-      acc.push(...positions);
-    }
-    return acc;
-  }, [] as { x: number; y: number; value: number }[]);
-
-  function renderInnerLines() {
-    const innerLinesDomain = Array.from(
-      { length: 4 },
-      (_, i) => yStep * i
-    ).slice(1);
-    return (
-      <Group>
-        {innerLinesDomain.map((value, i) => {
-          return (
-            <Rect
-              key={i}
-              x={chart.x}
-              y={canvas.height - canvas.paddingBottom - yAxis(value)}
-              height={1}
-              width={chart.width}
-              color={colors.gray.light}
-            />
-          );
-        })}
-      </Group>
-    );
-  }
-
-  function renderChartBorder() {
-    return <Rect {...chart} style="stroke" color={colors.gray.light} />;
-  }
+  const allowedTooltipPositions = getAllowedTooltipPositions();
 
   function renderLinePaths() {
-    return props.data.map(({ color, values, withDots }, i) => {
+    return props.data.map(({ color, values, withDots, fillColor }, i) => {
       const data = values.map((value, i) => {
         return { value, label: props.labels[i] };
       });
@@ -102,46 +60,72 @@ export function LineChart(props: LineChartProps) {
           <ChartLinePath
             canvasWidth={canvas.width}
             canvasHeight={canvas.height}
-            strokeWidth={LINE_PATH_STROKE_WIDTH}
+            strokeWidth={props.lineStrokeWidth || 1}
             xAxis={xAxis}
             yAxis={yAxis}
             color={color}
+            fill={fillColor}
             data={data}
           />
           {withDots
-            ? data.map(({ label, value }) => (
-                <Group key={label}>
-                  <LinePoint
-                    size={linePoint.r}
-                    y={canvas.height - canvas.paddingBottom - yAxis(value)}
-                    x={canvas.paddingLeft + xAxis(label)!}
-                    color={color}
-                  />
-                </Group>
-              ))
+            ? data.map(({ label, value }, i) => {
+                const useDot = typeof withDots === "function" ? withDots(value, i) : withDots;
+                if (useDot)
+                  return (
+                    <LinePoint
+                      key={i}
+                      size={linePoint.r}
+                      y={canvas.height - canvas.paddingBottom - yAxis(value)}
+                      x={canvas.paddingLeft + xAxis(label)!}
+                      color={color}
+                    />
+                  );
+              })
             : null}
         </Group>
       );
     });
   }
 
+  function getAllowedTooltipPositions() {
+    return props.data.reduce(
+      (acc, dataItem) => {
+        if (dataItem.tooltip?.enabled) {
+          const tooltipColor = dataItem.tooltip.color;
+
+          dataItem.values.forEach((value, i) => {
+            const isTooltipPositionAllowed =
+              typeof dataItem.tooltip?.enabled === "function"
+                ? dataItem.tooltip?.enabled(value, i)
+                : true;
+
+            if (isTooltipPositionAllowed) {
+              acc.push({
+                x: Math.trunc(xAxis(props.labels[i])!),
+                y: Math.trunc(yAxis(value)),
+                tooltipColor,
+                value
+              });
+            }
+          });
+        }
+        return acc;
+      },
+      [] as { x: number; y: number; value: number; tooltipColor: string }[]
+    );
+  }
+
   function getTooltipePositionWEB(e: PointerEvent) {
     return {
       posX: Math.trunc(e.nativeEvent.offsetX) - canvas.paddingLeft,
-      posY:
-        canvas.height -
-        canvas.paddingBottom -
-        Math.trunc(e.nativeEvent.offsetY),
+      posY: canvas.height - canvas.paddingBottom - Math.trunc(e.nativeEvent.offsetY)
     };
   }
 
   function getTooltipPositionMOBILE(e: GestureResponderEvent) {
     return {
       posX: Math.trunc(e.nativeEvent.locationX) - canvas.paddingLeft,
-      posY:
-        canvas.height -
-        canvas.paddingBottom -
-        Math.trunc(e.nativeEvent.locationY),
+      posY: canvas.height - canvas.paddingBottom - Math.trunc(e.nativeEvent.locationY)
     };
   }
 
@@ -165,13 +149,13 @@ export function LineChart(props: LineChartProps) {
         setTooltip((prev) => {
           const nextPosX = canvas.paddingLeft + position.x;
           const nextPosY = canvas.height - canvas.paddingBottom - position.y;
-          const samePosition =
-            prev?.posX === nextPosX && prev.posY === nextPosY;
+          const samePosition = prev?.posX === nextPosX && prev.posY === nextPosY;
           return {
             posX: nextPosX,
             posY: nextPosY,
             value: position.value,
             visible: samePosition ? !prev.visible : true,
+            color: position.tooltipColor
           };
         });
       }
@@ -188,24 +172,18 @@ export function LineChart(props: LineChartProps) {
   return (
     <View
       onPointerUp={Platform.OS === "web" ? handleTooltipPosition : undefined}
-      style={{ width: canvas.width, height: canvas.height }}
-    >
-      {tooltip?.visible && (
+      style={{ width: canvas.width, height: canvas.height }}>
+      {tooltip && tooltip?.visible && (
         <ToolTip
           posX={tooltip.posX}
           posY={tooltip.posY}
           value={`${tooltip.value}`}
+          color={tooltip.color}
         />
       )}
       <Canvas
         onTouchEnd={Platform.OS !== "web" ? handleTooltipPosition : undefined}
-        style={{
-          width: canvas.width,
-          height: canvas.height,
-        }}
-      >
-        {renderChartBorder()}
-        {renderInnerLines()}
+        style={{ width: canvas.width, height: canvas.height }}>
         <XAxis
           xAxis={xAxis}
           fontSize={XAXIS_FONT_SIZE}
@@ -219,7 +197,6 @@ export function LineChart(props: LineChartProps) {
           canvasHeight={canvas.height}
           canvasWidth={canvas.width}
           axisLabel="kcal"
-          subdomain={[...new Set(ySubDomain)]}
         />
         {renderLinePaths()}
       </Canvas>

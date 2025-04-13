@@ -6,6 +6,7 @@ module.exports = {
   rules: {
     "prettier/prettier": "error",
     "@typescript-eslint/no-explicit-any": "warn",
+    "@typescript-eslint/no-unused-vars": "error",
     "@typescript-eslint/explicit-member-accessibility": [
       "error",
       {
@@ -15,9 +16,9 @@ module.exports = {
           constructors: "off",
           methods: "explicit",
           parameterProperties: "off",
-          properties: "explicit",
-        },
-      },
-    ],
-  },
+          properties: "explicit"
+        }
+      }
+    ]
+  }
 };
