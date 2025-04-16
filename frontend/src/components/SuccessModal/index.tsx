@@ -23,8 +23,7 @@ export function SuccessModal(props: SuccessModalProps) {
       backdropColor={colors.common.black}
       backdropOpacity={0.2}
       isVisible={isVisible}
-      style={styles.container}
-    >
+      style={styles.container}>
       <View style={styles.modal}>
         <SuccessCheckIcon style={styles.checkIcon} />
         <Text style={styles.message}>{message}</Text>
