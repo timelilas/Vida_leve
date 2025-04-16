@@ -2,6 +2,7 @@
   "name": "vida-leve-app",
   "version": "1.0.0",
   "main": "expo/AppEntry.js",
+  "license": "Attribution-NonCommercial-NoDerivatives 4.0 International",
   "scripts": {
     "lint": "eslint .",
     "start": "expo start",

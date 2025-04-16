@@ -1,20 +1,19 @@
 import { View } from "moti";
 import { NavigationHeader } from "../../../components/NavigationHeader";
 import { ScreenWrapper } from "../../../components/ScreenWrapper";
-import { useAppNavigation } from "../../../hooks/common/useAppNavigation";
 import { useSnackbar } from "../../../hooks/common/useSnackbar";
 import {
-  convertDateToLocalDateData,
   formatDateToLabel,
-  generateLocalDateRange
+  generateLocalDateRange,
+  getLocalDateOnly
 } from "../../../utils/helpers";
 import { ScreenTitle } from "../../../components/ScreenTitle";
 import { Paragraph } from "../../../components/Paragraph/Paragraph";
 import { styles } from "./styles";
 import Select, { SelectEvent } from "../../../components/Select";
 import { useDebounce } from "../../../hooks/common/useDebounce";
-import { useCallback, useEffect, useMemo, useState } from "react";
-import { DateIntervalType, PlainDate } from "../../../@types";
+import { useCallback, useContext, useEffect, useMemo } from "react";
+import { DateIntervalType } from "../../../@types";
 import { QueryKeys } from "../../../constants/reactQueryKeys";
 import { queryClient } from "../../../libs/react-query/queryClient";
 import { TimeRangeNavigator } from "../../../components/TimeRangeNavigator";
@@ -22,34 +21,29 @@ import { Text, TouchableOpacity } from "react-native";
 import { colors } from "../../../styles/colors";
 import { ChartLabel } from "../../../components/ChartLabel";
 import { LineChart } from "../../../components/LineChart";
-import { RouteConstants } from "../../../routes/types";
 import { useCalorieStatistics } from "../../../hooks/calorieStatistics/useCalorieStatistics";
 import { HttpError } from "../../../@core/errors/httpError";
 import { NETWORK_ERROR_MESSAGE } from "../../../constants/errorMessages";
 import { EmptyDataPlaceholder } from "../../../components/EmptyDataPlaceholder";
 import { LineChartIcon } from "../../../components/Icons/LineChartIcon";
 import { LineChartSkeleton } from "./components/LineChartSkeleton/inde";
+import { NavigationProp, useNavigation } from "@react-navigation/native";
+import {
+  ReportRoutesConstants,
+  ReportRoutesParamsList
+} from "../../../routes/reportRouter/types";
+import { DateFilterContext } from "../../../contexts/dateFilterContext/DateFilterContext";
 
 const ReportScreen = () => {
+  const navigation = useNavigation<NavigationProp<ReportRoutesParamsList>>();
+  const localDate = useMemo(() => getLocalDateOnly(), []);
   const { Snackbar, showSnackbar } = useSnackbar();
-  const navigation = useAppNavigation();
-  const dateData = useMemo(() => convertDateToLocalDateData(new Date()), []);
-  const localDate = useMemo(
-    () => new Date(dateData.year, dateData.month, dateData.day),
-    [dateData]
-  );
-
   const { isDebouncing, startDebounce } = useDebounce(300);
-  const [intervalType, setIntervalType] = useState<DateIntervalType>("monthly");
-  const [dateFilter, setDateFilter] = useState<PlainDate>({
-    year: dateData.year,
-    month: dateData.month,
-    day: dateData.day,
-    weekDay: dateData.weekDay
-  });
 
-  const dateRange = generateLocalDateRange(intervalType, dateFilter);
+  const { dateData, intervalType, updateDateDate, updateIntervalType } =
+    useContext(DateFilterContext);
 
+  const dateRange = generateLocalDateRange(intervalType, dateData);
   const { statistics, isLoading, isFetching, error } = useCalorieStatistics({
     from: dateRange.from,
     to: dateRange.to > localDate ? localDate : dateRange.to,
@@ -76,11 +70,11 @@ const ReportScreen = () => {
   }
 
   function navigateToReportDetailsScreen() {
-    navigation.navigate(RouteConstants.ReportDetails);
+    navigation.navigate(ReportRoutesConstants.ReportDetails);
   }
 
   function handleIntervalTypeSelect(e: SelectEvent) {
-    setIntervalType(e.value as "monthly" | "weekly");
+    updateIntervalType(e.value as DateIntervalType);
   }
 
   function isTooltipEnabledHadler(value: number, index: number) {
@@ -92,29 +86,21 @@ const ReportScreen = () => {
   const handleTimeRangeChange = useCallback(
     (date: Date) => {
       const { from, to } = generateLocalDateRange(intervalType, date);
-      const sanitizedTo = to > localDate ? localDate : to;
-
       const queryKey = QueryKeys.DATABASE.CALORIE_STATISTICS(
         from.toISOString().split("T")[0],
-        sanitizedTo.toISOString().split("T")[0]
+        (to > localDate ? localDate : to).toISOString().split("T")[0]
       );
       if (queryClient.getQueryData(queryKey) === undefined) {
         startDebounce();
       }
-      setDateFilter({
-        year: date.getFullYear(),
-        month: date.getMonth(),
-        day: date.getDate(),
-        weekDay: date.getDay()
-      });
+      updateDateDate(date);
     },
-    [setDateFilter, startDebounce, intervalType, localDate]
+    [updateDateDate, startDebounce, intervalType, localDate]
   );
 
   const handleQueryError = useCallback(
     (error: Error) => {
       const mealsError = `Desculpe, não foi possível obter as informações para o período selecionado. contate o suporte para mais informações.`;
-
       const errorMessage = error instanceof HttpError ? mealsError : NETWORK_ERROR_MESSAGE;
 
       showSnackbar({
@@ -154,7 +140,12 @@ const ReportScreen = () => {
           ]}
           onChange={handleIntervalTypeSelect}
         />
-        <TimeRangeNavigator onChange={handleTimeRangeChange} intervalType={intervalType} />
+        <TimeRangeNavigator
+          key={`${dateData.year}-${dateData.month}-${dateData.day}`}
+          onChange={handleTimeRangeChange}
+          intervalType={intervalType}
+          initialDate={new Date(dateData.year, dateData.month, dateData.day)}
+        />
       </View>
       <View style={styles.chartContainer}>
         <LineChartSkeleton show={isLoading || isDebouncing || isFetching || !!error}>
@@ -164,7 +155,7 @@ const ReportScreen = () => {
           </View>
           {statistics.length > 0 ? (
             <LineChart
-              key={dateFilter.day}
+              key={dateData.day}
               lineStrokeWidth={3}
               labels={chartDataAndLabels.labels}
               data={[

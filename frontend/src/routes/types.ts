@@ -17,9 +17,9 @@ export enum RouteConstants {
   CreateMeal = "SCREEN_Main_CreateMeal",
   SearchFoods = "SCREEN_Main_SearchFoods",
   MealRegistration = "SCREEN_Main_MealRegistration",
-  Report = "SCREEN_Main_ReportScreen",
-  ReportDetails = "SCREEN_Main_ReportDetailsScreen",
   ConnectionError = "SCREEN_Error_ConnectionError",
+
+  ReportRouter = "ROUTER_Main_ReportRouter"
 }
 
 export type RouteParamsList = {
@@ -43,7 +43,6 @@ export type RouteParamsList = {
   [RouteConstants.CreateMeal]?: { withSubmitButton?: boolean; date?: string };
   [RouteConstants.SearchFoods]?: { foodName: string };
   [RouteConstants.MealRegistration]: undefined;
-  [RouteConstants.Report]: undefined;
-  [RouteConstants.ReportDetails]: undefined;
+  [RouteConstants.ReportRouter]: undefined;
   [RouteConstants.ConnectionError]: undefined;
 };

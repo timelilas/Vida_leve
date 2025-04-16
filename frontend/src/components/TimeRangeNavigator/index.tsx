@@ -72,11 +72,12 @@ export function TimeRangeNavigator(props: TimeRangeNavigatorProps) {
       nextDate.setUTCFullYear(year);
       if (intervalType === "monthly") {
         nextDate.setUTCMonth(month - 1);
-        nextDate.setUTCDate(2);
+        nextDate.setUTCDate(3);
       }
       if (intervalType === "weekly") {
         nextDate.setUTCMonth(month);
         nextDate.setUTCDate(day - 7);
+        nextDate.setUTCDate(nextDate.getUTCDate() - nextDate.getUTCDay() + 3);
       }
       return nextDate <= minDate
         ? {
@@ -99,11 +100,12 @@ export function TimeRangeNavigator(props: TimeRangeNavigatorProps) {
       nextDate.setUTCFullYear(year);
       if (intervalType === "monthly") {
         nextDate.setUTCMonth(month + 1);
-        nextDate.setUTCDate(2);
+        nextDate.setUTCDate(3);
       }
       if (intervalType === "weekly") {
         nextDate.setUTCMonth(month);
         nextDate.setUTCDate(day + 7);
+        nextDate.setUTCDate(nextDate.getUTCDate() - nextDate.getUTCDay() + 3);
       }
 
       return nextDate > getMaxDate()
