@@ -1,3 +1,4 @@
+import { GenderType } from "../@core/entities/@shared/gender/type";
 import { PlanType } from "../@core/entities/@shared/planType/type";
 import { CaloriePlanProps } from "../@core/entities/caloriePlan/type";
 import { ProgressProps } from "../@core/entities/progress/type";
@@ -14,6 +15,7 @@ export enum RouteConstants {
   GoalSettings = "SCREEN_Main_GoalSettings",
   UpdateWeight = "SCREEN_Main_UpdateWeight",
   UpdateProfile = "SCREEN_Main_UpdateProfile",
+  UpdateProgress = "SCREEN_Main_UpdateProgress",
   CreateMeal = "SCREEN_Main_CreateMeal",
   SearchFoods = "SCREEN_Main_SearchFoods",
   MealRegistration = "SCREEN_Main_MealRegistration",
@@ -40,6 +42,14 @@ export type RouteParamsList = {
   [RouteConstants.GoalSettings]: undefined;
   [RouteConstants.UpdateWeight]: undefined;
   [RouteConstants.UpdateProfile]: undefined;
+  [RouteConstants.UpdateProgress]: {
+    profileData: {
+      name: string;
+      phone: string;
+      birthDate: string;
+      gender: GenderType;
+    };
+  };
   [RouteConstants.CreateMeal]?: { withSubmitButton?: boolean; date?: string };
   [RouteConstants.SearchFoods]?: { foodName: string };
   [RouteConstants.MealRegistration]: undefined;

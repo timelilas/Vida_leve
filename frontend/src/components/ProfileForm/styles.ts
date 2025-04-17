@@ -4,24 +4,23 @@ import { colors } from "../../styles/colors";
 
 export const styles = StyleSheet.create({
   container: {
-    flex: 1,
+    flex: 1
   },
   form: {
-    marginTop: 32,
     gap: 16,
-    marginBottom: 56,
+    marginBottom: 56
   },
   genderButtons: {
     alignSelf: "flex-start",
     flexDirection: "row",
-    gap: 40,
+    gap: 40
   },
   genderLabel: {
     fontFamily: fonts.robotoRegular,
     fontSize: 16,
     lineHeight: 16,
     color: colors.text.primary,
-    marginBottom: 8,
+    marginBottom: 8
   },
   gender: {
     fontSize: 16,
@@ -29,12 +28,12 @@ export const styles = StyleSheet.create({
     paddingVertical: 14,
     paddingHorizontal: 6,
     fontFamily: fonts.robotoRegular,
-    color: colors.text.primary,
+    color: colors.text.primary
   },
   submitButton: {
-    marginTop: "auto",
+    marginTop: "auto"
   },
   genderError: {
-    marginTop: 8,
-  },
+    marginTop: 8
+  }
 });
