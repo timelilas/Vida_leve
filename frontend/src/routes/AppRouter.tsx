@@ -13,7 +13,7 @@ import ConnectionErrorScreen from "../screens/error/ConnectionErrorScreen";
 import WelcomeScreen from "../screens/auth/WelcomeScreen";
 import HomeScreen from "../screens/main/HomeScreen";
 import GoalSettingsScreen from "../screens/main/GoalSettingsScreen";
-import UpdateProgressScreen from "../screens/main/UpdateProgressScreen";
+import UpdateWeightScreen from "../screens/main/UpdateWeightScreen";
 import CreateMealScreen from "../screens/main/CreateMealScreen";
 import SearchFoodsScreen from "../screens/main/SearchFoodsScreen";
 import MealRegistrationScreen from "../screens/main/MealRegistrationScreen";
@@ -75,8 +75,8 @@ const AppRouter = () => {
           options={{ headerShown: false }}
         />
         <Stack.Screen
-          name={RouteConstants.UpdateProgress}
-          component={UpdateProgressScreen}
+          name={RouteConstants.UpdateWeight}
+          component={UpdateWeightScreen}
           options={{ headerShown: false }}
         />
         <Stack.Screen

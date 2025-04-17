@@ -12,7 +12,7 @@ export enum RouteConstants {
   GoalGuidance = "SCREEN_Onboarding_GoalGuidance",
   Home = "SCREEN_Main_Home",
   GoalSettings = "SCREEN_Main_GoalSettings",
-  UpdateProgress = "SCREEN_Main_UpdateProgress",
+  UpdateWeight = "SCREEN_Main_UpdateWeight",
   UpdateProfile = "SCREEN_Main_UpdateProfile",
   CreateMeal = "SCREEN_Main_CreateMeal",
   SearchFoods = "SCREEN_Main_SearchFoods",
@@ -38,7 +38,7 @@ export type RouteParamsList = {
   [RouteConstants.GoalGuidance]: undefined;
   [RouteConstants.Home]: undefined;
   [RouteConstants.GoalSettings]: undefined;
-  [RouteConstants.UpdateProgress]: undefined;
+  [RouteConstants.UpdateWeight]: undefined;
   [RouteConstants.UpdateProfile]: undefined;
   [RouteConstants.CreateMeal]?: { withSubmitButton?: boolean; date?: string };
   [RouteConstants.SearchFoods]?: { foodName: string };

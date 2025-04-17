@@ -11,7 +11,7 @@ import { styles } from "./styles";
 import { useUser } from "../../../hooks/user/useUser";
 import { useProgress } from "../../../hooks/progress/useProgress";
 
-const UpdateProgressScreen = () => {
+const UpdateWeightScreen = () => {
   const { Snackbar, showSnackbar } = useSnackbar();
   const { progress } = useProgress({ refetchOnMount: false });
   const { user } = useUser({ refetchOnMount: false });
@@ -23,7 +23,7 @@ const UpdateProgressScreen = () => {
     goalWeight: `${progress?.goalWeight ?? ""}`,
     activityFrequency: progress?.activityFrequency ?? null,
     gender: user.gender,
-    birthDate: user.birthDate ?? "",
+    birthDate: user.birthDate ?? ""
   };
 
   function goBack() {
@@ -41,7 +41,7 @@ const UpdateProgressScreen = () => {
       withModal: true,
       plans: newCaloriePlans,
       curentPlan: null,
-      progressData: formData,
+      progressData: formData
     });
   }
 
@@ -54,13 +54,10 @@ const UpdateProgressScreen = () => {
   return (
     <ScreenWrapper snackbar={<Snackbar />}>
       <NavigationHeader variant="branded" onBack={goBack} />
-      <ScreenTitle
-        style={styles.title}
-        title="Ajuste sua meta de perda de peso"
-      />
+      <ScreenTitle style={styles.title} title="Ajuste sua meta de perda de peso" />
       <Paragraph style={styles.description}>
-        Para ajudá-lo a alcançar seus objetivos de saúde, atualize seu peso
-        atual, defina seu peso desejado e ajuste sua rotina de atividade física.
+        Para ajudá-lo a alcançar seus objetivos de saúde, atualize seu peso atual, defina seu
+        peso desejado e ajuste sua rotina de atividade física.
       </Paragraph>
       <ProgressForm
         variant="goalAdjustments"
@@ -72,4 +69,4 @@ const UpdateProgressScreen = () => {
   );
 };
 
-export default UpdateProgressScreen;
+export default UpdateWeightScreen;
