@@ -40,7 +40,7 @@ const UpdateWeightScreen = () => {
       nextRoute: RouteConstants.Home,
       withModal: true,
       plans: newCaloriePlans,
-      curentPlan: null,
+      currentPlan: null,
       progressData: formData
     });
   }

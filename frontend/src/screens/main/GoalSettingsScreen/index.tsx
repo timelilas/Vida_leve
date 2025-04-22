@@ -32,7 +32,7 @@ const GoalSettingsScreen = () => {
       nextRoute: RouteConstants.Home,
       withModal: true,
       plans: plans,
-      curentPlan: progress?.currentCaloriePlan || null
+      currentPlan: progress?.currentCaloriePlan || null
     });
   }
 

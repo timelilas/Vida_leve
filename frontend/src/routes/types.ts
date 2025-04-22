@@ -28,7 +28,7 @@ export type RouteParamsList = {
   [RouteConstants.PlanSelection]: {
     nextRoute: string;
     plans: CaloriePlanProps[];
-    curentPlan: PlanType | null;
+    currentPlan: PlanType | null;
     withModal?: boolean;
     progressData?: Omit<ProgressProps, "currentCaloriePlan">;
   };

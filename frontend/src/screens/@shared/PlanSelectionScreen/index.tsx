@@ -3,7 +3,6 @@ import { ScreenWrapper } from "../../../components/ScreenWrapper";
 import { NavigationHeader } from "../../../components/NavigationHeader";
 import { ScreenTitle } from "../../../components/ScreenTitle";
 import { Paragraph } from "../../../components/Paragraph/Paragraph";
-import { ConnectionError } from "../../../@core/errors/connectionError";
 import { useAppNavigation } from "../../../hooks/common/useAppNavigation";
 import { RouteConstants, RouteParamsList } from "../../../routes/types";
 import { useSnackbar } from "../../../hooks/common/useSnackbar";
@@ -15,10 +14,7 @@ import { FormState, PlanSelectionForm } from "./components/PlanSelectionForm";
 import { useProgress } from "../../../hooks/progress/useProgress";
 import { useCaloriePlans } from "../../../hooks/caloriePlan/useCaloriePlans";
 
-type PlanSelectionScreenRouteProp = RouteProp<
-  RouteParamsList,
-  RouteConstants.PlanSelection
->;
+type PlanSelectionScreenRouteProp = RouteProp<RouteParamsList, RouteConstants.PlanSelection>;
 
 interface PlanSelectionScreenProps {
   route: PlanSelectionScreenRouteProp;
@@ -30,10 +26,9 @@ const PlanSelectionScreen = ({ route }: PlanSelectionScreenProps) => {
   const { Snackbar, showSnackbar } = useSnackbar();
   const { updateLocalPlans } = useCaloriePlans({ refetchOnMount: false });
   const { setCaloriePlan, upsertProgress } = useProgress({
-    refetchOnMount: false,
+    refetchOnMount: false
   });
-  const { progressData, plans, curentPlan, nextRoute, withModal } =
-    route.params;
+  const { progressData, plans, currentPlan, nextRoute, withModal } = route.params;
 
   function goBack() {
     navigation.goBack();
@@ -56,7 +51,7 @@ const PlanSelectionScreen = ({ route }: PlanSelectionScreenProps) => {
     if (progressData) {
       await upsertProgress({
         ...progressData,
-        currentCaloriePlan: selectedPlan,
+        currentCaloriePlan: selectedPlan
       });
       updateLocalPlans(plans);
     } else {
@@ -71,7 +66,7 @@ const PlanSelectionScreen = ({ route }: PlanSelectionScreenProps) => {
     return showSnackbar({
       duration: 4000,
       message: error.message,
-      variant: "error",
+      variant: "error"
     });
   }
 
@@ -79,19 +74,15 @@ const PlanSelectionScreen = ({ route }: PlanSelectionScreenProps) => {
     <ScreenWrapper snackbar={<Snackbar />}>
       <NavigationHeader variant="branded" onBack={goBack} />
       <View style={styles.contentContainer}>
-        <ScreenTitle
-          style={styles.title}
-          title="Escolha o plano ideal para você!"
-        />
+        <ScreenTitle style={styles.title} title="Escolha o plano ideal para você!" />
         <Paragraph style={styles.text}>
-          Selecione entre 3 opções de planos para alcançar seus objetivos no seu
-          próprio tempo. Seja qual for a sua escolha, estamos prontos para te
-          ajudar a chegar lá!
+          Selecione entre 3 opções de planos para alcançar seus objetivos no seu próprio tempo.
+          Seja qual for a sua escolha, estamos prontos para te ajudar a chegar lá!
         </Paragraph>
       </View>
       <PlanSelectionForm
         plans={plans}
-        currentPlan={curentPlan}
+        currentPlan={currentPlan}
         onSubmit={handleSubmit}
         onError={handleError}
       />

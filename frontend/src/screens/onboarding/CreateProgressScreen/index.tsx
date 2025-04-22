@@ -7,7 +7,6 @@ import { RouteConstants } from "../../../routes/types";
 import { useSnackbar } from "../../../hooks/common/useSnackbar";
 import { ProgressForm } from "../../../components/ProgressForm";
 import { OnProgressSubmitData } from "../../../components/ProgressForm/types";
-import { useState } from "react";
 import { styles } from "./styles";
 import { useUser } from "../../../hooks/user/useUser";
 import { useProgress } from "../../../hooks/progress/useProgress";
@@ -19,7 +18,7 @@ const CreateProgressScreen = () => {
   const { updateLocalPlans } = useCaloriePlans({ refetchOnMount: false });
   const { user } = useUser({ refetchOnMount: false });
   const { progress, isUpsertingProgress, upsertProgress } = useProgress({
-    refetchOnMount: false,
+    refetchOnMount: false
   });
   const navigation = useAppNavigation({ preventGoBack: isUpsertingProgress });
 
@@ -29,7 +28,7 @@ const CreateProgressScreen = () => {
     weight: `${progress?.weight ?? ""}`,
     height: progress?.height ? progress.height.toFixed(2) : "",
     goalWeight: `${progress?.goalWeight ?? ""}`,
-    activityFrequency: progress?.activityFrequency ?? null,
+    activityFrequency: progress?.activityFrequency ?? null
   };
 
   function goBack() {
@@ -47,7 +46,7 @@ const CreateProgressScreen = () => {
     navigation.navigate(RouteConstants.PlanSelection, {
       nextRoute: RouteConstants.GoalGuidance,
       plans: newCaloriePlans,
-      curentPlan: progressData.currentCaloriePlan,
+      currentPlan: progressData.currentCaloriePlan
     });
   }
 
@@ -56,7 +55,7 @@ const CreateProgressScreen = () => {
       showSnackbar({
         duration: 4000,
         message: error.message,
-        variant: "error",
+        variant: "error"
       });
     }
   }
@@ -66,8 +65,8 @@ const CreateProgressScreen = () => {
       <NavigationHeader variant="branded" onBack={goBack} />
       <ScreenTitle style={styles.title} title="Nos conte mais sobre você!" />
       <Paragraph style={styles.description}>
-        Precisamos da sua altura, peso atual, meta de peso e frequência de
-        atividade física para personalizar sua jornada.
+        Precisamos da sua altura, peso atual, meta de peso e frequência de atividade física
+        para personalizar sua jornada.
       </Paragraph>
       <ProgressForm
         variant="default"
