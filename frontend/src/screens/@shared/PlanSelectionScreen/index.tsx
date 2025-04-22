@@ -28,7 +28,7 @@ const PlanSelectionScreen = ({ route }: PlanSelectionScreenProps) => {
   const { setCaloriePlan, upsertProgress } = useProgress({
     refetchOnMount: false
   });
-  const { progressData, plans, currentPlan, nextRoute, withModal } = route.params;
+  const { progressData, profileData, plans, currentPlan, nextRoute, withModal } = route.params;
 
   function goBack() {
     navigation.goBack();
@@ -46,6 +46,8 @@ const PlanSelectionScreen = ({ route }: PlanSelectionScreenProps) => {
   }
 
   async function handleSubmit(formState: FormState) {
+    if (profileData) return;
+
     const { selectedPlan } = formState;
 
     if (progressData) {

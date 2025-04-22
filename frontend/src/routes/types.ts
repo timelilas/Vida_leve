@@ -31,6 +31,7 @@ export type RouteParamsList = {
     currentPlan: PlanType | null;
     withModal?: boolean;
     progressData?: Omit<ProgressProps, "currentCaloriePlan">;
+    profileData?: { name: string; phone: string; birthDate: string; gender: GenderType };
   };
   [RouteConstants.Welcome]: undefined;
   [RouteConstants.Login]: undefined;

@@ -8,6 +8,7 @@ import { useAppNavigation } from "../../../hooks/common/useAppNavigation";
 import { useProgress } from "../../../hooks/progress/useProgress";
 import { RouteConstants, RouteParamsList } from "../../../routes/types";
 import { styles } from "./styles";
+import { OnProgressSubmitData } from "../../../components/ProgressForm/types";
 
 type UpdateProgressScreenRouteProp = RouteProp<RouteParamsList, RouteConstants.UpdateProgress>;
 
@@ -32,7 +33,16 @@ const UpdateProgressScreen = ({ route }: UpdateProgressScreenProps) => {
     navigation.goBack();
   }
 
-  async function onSubmit() {}
+  async function onSubmit(data: OnProgressSubmitData) {
+    navigation.navigate(RouteConstants.PlanSelection, {
+      withModal: false,
+      nextRoute: RouteConstants.Home,
+      plans: data.newCaloriePlans,
+      currentPlan: null,
+      progressData: data.formData,
+      profileData: profileData
+    });
+  }
 
   return (
     <ScreenWrapper>
