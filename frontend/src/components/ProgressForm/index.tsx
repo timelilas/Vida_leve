@@ -19,8 +19,8 @@ import { customZodResolver } from "../../libs/zod/@shared/resolver";
 interface ProgressFormProps {
   variant: "default" | "goalAdjustments";
   initialData: ProgressFormData;
-  onError: (error: Error) => void;
   onSubmit: (formData: OnProgressSubmitData) => Promise<void>;
+  onError?: (error: Error) => void;
 }
 
 export function ProgressForm(props: ProgressFormProps) {
@@ -35,23 +35,20 @@ export function ProgressForm(props: ProgressFormProps) {
     getValues,
     setValue,
     handleSubmit,
-    formState: { isSubmitting, errors },
+    formState: { isSubmitting, errors }
   } = useForm({
     criteriaMode: "firstError",
     values: initialFormData,
     mode: "onBlur",
     reValidateMode: "onBlur",
-    resolver: customZodResolver(zodProgressSchema),
+    resolver: customZodResolver(zodProgressSchema)
   });
 
   const firstFieldError = Object.entries(errors)[0];
 
   function selectActitivyFrequency(value: ActitivyFrequency) {
     const currentActivityFrequency = getValues("activityFrequency");
-    setValue(
-      "activityFrequency",
-      currentActivityFrequency === value ? null : value
-    );
+    setValue("activityFrequency", currentActivityFrequency === value ? null : value);
     trigger();
   }
 
@@ -59,9 +56,7 @@ export function ProgressForm(props: ProgressFormProps) {
     trigger();
   }
 
-  function generateCaloriePlans(
-    params: Omit<ProgressProps, "currentCaloriePlan">
-  ) {
+  function generateCaloriePlans(params: Omit<ProgressProps, "currentCaloriePlan">) {
     const { weight, height, goalWeight, activityFrequency } = params;
     if (!initialData.birthDate || !initialData.gender) {
       return [];
@@ -81,17 +76,17 @@ export function ProgressForm(props: ProgressFormProps) {
     if (error instanceof HttpError && error.field) {
       setError(error.field as any, { message: error.message });
     }
-    props.onError(error);
+    if (props.onError) {
+      props.onError(error);
+    }
   }
 
-  async function onSubmit(
-    params: Omit<ProgressFormData, "birthDate"> & { age: number }
-  ) {
+  async function onSubmit(params: Omit<ProgressFormData, "birthDate"> & { age: number }) {
     const sanitizedData = {
       height: parseFloat(params.height),
       weight: parseInt(params.weight),
       goalWeight: parseInt(params.goalWeight),
-      activityFrequency: params.activityFrequency as ActitivyFrequency,
+      activityFrequency: params.activityFrequency as ActitivyFrequency
     };
     try {
       const newCaloriePlans = generateCaloriePlans(sanitizedData);
@@ -121,9 +116,7 @@ export function ProgressForm(props: ProgressFormProps) {
                     keyboardType="numeric"
                     label="Altura"
                     placeholder="Ex.: 1,60"
-                    errorMessage={
-                      isHeightError ? firstFieldError[1].message : undefined
-                    }
+                    errorMessage={isHeightError ? firstFieldError[1].message : undefined}
                   />
                 );
               }}
@@ -143,9 +136,7 @@ export function ProgressForm(props: ProgressFormProps) {
                   onBlur={revalidateAllFields}
                   onChangeText={(text) => onChange(onlyNumbers(text, 3))}
                   error={isWeightError}
-                  errorMessage={
-                    isWeightError ? firstFieldError[1].message : undefined
-                  }
+                  errorMessage={isWeightError ? firstFieldError[1].message : undefined}
                 />
               );
             }}
@@ -164,9 +155,7 @@ export function ProgressForm(props: ProgressFormProps) {
                   onBlur={revalidateAllFields}
                   onChangeText={(text) => onChange(onlyNumbers(text, 3))}
                   error={isGoalWeightError}
-                  errorMessage={
-                    isGoalWeightError ? firstFieldError[1].message : undefined
-                  }
+                  errorMessage={isGoalWeightError ? firstFieldError[1].message : undefined}
                 />
               );
             }}
@@ -184,9 +173,7 @@ export function ProgressForm(props: ProgressFormProps) {
                 selectedFrequency={value}
                 disabled={isSubmitting}
                 errorMessage={
-                  isActivityFrequnecyError
-                    ? firstFieldError[1].message
-                    : undefined
+                  isActivityFrequnecyError ? firstFieldError[1].message : undefined
                 }
               />
             );

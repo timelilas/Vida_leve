@@ -11,17 +11,12 @@ import { ErrorMessage } from "../ErrorMessage";
 import { SubmitButton } from "../SubmitButton";
 import { delay, formatDateToISO } from "../../utils/helpers";
 import { GenderType } from "../../@core/entities/@shared/gender/type";
-import {
-  maskDatePTBR,
-  maskName,
-  maskPhone,
-  onlyNumbers,
-} from "../../utils/masks";
+import { maskDatePTBR, maskName, maskPhone, onlyNumbers } from "../../utils/masks";
 
 interface ProfileFormProps {
   initialData: ProfileFormData;
-  onError: (error: Error) => void;
   onSubmit: (formData: ProfileFormSubmitData) => Promise<void>;
+  onError?: (error: Error) => void;
 }
 
 export function ProfileForm(props: ProfileFormProps) {
@@ -35,13 +30,13 @@ export function ProfileForm(props: ProfileFormProps) {
     setValue,
     handleSubmit,
     clearErrors,
-    formState: { isSubmitting, errors },
+    formState: { isSubmitting, errors }
   } = useForm({
     criteriaMode: "firstError",
     values: initialData,
     mode: "onBlur",
     reValidateMode: "onBlur",
-    resolver: customZodResolver(zodProfileSchema),
+    resolver: customZodResolver(zodProfileSchema)
   });
 
   const firstFieldError = Object.entries(errors)[0];
@@ -50,7 +45,9 @@ export function ProfileForm(props: ProfileFormProps) {
     if (error instanceof HttpError && error.field) {
       setError(error.field as any, { message: error.message });
     }
-    props.onError(error);
+    if (props.onError) {
+      props.onError(error);
+    }
   }
 
   async function onSubmit(params: ProfileFormData) {
@@ -61,7 +58,7 @@ export function ProfileForm(props: ProfileFormProps) {
       name: params.name,
       phone: params.phone,
       birthDate: new Date(birthDateISO),
-      gender: params.gender,
+      gender: params.gender
     };
     try {
       await props.onSubmit(sanitizedData);
@@ -101,14 +98,11 @@ export function ProfileForm(props: ProfileFormProps) {
                 placeholder="Ex.: Maria Silva"
                 textContentType="name"
                 disabled={isSubmitting}
-                errorMessage={
-                  isNameError ? firstFieldError[1].message : undefined
-                }
+                errorMessage={isNameError ? firstFieldError[1].message : undefined}
                 onBlur={() => revalidateFields(["name"])}
                 onChangeText={(text) => onChange(maskName(text))}
                 onFocus={() =>
-                  isInvalid &&
-                  clearErrorsWithDelay(["phone", "birthDate", "gender"])
+                  isInvalid && clearErrorsWithDelay(["phone", "birthDate", "gender"])
                 }
               />
             );
@@ -128,14 +122,10 @@ export function ProfileForm(props: ProfileFormProps) {
                 placeholder="(DDD) + número de telefone"
                 textContentType="telephoneNumber"
                 disabled={isSubmitting}
-                errorMessage={
-                  isPhoneError ? firstFieldError[1].message : undefined
-                }
+                errorMessage={isPhoneError ? firstFieldError[1].message : undefined}
                 onBlur={() => revalidateFields(["name", "phone"])}
                 onChangeText={(text) => onChange(onlyNumbers(text, 11))}
-                onFocus={() =>
-                  isInvalid && clearErrorsWithDelay(["birthDate", "gender"])
-                }
+                onFocus={() => isInvalid && clearErrorsWithDelay(["birthDate", "gender"])}
               />
             );
           }}
@@ -153,9 +143,7 @@ export function ProfileForm(props: ProfileFormProps) {
                 onFocus={() => isInvalid && clearErrorsWithDelay(["gender"])}
                 value={value}
                 error={isDateError}
-                errorMessage={
-                  isDateError ? firstFieldError[1].message : undefined
-                }
+                errorMessage={isDateError ? firstFieldError[1].message : undefined}
                 disabled={isSubmitting}
                 textContentType="birthdate"
                 label="Data de nascimento"
@@ -176,15 +164,13 @@ export function ProfileForm(props: ProfileFormProps) {
                   <GenderButton
                     disabled={isSubmitting}
                     selected={value === "feminino"}
-                    onPress={() => selectGender("feminino")}
-                  >
+                    onPress={() => selectGender("feminino")}>
                     <Text style={styles.gender}>Feminino</Text>
                   </GenderButton>
                   <GenderButton
                     disabled={isSubmitting}
                     selected={value === "masculino"}
-                    onPress={() => selectGender("masculino")}
-                  >
+                    onPress={() => selectGender("masculino")}>
                     <Text style={styles.gender}>Masculino</Text>
                   </GenderButton>
                 </View>

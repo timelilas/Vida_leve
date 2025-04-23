@@ -24,7 +24,7 @@ export function ProgressStatistics(props: ProgressStatisticsProps) {
   }
 
   function navigateToReportScreen() {
-    navigation.navigate(RouteConstants.Report);
+    navigation.navigate(RouteConstants.ReportRouter);
   }
 
   return (
@@ -43,12 +43,8 @@ export function ProgressStatistics(props: ProgressStatisticsProps) {
           height={20}
           radius={20}
           width="100%"
-          colorMode="light"
-        >
-          <ProgressBar
-            total={props.targetCalories}
-            achieved={props.consumedCalories}
-          />
+          colorMode="light">
+          <ProgressBar total={props.targetCalories} achieved={props.consumedCalories} />
         </Skeleton>
       </View>
       <View style={styles.buttonWrapper}>

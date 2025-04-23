@@ -25,9 +25,7 @@ export default function Select(props: SelectProps) {
       placeholderStyle={styles.selectedItemText}
       itemTextStyle={styles.itemText}
       selectedTextStyle={styles.selectedItemText}
-      renderRightIcon={() => (
-        <ArrowIcon width={28} height={28} style={styles.rightIcon} />
-      )}
+      renderRightIcon={() => <ArrowIcon width={28} height={28} style={styles.rightIcon} />}
       labelField="label"
       valueField="value"
       {...propsRest}

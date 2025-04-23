@@ -17,9 +17,7 @@ const GoalSettingsScreen = () => {
   const navigation = useAppNavigation();
   const { plans } = useCaloriePlans({ refetchOnMount: false });
   const { progress } = useProgress({ refetchOnMount: false });
-  const [selectedRoute, setSelectedRoute] = useState<SelectedRoute | null>(
-    null
-  );
+  const [selectedRoute, setSelectedRoute] = useState<SelectedRoute | null>(null);
 
   function goBack() {
     navigation.goBack();
@@ -34,12 +32,12 @@ const GoalSettingsScreen = () => {
       nextRoute: RouteConstants.Home,
       withModal: true,
       plans: plans,
-      curentPlan: progress?.currentCaloriePlan || null,
+      currentPlan: progress?.currentCaloriePlan || null
     });
   }
 
   function navigateToUpdateProgress() {
-    navigation.navigate(RouteConstants.UpdateProgress);
+    navigation.navigate(RouteConstants.UpdateWeight);
   }
 
   return (
@@ -49,8 +47,8 @@ const GoalSettingsScreen = () => {
         <View style={styles.contentContainer}>
           <ScreenTitle title="Altere sua meta diária" />
           <Paragraph>
-            Ajuste facilmente sua meta de calorias e refeições para alcançar
-            seus objetivos de forma personalizada. Através da:
+            Ajuste facilmente sua meta de calorias e refeições para alcançar seus objetivos de
+            forma personalizada. Através da:
           </Paragraph>
         </View>
         <View style={styles.buttonWrapper}>
@@ -59,8 +57,7 @@ const GoalSettingsScreen = () => {
             onPress={navigateToUpdateProgress}
             selected={selectedRoute === "progress"}
             onTouchStart={() => selectRoute("progress")}
-            onTouchEnd={() => selectRoute(null)}
-          >
+            onTouchEnd={() => selectRoute(null)}>
             <Text style={styles.buttonText}>Meta</Text>
           </ToggleButton>
           <Text style={styles.textDivider}>Ou</Text>
@@ -69,8 +66,7 @@ const GoalSettingsScreen = () => {
             onPress={navigateToPlanSelection}
             selected={selectedRoute === "plan"}
             onTouchStart={() => selectRoute("plan")}
-            onTouchEnd={() => selectRoute(null)}
-          >
+            onTouchEnd={() => selectRoute(null)}>
             <Text style={styles.buttonText}>Plano de execução</Text>
           </ToggleButton>
         </View>

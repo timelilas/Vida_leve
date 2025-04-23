@@ -20,43 +20,35 @@ export function useProgress(params?: UseProgressParams) {
     queryFn: async () => {
       const { data: progressData } = await httpProgressService.getProgress();
       return progressData;
-    },
+    }
   });
 
   const upsertProgressMutation = useMutation({
     mutationFn: async (params: upsertProgressParams) => {
       const { data: progressData } = await httpProgressService.upsertProgress({
-        ...params,
+        ...params
       });
       return progressData;
     },
     onSuccess: (progressData) => {
       invalidateCalorieStatistics();
-      queryClient.setQueryData<ProgressQueryState>(
-        QueryKeys.DATABASE.PROGRESS,
-        (old) => {
-          return old ? { ...old, ...progressData } : progressData;
-        }
-      );
-    },
+      queryClient.setQueryData<ProgressQueryState>(QueryKeys.DATABASE.PROGRESS, (old) => {
+        return old ? { ...old, ...progressData } : progressData;
+      });
+    }
   });
 
   const setCaloriePlanMutation = useMutation({
     mutationFn: async (planType: PlanType) => {
-      const { data: progressData } = await httpProgressService.setCaloriePlan(
-        planType
-      );
+      const { data: progressData } = await httpProgressService.setCaloriePlan(planType);
       return progressData;
     },
     onSuccess: (progressData) => {
       invalidateCalorieStatistics();
-      queryClient.setQueryData<ProgressQueryState>(
-        QueryKeys.DATABASE.PROGRESS,
-        (old) => {
-          return old ? { ...old, ...progressData } : progressData;
-        }
-      );
-    },
+      queryClient.setQueryData<ProgressQueryState>(QueryKeys.DATABASE.PROGRESS, (old) => {
+        return old ? { ...old, ...progressData } : progressData;
+      });
+    }
   });
 
   const upsertProgress = useCallback(
@@ -87,6 +79,6 @@ export function useProgress(params?: UseProgressParams) {
     progress: data || null,
     isLoading,
     isUpsertingProgress: upsertProgressMutation.isPending,
-    error,
+    error
   };
 }

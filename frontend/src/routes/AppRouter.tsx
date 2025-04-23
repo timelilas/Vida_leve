@@ -2,6 +2,7 @@ import { Stack } from "./stack";
 import { colors } from "../styles/colors";
 import { RouteConstants } from "./types";
 import { NavigationContainer } from "@react-navigation/native";
+import { ReportRouter } from "./reportRouter/ReportRouter";
 import LoginScreen from "../screens/auth/LoginScreen";
 import SignupScreen from "../screens/auth/SignupScreen";
 import PlanSelectionScreen from "../screens/@shared/PlanSelectionScreen";
@@ -12,13 +13,12 @@ import ConnectionErrorScreen from "../screens/error/ConnectionErrorScreen";
 import WelcomeScreen from "../screens/auth/WelcomeScreen";
 import HomeScreen from "../screens/main/HomeScreen";
 import GoalSettingsScreen from "../screens/main/GoalSettingsScreen";
-import UpdateProgressScreen from "../screens/main/UpdateProgressScreen";
+import UpdateWeightScreen from "../screens/main/UpdateWeightScreen";
 import CreateMealScreen from "../screens/main/CreateMealScreen";
 import SearchFoodsScreen from "../screens/main/SearchFoodsScreen";
 import MealRegistrationScreen from "../screens/main/MealRegistrationScreen";
-import ReportDetailsScreen from "../screens/main/ReportDetailsScreen";
-import ReportScreen from "../screens/main/ReportScreen";
 import UpdateProfileScreen from "../screens/main/UpdateProfileScreen";
+import UpdateProgressScreen from "../screens/main/UpdateProgressScreen";
 
 const AppRouter = () => {
   return (
@@ -28,9 +28,8 @@ const AppRouter = () => {
         screenOptions={{
           orientation: "all",
           statusBarStyle: "dark",
-          statusBarColor: colors.background.primary,
-        }}
-      >
+          statusBarColor: colors.background.primary
+        }}>
         <Stack.Screen
           name={RouteConstants.Welcome}
           component={WelcomeScreen}
@@ -77,13 +76,18 @@ const AppRouter = () => {
           options={{ headerShown: false }}
         />
         <Stack.Screen
-          name={RouteConstants.UpdateProgress}
-          component={UpdateProgressScreen}
+          name={RouteConstants.UpdateWeight}
+          component={UpdateWeightScreen}
           options={{ headerShown: false }}
         />
         <Stack.Screen
           name={RouteConstants.UpdateProfile}
           component={UpdateProfileScreen}
+          options={{ headerShown: false }}
+        />
+        <Stack.Screen
+          name={RouteConstants.UpdateProgress}
+          component={UpdateProgressScreen}
           options={{ headerShown: false }}
         />
         <Stack.Screen
@@ -102,18 +106,14 @@ const AppRouter = () => {
           options={{ headerShown: false }}
         />
         <Stack.Screen
-          name={RouteConstants.Report}
-          component={ReportScreen}
-          options={{ headerShown: false }}
-        />
-        <Stack.Screen
-          name={RouteConstants.ReportDetails}
-          component={ReportDetailsScreen}
-          options={{ headerShown: false }}
-        />
-        <Stack.Screen
           name={RouteConstants.ConnectionError}
           component={ConnectionErrorScreen}
+          options={{ headerShown: false }}
+        />
+
+        <Stack.Screen
+          name={RouteConstants.ReportRouter}
+          component={ReportRouter}
           options={{ headerShown: false }}
         />
       </Stack.Navigator>
