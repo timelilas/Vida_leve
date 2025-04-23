@@ -7,9 +7,11 @@ import {
   toCapitalized
 } from "../../utils/helpers";
 import { useEffect, useMemo, useRef, useState } from "react";
+import { DateIntervalType } from "../../@types";
 
 interface TimeRangeNavigatorProps {
-  intervalType: "monthly" | "weekly";
+  initialDate?: Date;
+  intervalType: DateIntervalType;
   onChange: (date: Date) => void;
 }
 
@@ -18,10 +20,13 @@ export function TimeRangeNavigator(props: TimeRangeNavigatorProps) {
   const firstRender = useRef(true);
   const todayDate = useMemo(() => new Date(), []);
 
-  const [dateData, setDateData] = useState({
-    year: todayDate.getUTCFullYear(),
-    month: todayDate.getUTCMonth(),
-    day: todayDate.getUTCDate()
+  const [dateData, setDateData] = useState(() => {
+    const startDate = props.initialDate || new Date();
+    return {
+      year: startDate.getUTCFullYear(),
+      month: startDate.getUTCMonth(),
+      day: startDate.getUTCDate()
+    };
   });
 
   useEffect(() => {
@@ -67,11 +72,12 @@ export function TimeRangeNavigator(props: TimeRangeNavigatorProps) {
       nextDate.setUTCFullYear(year);
       if (intervalType === "monthly") {
         nextDate.setUTCMonth(month - 1);
-        nextDate.setUTCDate(2);
+        nextDate.setUTCDate(3);
       }
       if (intervalType === "weekly") {
         nextDate.setUTCMonth(month);
         nextDate.setUTCDate(day - 7);
+        nextDate.setUTCDate(nextDate.getUTCDate() - nextDate.getUTCDay() + 3);
       }
       return nextDate <= minDate
         ? {
@@ -94,11 +100,12 @@ export function TimeRangeNavigator(props: TimeRangeNavigatorProps) {
       nextDate.setUTCFullYear(year);
       if (intervalType === "monthly") {
         nextDate.setUTCMonth(month + 1);
-        nextDate.setUTCDate(2);
+        nextDate.setUTCDate(3);
       }
       if (intervalType === "weekly") {
         nextDate.setUTCMonth(month);
         nextDate.setUTCDate(day + 7);
+        nextDate.setUTCDate(nextDate.getUTCDate() - nextDate.getUTCDay() + 3);
       }
 
       return nextDate > getMaxDate()

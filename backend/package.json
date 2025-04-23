@@ -2,6 +2,7 @@
   "name": "vida-leve-api",
   "version": "1.0.0",
   "main": "dist/server.js",
+  "license": "Attribution-NonCommercial-NoDerivatives 4.0 International",
   "scripts": {
     "build": "rimraf ./dist && tsc --project tsconfig.json",
     "start": "node dist/server.js",
@@ -14,7 +15,6 @@
   },
   "keywords": [],
   "author": "",
-  "license": "ISC",
   "dependencies": {
     "bcrypt": "^5.1.1",
     "cors": "^2.8.5",

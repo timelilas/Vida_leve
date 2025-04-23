@@ -67,7 +67,9 @@ export const ChartLinePath = (props: LinePathProps) => {
         style={"stroke"}
         path={createLinePath()}
       />
-      {props.fill && <Path path={createGradient()} color={props.fill} />}
+      {props.data.length > 1 && props.fill && (
+        <Path path={createGradient()} color={props.fill} />
+      )}
     </Group>
   );
 };

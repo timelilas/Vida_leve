@@ -94,9 +94,7 @@ const MealRegistrationScreen = () => {
 
   function closeModalAndResetNavigation() {
     setIsModalVisible(false);
-    setTimeout(() => {
-      resetNavigationToHome();
-    }, 300);
+    setTimeout(() => resetNavigationToHome(), 300);
   }
 
   const shortDateLabel = formatDateToLabel(new Date(mealDate), "short");
