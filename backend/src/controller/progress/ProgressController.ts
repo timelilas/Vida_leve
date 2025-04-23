@@ -69,27 +69,27 @@ export default class ProgressController {
         });
       });
 
+      const foundPlan = newCaloriePlans.find(
+        ({ type }) => type === req.body.currentCaloriePlan
+      );
+
       const createdProgress = await this._ProgressService.upsert({
         data: { ...req.body, userId },
         transaction,
       });
-
-      const planCalorieIntake = newCaloriePlans.find(
-        ({ type }) => type === req.body.currentCaloriePlan
-      );
 
       await this._CaloriePlanService.upsertPlans({
         data: { userId, plans: newCaloriePlans },
         transaction,
       });
 
-      if (planCalorieIntake) {
+      if (foundPlan) {
         await this._PlanHistoryService.upsert(
           {
             date: getDateFromTimezone(userTimezone),
-            planType: req.body.currentCaloriePlan,
+            planType: foundPlan.type,
             strategy: goalWeight < weight ? "deficit" : "superavit",
-            dailyCalorieIntake: planCalorieIntake?.dailyCalorieIntake!,
+            dailyCalorieIntake: foundPlan.dailyCalorieIntake!,
             userId: userId,
           },
           transaction

@@ -35,7 +35,7 @@ const UpdateProgressScreen = ({ route }: UpdateProgressScreenProps) => {
 
   async function onSubmit(data: OnProgressSubmitData) {
     navigation.navigate(RouteConstants.PlanSelection, {
-      withModal: false,
+      withModal: true,
       nextRoute: RouteConstants.Home,
       plans: data.newCaloriePlans,
       currentPlan: null,
@@ -52,12 +52,7 @@ const UpdateProgressScreen = ({ route }: UpdateProgressScreenProps) => {
         Agora, se quiser, você pode ajustar sua altura, peso atual, peso desejado e frequência
         de atividade física para manter suas metas sempre em dia.
       </Paragraph>
-      <ProgressForm
-        variant="default"
-        onSubmit={onSubmit}
-        onError={() => {}}
-        initialData={formInitialData}
-      />
+      <ProgressForm variant="default" onSubmit={onSubmit} initialData={formInitialData} />
     </ScreenWrapper>
   );
 };

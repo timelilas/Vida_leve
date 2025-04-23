@@ -13,6 +13,7 @@ import { styles } from "./styles";
 import { FormState, PlanSelectionForm } from "./components/PlanSelectionForm";
 import { useProgress } from "../../../hooks/progress/useProgress";
 import { useCaloriePlans } from "../../../hooks/caloriePlan/useCaloriePlans";
+import { useUser } from "../../../hooks/user/useUser";
 
 type PlanSelectionScreenRouteProp = RouteProp<RouteParamsList, RouteConstants.PlanSelection>;
 
@@ -25,6 +26,7 @@ const PlanSelectionScreen = ({ route }: PlanSelectionScreenProps) => {
   const [isModalVisible, setIsModalVisible] = useState(false);
   const { Snackbar, showSnackbar } = useSnackbar();
   const { updateLocalPlans } = useCaloriePlans({ refetchOnMount: false });
+  const { updateUserProfile } = useUser({ refetchOnMount: false });
   const { setCaloriePlan, upsertProgress } = useProgress({
     refetchOnMount: false
   });
@@ -46,17 +48,20 @@ const PlanSelectionScreen = ({ route }: PlanSelectionScreenProps) => {
   }
 
   async function handleSubmit(formState: FormState) {
-    if (profileData) return;
-
     const { selectedPlan } = formState;
 
+    if (profileData) {
+      const { birthDate: birthDateISO, ...profileDataRest } = profileData;
+      const birthDate = new Date(birthDateISO);
+      await updateUserProfile({ ...profileDataRest, birthDate: birthDate });
+    }
+
     if (progressData) {
-      await upsertProgress({
-        ...progressData,
-        currentCaloriePlan: selectedPlan
-      });
+      await upsertProgress({ ...progressData, currentCaloriePlan: selectedPlan });
       updateLocalPlans(plans);
-    } else {
+    }
+
+    if (!profileData && !progressData) {
       await setCaloriePlan(selectedPlan);
     }
 

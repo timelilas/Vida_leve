@@ -44,12 +44,7 @@ export type RouteParamsList = {
   [RouteConstants.UpdateWeight]: undefined;
   [RouteConstants.UpdateProfile]: undefined;
   [RouteConstants.UpdateProgress]: {
-    profileData: {
-      name: string;
-      phone: string;
-      birthDate: string;
-      gender: GenderType;
-    };
+    profileData: { name: string; phone: string; birthDate: string; gender: GenderType };
   };
   [RouteConstants.CreateMeal]?: { withSubmitButton?: boolean; date?: string };
   [RouteConstants.SearchFoods]?: { foodName: string };
