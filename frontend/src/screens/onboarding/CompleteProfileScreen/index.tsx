@@ -12,23 +12,20 @@ import { NavigationHeader } from "../../../components/NavigationHeader";
 import { styles } from "./styles";
 import { useUser } from "../../../hooks/user/useUser";
 import { ProfileForm } from "../../../components/ProfileForm";
-import {
-  ProfileFormData,
-  ProfileFormSubmitData,
-} from "../../../components/ProfileForm/types";
+import { ProfileFormData, ProfileFormSubmitData } from "../../../components/ProfileForm/types";
 import { ScreenWrapper } from "../../../components/ScreenWrapper";
 
 const CompleteProfileScreen = () => {
   const { Snackbar, showSnackbar } = useSnackbar();
   const { user, isUpdatingProfile, updateUserProfile } = useUser({
-    refetchOnMount: false,
+    refetchOnMount: false
   });
 
   const formInitialState: ProfileFormData = {
     name: user.name ?? "",
     phone: user.phone ?? "",
     gender: user.gender ?? null,
-    birthDate: user.birthDate ? dateToPTBR(new Date(user.birthDate)) : "",
+    birthDate: user.birthDate ? dateToPTBR(new Date(user.birthDate)) : ""
   };
 
   const navigation = useAppNavigation({ preventGoBack: isUpdatingProfile });
@@ -38,10 +35,7 @@ const CompleteProfileScreen = () => {
     navigation.dispatch(
       CommonActions.reset({
         index: 1,
-        routes: [
-          { name: RouteConstants.Welcome },
-          { name: RouteConstants.Login },
-        ],
+        routes: [{ name: RouteConstants.Welcome }, { name: RouteConstants.Login }]
       })
     );
   }
@@ -64,7 +58,7 @@ const CompleteProfileScreen = () => {
       showSnackbar({
         duration: 5000,
         message: error.message,
-        variant: "error",
+        variant: "error"
       });
     }
   }
@@ -78,6 +72,7 @@ const CompleteProfileScreen = () => {
       </Paragraph>
       <ProfileForm
         initialData={formInitialState}
+        submitButtonText="Continuar cadastro"
         onSubmit={onSubmit}
         onError={handleApiError}
       />

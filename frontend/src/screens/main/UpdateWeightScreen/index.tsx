@@ -61,6 +61,7 @@ const UpdateWeightScreen = () => {
       </Paragraph>
       <ProgressForm
         variant="goalAdjustments"
+        submitButtonText="Continuar"
         initialData={initialFormData}
         onError={onError}
         onSubmit={onSubmit}
