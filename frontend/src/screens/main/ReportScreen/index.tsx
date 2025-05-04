@@ -112,6 +112,44 @@ const ReportScreen = () => {
     [showSnackbar]
   );
 
+  function renderLineChart() {
+    return statistics.length > 0 ? (
+      <LineChart
+        key={dateData.day}
+        lineStrokeWidth={3}
+        labels={chartDataAndLabels.labels}
+        data={[
+          {
+            color: colors.primary,
+            fillColor: colors.primary,
+            values: chartDataAndLabels.dailyConsumption,
+            tooltip: { color: colors.primary, enabled: true },
+            withDots: true
+          },
+          {
+            color: colors.secondary,
+            values: chartDataAndLabels.dailyTarget,
+            withDots: isTooltipEnabledHadler,
+            tooltip: { color: colors.secondary, enabled: isTooltipEnabledHadler }
+          }
+        ]}
+      />
+    ) : (
+      <EmptyDataPlaceholder
+        title="Sem dados disponíveis"
+        text="Parece que você não possui dados registrados para esse período."
+        icon={
+          <LineChartIcon
+            strokeWidth={1.5}
+            width="100%"
+            height="100%"
+            stroke={colors.gray.mediumDark}
+          />
+        }
+      />
+    );
+  }
+
   useEffect(() => {
     if (error && !isLoading) handleQueryError(error);
   }, [error, isLoading, handleQueryError]);
@@ -148,46 +186,12 @@ const ReportScreen = () => {
         />
       </View>
       <View style={styles.chartContainer}>
-        <LineChartSkeleton show={isLoading || isDebouncing || isFetching || !!error}>
+        <LineChartSkeleton show={isLoading || isDebouncing || isFetching}>
           <View style={styles.labelsWrapper}>
             <ChartLabel color={colors.secondary} label="Plano de execução" />
             <ChartLabel color={colors.primary} label="Calorias consumidas" />
           </View>
-          {statistics.length > 0 ? (
-            <LineChart
-              key={dateData.day}
-              lineStrokeWidth={3}
-              labels={chartDataAndLabels.labels}
-              data={[
-                {
-                  color: colors.primary,
-                  fillColor: colors.primary,
-                  values: chartDataAndLabels.dailyConsumption,
-                  tooltip: { color: colors.primary, enabled: true },
-                  withDots: true
-                },
-                {
-                  color: colors.secondary,
-                  values: chartDataAndLabels.dailyTarget,
-                  withDots: isTooltipEnabledHadler,
-                  tooltip: { color: colors.secondary, enabled: isTooltipEnabledHadler }
-                }
-              ]}
-            />
-          ) : (
-            <EmptyDataPlaceholder
-              title="Sem dados disponíveis"
-              text="Parece que você não possui dados registrados para esse período."
-              icon={
-                <LineChartIcon
-                  strokeWidth={1.5}
-                  width="100%"
-                  height="100%"
-                  stroke={colors.gray.mediumDark}
-                />
-              }
-            />
-          )}
+          {error ? null : renderLineChart()}
         </LineChartSkeleton>
       </View>
       <TouchableOpacity style={styles.linkButton} onPress={navigateToReportDetailsScreen}>

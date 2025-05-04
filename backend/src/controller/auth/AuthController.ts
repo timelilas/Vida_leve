@@ -14,11 +14,11 @@ export class AuthController {
 
     try {
       const foundUser = await this._userService.getUserByEmail(email);
-      const notFoundMessage = "Email ou senha incorretos.";
+      const unauthorizedErrorMessage = "Email ou senha incorretos.";
 
       if (!foundUser) {
         throw new UnauthorizedException(
-          notFoundMessage,
+          unauthorizedErrorMessage,
           AuthController.name,
           "password"
         );
@@ -27,7 +27,7 @@ export class AuthController {
       const isPasswordCorrect = await compareHash(password, foundUser.password);
       if (!isPasswordCorrect) {
         throw new UnauthorizedException(
-          notFoundMessage,
+          unauthorizedErrorMessage,
           AuthController.name,
           "password"
         );
@@ -54,7 +54,7 @@ export class AuthController {
       const foundUser = await this._userService.getUserByEmail(email);
       if (foundUser) {
         throw new ConflictException(
-          `Já existe um usuário cadastro com email: ${email}.`,
+          `Já existe um usuário cadastro com email: '${email}'.`,
           AuthController.name,
           "email"
         );

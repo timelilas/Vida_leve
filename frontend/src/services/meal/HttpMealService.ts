@@ -8,7 +8,7 @@ import {
   HttpGetCalorieStatisticsOutputDTO,
   HttpGetMealsOutputDTO,
   HttpUpdateMealInputDTO,
-  HttpUpdateMealOutputDTO,
+  HttpUpdateMealOutputDTO
 } from "./types";
 
 export class HttpMealService extends HttpService {
@@ -19,8 +19,8 @@ export class HttpMealService extends HttpService {
       method: "GET",
       path: `/meals?date=${date}`,
       headers: {
-        Authorization: `Bearer ${accessToken}`,
-      },
+        Authorization: `Bearer ${accessToken}`
+      }
     });
   }
 
@@ -32,8 +32,8 @@ export class HttpMealService extends HttpService {
       path: "/meals",
       body: params,
       headers: {
-        Authorization: `Bearer ${accessToken}`,
-      },
+        Authorization: `Bearer ${accessToken}`
+      }
     });
   }
 
@@ -45,8 +45,8 @@ export class HttpMealService extends HttpService {
       method: "GET",
       path: `/meals/calorie-statistics?from=${from}&to=${to}`,
       headers: {
-        Authorization: `Bearer ${accessToken}`,
-      },
+        Authorization: `Bearer ${accessToken}`
+      }
     });
   }
 
@@ -58,8 +58,8 @@ export class HttpMealService extends HttpService {
       path: `/meals/${params.id}`,
       body: { foods: params.foods },
       headers: {
-        Authorization: `Bearer ${accessToken}`,
-      },
+        Authorization: `Bearer ${accessToken}`
+      }
     });
   }
 }

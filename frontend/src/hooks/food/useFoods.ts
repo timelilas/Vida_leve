@@ -51,6 +51,7 @@ export function useFoods(params: UseFoodsParams) {
 
     await queryClient.fetchQuery<FoodDataState>({
       queryKey,
+      retry: 1,
       gcTime: options.gcTime,
       queryFn: async () => {
         const { data: newData } = await httpFoodService.searchFoods({

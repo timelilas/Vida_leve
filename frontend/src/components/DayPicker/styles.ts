@@ -4,17 +4,18 @@ export const styles = StyleSheet.create({
   container: {
     flexDirection: "row",
     alignItems: "center",
-    gap: 8,
+    gap: 8
   },
   listContainer: {
     alignItems: "center",
+    marginInline: "auto",
     paddingTop: 4,
-    paddingBottom: 8,
+    paddingBottom: 8
   },
   listItemSeparator: {
-    width: 8,
+    width: 8
   },
   rightArrowIcon: {
-    transform: [{ rotate: "180deg" }],
-  },
+    transform: [{ rotate: "180deg" }]
+  }
 });
