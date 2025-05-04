@@ -2,7 +2,7 @@ import { queryOptions, useQuery } from "@tanstack/react-query";
 import { FoodProps } from "../../@core/entities/food/type";
 import { transformFoodNameIntoSlug } from "../../utils/helpers";
 import { QueryKeys } from "../../constants/reactQueryKeys";
-import { useCallback, useDeferredValue } from "react";
+import { useCallback } from "react";
 import { queryClient } from "../../libs/react-query/queryClient";
 import { httpFoodService } from "../../services/food";
 
@@ -41,8 +41,7 @@ export function useFoods(params: UseFoodsParams) {
     }
   });
 
-  const { data, isFetching, error } = useQuery<FoodDataState>(options);
-  const deferredData = useDeferredValue(data);
+  const { data: queryData, isFetching, error } = useQuery<FoodDataState>(options);
 
   const fetchMoreFoods = useCallback(async () => {
     const currentState = queryClient.getQueryData<FoodDataState>(queryKey);
@@ -71,8 +70,7 @@ export function useFoods(params: UseFoodsParams) {
   }, [queryKey, options.gcTime, foodSlug]);
 
   return {
-    foods: deferredData?.foods || [],
-    hasMore: deferredData?.hasMore ?? true,
+    data: { foods: queryData?.foods || [], hasMore: queryData?.hasMore || true },
     isFetching,
     error,
     fetchMoreFoods

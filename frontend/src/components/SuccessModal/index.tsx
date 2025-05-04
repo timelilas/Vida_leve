@@ -15,22 +15,24 @@ export function SuccessModal(props: SuccessModalProps) {
   const { message, isVisible, onClose } = props;
 
   return (
-    <Modal
-      animationInTiming={300}
-      animationOutTiming={500}
-      animationIn="zoomIn"
-      animationOut="fadeOutUpBig"
-      backdropColor={colors.common.black}
-      backdropOpacity={0.2}
-      isVisible={isVisible}
-      style={styles.container}>
-      <View style={styles.modal}>
-        <SuccessCheckIcon style={styles.checkIcon} />
-        <Text style={styles.message}>{message}</Text>
-        <Pressable onPress={onClose} style={styles.closeButton}>
-          <CloseIcon stroke={colors.text.primary} />
-        </Pressable>
-      </View>
-    </Modal>
+    <View>
+      <Modal
+        animationInTiming={350}
+        animationOutTiming={600}
+        animationIn="zoomIn"
+        animationOut="fadeOutUpBig"
+        backdropColor={colors.common.black}
+        backdropOpacity={0.2}
+        isVisible={isVisible}
+        style={styles.container}>
+        <View style={styles.modal}>
+          <SuccessCheckIcon style={styles.checkIcon} />
+          <Text style={styles.message}>{message}</Text>
+          <Pressable onPress={onClose} style={styles.closeButton}>
+            <CloseIcon stroke={colors.text.primary} />
+          </Pressable>
+        </View>
+      </Modal>
+    </View>
   );
 }
