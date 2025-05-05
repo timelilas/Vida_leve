@@ -8,6 +8,11 @@ import helmet from "helmet";
 import foodRouter from "./routes/FoodRouter";
 import mealRouter from "./routes/MealRouter";
 import planHistoryRouter from "./routes/PlanHistoryRouter";
+import weightHistoryRouter from "./routes/WeightHistoryRouter";
+
+// Swagger
+import swaggerUi from "swagger-ui-express";
+import swaggerSpec from "./swaggerConfig";
 
 class App {
   public app: Application = express();
@@ -32,6 +37,9 @@ class App {
     this.app.use(express.json());
     this.app.use(helmet());
     this.app.use(cors(corsOptions));
+
+    // Swagger UI
+    this.app.use("/docs", swaggerUi.serve, swaggerUi.setup(swaggerSpec));
   }
 
   private routes(): void {
@@ -42,6 +50,7 @@ class App {
     this.app.use("/foods", foodRouter);
     this.app.use("/meals", mealRouter);
     this.app.use("/history", planHistoryRouter);
+    this.app.use("/Weight-History", weightHistoryRouter);
   }
 
   public start(PORT: string | number): void {
