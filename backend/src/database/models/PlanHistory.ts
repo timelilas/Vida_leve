@@ -18,8 +18,8 @@ import { PlanHistoryEntity } from "../../@core/entity/planHistory/entity";
 
 class PlanHistory extends Model<
   InferAttributes<PlanHistory>,
-  InferCreationAttributes<PlanHistory>
-> {
+  InferCreationAttributes<PlanHistory>>
+{
   declare id: CreationOptional<number>;
   declare userId: ForeignKey<User["id"]>;
   declare dailyCalorieIntake: number;
