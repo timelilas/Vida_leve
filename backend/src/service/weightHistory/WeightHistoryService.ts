@@ -85,4 +85,18 @@ export default class WeightHistoryService {
           throw new Error(message);
         }
     };
+
+    public delete = async (id: number) => {
+        try {
+            const deletedWeightHistory = await WeightHistory.destroy({
+                where: { id },
+            });
+
+            return deletedWeightHistory;
+        } catch (error) {
+            console.log(error);
+            const message = `Ocorreu um erro durante a exclusão do histórico de peso com id: '${id}'`;
+            throw new Error(message);
+        }
+    };
 }

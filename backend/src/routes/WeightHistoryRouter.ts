@@ -120,4 +120,28 @@ weightHistoryRouter.put("/",
     (req, res) => weightHistoryController.put(req, res)
 );
 
+/**
+ * @swagger
+ * /Weight-History/{id}:
+ *   delete:
+ *     summary: Deleta um registro de peso
+ *     tags: [Histórico de Peso]
+ *     security:
+ *       - bearerAuth: []
+ *     parameters:
+ *       - in: path
+ *         name: id
+ *         required: true
+ *         schema:
+ *           type: integer
+ *         description: ID do registro a ser deletado
+ *     responses:
+ *       200:
+ *         description: Registro deletado com sucesso
+ */
+weightHistoryRouter.delete("/:id",
+    (req, res, next) => authorizationMiddleware.execute(req, res, next),
+    (req, res) => weightHistoryController.delete(req, res)
+);
+
 export default weightHistoryRouter;

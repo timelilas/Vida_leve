@@ -69,5 +69,21 @@ export default class WeightHistoryController {
                 alternativeMsg: "Erro ao atualizar o plano.",
             });
         }
-    }
+    };
+
+    async delete (req: Request, res: Response): Promise<Response> {
+        const { id } = req.user;
+
+        try {
+            await this._weightHistoryService.delete(id);
+            return res.status(204).send();
+        } catch (error: any) {
+            return exceptionResponseAdapter({
+                req,
+                res,
+                exception: error,
+                alternativeMsg: "Erro ao deletar o plano.",
+            });
+        }
+    };
 }
