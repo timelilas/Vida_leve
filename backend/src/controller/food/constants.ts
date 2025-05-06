@@ -1,1 +1,1 @@
-export const DEFAULT_FOOD_LIMIT = 10;
+export const DEFAULT_FOOD_SEARCH_LIMIT = 10;

@@ -1,4 +1,4 @@
-import { queryOptions, useQuery } from "@tanstack/react-query";
+import { useQuery } from "@tanstack/react-query";
 import { FoodProps } from "../../@core/entities/food/type";
 import { transformFoodNameIntoSlug } from "../../utils/helpers";
 import { QueryKeys } from "../../constants/reactQueryKeys";
@@ -21,7 +21,11 @@ export function useFoods(params: UseFoodsParams) {
   const foodSlug = transformFoodNameIntoSlug(params.foodName);
   const queryKey = QueryKeys.DATABASE.FOODS(foodSlug);
 
-  const options = queryOptions<FoodDataState>({
+  const {
+    data: queryData,
+    isFetching,
+    error
+  } = useQuery<FoodDataState>({
     queryKey: queryKey,
     refetchIntervalInBackground: false,
     enabled: params.enabled,
@@ -41,8 +45,6 @@ export function useFoods(params: UseFoodsParams) {
     }
   });
 
-  const { data: queryData, isFetching, error } = useQuery<FoodDataState>(options);
-
   const fetchMoreFoods = useCallback(async () => {
     const currentState = queryClient.getQueryData<FoodDataState>(queryKey);
 
@@ -51,23 +53,20 @@ export function useFoods(params: UseFoodsParams) {
     await queryClient.fetchQuery<FoodDataState>({
       queryKey,
       retry: 1,
-      gcTime: options.gcTime,
       queryFn: async () => {
         const { data: newData } = await httpFoodService.searchFoods({
           name: foodSlug,
           limit: 10,
           offset: currentState?.foods.length || 0
         });
-
         if (!currentState) return newData;
-
         return {
           hasMore: newData.hasMore,
           foods: [...currentState.foods, ...newData.foods]
         };
       }
     });
-  }, [queryKey, options.gcTime, foodSlug]);
+  }, [queryKey, foodSlug]);
 
   return {
     data: { foods: queryData?.foods || [], hasMore: queryData?.hasMore || true },

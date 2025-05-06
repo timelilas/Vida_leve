@@ -19,7 +19,7 @@ import SearchFoodsScreen from "../screens/main/SearchFoodsScreen";
 import MealRegistrationScreen from "../screens/main/MealRegistrationScreen";
 import UpdateProfileScreen from "../screens/main/UpdateProfileScreen";
 import UpdateProgressScreen from "../screens/main/UpdateProgressScreen";
-import WeightHistoryScreen from "../screens/main/WeightHistory";
+import WeightHistoryScreen from "../screens/main/WeightHistoryScreen";
 
 const AppRouter = () => {
   return (
