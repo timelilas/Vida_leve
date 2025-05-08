@@ -42,7 +42,7 @@ const LoginScreen = () => {
     naivgateToHome,
     navigateToProfileForm,
     navigateToProgressForm,
-    navigateToPlanSelection,
+    navigateToPlanSelection
   } = useNavigationAfterLogin();
 
   const {
@@ -51,13 +51,13 @@ const LoginScreen = () => {
     handleSubmit,
     setError,
     trigger,
-    clearErrors,
+    clearErrors
   } = useForm<LoginFormData>({
     criteriaMode: "firstError",
     values: loginInitialState,
     resolver: customZodResolver(zodLoginSchema),
     mode: "onBlur",
-    reValidateMode: "onBlur",
+    reValidateMode: "onBlur"
   });
 
   const firstFieldError = Object.entries(errors).at(0);
@@ -85,14 +85,13 @@ const LoginScreen = () => {
     if (error instanceof HttpError && error.field) {
       if (error.status === 401) scrollToTop();
       const field = error.status === 401 ? "root" : error.field;
-      const message =
-        error.status === 401 ? wrongCredentialsMessage : error.message;
+      const message = error.status === 401 ? wrongCredentialsMessage : error.message;
       return setError(field as any, { message });
     }
     showSnackbar({
       duration: 5000,
       message: error.message,
-      variant: "error",
+      variant: "error"
     });
   }
 
@@ -100,7 +99,7 @@ const LoginScreen = () => {
     try {
       const { user, progress, plans } = await setOnboardingData();
 
-      if (!user.birthDate || !user.gender || !user.phone || !user.name) {
+      if (!user?.birthDate || !user?.gender || !user?.phone || !user?.name) {
         return navigateToProfileForm();
       }
       if (!progress || !plans.length) {
@@ -120,7 +119,7 @@ const LoginScreen = () => {
     const [user, progress, plans] = await Promise.all([
       getUserProfile(),
       getProgress(),
-      getPlans(),
+      getPlans()
     ]);
     return { user, progress, plans };
   }
@@ -162,9 +161,7 @@ const LoginScreen = () => {
                 label="E-mail"
                 placeholder="Ex: joaodasilva@email.com"
                 textContentType="emailAddress"
-                errorMessage={
-                  isEmailError ? firstFieldError[1]?.message : undefined
-                }
+                errorMessage={isEmailError ? firstFieldError[1]?.message : undefined}
                 error={isEmailError || isRootError}
                 value={value}
                 disabled={isSubmitting}
@@ -185,9 +182,7 @@ const LoginScreen = () => {
                 label="Senha"
                 placeholder="**********"
                 value={value}
-                errorMessage={
-                  isPasswordError ? firstFieldError[1]?.message : undefined
-                }
+                errorMessage={isPasswordError ? firstFieldError[1]?.message : undefined}
                 error={isPasswordError || isRootError}
                 disabled={isSubmitting}
               />

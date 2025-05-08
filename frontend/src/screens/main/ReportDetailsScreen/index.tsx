@@ -91,7 +91,7 @@ const ReportDetailsScreen = () => {
 
   const handleQueryError = useCallback(
     (error: Error) => {
-      const mealsError = `Desculpe, não foi possível obter as informações para o período selecionado. contate o suporte para mais informações.`;
+      const mealsError = `Desculpe, não foi possível obter as informações para o período selecionado. Tente novamente mais tarde.`;
       const errorMessage = error instanceof HttpError ? mealsError : NETWORK_ERROR_MESSAGE;
 
       showSnackbar({
@@ -170,6 +170,35 @@ const ReportDetailsScreen = () => {
     return feedbakMessage;
   }
 
+  function renderSummary() {
+    return (
+      <View style={styles.summaryContainer}>
+        <Text style={styles.sectionTitle}>Média de consumo:</Text>
+        <Text style={styles.avgCalorieConsumption}>{Math.round(avgConsumption)} KCAL</Text>
+        <Text style={styles.feedbackMessage}>{generateConsumptionFeedback()}</Text>
+      </View>
+    );
+  }
+
+  function renderPizzaChart() {
+    return daysWithData > 0 ? (
+      <PizzaChart style={styles.chart} data={chartData} />
+    ) : (
+      <EmptyDataPlaceholder
+        title="Sem dados disponíveis"
+        text="Parece que você não possui dados registrados para esse período."
+        icon={
+          <PizzaChartIcon
+            strokeWidth={1.5}
+            width="100%"
+            height="100%"
+            stroke={colors.gray.mediumDark}
+          />
+        }
+      />
+    );
+  }
+
   const chartData: PizzaChartProps["data"] = [
     {
       value: daysOffTarget,
@@ -225,17 +254,13 @@ const ReportDetailsScreen = () => {
         />
       </View>
       <SummaryTextSkeleton
-        show={isLoading || isDebouncing || isFetching || !!error}
+        show={isLoading || isDebouncing || isFetching}
         style={styles.summaryContainerSkeleton}>
-        <View style={styles.summaryContainer}>
-          <Text style={styles.sectionTitle}>Média de consumo:</Text>
-          <Text style={styles.avgCalorieConsumption}>{Math.round(avgConsumption)} KCAL</Text>
-          <Text style={styles.feedbackMessage}>{generateConsumptionFeedback()}</Text>
-        </View>
+        {error ? null : renderSummary()}
       </SummaryTextSkeleton>
       <View style={styles.separatorLine} />
       <PizzaChartSkeleton
-        show={isLoading || isDebouncing || isFetching || !!error}
+        show={isLoading || isDebouncing || isFetching}
         style={styles.chartContainerSkeleton}>
         <View style={styles.chartContainer}>
           <Text style={styles.sectionTitle}>Cumprimento do plano de execução:</Text>
@@ -243,22 +268,7 @@ const ReportDetailsScreen = () => {
             <ChartLabel color={colors.secondary} label="Meta alcançada" />
             <ChartLabel color={colors.primary} label="Meta não alcançada" />
           </View>
-          {daysWithData > 0 ? (
-            <PizzaChart style={styles.chart} data={chartData} />
-          ) : (
-            <EmptyDataPlaceholder
-              title="Sem dados disponíveis"
-              text="Parece que você não possui dados registrados para esse período."
-              icon={
-                <PizzaChartIcon
-                  strokeWidth={1.5}
-                  width="100%"
-                  height="100%"
-                  stroke={colors.gray.mediumDark}
-                />
-              }
-            />
-          )}
+          {error ? null : renderPizzaChart()}
         </View>
       </PizzaChartSkeleton>
       <SubmitButton

@@ -2,8 +2,8 @@ import { Pressable, Text, View } from "react-native";
 import { SuccessCheckIcon } from "../Icons/SuccessCheckIcon";
 import { CloseIcon } from "../Icons/CloseIcon";
 import { styles } from "./styles";
-import Modal from "react-native-modal";
 import { colors } from "../../styles/colors";
+import { Modal } from "../Modal";
 
 interface SuccessModalProps {
   message: string;
@@ -15,15 +15,7 @@ export function SuccessModal(props: SuccessModalProps) {
   const { message, isVisible, onClose } = props;
 
   return (
-    <Modal
-      animationInTiming={300}
-      animationOutTiming={500}
-      animationIn="zoomIn"
-      animationOut="fadeOutUpBig"
-      backdropColor={colors.common.black}
-      backdropOpacity={0.2}
-      isVisible={isVisible}
-      style={styles.container}>
+    <Modal isVisible={isVisible}>
       <View style={styles.modal}>
         <SuccessCheckIcon style={styles.checkIcon} />
         <Text style={styles.message}>{message}</Text>

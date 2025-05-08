@@ -8,10 +8,7 @@ import { useMealStore } from "../../../../../store/meal";
 import { useExpansionAnimation } from "./animations";
 import { styles } from "./styles";
 
-import Reanimated, {
-  interpolate,
-  useAnimatedStyle,
-} from "react-native-reanimated";
+import Reanimated, { interpolate, useAnimatedStyle } from "react-native-reanimated";
 
 interface MealItemProps {
   foodId: string;
@@ -24,11 +21,7 @@ export function MealItem(props: MealItemProps) {
   const { value } = useExpansionAnimation({ isItemExpanded: food.isExpanded });
 
   const animatedStyle = useAnimatedStyle(() => ({
-    height: interpolate(
-      value.value,
-      [0, 1],
-      [ITEM_HEIGHT_SHRINKED, ITEM_HEIGHT_EXPANDED]
-    ),
+    height: interpolate(value.value, [0, 1], [ITEM_HEIGHT_SHRINKED, ITEM_HEIGHT_EXPANDED])
   }));
 
   function handleIncrement() {
@@ -54,20 +47,14 @@ export function MealItem(props: MealItemProps) {
   return (
     <View style={styles.container}>
       <Reanimated.View style={[styles.innerContainer, animatedStyle]}>
-        <View
-          style={[
-            styles.foodDetails,
-            props.disabled ? styles.containerDisabled : null,
-          ]}
-        >
+        <View style={[styles.foodDetails, props.disabled ? styles.containerDisabled : null]}>
           <View style={styles.itemBoxWrapper}>
             <View style={[styles.itemBox, styles.itemHeader]}>
               <ScrollView
                 style={styles.textScrollView}
                 contentContainerStyle={styles.textScrollContainerStyle}
                 horizontal={true}
-                showsHorizontalScrollIndicator={false}
-              >
+                showsHorizontalScrollIndicator={false}>
                 <Text style={styles.text}>{food.name}</Text>
               </ScrollView>
               <Text style={styles.calorieText}>{food.calories} kcal</Text>
@@ -77,15 +64,11 @@ export function MealItem(props: MealItemProps) {
                 <TouchableOpacity
                   style={food.quantity <= 1 && styles.buttonDisabled}
                   onPress={hadleDecrement}
-                  disabled={food.quantity <= 1 || props.disabled}
-                >
+                  disabled={food.quantity <= 1 || props.disabled}>
                   <DecrementIcon />
                 </TouchableOpacity>
                 <Text style={styles.text}>{food.quantity}</Text>
-                <TouchableOpacity
-                  onPress={handleIncrement}
-                  disabled={props.disabled}
-                >
+                <TouchableOpacity onPress={handleIncrement} disabled={props.disabled}>
                   <IncrementIcon />
                 </TouchableOpacity>
               </View>
@@ -94,8 +77,7 @@ export function MealItem(props: MealItemProps) {
                   style={styles.textScrollView}
                   contentContainerStyle={styles.textScrollContainerStyle}
                   horizontal={true}
-                  showsHorizontalScrollIndicator={false}
-                >
+                  showsHorizontalScrollIndicator={false}>
                   <Text style={styles.text}>{food.measurementUnit}</Text>
                 </ScrollView>
               </View>
@@ -104,16 +86,14 @@ export function MealItem(props: MealItemProps) {
           <TouchableOpacity
             onPress={toggleItemExpansion}
             disabled={props.disabled}
-            style={styles.toggleItemButton}
-          >
+            style={styles.toggleItemButton}>
             <ChevronUpIcon style={!food.isExpanded && styles.chvronIconDown} />
           </TouchableOpacity>
         </View>
         <TouchableOpacity
           onPress={handleDelete}
           disabled={props.disabled}
-          style={styles.removeFoodButton}
-        >
+          style={styles.removeFoodButton}>
           <TrashIcon width={18} height={18} />
           <Text style={styles.text}>Excluir</Text>
         </TouchableOpacity>

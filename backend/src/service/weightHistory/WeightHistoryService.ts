@@ -1,102 +1,116 @@
+import { FindOptions, InferAttributes, Op } from "sequelize";
 import WeightHistory from "../../database/models/WeightHistory";
-import { WeightHistoryDTO } from "./types";
+import {
+  GetWeightHistoryDTO,
+  AddWeightDTO,
+  GetWeightsByDateDTO,
+  GetWeightByIdDTO,
+  DeleteWeightDTO,
+} from "./types";
+import { DatabaseException } from "../../@core/exception/infrastructure/DatabaseException";
 
 export default class WeightHistoryService {
-    public getById = async (id: number) => {
-        try {
-            const weightHistory = await WeightHistory.findAll({
-                where: { userId: id },
-                attributes: { exclude: ["userId"] },
-            });
+  public get = async (params: GetWeightHistoryDTO) => {
+    const { userId, limit, offset } = params;
 
-            return weightHistory?.map((wh) => wh.toJSON());
-        } catch (error) {
-            console.log(error);
-            const message = `Ocorreu um erro durante a busca do histórico de peso com id: '${id}'`;
-            throw new Error(message);
-        }
+    const findWeightsQuery: FindOptions<
+      InferAttributes<WeightHistory, { omit: never }>
+    > = {
+      limit,
+      offset,
+      order: [["date", "DESC"]],
+      where: { userId },
     };
 
-    public getByDate = async (id: number, date: string) => {
-        try {
-          const weightHistory = await WeightHistory.findOne({
-            where: { userId: id, date },
-            attributes: { exclude: ["userId"] },
-          });
-    
-          return weightHistory?.toJSON();
-        } catch (error) {
-          console.log(error);
-          const message = `Ocorreu um erro durante a busca do histórico de peso com id: '${id}'`;
-          throw new Error(message);
-        }
-    };
+    try {
+      const [weights, total] = await Promise.all([
+        WeightHistory.findAll(findWeightsQuery),
+        WeightHistory.count({ where: { userId } }),
+      ]);
 
-    public post = async (weightHistory: WeightHistoryDTO) => {
-        try {
-            const date = weightHistory.date.toISOString().split("T")[0];
-            const createdWeightHistory = await WeightHistory.create(
-                { ...weightHistory, date },
-                {}
-            );
+      const hasMore = (limit || weights.length) + (offset || 0) < total;
 
-            const newData = {
-                weight: createdWeightHistory.weight,
-                date: createdWeightHistory.date,
-            }
+      return { weights: weights.map((weight) => weight.toJSON()), hasMore };
+    } catch (error: any) {
+      throw new DatabaseException(
+        `Erro na busca do histórico de pesos do usuário com id: '${userId}'`,
+        WeightHistoryService.name,
+        error.message
+      );
+    }
+  };
 
-            return newData
-        } catch (error) {
-            console.log(error);
-            const message = `Ocorreu um erro durante a criação do histórico de peso.`;
-            throw new Error(message);
-        }
-    };
+  public getById = async (params: GetWeightByIdDTO) => {
+    const { userId, id } = params;
 
-    public put = async (weightHistory: WeightHistoryDTO) => {
-        const exist = await WeightHistory.findOne({
-          where: { userId: weightHistory.userId, date: weightHistory.date },
-        });
-    
-        if (!exist) {
-          throw new Error(
-            `Histórico de peso com id: '${weightHistory.userId}' não encontrado.`
-          );
-        }
-        try {
-          const date = weightHistory.date.toISOString().split("T")[0];
-          const updatedWeightHistory = await WeightHistory.update(
-            { ...weightHistory, date },
-            {
-              where: { userId: weightHistory.userId, date: weightHistory.date },
-              returning: true,
-            }
-          );
-    
-          const newData = {
-            weight: updatedWeightHistory[1][0].weight,
-            date: updatedWeightHistory[1][0].date,
-          };
+    try {
+      const weightHistory = await WeightHistory.findOne({
+        where: { userId, id },
+        attributes: { exclude: ["userId"] },
+      });
 
-          return newData;
-        } catch (error) {
-          console.log(error);
-          const message = `Ocorreu um erro durante a atualização do histórico de peso com id: '${weightHistory.userId}'`;
-          throw new Error(message);
-        }
-    };
+      return weightHistory?.toJSON() || null;
+    } catch (error: any) {
+      throw new DatabaseException(
+        `Erro na busca do registro de peso com id: '${id}' do usuário com id: '${userId}'`,
+        WeightHistoryService.name,
+        error.message
+      );
+    }
+  };
 
-    public delete = async (id: number) => {
-        try {
-            const deletedWeightHistory = await WeightHistory.destroy({
-                where: { id },
-            });
+  public getByDate = async (params: GetWeightsByDateDTO) => {
+    const { userId, from, to } = params;
+    const dateOnlyFrom = from.toISOString().split("T")[0];
+    const dateOnlyto = to.toISOString().split("T")[0];
 
-            return deletedWeightHistory;
-        } catch (error) {
-            console.log(error);
-            const message = `Ocorreu um erro durante a exclusão do histórico de peso com id: '${id}'`;
-            throw new Error(message);
-        }
-    };
+    try {
+      const foundWeights = await WeightHistory.findAll({
+        where: { userId, date: { [Op.between]: [dateOnlyFrom, dateOnlyto] } },
+      });
+
+      return foundWeights.map((foundWeights) => foundWeights.toJSON());
+    } catch (error: any) {
+      throw new DatabaseException(
+        `Erro na obtenção dos pesos registrados entre as datas: '${dateOnlyFrom}' e '${dateOnlyto}' para o usuário com id: '${userId}'`,
+        WeightHistoryService.name,
+        error.message
+      );
+    }
+  };
+
+  public addWeight = async (params: AddWeightDTO) => {
+    const { userId, weight, date } = params;
+    try {
+      const dateOnly = date.toISOString().split("T")[0];
+      const addedWeightRecord = await WeightHistory.create({
+        date: dateOnly,
+        weight,
+        userId,
+      });
+
+      return addedWeightRecord.toJSON();
+    } catch (error: any) {
+      throw new DatabaseException(
+        `Erro na criação de um registro de peso para o usuário com id: '${userId}'`,
+        WeightHistoryService.name,
+        error.message
+      );
+    }
+  };
+
+  public delete = async (params: DeleteWeightDTO) => {
+    const { userId, id } = params;
+    try {
+      await WeightHistory.destroy({
+        where: { userId, id },
+      });
+    } catch (error: any) {
+      throw new DatabaseException(
+        `Erro na tentativa de deletar o registro de peso com id: '${id}' do usuário com id: '${userId}'`,
+        WeightHistoryService.name,
+        error.message
+      );
+    }
+  };
 }

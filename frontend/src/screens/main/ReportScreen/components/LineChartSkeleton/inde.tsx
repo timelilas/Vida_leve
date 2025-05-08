@@ -18,7 +18,7 @@ export function LineChartSkeleton(props: {
   const defaultAnimationProps: Omit<MotiSkeletonProps, "Gradient"> = {
     colorMode: "light",
     transition: { type: "timing" },
-    disableExitAnimation: true,
+    disableExitAnimation: true
   };
 
   return (

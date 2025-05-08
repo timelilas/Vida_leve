@@ -1,7 +1,7 @@
 import { Request, Response } from "express";
 import { exceptionResponseAdapter } from "../../utils/express/helpers";
 import FoodService from "../../service/food/FoodService";
-import { DEFAULT_FOOD_LIMIT } from "./constants";
+import { DEFAULT_FOOD_SEARCH_LIMIT } from "./constants";
 
 export class FoodController {
   private _foodService = new FoodService();
@@ -16,7 +16,7 @@ export class FoodController {
     try {
       const { foods, hasMore } = await this._foodService.get({
         name: query.name,
-        limit: query.limit || DEFAULT_FOOD_LIMIT,
+        limit: query.limit || DEFAULT_FOOD_SEARCH_LIMIT,
         offset: query.offset,
       });
       return res.status(200).json({ data: { foods, hasMore } });
@@ -25,7 +25,7 @@ export class FoodController {
         req,
         res,
         exception: error,
-        alternativeMsg: "Erro ao na obtenção da lista de alimentos.",
+        alternativeMsg: "Erro na obtenção da lista de alimentos.",
       });
     }
   }

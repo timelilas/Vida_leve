@@ -17,26 +17,26 @@ export const mealButtonsData: MealButtonData[] = [
   {
     type: "cafe-da-manha",
     name: "Café da manhã",
-    icon: <MugIcon stroke={colors.secondary} />,
+    icon: <MugIcon stroke={colors.secondary} />
   },
   {
     type: "lanche",
     name: "Lanche",
-    icon: <CookieIcon stroke={colors.secondary} />,
+    icon: <CookieIcon stroke={colors.secondary} />
   },
   {
     type: "almoco",
     name: "Almoço",
-    icon: <FreshFruitsIcon stroke={colors.secondary} />,
+    icon: <FreshFruitsIcon stroke={colors.secondary} />
   },
   {
     type: "jantar",
     name: "Jantar",
-    icon: <SoupIcon stroke={colors.secondary} />,
+    icon: <SoupIcon stroke={colors.secondary} />
   },
   {
     type: "outro",
     name: "Outros",
-    icon: <AppleIcon stroke={colors.secondary} />,
-  },
+    icon: <AppleIcon stroke={colors.secondary} />
+  }
 ];

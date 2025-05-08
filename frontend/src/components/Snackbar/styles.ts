@@ -9,26 +9,26 @@ export const styles = StyleSheet.create({
     position: "absolute",
     bottom: 0,
     left: 0,
-    right: 0,
+    right: 0
   },
   message: {
     fontFamily: fonts.robotoRegular,
     fontSize: 15,
-    color: colors.text.secondary,
-  },
+    color: colors.text.secondary
+  }
 });
 
 export const neutralStyles = StyleSheet.create({
   container: { backgroundColor: colors.gray.medium },
-  message: { color: colors.text.secondary },
+  message: { color: colors.text.secondary }
 });
 
 export const errorStyles = StyleSheet.create({
   container: { backgroundColor: colors.error },
-  message: { color: colors.common.white },
+  message: { color: colors.common.white }
 });
 
 export const successStyles = StyleSheet.create({
   container: { backgroundColor: colors.success },
-  message: { color: colors.common.white },
+  message: { color: colors.common.white }
 });

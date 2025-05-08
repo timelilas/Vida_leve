@@ -20,11 +20,9 @@ const HomeScreen = () => {
   const { plans } = useCaloriePlans({ refetchOnMount: false });
   const { Snackbar, showSnackbar } = useSnackbar();
 
-  const currentPlan = plans.find(
-    ({ type }) => type === progress?.currentCaloriePlan
-  );
+  const currentPlan = plans.find(({ type }) => type === progress?.currentCaloriePlan);
   const { dailyConsumption, error, isLoading } = useMeal({
-    date: new Date(year, month, day),
+    date: new Date(year, month, day)
   });
 
   const handleQueryError = useCallback(
@@ -33,14 +31,12 @@ const HomeScreen = () => {
         "Desculpe, ocorreu um erro na busca das informações do seu consumo de calorias diário, por favor, tente novamente mais tarde.";
 
       const errorMessage =
-        error instanceof HttpError
-          ? dailyConsumptionErrorMessage
-          : NETWORK_ERROR_MESSAGE;
+        error instanceof HttpError ? dailyConsumptionErrorMessage : NETWORK_ERROR_MESSAGE;
 
       showSnackbar({
         variant: "error",
         duration: 7000,
-        message: errorMessage,
+        message: errorMessage
       });
     },
     [showSnackbar]

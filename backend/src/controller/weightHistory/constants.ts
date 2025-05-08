@@ -1,0 +1,1 @@
+export const DEFAULT_WEIGHT_SEARCH_LIMIT = 20;

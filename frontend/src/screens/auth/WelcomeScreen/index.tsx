@@ -22,8 +22,7 @@ const WelcomeScreen = () => {
     <SafeAreaView style={styles.safeAreaView}>
       <ScrollView
         contentContainerStyle={styles.scrollView}
-        showsVerticalScrollIndicator={false}
-      >
+        showsVerticalScrollIndicator={false}>
         <View style={styles.imageContainer}>
           <Image
             style={styles.backgroundImage}
@@ -41,20 +40,13 @@ const WelcomeScreen = () => {
           <View style={styles.titleContainer}>
             <Text style={styles.titleRuda}>Oiê!!</Text>
             <Text style={styles.titleRoboto}>
-              Transforme sua jornada de perda de peso em uma experiência leve e
-              motivadora com o{" "}
-              <Text style={[styles.titleRoboto, styles.titleRobotoBold]}>
-                Vida Leve
-              </Text>
+              Transforme sua jornada de perda de peso em uma experiência leve e motivadora com
+              o <Text style={[styles.titleRoboto, styles.titleRobotoBold]}>Vida Leve</Text>
               <Text style={styles.titleRoboto}> !</Text>
             </Text>
           </View>
           <View style={styles.buttonWrapper}>
-            <SubmitButton
-              title="Começar agora"
-              type="primary"
-              onPress={navigateToSignup}
-            />
+            <SubmitButton title="Começar agora" type="primary" onPress={navigateToSignup} />
             <SubmitButton
               title="Já tenho uma conta"
               type="outlined"

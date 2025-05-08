@@ -8,13 +8,15 @@ import { Paragraph } from "../../../components/Paragraph/Paragraph";
 import { MealItem } from "./components/MealItem";
 import { useMealStore } from "../../../store/meal";
 import { MealRegistrationData, MealSummary } from "./components/MealSummary";
-import { formatDateToLabel, getTitleFromMealType } from "../../../utils/helpers";
+import { dateToPTBR, formatDateToLabel, getTitleFromMealType } from "../../../utils/helpers";
 import { RouteConstants } from "../../../routes/types";
 import { useSnackbar } from "../../../hooks/common/useSnackbar";
 import { useEffect, useState } from "react";
 import { useMeal } from "../../../hooks/meal/useMeal";
 import { CommonActions } from "@react-navigation/native";
 import { SuccessModal } from "../../../components/SuccessModal";
+import { NETWORK_ERROR_MESSAGE } from "../../../constants/errorMessages";
+import { HttpError } from "../../../@core/errors/httpError";
 
 const MealRegistrationScreen = () => {
   const navigation = useAppNavigation();
@@ -23,7 +25,6 @@ const MealRegistrationScreen = () => {
   const mealDate = useMealStore((state) => state.date);
   const mealType = useMealStore((state) => state.type);
   const foodIds = useMealStore((state) => state.foodIds);
-  const mealId = useMealStore((state) => state.foodIds);
 
   const { collapseAllItems } = useMealStore((state) => state.actions);
   const { Snackbar, showSnackbar } = useSnackbar();
@@ -75,7 +76,16 @@ const MealRegistrationScreen = () => {
   }
 
   function handleError(error: Error) {
-    showSnackbar({ duration: 5000, message: error.message, variant: "error" });
+    let defaultMessage = NETWORK_ERROR_MESSAGE;
+    if (error instanceof HttpError) {
+      if (error.status === 409) {
+        const formattedDate = dateToPTBR(new Date(mealDate));
+        defaultMessage = `Desculpe, você já possui uma refeição do tipo '${mealType}' registrada na data '${formattedDate}'.`;
+      } else {
+        defaultMessage = `Desculpe, houve um erro durante o cadastro da sua refeição. Tente novamente mais tarde.`;
+      }
+    }
+    showSnackbar({ duration: 5000, message: defaultMessage, variant: "error" });
   }
 
   async function handleSubmit(data: MealRegistrationData) {
@@ -135,11 +145,7 @@ const MealRegistrationScreen = () => {
       <SuccessModal
         isVisible={isModalVisible}
         onClose={closeModalAndResetNavigation}
-        message={
-          mealId
-            ? "Sua refeição foi atualizada com sucesso!"
-            : "Sua refeição foi registrada com sucesso!"
-        }
+        message="Sua refeição foi registrada com sucesso!"
       />
     </ScreenWrapper>
   );

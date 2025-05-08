@@ -4,17 +4,17 @@ import { colors } from "../../../../../styles/colors";
 
 export const styles = StyleSheet.create({
   container: {
-    gap: 8,
+    gap: 8
   },
   title: {
     fontSize: 16,
     lineHeight: 16,
     fontFamily: fonts.robotoLight,
-    color: colors.text.primary,
+    color: colors.text.primary
   },
   calorieProgress: {
-    padding: 10,
-    gap: 10,
+    paddingBlock: 10,
+    gap: 10
   },
   foodIconsWrapper: {
     gap: 32,
@@ -22,16 +22,16 @@ export const styles = StyleSheet.create({
     flexWrap: "wrap",
     flexDirection: "row",
     justifyContent: "center",
-    alignItems: "center",
+    alignItems: "center"
   },
   buttonWrapper: {
     flexDirection: "row",
-    justifyContent: "space-between",
+    justifyContent: "space-between"
   },
   buttonText: {
     textAlign: "auto",
     fontSize: 14,
     fontFamily: fonts.robotoLight,
-    color: colors.blue,
-  },
+    color: colors.blue
+  }
 });

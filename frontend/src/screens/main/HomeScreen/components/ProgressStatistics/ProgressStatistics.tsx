@@ -27,6 +27,10 @@ export function ProgressStatistics(props: ProgressStatisticsProps) {
     navigation.navigate(RouteConstants.ReportRouter);
   }
 
+  function navigateToWeightTrackingScreen() {
+    navigation.navigate(RouteConstants.WeightTracking);
+  }
+
   return (
     <View style={styles.container}>
       <Text style={styles.title}>Foram registradas:</Text>
@@ -50,6 +54,9 @@ export function ProgressStatistics(props: ProgressStatisticsProps) {
       <View style={styles.buttonWrapper}>
         <TouchableOpacity onPress={navigateToReportScreen}>
           <Text style={styles.buttonText}>Relatórios</Text>
+        </TouchableOpacity>
+        <TouchableOpacity onPress={navigateToWeightTrackingScreen}>
+          <Text style={styles.buttonText}>Registrar peso</Text>
         </TouchableOpacity>
         <TouchableOpacity onPress={navigateToCreateMealScreen}>
           <Text style={styles.buttonText}>Registrar refeição</Text>

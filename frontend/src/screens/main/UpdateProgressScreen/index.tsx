@@ -52,7 +52,12 @@ const UpdateProgressScreen = ({ route }: UpdateProgressScreenProps) => {
         Agora, se quiser, você pode ajustar sua altura, peso atual, peso desejado e frequência
         de atividade física para manter suas metas sempre em dia.
       </Paragraph>
-      <ProgressForm variant="default" onSubmit={onSubmit} initialData={formInitialData} />
+      <ProgressForm
+        variant="default"
+        onSubmit={onSubmit}
+        initialData={formInitialData}
+        submitButtonText="Continuar"
+      />
     </ScreenWrapper>
   );
 };
