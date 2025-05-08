@@ -70,6 +70,7 @@ const CreateProgressScreen = () => {
       </Paragraph>
       <ProgressForm
         variant="default"
+        submitButtonText="Continuar cadastro"
         initialData={initialFormData}
         onError={onError}
         onSubmit={onSubmit}

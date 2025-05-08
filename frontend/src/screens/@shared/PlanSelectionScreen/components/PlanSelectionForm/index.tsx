@@ -20,9 +20,7 @@ export interface PlanSelectionFormProps {
 
 export function PlanSelectionForm(props: PlanSelectionFormProps) {
   const { currentPlan, plans, onSubmit, onError } = props;
-  const [selectedPlan, setSelectedPlan] = useState<PlanType | null>(
-    currentPlan
-  );
+  const [selectedPlan, setSelectedPlan] = useState<PlanType | null>(currentPlan);
   const [isSubmitting, setIsSubmitting] = useState(false);
 
   useAppNavigation({ preventGoBack: isSubmitting });
@@ -79,13 +77,13 @@ export function PlanSelectionForm(props: PlanSelectionFormProps) {
 
 const styles = StyleSheet.create({
   container: {
-    flex: 1,
+    flex: 1
   },
   plansWrapper: {
     gap: 16,
-    marginBottom: 40,
+    marginBottom: 40
   },
   submitButton: {
-    marginTop: "auto",
-  },
+    marginTop: "auto"
+  }
 });

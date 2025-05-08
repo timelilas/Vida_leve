@@ -24,7 +24,7 @@ import { delay } from "../../../utils/helpers";
 const signupFormInitialState: SignupFormData = {
   email: "",
   password: "",
-  passwordConfirmation: "",
+  passwordConfirmation: ""
 };
 
 const SignupScreen = () => {
@@ -38,13 +38,13 @@ const SignupScreen = () => {
     handleSubmit,
     setError,
     trigger,
-    clearErrors,
+    clearErrors
   } = useForm({
     criteriaMode: "firstError",
     values: signupFormInitialState,
     resolver: customZodResolver(zodSignupSchema),
     mode: "onBlur",
-    reValidateMode: "onSubmit",
+    reValidateMode: "onSubmit"
   });
 
   const firstFieldError = Object.entries(errors).at(0);
@@ -67,7 +67,7 @@ const SignupScreen = () => {
     showSnackbar({
       duration: 5000,
       message: error.message,
-      variant: "error",
+      variant: "error"
     });
   }
 
@@ -89,10 +89,7 @@ const SignupScreen = () => {
       <View style={styles.container}>
         <NavigationHeader variant="default" onBack={goBack} />
         <LogoSVG style={styles.logo} />
-        <ScreenTitle
-          style={styles.title}
-          title={`Boas vindas!\nCadastre-se para continuar`}
-        />
+        <ScreenTitle style={styles.title} title={`Boas vindas!\nCadastre-se para continuar`} />
         <View style={styles.form}>
           <Controller
             control={control}
@@ -111,12 +108,9 @@ const SignupScreen = () => {
                   onBlur={() => revalidateFields(["email"])}
                   onChangeText={(text) => onChange(maskEmail(text))}
                   onFocus={() =>
-                    isInvalid &&
-                    clearErrorsWithDelay(["password", "passwordConfirmation"])
+                    isInvalid && clearErrorsWithDelay(["password", "passwordConfirmation"])
                   }
-                  errorMessage={
-                    isEmailError ? firstFieldError[1].message : undefined
-                  }
+                  errorMessage={isEmailError ? firstFieldError[1].message : undefined}
                 />
               );
             }}
@@ -164,9 +158,7 @@ const SignupScreen = () => {
                   disabled={isSubmitting}
                   error={isConfirmPasswordError}
                   errorMessage={
-                    isConfirmPasswordError
-                      ? firstFieldError[1].message
-                      : undefined
+                    isConfirmPasswordError ? firstFieldError[1].message : undefined
                   }
                 />
               );

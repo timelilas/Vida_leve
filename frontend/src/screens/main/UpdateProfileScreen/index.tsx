@@ -44,7 +44,11 @@ const UpdateProfileScreen = () => {
         Aqui você pode alterar seu nome e telefone. Lembre-se, a data de nascimento e o gênero
         são obrigatórios para calcular corretamente as suas calorias.
       </Paragraph>
-      <ProfileForm initialData={formInitialState} onSubmit={onSubmit} />
+      <ProfileForm
+        initialData={formInitialState}
+        submitButtonText="Continuar"
+        onSubmit={onSubmit}
+      />
     </ScreenWrapper>
   );
 };

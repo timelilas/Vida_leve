@@ -15,12 +15,13 @@ import { maskDatePTBR, maskName, maskPhone, onlyNumbers } from "../../utils/mask
 
 interface ProfileFormProps {
   initialData: ProfileFormData;
+  submitButtonText: string;
   onSubmit: (formData: ProfileFormSubmitData) => Promise<void>;
   onError?: (error: Error) => void;
 }
 
 export function ProfileForm(props: ProfileFormProps) {
-  const { initialData } = props;
+  const { initialData, submitButtonText } = props;
 
   const {
     control,
@@ -189,7 +190,7 @@ export function ProfileForm(props: ProfileFormProps) {
         disabled={isSubmitting}
         onPress={handleSubmit(onSubmit)}
         style={styles.submitButton}
-        title="Continuar cadastro"
+        title={submitButtonText}
         type="primary"
       />
     </View>

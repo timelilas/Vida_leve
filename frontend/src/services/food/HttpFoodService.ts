@@ -8,7 +8,7 @@ export class HttpFoodService extends HttpService {
 
     return await this.submit<{ foods: FoodProps[]; hasMore: boolean }>({
       method: "GET",
-      path: `/foods?name=${name}&limit=${limit}&offset=${offset}`,
+      path: `/foods?name=${name}&limit=${limit}&offset=${offset}`
     });
   }
 }

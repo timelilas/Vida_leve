@@ -17,7 +17,6 @@ import { DateIntervalType } from "../../../@types";
 import { QueryKeys } from "../../../constants/reactQueryKeys";
 import { queryClient } from "../../../libs/react-query/queryClient";
 import { TimeRangeNavigator } from "../../../components/TimeRangeNavigator";
-import { Text, TouchableOpacity } from "react-native";
 import { colors } from "../../../styles/colors";
 import { ChartLabel } from "../../../components/ChartLabel";
 import { LineChart } from "../../../components/LineChart";
@@ -33,6 +32,7 @@ import {
   ReportRoutesParamsList
 } from "../../../routes/reportRouter/types";
 import { DateFilterContext } from "../../../contexts/dateFilterContext/DateFilterContext";
+import { LinkButton } from "../../../components/LinkButton";
 
 const ReportScreen = () => {
   const navigation = useNavigation<NavigationProp<ReportRoutesParamsList>>();
@@ -100,7 +100,7 @@ const ReportScreen = () => {
 
   const handleQueryError = useCallback(
     (error: Error) => {
-      const mealsError = `Desculpe, não foi possível obter as informações para o período selecionado. contate o suporte para mais informações.`;
+      const mealsError = `Desculpe, não foi possível obter as informações para o período selecionado. Tente novamente mais tarde.`;
       const errorMessage = error instanceof HttpError ? mealsError : NETWORK_ERROR_MESSAGE;
 
       showSnackbar({
@@ -111,6 +111,44 @@ const ReportScreen = () => {
     },
     [showSnackbar]
   );
+
+  function renderLineChart() {
+    return statistics.length > 0 ? (
+      <LineChart
+        key={dateData.day}
+        lineStrokeWidth={3}
+        labels={chartDataAndLabels.labels}
+        data={[
+          {
+            color: colors.primary,
+            fillColor: colors.primary,
+            values: chartDataAndLabels.dailyConsumption,
+            tooltip: { color: colors.primary, enabled: true },
+            withDots: true
+          },
+          {
+            color: colors.secondary,
+            values: chartDataAndLabels.dailyTarget,
+            withDots: isTooltipEnabledHadler,
+            tooltip: { color: colors.secondary, enabled: isTooltipEnabledHadler }
+          }
+        ]}
+      />
+    ) : (
+      <EmptyDataPlaceholder
+        title="Sem dados disponíveis"
+        text="Parece que você não possui dados registrados para esse período."
+        icon={
+          <LineChartIcon
+            strokeWidth={1.5}
+            width="100%"
+            height="100%"
+            stroke={colors.gray.mediumDark}
+          />
+        }
+      />
+    );
+  }
 
   useEffect(() => {
     if (error && !isLoading) handleQueryError(error);
@@ -148,51 +186,19 @@ const ReportScreen = () => {
         />
       </View>
       <View style={styles.chartContainer}>
-        <LineChartSkeleton show={isLoading || isDebouncing || isFetching || !!error}>
+        <LineChartSkeleton show={isLoading || isDebouncing || isFetching}>
           <View style={styles.labelsWrapper}>
             <ChartLabel color={colors.secondary} label="Plano de execução" />
             <ChartLabel color={colors.primary} label="Calorias consumidas" />
           </View>
-          {statistics.length > 0 ? (
-            <LineChart
-              key={dateData.day}
-              lineStrokeWidth={3}
-              labels={chartDataAndLabels.labels}
-              data={[
-                {
-                  color: colors.primary,
-                  fillColor: colors.primary,
-                  values: chartDataAndLabels.dailyConsumption,
-                  tooltip: { color: colors.primary, enabled: true },
-                  withDots: true
-                },
-                {
-                  color: colors.secondary,
-                  values: chartDataAndLabels.dailyTarget,
-                  withDots: isTooltipEnabledHadler,
-                  tooltip: { color: colors.secondary, enabled: isTooltipEnabledHadler }
-                }
-              ]}
-            />
-          ) : (
-            <EmptyDataPlaceholder
-              title="Sem dados disponíveis"
-              text="Parece que você não possui dados registrados para esse período."
-              icon={
-                <LineChartIcon
-                  strokeWidth={1.5}
-                  width="100%"
-                  height="100%"
-                  stroke={colors.gray.mediumDark}
-                />
-              }
-            />
-          )}
+          {error ? null : renderLineChart()}
         </LineChartSkeleton>
       </View>
-      <TouchableOpacity style={styles.linkButton} onPress={navigateToReportDetailsScreen}>
-        <Text style={styles.linkButtonText}>Saiba mais</Text>
-      </TouchableOpacity>
+      <LinkButton
+        style={styles.linkButton}
+        title="Saiba mais"
+        onPress={navigateToReportDetailsScreen}
+      />
     </ScreenWrapper>
   );
 };

@@ -3,12 +3,9 @@ import { colors } from "../../styles/colors";
 import { fonts } from "../../styles/fonts";
 
 export const styles = StyleSheet.create({
-  container: {
-    alignItems: "center",
-  },
   modal: {
+    marginInline: 24,
     position: "relative",
-    width: "100%",
     maxWidth: 390,
     minHeight: 170,
     backgroundColor: colors.background.primary,
@@ -17,23 +14,23 @@ export const styles = StyleSheet.create({
     borderWidth: 3,
     borderColor: colors.success,
     borderRadius: 8,
-    padding: 24,
+    padding: 24
   },
   message: {
     color: colors.text.primary,
     fontSize: 24,
     lineHeight: 28.8,
     fontFamily: fonts.robotoBold,
-    textAlign: "center",
+    textAlign: "center"
   },
   closeButton: {
     position: "absolute",
     top: 8,
-    right: 8,
+    right: 8
   },
   checkIcon: {
     position: "absolute",
     top: 0,
-    transform: [{ translateY: "-50%" }],
-  },
+    transform: [{ translateY: "-50%" }]
+  }
 });

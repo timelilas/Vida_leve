@@ -6,14 +6,14 @@ export const styles = StyleSheet.create({
   container: {
     zIndex: 20,
     paddingHorizontal: 6,
-    paddingVertical: 3,
+    paddingVertical: 2,
     borderRadius: 6,
     position: "absolute",
     borderWidth: 1,
     borderColor: "#000000"
   },
   text: {
-    fontSize: 12,
+    fontSize: 13,
     fontFamily: fonts.robotoMedium,
     color: colors.common.white
   },

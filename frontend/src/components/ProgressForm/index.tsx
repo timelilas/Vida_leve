@@ -19,12 +19,13 @@ import { customZodResolver } from "../../libs/zod/@shared/resolver";
 interface ProgressFormProps {
   variant: "default" | "goalAdjustments";
   initialData: ProgressFormData;
+  submitButtonText: string;
   onSubmit: (formData: OnProgressSubmitData) => Promise<void>;
   onError?: (error: Error) => void;
 }
 
 export function ProgressForm(props: ProgressFormProps) {
-  const { initialData, variant } = props;
+  const { initialData, variant, submitButtonText } = props;
   const { birthDate, ...rest } = initialData;
   const initialFormData = { ...rest, age: calculateAge(new Date(birthDate)) };
 
@@ -185,7 +186,7 @@ export function ProgressForm(props: ProgressFormProps) {
         onPress={handleSubmit(onSubmit)}
         style={styles.submitButton}
         type="primary"
-        title="Continuar cadastro"
+        title={submitButtonText}
       />
     </View>
   );

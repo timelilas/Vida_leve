@@ -14,7 +14,7 @@ import {
 } from "react-native";
 import { Paragraph } from "../../../components/Paragraph/Paragraph";
 import SearchInput from "./components/SearchInput";
-import { useCallback, useEffect, useState } from "react";
+import { useCallback, useDeferredValue, useEffect, useState } from "react";
 import { FOOD_ITEM_HEIGHT } from "./components/FoodItem/constants";
 import { formatDateToLabel, getTitleFromMealType } from "../../../utils/helpers";
 import { useDebounce } from "../../../hooks/common/useDebounce";
@@ -49,11 +49,13 @@ const SearchFoodsScreen = ({ route }: SearchFoodsScreenProps) => {
   const limit = calculateTotalFoodsToFetch();
   const shortDateLabel = formatDateToLabel(new Date(mealDate), "short");
 
-  const { foods, hasMore, error, isFetching, fetchMoreFoods } = useFoods({
+  const { data, error, isFetching, fetchMoreFoods } = useFoods({
     foodName,
     enabled: isQueryEnabled,
     limit
   });
+
+  const deferredData = useDeferredValue(data);
 
   function goBack() {
     navigation.goBack();
@@ -88,7 +90,7 @@ const SearchFoodsScreen = ({ route }: SearchFoodsScreenProps) => {
 
   function handleScreenScroll(e: NativeSyntheticEvent<NativeScrollEvent>) {
     if (!foodName.length) return;
-    if (!hasMore) return;
+    if (!deferredData.hasMore) return;
 
     const isScrollCloseToBottom = isCloseToBottom(e);
 
@@ -158,7 +160,7 @@ const SearchFoodsScreen = ({ route }: SearchFoodsScreenProps) => {
           />
         </View>
       </View>
-      <FoodList foods={foods} />
+      <FoodList foods={deferredData.foods} />
       <View style={styles.activityIndicatorContainer}>
         {isFetching ? <ActivityIndicator color={colors.primary} size="large" /> : null}
       </View>

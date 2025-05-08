@@ -13,15 +13,7 @@ interface MealButtonProps {
 }
 
 export function MealButton(props: MealButtonProps & PressableProps) {
-  const {
-    icon,
-    title,
-    selected,
-    caloriesConsumed,
-    disabled,
-    isLoading,
-    ...propsRest
-  } = props;
+  const { icon, title, selected, caloriesConsumed, disabled, isLoading, ...propsRest } = props;
 
   return (
     <Skeleton
@@ -31,13 +23,8 @@ export function MealButton(props: MealButtonProps & PressableProps) {
       width="100%"
       transition={{ type: "timing" }}
       disableExitAnimation
-      show={isLoading}
-    >
-      <ToggleButton
-        selected={selected}
-        disabled={disabled || isLoading}
-        {...propsRest}
-      >
+      show={isLoading}>
+      <ToggleButton selected={selected} disabled={disabled || isLoading} {...propsRest}>
         <View style={[styles.container, disabled && styles.containerDisabled]}>
           {icon}
           <Text style={styles.title}>{title}</Text>
