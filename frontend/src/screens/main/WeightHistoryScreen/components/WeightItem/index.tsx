@@ -13,16 +13,17 @@ import { WEIGHT_TABLE_ITEM_HEIGHT, WEIGHT_TABLE_ITEM_MARGIN_BOTTOM } from "./con
 
 interface WeightItemProps extends WeightProps {
   isDeleted: boolean;
+  isLast: boolean;
   onDelete: () => void;
 }
 
 export function WeightItem(props: WeightItemProps) {
-  const { id, date, weight, isDeleted, onDelete } = props;
+  const { id, date, weight, isDeleted, isLast, onDelete } = props;
 
   const { animatedStyles, isDeleteAnimationFinished, startDeleteAnimation } =
     useWeightItemAnimation({
       itemHeight: WEIGHT_TABLE_ITEM_HEIGHT,
-      itemMarginBottom: WEIGHT_TABLE_ITEM_MARGIN_BOTTOM
+      itemMarginBottom: isLast ? 0 : WEIGHT_TABLE_ITEM_MARGIN_BOTTOM
     });
 
   function onDeleteWeight() {

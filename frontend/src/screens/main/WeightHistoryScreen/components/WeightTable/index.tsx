@@ -5,6 +5,7 @@ import { WeightProps } from "../../../../../@core/entities/weight/type";
 
 interface WeightItemData extends WeightProps {
   isDeleted: boolean;
+  isLast: boolean;
   onDelete: () => void;
 }
 
@@ -28,6 +29,7 @@ export function WeightTable(props: WeightTableProps) {
             date={item.date}
             weight={item.weight}
             isDeleted={item.isDeleted}
+            isLast={item.isLast}
             onDelete={item.onDelete}
           />
         ))}

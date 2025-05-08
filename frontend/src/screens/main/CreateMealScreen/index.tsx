@@ -57,11 +57,17 @@ const CreateMealScreen = (props: CreateMealScreenProps) => {
 
   const foundMeal = meals.find((meal) => meal.type === selectedMealType);
   const dateString = dateToPTBR(localDate);
-  const shortDateLabel = formatDateToLabel(localDate, "short");
-  const longDateLabel = formatDateToLabel(localDate, "long");
 
   function goBack() {
     navigation.goBack();
+  }
+
+  function areDatesEqual(date1: Date, date2: Date) {
+    return (
+      date1.getFullYear() === date2.getFullYear() &&
+      date1.getMonth() === date2.getMonth() &&
+      date1.getDate() === date2.getDate()
+    );
   }
 
   function handleMealSelection(mealType: MealType) {
@@ -139,11 +145,15 @@ const CreateMealScreen = (props: CreateMealScreenProps) => {
       <NavigationHeader
         variant="titled"
         title="Registrar Refeição"
-        subtitle={shortDateLabel}
+        subtitle={formatDateToLabel(localDate, "short")}
         onBack={goBack}
       />
-
-      <ScreenTitle title={longDateLabel} style={[styles.title, styles.dayTitle]} />
+      <ScreenTitle
+        style={[styles.title, styles.dayTitle]}
+        title={
+          areDatesEqual(currentDate, localDate) ? "Hoje" : formatDateToLabel(localDate, "long")
+        }
+      />
       <View style={styles.dayPicker}>
         <DayPicker
           currentDate={selectedDate}

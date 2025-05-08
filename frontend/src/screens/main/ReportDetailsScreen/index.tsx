@@ -91,7 +91,7 @@ const ReportDetailsScreen = () => {
 
   const handleQueryError = useCallback(
     (error: Error) => {
-      const mealsError = `Desculpe, não foi possível obter as informações para o período selecionado. contate o suporte para mais informações.`;
+      const mealsError = `Desculpe, não foi possível obter as informações para o período selecionado. Tente novamente mais tarde.`;
       const errorMessage = error instanceof HttpError ? mealsError : NETWORK_ERROR_MESSAGE;
 
       showSnackbar({

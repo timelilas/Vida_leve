@@ -6,14 +6,14 @@ import { httpWeightHistoryService } from "../../services/weight";
 import { AddWeightParams, WeightHistoryQueryState } from "./types";
 
 interface UseWeightHistoryParams {
-  limit: number;
+  limit?: number;
   enabled: boolean;
 }
 
 export function useWeightHistory(props: UseWeightHistoryParams) {
   const queryKey = QueryKeys.DATABASE.WEIGHT_HISTORY;
 
-  const { data, isLoading, isFetching, error } = useQuery({
+  const { data, isLoading, isFetching, error, refetch } = useQuery({
     queryKey,
     refetchIntervalInBackground: false,
     staleTime: Infinity,
@@ -25,7 +25,7 @@ export function useWeightHistory(props: UseWeightHistoryParams) {
     retry: 1,
     queryFn: async () => {
       const { data } = await httpWeightHistoryService.getWeightHistory({
-        limit: Math.min(props.limit, 20),
+        limit: props.limit || 10,
         offset: 0
       });
       return data;
@@ -81,6 +81,10 @@ export function useWeightHistory(props: UseWeightHistoryParams) {
     });
   }, [queryKey]);
 
+  const fetchWeights = useCallback(async () => {
+    await refetch();
+  }, [refetch]);
+
   const deleteWeight = useCallback(
     async (weightId: number) => {
       await deleteWeightMutation.mutateAsync(weightId);
@@ -101,6 +105,7 @@ export function useWeightHistory(props: UseWeightHistoryParams) {
     isLoading,
     error,
     isDeleting: deleteWeightMutation.isPending,
+    fetchWeights,
     fetchMoreWeights,
     deleteWeight,
     addWeight

@@ -7,17 +7,15 @@ import { useSnackbarAnimation } from "./animations";
 export function Snackbar(props: SnackbarProps) {
   const { duration, message, variant, isVisible } = props;
   const snackbarRef = useRef<View | null>(null);
-  const { translateAnimatedValue, opacityAnimatedValue } = useSnackbarAnimation(
-    {
-      snackbarRef,
-      duration,
-    }
-  );
+  const { translateAnimatedValue, opacityAnimatedValue } = useSnackbarAnimation({
+    snackbarRef,
+    duration
+  });
 
   const variantStyleMap = {
     error: errorStyles,
     success: successStyles,
-    neutral: neutralStyles,
+    neutral: neutralStyles
   };
 
   if (!isVisible) {
@@ -32,13 +30,10 @@ export function Snackbar(props: SnackbarProps) {
         variantStyleMap[variant].container,
         {
           transform: [{ translateY: translateAnimatedValue }],
-          opacity: opacityAnimatedValue,
-        },
-      ]}
-    >
-      <Text style={[styles.message, variantStyleMap[variant].message]}>
-        {message}
-      </Text>
+          opacity: opacityAnimatedValue
+        }
+      ]}>
+      <Text style={[styles.message, variantStyleMap[variant].message]}>{message}</Text>
     </Animated.View>
   );
 }

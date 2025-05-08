@@ -27,8 +27,8 @@ export function ProgressStatistics(props: ProgressStatisticsProps) {
     navigation.navigate(RouteConstants.ReportRouter);
   }
 
-  function navigateToWeightHistoryScreen() {
-    navigation.navigate(RouteConstants.WeightHistory);
+  function navigateToWeightTrackingScreen() {
+    navigation.navigate(RouteConstants.WeightTracking);
   }
 
   return (
@@ -55,7 +55,7 @@ export function ProgressStatistics(props: ProgressStatisticsProps) {
         <TouchableOpacity onPress={navigateToReportScreen}>
           <Text style={styles.buttonText}>Relatórios</Text>
         </TouchableOpacity>
-        <TouchableOpacity onPress={navigateToWeightHistoryScreen}>
+        <TouchableOpacity onPress={navigateToWeightTrackingScreen}>
           <Text style={styles.buttonText}>Registrar peso</Text>
         </TouchableOpacity>
         <TouchableOpacity onPress={navigateToCreateMealScreen}>

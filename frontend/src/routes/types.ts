@@ -20,6 +20,7 @@ export enum RouteConstants {
   SearchFoods = "SCREEN_Main_SearchFoods",
   MealRegistration = "SCREEN_Main_MealRegistration",
   WeightHistory = "SCREEN_Main_WeightHistory",
+  WeightTracking = "SCREEN_Main_WeightTracking",
   ConnectionError = "SCREEN_Error_ConnectionError",
 
   ReportRouter = "ROUTER_Main_ReportRouter"
@@ -52,5 +53,6 @@ export type RouteParamsList = {
   [RouteConstants.MealRegistration]: undefined;
   [RouteConstants.ReportRouter]: undefined;
   [RouteConstants.WeightHistory]: undefined;
+  [RouteConstants.WeightTracking]: undefined;
   [RouteConstants.ConnectionError]: undefined;
 };

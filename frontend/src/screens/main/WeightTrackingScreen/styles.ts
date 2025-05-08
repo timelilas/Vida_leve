@@ -24,6 +24,26 @@ export const styles = StyleSheet.create({
     fontFamily: fonts.robotoLight,
     color: colors.text.secondary
   },
+  paragraphBold: {
+    fontFamily: fonts.robotoMedium,
+    color: colors.text.secondary
+  },
+  podiumContainer: {
+    gap: 8,
+    marginTop: 8,
+    paddingInline: 16
+  },
+  podium: {
+    height: 165,
+    width: "100%",
+    borderRadius: 4,
+    borderWidth: 1,
+    borderColor: colors.primary
+  },
+  linkButton: {
+    marginLeft: "auto",
+    marginTop: 12
+  },
   separatorLine: {
     marginTop: 16,
     marginBottom: 24,
@@ -31,15 +51,10 @@ export const styles = StyleSheet.create({
     width: "100%",
     backgroundColor: colors.gray.medium
   },
-  weightTableContainer: {
-    position: "relative",
-    marginBottom: 40,
-    paddingHorizontal: 16
+  chartContainer: {
+    marginBottom: 40
   },
   submitButton: {
     marginTop: "auto"
-  },
-  activityIndicatorContainer: {
-    justifyContent: "center"
   }
 });

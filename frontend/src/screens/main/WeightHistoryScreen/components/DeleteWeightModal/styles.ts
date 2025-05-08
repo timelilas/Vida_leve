@@ -3,11 +3,9 @@ import { colors } from "../../../../../styles/colors";
 import { fonts } from "../../../../../styles/fonts";
 
 export const styles = StyleSheet.create({
-  container: {
-    alignItems: "center"
-  },
   modal: {
-    width: 340,
+    marginInline: 24,
+    maxWidth: 340,
     backgroundColor: colors.common.white,
     borderRadius: 8,
     padding: 24
@@ -20,9 +18,6 @@ export const styles = StyleSheet.create({
   },
   paragraph: {
     fontFamily: fonts.robotoLight,
-    color: colors.text.primary,
-    fontSize: 16,
-    lineHeight: 16,
     marginTop: 16
   },
   actionsWrapper: {

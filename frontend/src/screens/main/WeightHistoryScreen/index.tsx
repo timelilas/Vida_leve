@@ -3,6 +3,7 @@ import {
   LayoutChangeEvent,
   NativeScrollEvent,
   NativeSyntheticEvent,
+  RefreshControl,
   useWindowDimensions,
   View
 } from "react-native";
@@ -51,16 +52,29 @@ const WeightHistoryScreen = () => {
   const localDate = new Date(dateData.year, dateData.month, dateData.day);
   const shortDateLabel = formatDateToLabel(localDate, "short");
 
+  const [isRefreshing, setIsRefreshing] = useState(false);
   const [isModalVisible, setIsModalVisible] = useState(false);
   const [selectedWeight, setSelectedWeight] = useState<SelectedWeight | null>(null);
   const [bodyHeight, setBodyHeight] = useState<number | null>(null);
   const [queryLimit, setQueryLimit] = useState<number>(0);
 
-  const { data, isLoading, isFetching, isDeleting, error, deleteWeight, fetchMoreWeights } =
-    useWeightHistory({
-      limit: queryLimit,
-      enabled: !!queryLimit
-    });
+  const {
+    data,
+    isLoading,
+    isFetching,
+    isDeleting,
+    error,
+    deleteWeight,
+    fetchWeights,
+    fetchMoreWeights
+  } = useWeightHistory({
+    limit: queryLimit,
+    enabled: !!queryLimit
+  });
+
+  const orderedWeights = data.weights.sort((a, b) => {
+    return new Date(b.date).getTime() - new Date(a.date).getTime();
+  });
 
   const selectedWeightFormattedDate = selectedWeight
     ? dateToPTBR(selectedWeight.date, { year: "2-digits" })
@@ -124,6 +138,12 @@ const WeightHistoryScreen = () => {
     }
   }
 
+  async function refreshWeightHistory() {
+    setIsRefreshing(true);
+    await fetchWeights();
+    setIsRefreshing(false);
+  }
+
   function getBodyHeight(e: LayoutChangeEvent) {
     setBodyHeight(e.nativeEvent.layout.height);
   }
@@ -175,7 +195,12 @@ const WeightHistoryScreen = () => {
   }, [bodyHeight, windowDimensions.height]);
 
   return (
-    <ScreenWrapper onScroll={handleScreenScroll} snackbar={<Snackbar />}>
+    <ScreenWrapper
+      onScroll={handleScreenScroll}
+      snackbar={<Snackbar />}
+      refreshControl={
+        <RefreshControl refreshing={isRefreshing} onRefresh={refreshWeightHistory} />
+      }>
       <View onLayout={getBodyHeight}>
         <NavigationHeader
           variant="titled"
@@ -197,16 +222,17 @@ const WeightHistoryScreen = () => {
         <View style={styles.separatorLine} />
       </View>
       <View style={styles.weightTableContainer}>
-        <WeightHistoryTableSkeleton show={isLoading}>
+        <WeightHistoryTableSkeleton show={isLoading || isRefreshing}>
           {error ? null : (
             <>
               <WeightTable
-                data={data.weights.map((record) => {
+                data={orderedWeights.map((record, index) => {
                   return {
                     id: record.id,
                     weight: record.weight,
                     date: new Date(record.date),
-                    isDeleted: selectedWeight?.id === record.id && selectedWeight.isDeleted,
+                    isDeleted: selectedWeight?.id === record.id && selectedWeight?.isDeleted,
+                    isLast: index === orderedWeights.length - 1,
                     onDelete: () => onDeleteWeight({ ...record, date: new Date(record.date) })
                   };
                 })}

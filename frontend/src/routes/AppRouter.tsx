@@ -20,6 +20,7 @@ import MealRegistrationScreen from "../screens/main/MealRegistrationScreen";
 import UpdateProfileScreen from "../screens/main/UpdateProfileScreen";
 import UpdateProgressScreen from "../screens/main/UpdateProgressScreen";
 import WeightHistoryScreen from "../screens/main/WeightHistoryScreen";
+import WeightTrackingScreen from "../screens/main/WeightTrackingScreen";
 
 const AppRouter = () => {
   return (
@@ -109,6 +110,11 @@ const AppRouter = () => {
         <Stack.Screen
           name={RouteConstants.WeightHistory}
           component={WeightHistoryScreen}
+          options={{ headerShown: false }}
+        />
+        <Stack.Screen
+          name={RouteConstants.WeightTracking}
+          component={WeightTrackingScreen}
           options={{ headerShown: false }}
         />
         <Stack.Screen

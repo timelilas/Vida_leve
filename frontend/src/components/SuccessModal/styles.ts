@@ -3,12 +3,9 @@ import { colors } from "../../styles/colors";
 import { fonts } from "../../styles/fonts";
 
 export const styles = StyleSheet.create({
-  container: {
-    alignItems: "center"
-  },
   modal: {
+    marginInline: 24,
     position: "relative",
-    width: "100%",
     maxWidth: 390,
     minHeight: 170,
     backgroundColor: colors.background.primary,

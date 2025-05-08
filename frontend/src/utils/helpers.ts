@@ -16,10 +16,13 @@ export function numberToMonthName(number: number): string {
   );
 }
 
-export function dateToPTBR(date: Date) {
+export function dateToPTBR(date: Date, options?: { year?: "2-digits" | "full" }) {
   const day = `0${date.getUTCDate()}`.slice(-2);
   const month = `0${date.getUTCMonth() + 1}`.slice(-2);
-  const year = date.getUTCFullYear();
+  const year =
+    options?.year === "2-digits"
+      ? `${date.getUTCFullYear()}`.slice(-2)
+      : date.getUTCFullYear();
 
   return `${day}/${month}/${year}`;
 }

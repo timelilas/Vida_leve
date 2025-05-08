@@ -17,7 +17,6 @@ import { DateIntervalType } from "../../../@types";
 import { QueryKeys } from "../../../constants/reactQueryKeys";
 import { queryClient } from "../../../libs/react-query/queryClient";
 import { TimeRangeNavigator } from "../../../components/TimeRangeNavigator";
-import { Text, TouchableOpacity } from "react-native";
 import { colors } from "../../../styles/colors";
 import { ChartLabel } from "../../../components/ChartLabel";
 import { LineChart } from "../../../components/LineChart";
@@ -33,6 +32,7 @@ import {
   ReportRoutesParamsList
 } from "../../../routes/reportRouter/types";
 import { DateFilterContext } from "../../../contexts/dateFilterContext/DateFilterContext";
+import { LinkButton } from "../../../components/LinkButton";
 
 const ReportScreen = () => {
   const navigation = useNavigation<NavigationProp<ReportRoutesParamsList>>();
@@ -100,7 +100,7 @@ const ReportScreen = () => {
 
   const handleQueryError = useCallback(
     (error: Error) => {
-      const mealsError = `Desculpe, não foi possível obter as informações para o período selecionado. contate o suporte para mais informações.`;
+      const mealsError = `Desculpe, não foi possível obter as informações para o período selecionado. Tente novamente mais tarde.`;
       const errorMessage = error instanceof HttpError ? mealsError : NETWORK_ERROR_MESSAGE;
 
       showSnackbar({
@@ -194,9 +194,11 @@ const ReportScreen = () => {
           {error ? null : renderLineChart()}
         </LineChartSkeleton>
       </View>
-      <TouchableOpacity style={styles.linkButton} onPress={navigateToReportDetailsScreen}>
-        <Text style={styles.linkButtonText}>Saiba mais</Text>
-      </TouchableOpacity>
+      <LinkButton
+        style={styles.linkButton}
+        title="Saiba mais"
+        onPress={navigateToReportDetailsScreen}
+      />
     </ScreenWrapper>
   );
 };

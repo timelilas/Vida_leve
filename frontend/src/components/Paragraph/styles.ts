@@ -6,6 +6,6 @@ export const styles = StyleSheet.create({
   text: {
     fontSize: 16,
     fontFamily: fonts.robotoRegular,
-    color: colors.text.primary,
-  },
+    color: colors.text.primary
+  }
 });
