@@ -7,8 +7,7 @@ const robotoLight = require("../../../../assets/fonts/Roboto-Light.ttf");
 
 interface XAxisProps {
   fontSize: number;
-  canvasHeight: number;
-  canvasWidth: number;
+  measures: ReturnType<typeof useChartMeasures>;
   axisLabel: string;
   xAxis: d3.ScalePoint<string>;
 }
@@ -16,12 +15,8 @@ interface XAxisProps {
 export function XAxis(props: XAxisProps) {
   const fontSize = props.fontSize;
   const domain = props.xAxis.domain();
-
-  const measures = useChartMeasures({
-    canvasWidth: props.canvasWidth,
-    canvasHeight: props.canvasHeight
-  });
-
+  const measures = props.measures;
+  console.log(domain);
   const font = useFont(robotoLight, fontSize);
 
   const axisLabelWidth = calculateTextWidth(props.axisLabel, font!);
@@ -38,13 +33,18 @@ export function XAxis(props: XAxisProps) {
         {domain.map((domainValue, index) => {
           const textWidth = font ? calculateTextWidth(domainValue, font) : 0;
           if (index === 0 || index === domain.length - 1) {
+            const isLast = index === domain.length - 1;
             return (
               <Group key={domainValue}>
                 <Text
                   font={font}
                   text={domainValue}
                   color={colors.common.black}
-                  x={measures.canvas.paddingLeft - textWidth / 2 + props.xAxis(domainValue)!}
+                  x={
+                    measures.canvas.paddingLeft +
+                    props.xAxis(domainValue)! -
+                    (isLast ? textWidth : textWidth / 2)
+                  }
                   y={
                     fontSize +
                     measures.xAxis.margintTop +
@@ -73,7 +73,7 @@ export function XAxis(props: XAxisProps) {
         text={props.axisLabel}
         color={colors.common.black}
         x={measures.chart.x + measures.chart.width / 2 - axisLabelWidth / 2}
-        y={measures.canvas.height}
+        y={measures.canvas.height - 4}
       />
     </Group>
   );

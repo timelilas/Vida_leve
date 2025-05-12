@@ -20,8 +20,13 @@ interface TooltipState {
 }
 
 interface LineChartProps {
-  labels: string[];
   lineStrokeWidth?: number;
+  labels: string[];
+  yAxisName: string;
+  xAxisName: string;
+  style?: {
+    paddingLeft?: number;
+  };
   data: {
     values: number[];
     color: Color;
@@ -40,8 +45,11 @@ export function LineChart(props: LineChartProps) {
   const XAXIS_FONT_SIZE = 14;
   const YAXIS_FONT_SIZE = 14;
 
-  const { canvas, chart, linePoint } = useChartMeasures();
+  const measures = useChartMeasures({
+    canvasPaddingLeft: props.style?.paddingLeft
+  });
 
+  const { canvas, chart, linePoint } = measures;
   const { xAxis, yAxis } = useChartDomain({
     xLabels: props.labels,
     yData: props.data.map(({ values }) => values).flat(1),
@@ -58,8 +66,7 @@ export function LineChart(props: LineChartProps) {
       return (
         <Group key={i}>
           <ChartLinePath
-            canvasWidth={canvas.width}
-            canvasHeight={canvas.height}
+            measures={measures}
             strokeWidth={props.lineStrokeWidth || 1}
             xAxis={xAxis}
             yAxis={yAxis}
@@ -187,16 +194,14 @@ export function LineChart(props: LineChartProps) {
         <XAxis
           xAxis={xAxis}
           fontSize={XAXIS_FONT_SIZE}
-          canvasHeight={canvas.height}
-          canvasWidth={canvas.width}
-          axisLabel="Dias do mês"
+          measures={measures}
+          axisLabel={props.xAxisName}
         />
         <YAxis
           yAxis={yAxis}
           fontSize={YAXIS_FONT_SIZE}
-          canvasHeight={canvas.height}
-          canvasWidth={canvas.width}
-          axisLabel="kcal"
+          measures={measures}
+          axisLabel={props.yAxisName}
         />
         {renderLinePaths()}
       </Canvas>
