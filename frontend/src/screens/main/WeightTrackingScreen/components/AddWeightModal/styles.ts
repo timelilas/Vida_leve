@@ -31,7 +31,8 @@ export const styles = StyleSheet.create({
     gap: 8
   },
   warningIcon: {
-    marginTop: 4
+    marginTop: 4,
+    flexShrink: 0
   },
   inputSection: {
     marginTop: 16,

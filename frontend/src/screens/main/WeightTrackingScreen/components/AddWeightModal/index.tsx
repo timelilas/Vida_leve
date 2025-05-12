@@ -77,6 +77,7 @@ export function AddWeightModal(props: AddWeightModalProps) {
 
     try {
       await addWeight({ date: currentDate, weight: parseInt(params.weight) });
+      reset({ weight: "" });
       onSuccess();
     } catch (error: any) {
       handleWeightAdditionError(error);

@@ -40,7 +40,7 @@ export function useWeightItemAnimation(params: UseWeightItemAnimationParams) {
         withSequence(
           withTiming(0.5, {
             easing: Easing.out(Easing.ease),
-            duration: 550,
+            duration: 500,
             reduceMotion: ReduceMotion.System
           }),
           withTiming(

@@ -5,7 +5,7 @@ import { TrashIcon } from "../../../../../components/Icons/TrashIcon";
 import { useWeightItemAnimation } from "./animations";
 import { WeightProps } from "../../../../../@core/entities/weight/type";
 import { dateToPTBR } from "../../../../../utils/helpers";
-import { useEffect } from "react";
+import { useCallback, useEffect } from "react";
 import { queryClient } from "../../../../../libs/react-query/queryClient";
 import { WeightHistoryQueryState } from "../../../../../hooks/weight/types";
 import { QueryKeys } from "../../../../../constants/reactQueryKeys";
@@ -30,17 +30,24 @@ export function WeightItem(props: WeightItemProps) {
     onDelete();
   }
 
+  const removeItemFromCache = useCallback(() => {
+    const queryKey = QueryKeys.DATABASE.WEIGHT_HISTORY;
+    queryClient.setQueryData<WeightHistoryQueryState>(queryKey, (old) => {
+      if (old) {
+        const newWeightHistory = old.weights.filter((weight) => weight.id !== id);
+        return { ...old, weights: newWeightHistory };
+      }
+    });
+  }, [id]);
+
   useEffect(() => {
     if (isDeleteAnimationFinished) {
-      const queryKey = QueryKeys.DATABASE.WEIGHT_HISTORY;
-      queryClient.setQueryData<WeightHistoryQueryState>(queryKey, (old) => {
-        if (old) {
-          const newWeightHistory = old.weights.filter((weight) => weight.id !== id);
-          return { ...old, weights: newWeightHistory };
-        }
-      });
+      removeItemFromCache();
     }
-  }, [isDeleteAnimationFinished, id]);
+    return () => {
+      if (isDeleted) removeItemFromCache();
+    };
+  }, [isDeleteAnimationFinished, isDeleted, removeItemFromCache]);
 
   useEffect(() => {
     if (isDeleted) {

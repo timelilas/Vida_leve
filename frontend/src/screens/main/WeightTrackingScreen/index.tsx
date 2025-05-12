@@ -3,33 +3,49 @@ import { NavigationHeader } from "../../../components/NavigationHeader";
 import { ScreenTitle } from "../../../components/ScreenTitle";
 import { ScreenWrapper } from "../../../components/ScreenWrapper";
 import { useAppNavigation } from "../../../hooks/common/useAppNavigation";
-import { convertDateToLocalDateData, formatDateToLabel } from "../../../utils/helpers";
+import {
+  convertDateToLocalDateData,
+  delay,
+  formatDateToLabel,
+  getMonthNameFromIndex,
+  toCapitalized
+} from "../../../utils/helpers";
 import { DayPicker } from "../../../components/DayPicker";
-import { View } from "react-native";
+import { Text, View } from "react-native";
 import { Paragraph } from "../../../components/Paragraph/Paragraph";
 import { LinkButton } from "../../../components/LinkButton";
 import { RouteConstants } from "../../../routes/types";
 import { AddWeightModal } from "./components/AddWeightModal";
-import { useState } from "react";
+import { useCallback, useEffect, useState } from "react";
 import { useSnackbar } from "../../../hooks/common/useSnackbar";
 import { SubmitButton } from "../../../components/SubmitButton";
 import { CommonActions } from "@react-navigation/native";
 import { useProgress } from "../../../hooks/progress/useProgress";
 import { useWeightHistory } from "../../../hooks/weight/useWeightHistory";
 import { WeightHistoryQueryState } from "../../../hooks/weight/types";
+import { LineChartSkeleton } from "../../../components/LineChartSkeleton/inde";
+import { ChartLabel } from "../../../components/ChartLabel";
+import { colors } from "../../../styles/colors";
+import { LineChart } from "../../../components/LineChart";
+import { HttpError } from "../../../@core/errors/httpError";
+import { NETWORK_ERROR_MESSAGE } from "../../../constants/errorMessages";
 
 const WeightTrackingScreen = () => {
   const navigation = useAppNavigation();
 
   const { Snackbar, showSnackbar } = useSnackbar();
-  const { data } = useWeightHistory({ enabled: true, limit: 10 });
+  const {
+    data: weightHistory,
+    error,
+    isFetching
+  } = useWeightHistory({ enabled: true, limit: 20 });
   const { progress } = useProgress({ refetchOnMount: false });
   const [isModalVisible, setIsModalVisible] = useState(false);
 
   const dateData = convertDateToLocalDateData(new Date());
   const localDate = new Date(dateData.year, dateData.month, dateData.day);
   const shortDateLabel = formatDateToLabel(localDate, "short");
-  const mostRecentWeight = getMostRecentWeight(data.weights) || progress?.goalWeight;
+  const mostRecentWeight = getMostRecentWeight(weightHistory.weights) || progress?.goalWeight;
 
   function goBack() {
     navigation.goBack();
@@ -70,11 +86,13 @@ const WeightTrackingScreen = () => {
 
   function onWeightAdditionSuccess() {
     setIsModalVisible(false);
-    showSnackbar({
-      duration: 4000,
-      message: "Seu peso foi registrado com sucesso!",
-      variant: "success"
-    });
+    delay(300).then(() =>
+      showSnackbar({
+        duration: 4000,
+        message: "Seu peso foi registrado com sucesso!",
+        variant: "success"
+      })
+    );
   }
 
   function onWeightAdditionError(errorMessage: string) {
@@ -84,6 +102,79 @@ const WeightTrackingScreen = () => {
       variant: "error"
     });
   }
+
+  function checkGoalWeightPointsVisiblity(value: number, index: number) {
+    const data = weightHistory.weights;
+    const middleIndexes = [Math.floor(data.length / 2), Math.floor((data.length - 1) / 2)];
+
+    const isLastItem = index === data.length - 1;
+    const isFirstItem = index === 0;
+    const iMiddleItem =
+      data.length % 2 === 0
+        ? middleIndexes.includes(index)
+        : index === Math.floor(data.length / 2);
+
+    return isFirstItem || isLastItem || iMiddleItem;
+  }
+
+  function renderWeightHistoryChart() {
+    const sortedWeights = weightHistory.weights.sort((a, b) => {
+      return new Date(a.date).getTime() - new Date(b.date).getTime();
+    });
+    const goalWeightList: number[] = new Array(sortedWeights.length).fill(
+      progress?.goalWeight!
+    );
+    const weights = sortedWeights.map(({ weight }) => weight);
+    const labels = sortedWeights.map((record) => {
+      const date = new Date(record.date);
+      const day = `0${date.getUTCDate()}`.slice(-2);
+      const monthName = toCapitalized(getMonthNameFromIndex(date.getUTCMonth()).slice(0, 3));
+      return `${day}/${monthName}`;
+    });
+    return (
+      <LineChart
+        yAxisName="kg"
+        xAxisName="Dia do mês"
+        lineStrokeWidth={3}
+        style={{ paddingLeft: 32 }}
+        data={[
+          {
+            color: colors.primary,
+            values: weights,
+            withDots: true,
+            tooltip: { color: colors.primary, enabled: true }
+          },
+          {
+            color: colors.secondary,
+            values: goalWeightList,
+            withDots: checkGoalWeightPointsVisiblity,
+            tooltip: { color: colors.secondary, enabled: checkGoalWeightPointsVisiblity }
+          }
+        ]}
+        labels={labels}
+      />
+    );
+  }
+
+  const handleQueryError = useCallback(
+    (error: Error) => {
+      const weightHistoryError =
+        "Desculpe, não foi possível obter o seu histórico de pesos. Tente novamente mais tarde";
+      const errorMessage =
+        error instanceof HttpError ? weightHistoryError : NETWORK_ERROR_MESSAGE;
+
+      showSnackbar({
+        variant: "error",
+        duration: 5000,
+        message: errorMessage
+      });
+    },
+    [showSnackbar]
+  );
+
+  useEffect(() => {
+    if (error && !isFetching) handleQueryError(error);
+  }, [error, isFetching, handleQueryError]);
 
   return (
     <ScreenWrapper snackbar={<Snackbar />}>
@@ -119,6 +210,16 @@ const WeightTrackingScreen = () => {
       <LinkButton title="Registrar peso" onPress={onAddWeight} style={styles.linkButton} />
       <View style={styles.separatorLine} />
       <View style={styles.chartContainer}>
+        <Text style={styles.subtitle}>Acompanhamento do peso</Text>
+        <LineChartSkeleton show={isFetching} style={styles.chartSkeleton}>
+          <View style={styles.chartBox}>
+            <View style={styles.labelsWrapper}>
+              <ChartLabel color={colors.secondary} label="Peso desejado" />
+              <ChartLabel color={colors.primary} label="Peso registrado" />
+            </View>
+            {error ? null : renderWeightHistoryChart()}
+          </View>
+        </LineChartSkeleton>
         <LinkButton
           title="Histórico de registros"
           onPress={navigateToWeightHistory}

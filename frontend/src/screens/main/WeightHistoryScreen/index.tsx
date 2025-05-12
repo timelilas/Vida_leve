@@ -126,7 +126,7 @@ const WeightHistoryScreen = () => {
       setSelectedWeight((prevState) =>
         prevState ? { ...prevState, isDeleted: true } : prevState
       );
-      delay(750).then(() =>
+      delay(700).then(() =>
         showSnackbar({
           duration: 3000,
           message: "Registro de peso excluído com sucesso!",

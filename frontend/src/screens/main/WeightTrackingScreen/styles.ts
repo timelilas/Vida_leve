@@ -12,6 +12,11 @@ export const styles = StyleSheet.create({
     marginTop: 24,
     marginInline: "auto"
   },
+  subtitle: {
+    color: colors.text.secondary,
+    fontFamily: fonts.robotoLight,
+    fontSize: 16
+  },
   dayPickerContainer: {
     marginTop: 12
   },
@@ -45,7 +50,7 @@ export const styles = StyleSheet.create({
     marginTop: 12
   },
   separatorLine: {
-    marginTop: 16,
+    marginTop: 8,
     marginBottom: 24,
     height: 1,
     width: "100%",
@@ -53,6 +58,17 @@ export const styles = StyleSheet.create({
   },
   chartContainer: {
     marginBottom: 40
+  },
+  chartBox: {
+    marginTop: 32,
+    gap: 32
+  },
+  chartSkeleton: {
+    marginTop: 32
+  },
+  labelsWrapper: {
+    flexDirection: "row",
+    justifyContent: "space-between"
   },
   submitButton: {
     marginTop: "auto"

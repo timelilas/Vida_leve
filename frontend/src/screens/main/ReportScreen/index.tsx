@@ -25,7 +25,7 @@ import { HttpError } from "../../../@core/errors/httpError";
 import { NETWORK_ERROR_MESSAGE } from "../../../constants/errorMessages";
 import { EmptyDataPlaceholder } from "../../../components/EmptyDataPlaceholder";
 import { LineChartIcon } from "../../../components/Icons/LineChartIcon";
-import { LineChartSkeleton } from "./components/LineChartSkeleton/inde";
+import { LineChartSkeleton } from "../../../components/LineChartSkeleton/inde";
 import { NavigationProp, useNavigation } from "@react-navigation/native";
 import {
   ReportRoutesConstants,
@@ -77,12 +77,6 @@ const ReportScreen = () => {
     updateIntervalType(e.value as DateIntervalType);
   }
 
-  function isTooltipEnabledHadler(value: number, index: number) {
-    const previousValue = chartDataAndLabels.dailyTarget[index - 1];
-    const nextValue = chartDataAndLabels.dailyTarget[index + 1];
-    return previousValue !== value || nextValue !== value;
-  }
-
   const handleTimeRangeChange = useCallback(
     (date: Date) => {
       const { from, to } = generateLocalDateRange(intervalType, date);
@@ -112,11 +106,30 @@ const ReportScreen = () => {
     [showSnackbar]
   );
 
-  function renderLineChart() {
+  function checkDailyTargetPointsVisiblity(value: number, index: number) {
+    const data = chartDataAndLabels.dailyTarget;
+    const middleIndexes = [Math.floor(data.length / 2), Math.floor((data.length - 1) / 2)];
+
+    const isLastItem = index === data.length - 1;
+    const isFirstItem = index === 0;
+    const iMiddleItem =
+      data.length % 2 === 0
+        ? middleIndexes.includes(index)
+        : index === Math.floor(data.length / 2);
+
+    return isFirstItem || isLastItem || iMiddleItem;
+  }
+
+  function renderCalorieConsumptionChart() {
+    const data = chartDataAndLabels.dailyConsumption;
+    const maxCalorieConsumption = data?.length ? Math.max(...data) : 0;
     return statistics.length > 0 ? (
       <LineChart
+        xAxisName="Dia do mês"
+        yAxisName="kcal"
         key={dateData.day}
         lineStrokeWidth={3}
+        style={{ paddingLeft: maxCalorieConsumption > 10000 ? 52 : 44 }}
         labels={chartDataAndLabels.labels}
         data={[
           {
@@ -129,8 +142,8 @@ const ReportScreen = () => {
           {
             color: colors.secondary,
             values: chartDataAndLabels.dailyTarget,
-            withDots: isTooltipEnabledHadler,
-            tooltip: { color: colors.secondary, enabled: isTooltipEnabledHadler }
+            withDots: checkDailyTargetPointsVisiblity,
+            tooltip: { color: colors.secondary, enabled: checkDailyTargetPointsVisiblity }
           }
         ]}
       />
@@ -191,7 +204,7 @@ const ReportScreen = () => {
             <ChartLabel color={colors.secondary} label="Plano de execução" />
             <ChartLabel color={colors.primary} label="Calorias consumidas" />
           </View>
-          {error ? null : renderLineChart()}
+          {error ? null : renderCalorieConsumptionChart()}
         </LineChartSkeleton>
       </View>
       <LinkButton

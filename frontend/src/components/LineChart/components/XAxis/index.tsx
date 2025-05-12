@@ -16,7 +16,6 @@ export function XAxis(props: XAxisProps) {
   const fontSize = props.fontSize;
   const domain = props.xAxis.domain();
   const measures = props.measures;
-  console.log(domain);
   const font = useFont(robotoLight, fontSize);
 
   const axisLabelWidth = calculateTextWidth(props.axisLabel, font!);

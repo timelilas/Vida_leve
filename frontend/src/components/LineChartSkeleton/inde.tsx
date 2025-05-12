@@ -3,7 +3,7 @@ import { Skeleton } from "moti/skeleton";
 import { StyleProp, View, ViewStyle } from "react-native";
 import { styles } from "./styles";
 import { ReactNode } from "react";
-import { useChartMeasures } from "../../../../../components/LineChart/hooks/useChartMeasures";
+import { useChartMeasures } from "../LineChart/hooks/useChartMeasures";
 
 export function LineChartSkeleton(props: {
   show: boolean;
