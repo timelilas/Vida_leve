@@ -11,7 +11,7 @@ export const ptBR = {
     "Setembro",
     "Outubro",
     "Novembro",
-    "Dezembro",
+    "Dezembro"
   ],
   monthNamesShort: [
     "Jan",
@@ -25,17 +25,9 @@ export const ptBR = {
     "Set",
     "Out",
     "Nov",
-    "Dez",
+    "Dez"
   ],
-  dayNames: [
-    "Doming",
-    "Segunda",
-    "Terça",
-    "Quarta",
-    "Quinta",
-    "Sexta",
-    "Sábado",
-  ],
+  dayNames: ["Doming", "Segunda", "Terça", "Quarta", "Quinta", "Sexta", "Sábado"],
   dayNamesShort: ["D", "S", "T", "Q", "Q", "S", "S"],
-  today: "Hoje",
+  today: "Hoje"
 };

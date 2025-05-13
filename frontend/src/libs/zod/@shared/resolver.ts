@@ -11,19 +11,19 @@ export function customZodResolver<TFieldValues extends FieldValues>(
       return { errors: {}, values: validationResult.data };
     }
 
-    const shape = schema._def.shape
-      ? schema._def.shape()
-      : schema._def.schema.shape;
-
+    const shape = schema._def.shape ? schema._def.shape() : schema._def.schema.shape;
     const errors = validationResult.error.flatten().fieldErrors;
     const schemaKeys = Object.keys(shape);
 
-    const errorMap = schemaKeys.reduce((acc, key) => {
-      if (errors[key]) {
-        acc[key] = { message: errors[key][0] };
-      }
-      return acc;
-    }, {} as Record<string, { message: string } | undefined>);
+    const errorMap = schemaKeys.reduce(
+      (acc, key) => {
+        if (errors[key]) {
+          acc[key] = { message: errors[key][0] };
+        }
+        return acc;
+      },
+      {} as Record<string, { message: string } | undefined>
+    );
 
     return { errors: errorMap as any, values: {} };
   };
