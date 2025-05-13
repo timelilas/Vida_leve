@@ -7,17 +7,17 @@ import { AddWeightParams, WeightHistoryQueryState } from "./types";
 
 interface UseWeightHistoryParams {
   limit?: number;
-  enabled: boolean;
+  enabled?: boolean;
 }
 
-export function useWeightHistory(props: UseWeightHistoryParams) {
-  const queryKey = QueryKeys.DATABASE.WEIGHT_HISTORY;
+export function useWeightHistory(params: UseWeightHistoryParams) {
+  const queryKey = QueryKeys.API.WEIGHT_HISTORY;
 
   const { data, isLoading, isFetching, error, refetch } = useQuery({
     queryKey,
     refetchIntervalInBackground: false,
     staleTime: Infinity,
-    enabled: props.enabled,
+    enabled: params.enabled,
     refetchOnMount: false,
     refetchOnWindowFocus: false,
     refetchInterval: false,
@@ -25,7 +25,7 @@ export function useWeightHistory(props: UseWeightHistoryParams) {
     retry: 1,
     queryFn: async () => {
       const { data } = await httpWeightHistoryService.getWeightHistory({
-        limit: props.limit || 10,
+        limit: params.limit || 10,
         offset: 0
       });
       return data;

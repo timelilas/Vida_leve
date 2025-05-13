@@ -10,14 +10,12 @@ export function PlanInformation() {
   const navigation = useAppNavigation();
   const { progress } = useProgress({ refetchOnMount: false });
   const { plans } = useCaloriePlans({ refetchOnMount: false });
-  const currentPlan = plans.find(
-    ({ type }) => type === progress?.currentCaloriePlan
-  );
+  const currentPlan = plans.find(({ type }) => type === progress?.currentCaloriePlan);
 
   const planLabelMap: Record<PlanType, string> = {
     gradual: "Progresso gradual",
     moderado: "Progresso moderado",
-    acelerado: "Progresso acelerado",
+    acelerado: "Progresso acelerado"
   };
 
   function navitateToGoalSettings() {
@@ -29,24 +27,17 @@ export function PlanInformation() {
       {progress?.currentCaloriePlan ? (
         <Text style={styles.titleThin}>
           A meta que será executada:{" "}
-          <Text style={styles.titleRegular}>
-            {planLabelMap[progress.currentCaloriePlan]}
-          </Text>
+          <Text style={styles.titleRegular}>{planLabelMap[progress.currentCaloriePlan]}</Text>
         </Text>
       ) : (
-        <Text style={styles.titleThin}>
-          Você não possui um plano de execução cadastrado
-        </Text>
+        <Text style={styles.titleThin}>Você não possui um plano de execução cadastrado</Text>
       )}
       <View style={styles.targetCalorie}>
         <Text style={styles.targetCalorieText}>
           {currentPlan?.dailyCalorieIntake || 0} kcal/dia
         </Text>
       </View>
-      <TouchableOpacity
-        onPress={navitateToGoalSettings}
-        style={styles.adjustGoalButton}
-      >
+      <TouchableOpacity onPress={navitateToGoalSettings} style={styles.adjustGoalButton}>
         <Text style={styles.adjustGoalText}>Alterar</Text>
       </TouchableOpacity>
     </View>

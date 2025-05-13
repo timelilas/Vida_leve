@@ -1,11 +1,11 @@
 import { useCallback, useEffect, useRef, useState } from "react";
 
 export function useDebounce(debounceTime: number) {
+  const timerRef = useRef<NodeJS.Timeout | null>(null);
   const [debounceState, setDebounceState] = useState({
     isTimeCounting: false,
     isToggling: false
   });
-  const timerRef = useRef<NodeJS.Timeout | null>(null);
 
   useEffect(() => {
     if (!debounceState.isTimeCounting) return;
@@ -15,9 +15,7 @@ export function useDebounce(debounceTime: number) {
     }, debounceTime);
 
     return () => {
-      if (timerRef.current) {
-        clearTimeout(timerRef.current);
-      }
+      if (timerRef.current) clearTimeout(timerRef.current);
     };
   }, [debounceTime, debounceState]);
 

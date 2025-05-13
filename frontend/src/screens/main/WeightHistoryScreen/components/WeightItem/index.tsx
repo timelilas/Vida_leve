@@ -31,7 +31,7 @@ export function WeightItem(props: WeightItemProps) {
   }
 
   const removeItemFromCache = useCallback(() => {
-    const queryKey = QueryKeys.DATABASE.WEIGHT_HISTORY;
+    const queryKey = QueryKeys.API.WEIGHT_HISTORY;
     queryClient.setQueryData<WeightHistoryQueryState>(queryKey, (old) => {
       if (old) {
         const newWeightHistory = old.weights.filter((weight) => weight.id !== id);

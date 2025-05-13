@@ -8,14 +8,14 @@ import { PlanType } from "../../@core/entities/@shared/planType/type";
 import { invalidateCalorieStatistics } from "../../libs/react-query/helpers";
 
 interface UseProgressParams {
-  queryEnabled?: boolean;
+  enabled?: boolean;
   refetchOnMount?: boolean;
 }
 
 export function useProgress(params?: UseProgressParams) {
   const { data, isLoading, error, refetch } = useQuery<ProgressQueryState>({
-    queryKey: QueryKeys.DATABASE.PROGRESS,
-    enabled: params?.queryEnabled ?? true,
+    queryKey: QueryKeys.API.PROGRESS,
+    enabled: params?.enabled,
     refetchOnMount: params?.refetchOnMount,
     queryFn: async () => {
       const { data: progressData } = await httpProgressService.getProgress();
@@ -32,7 +32,7 @@ export function useProgress(params?: UseProgressParams) {
     },
     onSuccess: (progressData) => {
       invalidateCalorieStatistics();
-      queryClient.setQueryData<ProgressQueryState>(QueryKeys.DATABASE.PROGRESS, (old) => {
+      queryClient.setQueryData<ProgressQueryState>(QueryKeys.API.PROGRESS, (old) => {
         return old ? { ...old, ...progressData } : progressData;
       });
     }
@@ -45,7 +45,7 @@ export function useProgress(params?: UseProgressParams) {
     },
     onSuccess: (progressData) => {
       invalidateCalorieStatistics();
-      queryClient.setQueryData<ProgressQueryState>(QueryKeys.DATABASE.PROGRESS, (old) => {
+      queryClient.setQueryData<ProgressQueryState>(QueryKeys.API.PROGRESS, (old) => {
         return old ? { ...old, ...progressData } : progressData;
       });
     }

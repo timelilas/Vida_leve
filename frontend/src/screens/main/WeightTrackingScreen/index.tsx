@@ -34,11 +34,7 @@ const WeightTrackingScreen = () => {
   const navigation = useAppNavigation();
 
   const { Snackbar, showSnackbar } = useSnackbar();
-  const {
-    data: weightHistory,
-    error,
-    isFetching
-  } = useWeightHistory({ enabled: true, limit: 20 });
+  const { data: weightHistory, error, isFetching } = useWeightHistory({ limit: 20 });
   const { progress } = useProgress({ refetchOnMount: false });
   const [isModalVisible, setIsModalVisible] = useState(false);
 

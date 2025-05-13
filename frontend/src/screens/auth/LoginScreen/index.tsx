@@ -33,9 +33,9 @@ const loginInitialState: LoginFormData = { email: "", password: "" };
 const LoginScreen = () => {
   const navigation = useAppNavigation();
   const scrollRef = useRef<ScrollView | null>(null);
-  const { getUserProfile } = useUser({ queryEnabled: false });
-  const { getProgress } = useProgress({ queryEnabled: false });
-  const { getPlans } = useCaloriePlans({ queryEnabled: false });
+  const { getUserProfile } = useUser({ enabled: false });
+  const { getProgress } = useProgress({ enabled: false });
+  const { getPlans } = useCaloriePlans({ enabled: false });
 
   const { Snackbar, showSnackbar } = useSnackbar();
   const {

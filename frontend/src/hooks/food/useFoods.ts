@@ -19,7 +19,7 @@ interface UseFoodsParams {
 
 export function useFoods(params: UseFoodsParams) {
   const foodSlug = transformFoodNameIntoSlug(params.foodName);
-  const queryKey = QueryKeys.DATABASE.FOODS(foodSlug);
+  const queryKey = QueryKeys.API.FOODS(foodSlug);
 
   const {
     data: queryData,
