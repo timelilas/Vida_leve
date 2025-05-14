@@ -24,18 +24,12 @@ export const CalendarHeader = memo(
     return (
       <View style={styles.container}>
         <View style={styles.buttonWrapper}>
-          <CalendarSwipeButton
-            direction="left"
-            onPress={props.decrementMonth}
-          />
+          <CalendarSwipeButton direction="left" onPress={props.decrementMonth} />
           <CalendarControlButton
             label={toCapitalized(monthShortName)}
             onPress={() => props.selectMenu("month")}
           />
-          <CalendarSwipeButton
-            direction="right"
-            onPress={props.incrementMonth}
-          />
+          <CalendarSwipeButton direction="right" onPress={props.incrementMonth} />
         </View>
         <View style={styles.buttonWrapper}>
           <CalendarSwipeButton direction="left" onPress={props.decrementYear} />
@@ -43,10 +37,7 @@ export const CalendarHeader = memo(
             label={`${props.year}`}
             onPress={() => props.selectMenu("year")}
           />
-          <CalendarSwipeButton
-            direction="right"
-            onPress={props.incrementYear}
-          />
+          <CalendarSwipeButton direction="right" onPress={props.incrementYear} />
         </View>
       </View>
     );

@@ -32,7 +32,7 @@ export function XAxis(props: XAxisProps) {
         {domain.map((domainValue, index) => {
           const textWidth = font ? calculateTextWidth(domainValue, font) : 0;
           if (index === 0 || index === domain.length - 1) {
-            const isLast = index === domain.length - 1;
+            const isLast = domain.length !== 1 && index === domain.length - 1;
             return (
               <Group key={domainValue}>
                 <Text

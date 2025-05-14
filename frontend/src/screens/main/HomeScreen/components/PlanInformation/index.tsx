@@ -1,10 +1,12 @@
-import { Text, TouchableOpacity, View } from "react-native";
+import { Text, View } from "react-native";
 import { PlanType } from "../../../../../@core/entities/@shared/planType/type";
 import { useAppNavigation } from "../../../../../hooks/common/useAppNavigation";
 import { RouteConstants } from "../../../../../routes/types";
 import { styles } from "./styles";
 import { useProgress } from "../../../../../hooks/progress/useProgress";
 import { useCaloriePlans } from "../../../../../hooks/caloriePlan/useCaloriePlans";
+import { SmallLinkButton } from "../SmallLinkButton";
+import { SectionTitle } from "../SectionTitle";
 
 export function PlanInformation() {
   const navigation = useAppNavigation();
@@ -25,21 +27,25 @@ export function PlanInformation() {
   return (
     <View>
       {progress?.currentCaloriePlan ? (
-        <Text style={styles.titleThin}>
+        <SectionTitle>
           A meta que será executada:{" "}
-          <Text style={styles.titleRegular}>{planLabelMap[progress.currentCaloriePlan]}</Text>
-        </Text>
+          <SectionTitle style={styles.titleRegular}>
+            {planLabelMap[progress.currentCaloriePlan]}
+          </SectionTitle>
+        </SectionTitle>
       ) : (
-        <Text style={styles.titleThin}>Você não possui um plano de execução cadastrado</Text>
+        <SectionTitle>Você não possui um plano de execução cadastrado</SectionTitle>
       )}
       <View style={styles.targetCalorie}>
         <Text style={styles.targetCalorieText}>
           {currentPlan?.dailyCalorieIntake || 0} kcal/dia
         </Text>
       </View>
-      <TouchableOpacity onPress={navitateToGoalSettings} style={styles.adjustGoalButton}>
-        <Text style={styles.adjustGoalText}>Alterar</Text>
-      </TouchableOpacity>
+      <SmallLinkButton
+        title="Alterar"
+        style={styles.linkButton}
+        onPress={navitateToGoalSettings}
+      />
     </View>
   );
 }

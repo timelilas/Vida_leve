@@ -19,5 +19,11 @@ export const styles = StyleSheet.create({
     flexDirection: "row",
     alignItems: "center",
     gap: 4
+  },
+  itemActionButtonText: {
+    color: colors.error,
+    fontFamily: fonts.robotoRegular,
+    fontSize: 16,
+    verticalAlign: "bottom"
   }
 });

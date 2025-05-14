@@ -10,6 +10,7 @@ import { queryClient } from "../../../../../libs/react-query/queryClient";
 import { WeightHistoryQueryState } from "../../../../../hooks/weight/types";
 import { QueryKeys } from "../../../../../constants/reactQueryKeys";
 import { WEIGHT_TABLE_ITEM_HEIGHT, WEIGHT_TABLE_ITEM_MARGIN_BOTTOM } from "./constants";
+import { colors } from "../../../../../styles/colors";
 
 interface WeightItemProps extends WeightProps {
   isDeleted: boolean;
@@ -60,8 +61,8 @@ export function WeightItem(props: WeightItemProps) {
       <Text style={styles.weightItemText}>{dateToPTBR(date, { year: "2-digits" })}</Text>
       <Text style={styles.weightItemText}>{weight} kg</Text>
       <TouchableOpacity onPress={onDeleteWeight} style={styles.itemActionButton}>
-        <TrashIcon />
-        <Text style={styles.weightItemText}>Excluir</Text>
+        <TrashIcon stroke={colors.error} />
+        <Text style={styles.itemActionButtonText}>Excluir</Text>
       </TouchableOpacity>
     </Reanimated.View>
   );
