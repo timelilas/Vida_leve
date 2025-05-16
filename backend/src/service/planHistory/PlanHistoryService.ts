@@ -37,10 +37,10 @@ export default class PlanHistoryService {
   public post = async (planHistory: PlanHistoryDTO) => {
     try {
       const date = planHistory.date.toISOString().split("T")[0];
-      const createdPlanHistory = await PlanHistory.create(
-        { ...planHistory, date },
-        {}
-      );
+      const createdPlanHistory = await PlanHistory.create({
+        ...planHistory,
+        date,
+      });
 
       const newData = {
         dailyCalorieIntake: createdPlanHistory.dailyCalorieIntake,

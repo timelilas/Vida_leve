@@ -16,3 +16,8 @@ export interface SetCaloriePlanDTO {
     caloriePlan: PlanType;
   };
 }
+
+export interface GetProgressDTO {
+  transaction?: Transaction;
+  userId: number;
+}
