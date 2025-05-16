@@ -80,8 +80,14 @@ export default class ProgressController {
         transaction,
       });
 
+      const hasWeightChanged = oldProgressData?.weight !== weight;
+
       const createdProgress = await this._ProgressService.upsert({
-        data: { ...req.body, userId },
+        data: {
+          ...req.body,
+          userId,
+          lastWeightUpdateAt: hasWeightChanged ? new Date() : undefined,
+        },
         transaction,
       });
 
@@ -90,7 +96,7 @@ export default class ProgressController {
         transaction,
       });
 
-      if (oldProgressData && oldProgressData.weight !== weight) {
+      if (oldProgressData && hasWeightChanged) {
         await this._WeightHistoryService.deleteAll({ userId, transaction });
       }
 

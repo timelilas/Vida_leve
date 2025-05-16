@@ -6,4 +6,5 @@ export interface ProgressEntity {
   goalWeight: number;
   activityFrequency: ActivityFrequency;
   currentCaloriePlan: PlanType | null;
+  lastWeightUpdateAt: Date
 }

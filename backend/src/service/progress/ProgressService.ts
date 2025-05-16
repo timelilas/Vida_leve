@@ -5,10 +5,17 @@ import { GetProgressDTO, SetCaloriePlanDTO, UpsertProgressDTO } from "./types";
 export default class ProgressService {
   public upsert = async (params: UpsertProgressDTO) => {
     const { data, transaction } = params;
+    const lastWeightUpdateDate = data.lastWeightUpdateAt
+      ? new Date(data.lastWeightUpdateAt)
+      : undefined;
 
     try {
       const [updatedProgress] = await Progress.upsert(
-        { ...data, updatedAt: new Date() },
+        {
+          ...data,
+          updatedAt: new Date(),
+          lastWeightUpdateAt: lastWeightUpdateDate,
+        },
         { transaction: transaction, returning: true }
       );
 

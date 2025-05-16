@@ -4,7 +4,7 @@ import { Optional, PlanType } from "../../@core/entity/@shared";
 
 export interface UpsertProgressDTO {
   transaction?: Transaction;
-  data: Optional<ProgressEntity, "currentCaloriePlan"> & {
+  data: Optional<ProgressEntity, "currentCaloriePlan" |"lastWeightUpdateAt"> & {
     userId: number;
   };
 }

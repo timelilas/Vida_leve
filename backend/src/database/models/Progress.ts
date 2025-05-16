@@ -27,6 +27,7 @@ class Progress
   declare goalWeight: number;
   declare activityFrequency: ActivityFrequency;
   declare currentCaloriePlan: PlanType | null;
+  declare lastWeightUpdateAt: CreationOptional<Date>;
   declare createdAt: CreationOptional<Date>;
   declare updatedAt: CreationOptional<Date>;
 
@@ -38,6 +39,7 @@ class Progress
       goalWeight: props.goalWeight,
       activityFrequency: props.activityFrequency,
       currentCaloriePlan: props.currentCaloriePlan,
+      lastWeightUpdateAt: new Date(props.lastWeightUpdateAt),
     };
   }
 }
@@ -67,6 +69,11 @@ Progress.init(
     currentCaloriePlan: {
       type: Sequelize.ENUM<PlanType>(...allowedPlans),
       allowNull: true,
+    },
+    lastWeightUpdateAt: {
+      type: Sequelize.DATE(),
+      defaultValue: Sequelize.fn("CURRENT_TIMESTAMP", 3),
+      allowNull: false,
     },
     userId: {
       type: Sequelize.INTEGER,
