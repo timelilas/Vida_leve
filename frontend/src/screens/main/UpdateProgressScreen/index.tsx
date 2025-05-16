@@ -9,6 +9,10 @@ import { useProgress } from "../../../hooks/progress/useProgress";
 import { RouteConstants, RouteParamsList } from "../../../routes/types";
 import { styles } from "./styles";
 import { OnProgressSubmitData } from "../../../components/ProgressForm/types";
+import { AlertModal } from "../../../components/AlertModal";
+import { useRef, useState } from "react";
+import { CaloriePlanProps } from "../../../@core/entities/caloriePlan/type";
+import { ProgressProps } from "../../../@core/entities/progress/type";
 
 type UpdateProgressScreenRouteProp = RouteProp<RouteParamsList, RouteConstants.UpdateProgress>;
 
@@ -17,9 +21,14 @@ interface UpdateProgressScreenProps {
 }
 
 const UpdateProgressScreen = ({ route }: UpdateProgressScreenProps) => {
+  const navigation = useAppNavigation();
   const { profileData } = route.params;
   const { progress } = useProgress({ refetchOnMount: false });
-  const navigation = useAppNavigation();
+  const [isModalVisible, setIsModalVisible] = useState(false);
+
+  const caloriePlansRef = useRef<CaloriePlanProps[] | null>(null);
+  const formDataAfterSubmit = useRef<Omit<ProgressProps, "currentCaloriePlan"> | null>(null);
+
   const formInitialData = {
     height: `${progress?.height ?? ""}`,
     weight: `${progress?.weight ?? ""}`,
@@ -33,15 +42,43 @@ const UpdateProgressScreen = ({ route }: UpdateProgressScreenProps) => {
     navigation.goBack();
   }
 
+  function onCloseModal() {
+    setIsModalVisible(false);
+  }
+
+  function onConfirmModal() {
+    setIsModalVisible(false);
+    if (caloriePlansRef.current && formDataAfterSubmit.current) {
+      navigation.navigate(RouteConstants.PlanSelection, {
+        withModal: true,
+        nextRoute: RouteConstants.Home,
+        plans: caloriePlansRef.current,
+        currentPlan: null,
+        progressData: formDataAfterSubmit.current,
+        profileData: profileData
+      });
+    }
+  }
+
   async function onSubmit(data: OnProgressSubmitData) {
-    navigation.navigate(RouteConstants.PlanSelection, {
-      withModal: true,
-      nextRoute: RouteConstants.Home,
-      plans: data.newCaloriePlans,
-      currentPlan: null,
-      progressData: data.formData,
-      profileData: profileData
-    });
+    const newWeight = data.formData.weight;
+    const currentWeight = progress?.weight;
+    if (newWeight !== currentWeight) {
+      caloriePlansRef.current = data.newCaloriePlans;
+      formDataAfterSubmit.current = data.formData;
+      setIsModalVisible(true);
+    } else {
+      caloriePlansRef.current = null;
+      formDataAfterSubmit.current = null;
+      navigation.navigate(RouteConstants.PlanSelection, {
+        withModal: true,
+        nextRoute: RouteConstants.Home,
+        plans: data.newCaloriePlans,
+        currentPlan: null,
+        progressData: data.formData,
+        profileData: profileData
+      });
+    }
   }
 
   return (
@@ -57,6 +94,15 @@ const UpdateProgressScreen = ({ route }: UpdateProgressScreenProps) => {
         onSubmit={onSubmit}
         initialData={formInitialData}
         submitButtonText="Continuar"
+      />
+      <AlertModal
+        title="Atualizar peso atual"
+        message="Ao mudar o peso atual, todos os registros anteriores de peso serão apagados do histórico de peso. Essa alteração não poderá ser desfeita."
+        onConfirmText="Sim, alterar"
+        onCancelText="Não, cancelar"
+        isVisible={isModalVisible}
+        onCancel={onCloseModal}
+        onConfirm={onConfirmModal}
       />
     </ScreenWrapper>
   );

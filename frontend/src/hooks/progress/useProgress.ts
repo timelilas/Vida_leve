@@ -32,9 +32,17 @@ export function useProgress(params?: UseProgressParams) {
     },
     onSuccess: (progressData) => {
       invalidateCalorieStatistics();
+      const oldProgressData = queryClient.getQueryData<ProgressQueryState>(
+        QueryKeys.API.PROGRESS
+      );
+
       queryClient.setQueryData<ProgressQueryState>(QueryKeys.API.PROGRESS, (old) => {
         return old ? { ...old, ...progressData } : progressData;
       });
+
+      if (oldProgressData && oldProgressData.weight !== progressData.weight) {
+        queryClient.invalidateQueries({ queryKey: QueryKeys.API.WEIGHT_HISTORY });
+      }
     }
   });
 

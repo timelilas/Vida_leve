@@ -1,6 +1,6 @@
 import { StyleSheet } from "react-native";
-import { colors } from "../../../../../styles/colors";
-import { fonts } from "../../../../../styles/fonts";
+import { colors } from "../../styles/colors";
+import { fonts } from "../../styles/fonts";
 
 export const styles = StyleSheet.create({
   modal: {
@@ -10,11 +10,16 @@ export const styles = StyleSheet.create({
     borderRadius: 8,
     padding: 24
   },
+  titleContainer: {
+    flexDirection: "row",
+    gap: 8,
+    alignItems: "center"
+  },
   title: {
     fontSize: 16,
-    lineHeight: 16,
     color: colors.text.secondary,
-    fontFamily: fonts.robotoMedium
+    fontFamily: fonts.robotoMedium,
+    flexShrink: 1
   },
   paragraph: {
     fontFamily: fonts.robotoLight,
