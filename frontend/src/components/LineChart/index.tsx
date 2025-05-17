@@ -21,6 +21,7 @@ interface TooltipState {
 
 interface LineChartProps {
   lineStrokeWidth?: number;
+  yTickMultiple?: number;
   labels: string[];
   yAxisName: string;
   xAxisName: string;
@@ -53,7 +54,8 @@ export function LineChart(props: LineChartProps) {
   const { xAxis, yAxis } = useChartDomain({
     xLabels: props.labels,
     yData: props.data.map(({ values }) => values).flat(1),
-    chart: { width: chart.width, height: chart.height }
+    chart: { width: chart.width, height: chart.height },
+    yAxisTickMultiple: props.yTickMultiple
   });
 
   const allowedTooltipPositions = getAllowedTooltipPositions();
@@ -184,7 +186,7 @@ export function LineChart(props: LineChartProps) {
         <ToolTip
           posX={tooltip.posX}
           posY={tooltip.posY}
-          value={`${tooltip.value}`}
+          value={`${tooltip.value} ${props.yAxisName}`}
           color={tooltip.color}
         />
       )}

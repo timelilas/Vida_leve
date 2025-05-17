@@ -41,10 +41,45 @@ const WeightTrackingScreen = () => {
   const dateData = convertDateToLocalDateData(new Date());
   const localDate = new Date(dateData.year, dateData.month, dateData.day);
   const shortDateLabel = formatDateToLabel(localDate, "short");
-  const mostRecentWeight = getMostRecentWeight(weightHistory.weights) || progress?.goalWeight;
 
-  function goBack() {
-    navigation.goBack();
+  const chartDataAndLabels = generateChartDataAndLabels();
+  const mostRecentWeight = getMostRecentWeight(weightHistory.weights);
+
+  function generateChartDataAndLabels() {
+    const chartDataAndLabels: { labels: string[]; weights: number[]; goalWeights: number[] } =
+      {
+        labels: [],
+        weights: [],
+        goalWeights: []
+      };
+
+    const sortedWeightHistory = weightHistory.weights.sort((a, b) => {
+      return new Date(a.date).getTime() - new Date(b.date).getTime();
+    });
+
+    if (progress) {
+      const { day, month } = convertDateToLocalDateData(new Date(progress.lastWeightUpdateAt));
+      const monthName = toCapitalized(getMonthNameFromIndex(month).slice(0, 3));
+      chartDataAndLabels.weights.push(progress.weight);
+      chartDataAndLabels.goalWeights.push(progress.goalWeight);
+      chartDataAndLabels.labels.push(`${`0${day}`.slice(-2)}/${monthName}`);
+    }
+
+    for (const weightRecord of sortedWeightHistory) {
+      const recordDate = new Date(weightRecord.date);
+      const recordDay = `0${recordDate.getUTCDate()}`.slice(-2);
+      const RecordMonthName = toCapitalized(
+        getMonthNameFromIndex(recordDate.getUTCMonth()).slice(0, 3)
+      );
+
+      chartDataAndLabels.labels.push(`${recordDay}/${RecordMonthName}`);
+      chartDataAndLabels.weights.push(weightRecord.weight);
+      if (progress) {
+        chartDataAndLabels.goalWeights.push(progress.goalWeight);
+      }
+    }
+
+    return chartDataAndLabels;
   }
 
   function getMostRecentWeight(weightHsitory: WeightHistoryQueryState["weights"]) {
@@ -66,6 +101,10 @@ const WeightTrackingScreen = () => {
         routes: [{ name: RouteConstants.Home }]
       })
     );
+  }
+
+  function goBack() {
+    navigation.goBack();
   }
 
   function navigateToWeightHistory() {
@@ -100,43 +139,16 @@ const WeightTrackingScreen = () => {
   }
 
   function checkGoalWeightPointsVisiblity(value: number, index: number) {
-    const data = weightHistory.weights;
-    const middleIndexes = [Math.floor(data.length / 2), Math.floor((data.length - 1) / 2)];
+    const data = chartDataAndLabels.goalWeights;
 
     const isLastItem = index === data.length - 1;
     const isFirstItem = index === 0;
-    const iMiddleItem =
-      data.length % 2 === 0
-        ? middleIndexes.includes(index)
-        : index === Math.floor(data.length / 2);
+    const isMiddleItem = data.length % 2 !== 0 && index === Math.floor(data.length / 2);
 
-    return isFirstItem || isLastItem || iMiddleItem;
+    return isFirstItem || isLastItem || isMiddleItem;
   }
 
   function renderWeightHistoryChart() {
-    const chartDataAndLabels = weightHistory.weights
-      .sort((a, b) => {
-        return new Date(a.date).getTime() - new Date(b.date).getTime();
-      })
-      .reduce(
-        (acc, item, i) => {
-          const date = new Date(item.date);
-          const day = `0${date.getUTCDate()}`.slice(-2);
-          const monthName = toCapitalized(
-            getMonthNameFromIndex(date.getUTCMonth()).slice(0, 3)
-          );
-          acc.labels.push(`${day}/${monthName}`);
-          acc.weights.push(item.weight);
-          acc.goalWeights.push(progress?.goalWeight!);
-          return acc;
-        },
-        { weights: [], goalWeights: [], labels: [] } as {
-          labels: string[];
-          weights: number[];
-          goalWeights: number[];
-        }
-      );
-
     return (
       <LineChart
         yAxisName="kg"

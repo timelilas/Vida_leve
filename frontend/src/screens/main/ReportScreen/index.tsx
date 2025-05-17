@@ -108,7 +108,6 @@ const ReportScreen = () => {
 
   function checkDailyTargetPointsVisiblity(value: number, index: number) {
     const data = chartDataAndLabels.dailyTarget;
-    const middleIndexes = [Math.floor(data.length / 2), Math.floor((data.length - 1) / 2)];
 
     if (!isDailyTargetUnchanged) {
       const previousValue = data[index - 1];
@@ -118,10 +117,7 @@ const ReportScreen = () => {
 
     const isLastItem = index === data.length - 1;
     const isFirstItem = index === 0;
-    const isMiddleItem =
-      data.length % 2 === 0
-        ? middleIndexes.includes(index)
-        : index === Math.floor(data.length / 2);
+    const isMiddleItem = data.length % 2 !== 0 && index === Math.floor(data.length / 2);
 
     return isFirstItem || isLastItem || isMiddleItem;
   }
@@ -135,6 +131,7 @@ const ReportScreen = () => {
         yAxisName="kcal"
         key={dateData.day}
         lineStrokeWidth={3}
+        yTickMultiple={100}
         style={{ paddingLeft: maxCalorieConsumption > 10000 ? 52 : 44 }}
         labels={chartDataAndLabels.labels}
         data={[
