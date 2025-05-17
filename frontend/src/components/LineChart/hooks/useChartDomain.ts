@@ -1,6 +1,7 @@
 import * as d3 from "d3";
 
 interface UseChartDomainParams {
+  yAxisTickMultiple?: number;
   xLabels: string[];
   yData: number[];
   chart: {
@@ -10,10 +11,11 @@ interface UseChartDomainParams {
 }
 
 export function useChartDomain(params: UseChartDomainParams) {
-  const { chart, xLabels, yData } = params;
+  const { chart, xLabels, yData, yAxisTickMultiple } = params;
+  const yTickMultiple = yAxisTickMultiple || 1;
 
   const yRange = [0, chart.height];
-  const yDomain = [0, Math.ceil((d3.max(yData)! * 1.25) / 100) * 100];
+  const yDomain = [0, Math.ceil((d3.max(yData)! * 1.25) / yTickMultiple) * yTickMultiple];
   const yAxis = d3.scaleLinear().range(yRange).domain(yDomain);
 
   const xRange = [0, chart.width];
