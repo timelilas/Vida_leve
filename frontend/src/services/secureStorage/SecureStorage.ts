@@ -2,8 +2,7 @@ import { Platform } from "react-native";
 import * as ExpoSecureStore from "expo-secure-store";
 
 export class SecureStorage {
-  private static defaultKeychainAccessible =
-    ExpoSecureStore.WHEN_UNLOCKED_THIS_DEVICE_ONLY;
+  private static defaultKeychainAccessible = ExpoSecureStore.WHEN_UNLOCKED_THIS_DEVICE_ONLY;
 
   public static async getItem(key: string): Promise<string | null> {
     try {
@@ -23,7 +22,7 @@ export class SecureStorage {
     }
 
     return await ExpoSecureStore.setItemAsync(key, value, {
-      keychainAccessible: SecureStorage.defaultKeychainAccessible,
+      keychainAccessible: SecureStorage.defaultKeychainAccessible
     });
   }
 
@@ -33,7 +32,7 @@ export class SecureStorage {
     }
 
     return await ExpoSecureStore.deleteItemAsync(key, {
-      keychainAccessible: SecureStorage.defaultKeychainAccessible,
+      keychainAccessible: SecureStorage.defaultKeychainAccessible
     });
   }
 }

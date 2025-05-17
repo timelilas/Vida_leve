@@ -8,3 +8,12 @@ export interface HttpUpsertProgressInputDTO {
   activityFrequency: ActitivyFrequency;
   currentCaloriePlan?: PlanType;
 }
+
+export interface HttpProgressOutputDTO {
+  height: number;
+  weight: number;
+  goalWeight: number;
+  activityFrequency: ActitivyFrequency;
+  currentCaloriePlan: PlanType | null;
+  lastWeightUpdateAt: string;
+}

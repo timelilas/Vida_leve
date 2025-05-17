@@ -13,6 +13,6 @@ export interface ProgressFormData {
 }
 
 export interface OnProgressSubmitData {
-  formData: Omit<ProgressProps, "currentCaloriePlan">;
+  formData: Omit<ProgressProps, "currentCaloriePlan" | "lastWeightUpdateAt">;
   newCaloriePlans: CaloriePlanProps[];
 }

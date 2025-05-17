@@ -114,19 +114,29 @@ const WeightTrackingScreen = () => {
   }
 
   function renderWeightHistoryChart() {
-    const sortedWeights = weightHistory.weights.sort((a, b) => {
-      return new Date(a.date).getTime() - new Date(b.date).getTime();
-    });
-    const goalWeightList: number[] = new Array(sortedWeights.length).fill(
-      progress?.goalWeight!
-    );
-    const weights = sortedWeights.map(({ weight }) => weight);
-    const labels = sortedWeights.map((record) => {
-      const date = new Date(record.date);
-      const day = `0${date.getUTCDate()}`.slice(-2);
-      const monthName = toCapitalized(getMonthNameFromIndex(date.getUTCMonth()).slice(0, 3));
-      return `${day}/${monthName}`;
-    });
+    const chartDataAndLabels = weightHistory.weights
+      .sort((a, b) => {
+        return new Date(a.date).getTime() - new Date(b.date).getTime();
+      })
+      .reduce(
+        (acc, item, i) => {
+          const date = new Date(item.date);
+          const day = `0${date.getUTCDate()}`.slice(-2);
+          const monthName = toCapitalized(
+            getMonthNameFromIndex(date.getUTCMonth()).slice(0, 3)
+          );
+          acc.labels.push(`${day}/${monthName}`);
+          acc.weights.push(item.weight);
+          acc.goalWeights.push(progress?.goalWeight!);
+          return acc;
+        },
+        { weights: [], goalWeights: [], labels: [] } as {
+          labels: string[];
+          weights: number[];
+          goalWeights: number[];
+        }
+      );
+
     return (
       <LineChart
         yAxisName="kg"
@@ -136,18 +146,18 @@ const WeightTrackingScreen = () => {
         data={[
           {
             color: colors.primary,
-            values: weights,
+            values: chartDataAndLabels.weights,
             withDots: true,
             tooltip: { color: colors.primary, enabled: true }
           },
           {
             color: colors.secondary,
-            values: goalWeightList,
+            values: chartDataAndLabels.goalWeights,
             withDots: checkGoalWeightPointsVisiblity,
             tooltip: { color: colors.secondary, enabled: checkGoalWeightPointsVisiblity }
           }
         ]}
-        labels={labels}
+        labels={chartDataAndLabels.labels}
       />
     );
   }

@@ -50,17 +50,21 @@ const ReportScreen = () => {
 
   const chartDataAndLabels = statistics.reduce(
     (acc, { consumption, target, date }, i) => {
-      if (i === 0) acc = { dailyConsumption: [], dailyTarget: [], labels: [] };
       acc.labels.push(`${new Date(date).getUTCDate()}`);
       acc.dailyConsumption.push(consumption);
       acc.dailyTarget.push(target);
       return acc;
     },
-    {} as {
+    { dailyConsumption: [], dailyTarget: [], labels: [] } as {
       labels: string[];
       dailyConsumption: number[];
       dailyTarget: number[];
     }
+  );
+
+  const isDailyTargetUnchanged = chartDataAndLabels.dailyTarget.reduce(
+    (acc, value, _, data) => (value !== data[0] ? false : acc),
+    true
   );
 
   function goBack() {
@@ -106,14 +110,20 @@ const ReportScreen = () => {
     const data = chartDataAndLabels.dailyTarget;
     const middleIndexes = [Math.floor(data.length / 2), Math.floor((data.length - 1) / 2)];
 
+    if (!isDailyTargetUnchanged) {
+      const previousValue = data[index - 1];
+      const nextValue = data[index + 1];
+      return previousValue !== value || nextValue !== value;
+    }
+
     const isLastItem = index === data.length - 1;
     const isFirstItem = index === 0;
-    const iMiddleItem =
+    const isMiddleItem =
       data.length % 2 === 0
         ? middleIndexes.includes(index)
         : index === Math.floor(data.length / 2);
 
-    return isFirstItem || isLastItem || iMiddleItem;
+    return isFirstItem || isLastItem || isMiddleItem;
   }
 
   function renderCalorieConsumptionChart() {

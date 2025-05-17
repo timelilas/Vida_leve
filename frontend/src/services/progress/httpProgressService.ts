@@ -1,7 +1,6 @@
 import { PlanType } from "../../@core/entities/@shared/planType/type";
 import { HttpService } from "../HttpService";
-import { ProgressProps } from "../../@core/entities/progress/type";
-import { HttpUpsertProgressInputDTO } from "./types";
+import { HttpProgressOutputDTO, HttpUpsertProgressInputDTO } from "./types";
 import { STORAGE_ACCESS_TOKEN } from "../../constants/localStorageConstants";
 import { SecureStorage } from "../secureStorage/SecureStorage";
 
@@ -9,40 +8,40 @@ export class HttpProgressService extends HttpService {
   public async upsertProgress(params: HttpUpsertProgressInputDTO) {
     const accessToken = await SecureStorage.getItem(STORAGE_ACCESS_TOKEN);
 
-    return await this.submit<ProgressProps>({
+    return await this.submit<HttpProgressOutputDTO>({
       method: "POST",
       path: "/progress",
       body: params,
       headers: {
         Authorization: `Bearer ${accessToken}`,
-        "X-Timezone": Intl.DateTimeFormat().resolvedOptions().timeZone,
-      },
+        "X-Timezone": Intl.DateTimeFormat().resolvedOptions().timeZone
+      }
     });
   }
 
   public async setCaloriePlan(plan: PlanType) {
     const accessToken = await SecureStorage.getItem(STORAGE_ACCESS_TOKEN);
 
-    return await this.submit<ProgressProps>({
+    return await this.submit<HttpProgressOutputDTO>({
       method: "PATCH",
       path: "/progress/plan",
       body: { currentCaloriePlan: plan },
       headers: {
         Authorization: `Bearer ${accessToken}`,
-        "X-Timezone": Intl.DateTimeFormat().resolvedOptions().timeZone,
-      },
+        "X-Timezone": Intl.DateTimeFormat().resolvedOptions().timeZone
+      }
     });
   }
 
   public async getProgress() {
     const accessToken = await SecureStorage.getItem(STORAGE_ACCESS_TOKEN);
 
-    return await this.submit<ProgressProps | null>({
+    return await this.submit<HttpProgressOutputDTO | null>({
       method: "GET",
       path: "/progress",
       headers: {
-        Authorization: `Bearer ${accessToken}`,
-      },
+        Authorization: `Bearer ${accessToken}`
+      }
     });
   }
 }

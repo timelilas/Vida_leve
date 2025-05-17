@@ -1,5 +1,5 @@
 import { useMutation, useQuery } from "@tanstack/react-query";
-import { ProgressQueryState, upsertProgressParams } from "./types";
+import { ProgressQueryState, UpsertProgressParams } from "./types";
 import { QueryKeys } from "../../constants/reactQueryKeys";
 import { httpProgressService } from "../../services/progress";
 import { useCallback } from "react";
@@ -24,7 +24,7 @@ export function useProgress(params?: UseProgressParams) {
   });
 
   const upsertProgressMutation = useMutation({
-    mutationFn: async (params: upsertProgressParams) => {
+    mutationFn: async (params: UpsertProgressParams) => {
       const { data: progressData } = await httpProgressService.upsertProgress({
         ...params
       });
@@ -60,7 +60,7 @@ export function useProgress(params?: UseProgressParams) {
   });
 
   const upsertProgress = useCallback(
-    async (params: upsertProgressParams) => {
+    async (params: UpsertProgressParams) => {
       const progressData = await upsertProgressMutation.mutateAsync(params);
       return progressData;
     },

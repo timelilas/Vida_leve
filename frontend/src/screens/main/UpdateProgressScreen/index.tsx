@@ -27,7 +27,10 @@ const UpdateProgressScreen = ({ route }: UpdateProgressScreenProps) => {
   const [isModalVisible, setIsModalVisible] = useState(false);
 
   const caloriePlansRef = useRef<CaloriePlanProps[] | null>(null);
-  const formDataAfterSubmit = useRef<Omit<ProgressProps, "currentCaloriePlan"> | null>(null);
+  const formDataAfterSubmit = useRef<Omit<
+    ProgressProps,
+    "currentCaloriePlan" | "lastWeightUpdateAt"
+  > | null>(null);
 
   const formInitialData = {
     height: `${progress?.height ?? ""}`,
