@@ -25,7 +25,7 @@ interface MealQueryOptions {
 export default class MealService {
   public getById = async (params: GetMealByIdDTO) => {
     const { id, userId } = params;
-    const queryString = this.getMealQueryString({ by: "ID" });
+    const queryString = this.createMealQuery({ by: "ID" });
 
     try {
       const foundMeal = await sequelize.query<MealQueryResult>(queryString, {
@@ -50,7 +50,7 @@ export default class MealService {
   public getMeals = async (params: GetMealsDTO) => {
     const { userId, date, limit, offset } = params;
     const isoDate = date?.toISOString().split("T")[0];
-    const mealQueryString = this.getMealQueryString({
+    const mealQueryString = this.createMealQuery({
       by: date ? "DATE" : undefined,
       withLimit: !!limit,
       withOffset: !!offset,
@@ -91,7 +91,7 @@ export default class MealService {
   public searchMeal = async (params: SearchMealDTO) => {
     const { date, mealType, userId } = params;
     const isoDateString = date.toISOString().split("T")[0];
-    const queryString = this.getMealQueryString({ by: "DATE_AND_TYPE" });
+    const queryString = this.createMealQuery({ by: "DATE_AND_TYPE" });
 
     try {
       const foundMeal = await sequelize.query<MealQueryResult>(queryString, {
@@ -173,7 +173,7 @@ export default class MealService {
     const from = params.from.toISOString().split("T")[0];
     const to = params.to.toISOString().split("T")[0];
     const userId = params.userId;
-    const queryString = this.getCalorieStatisticsQuery();
+    const queryString = this.createCalorieStatisticsQuery();
 
     try {
       const queryResult = await sequelize.query<CalorieStatisticsQueryResult>(
@@ -196,7 +196,7 @@ export default class MealService {
     }
   };
 
-  private getMealQueryString = ({
+  private createMealQuery = ({
     by,
     withLimit,
     withOffset,
@@ -255,7 +255,7 @@ export default class MealService {
     return mainQuery;
   };
 
-  private getCalorieStatisticsQuery = () => {
+  private createCalorieStatisticsQuery = () => {
     const meal = TableNames.Meal;
     const consumedFood = TableNames.ConsumedFood;
     const food = TableNames.Food;

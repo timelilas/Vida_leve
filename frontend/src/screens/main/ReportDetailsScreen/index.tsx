@@ -29,7 +29,6 @@ import { HttpError } from "../../../@core/errors/httpError";
 import { useSnackbar } from "../../../hooks/common/useSnackbar";
 import { PizzaChartSkeleton } from "./components/PizzaChartSkeleton";
 import { SummaryTextSkeleton } from "./components/SummaryTextSkeleton";
-import { useDebounce } from "../../../hooks/common/useDebounce";
 import { DateIntervalType } from "../../../@types";
 import { queryClient } from "../../../libs/react-query/queryClient";
 import { QueryKeys } from "../../../constants/reactQueryKeys";
@@ -43,16 +42,15 @@ const ReportDetailsScreen = () => {
   const navigation = useAppNavigation();
   const localDate = useMemo(() => getLocalDateOnly(), []);
   const { Snackbar, showSnackbar } = useSnackbar();
-  const { isDebouncing, startDebounce } = useDebounce(300);
 
-  const { dateData, intervalType, updateDateDate, updateIntervalType } =
+  const { dateData, intervalType, isDebouncing, updateDateDate, updateIntervalType } =
     useContext(DateFilterContext);
 
   const dateRange = generateLocalDateRange(intervalType, dateData);
   const { statistics, isLoading, isFetching, error } = useCalorieStatistics({
     from: dateRange.from,
     to: dateRange.to > localDate ? localDate : dateRange.to,
-    disabled: isDebouncing
+    enabled: !isDebouncing
   });
 
   const { daysOffTarget, daysWithinTarget } = getCalorieStatisticsSummary(statistics);
@@ -77,16 +75,14 @@ const ReportDetailsScreen = () => {
   const handleTimeRangeChange = useCallback(
     (date: Date) => {
       const { from, to } = generateLocalDateRange(intervalType, date);
-      const queryKey = QueryKeys.DATABASE.CALORIE_STATISTICS(
+      const queryKey = QueryKeys.API.CALORIE_STATISTICS(
         from.toISOString().split("T")[0],
         (to > localDate ? localDate : to).toISOString().split("T")[0]
       );
-      if (queryClient.getQueryData(queryKey) === undefined) {
-        startDebounce();
-      }
-      updateDateDate(date);
+      const withDebounce = queryClient.getQueryData(queryKey) === undefined;
+      updateDateDate(date, withDebounce);
     },
-    [updateDateDate, startDebounce, intervalType, localDate]
+    [updateDateDate, intervalType, localDate]
   );
 
   const handleQueryError = useCallback(

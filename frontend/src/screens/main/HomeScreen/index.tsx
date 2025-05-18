@@ -2,7 +2,7 @@ import { View } from "react-native";
 import { ScreenWrapper } from "../../../components/ScreenWrapper";
 import { ProileHeader } from "./components/ProfileHeader";
 import { PlanInformation } from "./components/PlanInformation";
-import { ProgressStatistics } from "./components/ProgressStatistics/ProgressStatistics";
+import { CalorieConsumption } from "./components/CalorieConsumption";
 import { NavigationHeader } from "../../../components/NavigationHeader";
 import { styles } from "./styles";
 import { useProgress } from "../../../hooks/progress/useProgress";
@@ -13,6 +13,8 @@ import { useSnackbar } from "../../../hooks/common/useSnackbar";
 import { convertDateToLocalDateData } from "../../../utils/helpers";
 import { HttpError } from "../../../@core/errors/httpError";
 import { NETWORK_ERROR_MESSAGE } from "../../../constants/errorMessages";
+import { SectionContainer } from "./components/SectionContainer";
+import { StatisticsOverview } from "./components/StatisticsOverview";
 
 const HomeScreen = () => {
   const { year, month, day } = convertDateToLocalDateData(new Date());
@@ -52,13 +54,20 @@ const HomeScreen = () => {
       <View style={styles.body}>
         <ProileHeader />
         <View style={styles.separatorLine} />
-        <View style={styles.progressContainer}>
-          <PlanInformation />
-          <ProgressStatistics
-            targetCalories={currentPlan?.dailyCalorieIntake || 0}
-            consumedCalories={dailyConsumption.total}
-            isLoading={isLoading}
-          />
+        <View style={styles.sectionWrapper}>
+          <SectionContainer>
+            <PlanInformation />
+          </SectionContainer>
+          <SectionContainer>
+            <CalorieConsumption
+              targetCalories={currentPlan?.dailyCalorieIntake || 0}
+              consumedCalories={dailyConsumption.total}
+              isLoading={isLoading}
+            />
+          </SectionContainer>
+          <SectionContainer>
+            <StatisticsOverview />
+          </SectionContainer>
         </View>
       </View>
     </ScreenWrapper>

@@ -9,10 +9,12 @@ import { CaloriePlanService } from "../../service/caloriePlan/CaloriePlanService
 import { BadRequestException } from "../../@core/exception/http/BadRequestException";
 import { NotFoundException } from "../../@core/exception/http/NotFoundException";
 import { exceptionResponseAdapter } from "../../utils/express/helpers";
-import PlanHistoryService from "../../service/PlanHistory/PlanHistoryService";
+import PlanHistoryService from "../../service/planHistory/PlanHistoryService";
 import { getDateFromTimezone } from "../../utils/common/helpers";
+import WeightHistoryService from "../../service/weightHistory/WeightHistoryService";
 
 export default class ProgressController {
+  private _WeightHistoryService = new WeightHistoryService();
   private _CaloriePlanService = new CaloriePlanService();
   private _PlanHistoryService = new PlanHistoryService();
   private _ProgressService = new ProgressService();
@@ -73,8 +75,19 @@ export default class ProgressController {
         ({ type }) => type === req.body.currentCaloriePlan
       );
 
+      const oldProgressData = await this._ProgressService.get({
+        userId,
+        transaction,
+      });
+
+      const hasWeightChanged = oldProgressData?.weight !== weight;
+
       const createdProgress = await this._ProgressService.upsert({
-        data: { ...req.body, userId },
+        data: {
+          ...req.body,
+          userId,
+          lastWeightUpdateAt: hasWeightChanged ? new Date() : undefined,
+        },
         transaction,
       });
 
@@ -82,6 +95,10 @@ export default class ProgressController {
         data: { userId, plans: newCaloriePlans },
         transaction,
       });
+
+      if (oldProgressData && hasWeightChanged) {
+        await this._WeightHistoryService.deleteAll({ userId, transaction });
+      }
 
       if (foundPlan) {
         await this._PlanHistoryService.upsert(
@@ -113,7 +130,7 @@ export default class ProgressController {
     const userId = req.user.id;
 
     try {
-      const userProgress = await this._ProgressService.get(userId);
+      const userProgress = await this._ProgressService.get({ userId });
 
       return res.status(200).json({ data: userProgress });
     } catch (error: any) {

@@ -1,5 +1,5 @@
 import { useMutation, useQuery } from "@tanstack/react-query";
-import { ProgressQueryState, upsertProgressParams } from "./types";
+import { ProgressQueryState, UpsertProgressParams } from "./types";
 import { QueryKeys } from "../../constants/reactQueryKeys";
 import { httpProgressService } from "../../services/progress";
 import { useCallback } from "react";
@@ -8,14 +8,14 @@ import { PlanType } from "../../@core/entities/@shared/planType/type";
 import { invalidateCalorieStatistics } from "../../libs/react-query/helpers";
 
 interface UseProgressParams {
-  queryEnabled?: boolean;
+  enabled?: boolean;
   refetchOnMount?: boolean;
 }
 
 export function useProgress(params?: UseProgressParams) {
   const { data, isLoading, error, refetch } = useQuery<ProgressQueryState>({
-    queryKey: QueryKeys.DATABASE.PROGRESS,
-    enabled: params?.queryEnabled ?? true,
+    queryKey: QueryKeys.API.PROGRESS,
+    enabled: params?.enabled,
     refetchOnMount: params?.refetchOnMount,
     queryFn: async () => {
       const { data: progressData } = await httpProgressService.getProgress();
@@ -24,7 +24,7 @@ export function useProgress(params?: UseProgressParams) {
   });
 
   const upsertProgressMutation = useMutation({
-    mutationFn: async (params: upsertProgressParams) => {
+    mutationFn: async (params: UpsertProgressParams) => {
       const { data: progressData } = await httpProgressService.upsertProgress({
         ...params
       });
@@ -32,7 +32,15 @@ export function useProgress(params?: UseProgressParams) {
     },
     onSuccess: (progressData) => {
       invalidateCalorieStatistics();
-      queryClient.setQueryData<ProgressQueryState>(QueryKeys.DATABASE.PROGRESS, (old) => {
+      const oldProgressData = queryClient.getQueryData<ProgressQueryState>(
+        QueryKeys.API.PROGRESS
+      );
+
+      if (oldProgressData && oldProgressData.weight !== progressData.weight) {
+        queryClient.invalidateQueries({ queryKey: QueryKeys.API.WEIGHT_HISTORY });
+      }
+
+      queryClient.setQueryData<ProgressQueryState>(QueryKeys.API.PROGRESS, (old) => {
         return old ? { ...old, ...progressData } : progressData;
       });
     }
@@ -45,14 +53,14 @@ export function useProgress(params?: UseProgressParams) {
     },
     onSuccess: (progressData) => {
       invalidateCalorieStatistics();
-      queryClient.setQueryData<ProgressQueryState>(QueryKeys.DATABASE.PROGRESS, (old) => {
+      queryClient.setQueryData<ProgressQueryState>(QueryKeys.API.PROGRESS, (old) => {
         return old ? { ...old, ...progressData } : progressData;
       });
     }
   });
 
   const upsertProgress = useCallback(
-    async (params: upsertProgressParams) => {
+    async (params: UpsertProgressParams) => {
       const progressData = await upsertProgressMutation.mutateAsync(params);
       return progressData;
     },

@@ -20,7 +20,4 @@ userRouter.put(
   (req, res) => userController.update(req, res)
 );
 
-//Rotas utilizada em desenvolvimento apenas. Não requerem autorização
-userRouter.get("/profile/all", (req, res) => userController.getAll(req, res));
-
 export default userRouter;

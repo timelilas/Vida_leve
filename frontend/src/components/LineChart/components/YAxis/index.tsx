@@ -7,8 +7,7 @@ const robotoLight = require("../../../../assets/fonts/Roboto-Light.ttf");
 
 interface YAxisProps {
   fontSize: number;
-  canvasHeight: number;
-  canvasWidth: number;
+  measures: ReturnType<typeof useChartMeasures>;
   yAxis: d3.ScaleLinear<number, number, never>;
   axisLabel: string;
   subdomain?: number[];
@@ -16,14 +15,10 @@ interface YAxisProps {
 
 export function YAxis(props: YAxisProps) {
   const fontSize = props.fontSize;
+  const measures = props.measures;
   const domain = props.yAxis.domain();
   const step = Math.ceil(domain[domain.length - 1] / 4);
   const subDomain = Array.from({ length: 5 }, (_, i) => step * i);
-
-  const measures = useChartMeasures({
-    canvasWidth: props.canvasWidth,
-    canvasHeight: props.canvasHeight
-  });
 
   const font = useFont(robotoLight, fontSize);
 

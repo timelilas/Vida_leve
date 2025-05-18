@@ -57,7 +57,9 @@ export function ProgressForm(props: ProgressFormProps) {
     trigger();
   }
 
-  function generateCaloriePlans(params: Omit<ProgressProps, "currentCaloriePlan">) {
+  function generateCaloriePlans(
+    params: Omit<ProgressProps, "currentCaloriePlan" | "lastWeightUpdateAt">
+  ) {
     const { weight, height, goalWeight, activityFrequency } = params;
     if (!initialData.birthDate || !initialData.gender) {
       return [];

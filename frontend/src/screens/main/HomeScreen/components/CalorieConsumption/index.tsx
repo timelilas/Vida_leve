@@ -1,4 +1,4 @@
-import { Text, TouchableOpacity, View } from "react-native";
+import { View } from "react-native";
 import { MugIcon } from "../../../../../components/Icons/MugIcon";
 import { AppleIcon } from "../../../../../components/Icons/AppleIcon";
 import { FreshFruitsIcon } from "../../../../../components/Icons/FreshFruitsIcon";
@@ -9,31 +9,25 @@ import { useAppNavigation } from "../../../../../hooks/common/useAppNavigation";
 import { RouteConstants } from "../../../../../routes/types";
 import { styles } from "./styles";
 import { Skeleton } from "moti/skeleton";
+import { SmallLinkButton } from "../SmallLinkButton";
+import { SectionTitle } from "../SectionTitle";
 
-interface ProgressStatisticsProps {
+interface CalorieConsumptionProps {
   targetCalories: number;
   consumedCalories: number;
   isLoading?: boolean;
 }
 
-export function ProgressStatistics(props: ProgressStatisticsProps) {
+export function CalorieConsumption(props: CalorieConsumptionProps) {
   const navigation = useAppNavigation();
 
   function navigateToCreateMealScreen() {
     navigation.navigate(RouteConstants.CreateMeal);
   }
 
-  function navigateToReportScreen() {
-    navigation.navigate(RouteConstants.ReportRouter);
-  }
-
-  function navigateToWeightTrackingScreen() {
-    navigation.navigate(RouteConstants.WeightTracking);
-  }
-
   return (
-    <View style={styles.container}>
-      <Text style={styles.title}>Foram registradas:</Text>
+    <View>
+      <SectionTitle>Foram registradas:</SectionTitle>
       <View style={styles.calorieProgress}>
         <View style={styles.foodIconsWrapper}>
           <MugIcon />
@@ -51,17 +45,11 @@ export function ProgressStatistics(props: ProgressStatisticsProps) {
           <ProgressBar total={props.targetCalories} achieved={props.consumedCalories} />
         </Skeleton>
       </View>
-      <View style={styles.buttonWrapper}>
-        <TouchableOpacity onPress={navigateToReportScreen}>
-          <Text style={styles.buttonText}>Relatórios</Text>
-        </TouchableOpacity>
-        <TouchableOpacity onPress={navigateToWeightTrackingScreen}>
-          <Text style={styles.buttonText}>Registrar peso</Text>
-        </TouchableOpacity>
-        <TouchableOpacity onPress={navigateToCreateMealScreen}>
-          <Text style={styles.buttonText}>Registrar refeição</Text>
-        </TouchableOpacity>
-      </View>
+      <SmallLinkButton
+        title="Registrar"
+        style={styles.linkButton}
+        onPress={navigateToCreateMealScreen}
+      />
     </View>
   );
 }

@@ -12,7 +12,6 @@ interface UseMealParams {
   date?: Date;
   meals?: {
     refetchOnMount?: boolean;
-    disabled?: boolean;
   };
 }
 
@@ -20,15 +19,14 @@ export function useMeal(params?: UseMealParams) {
   const isoDate = (params?.date || new Date()).toISOString().split("T")[0];
 
   const mealsQuery = useQuery({
-    queryKey: QueryKeys.DATABASE.MEALS(isoDate),
-    enabled: !params?.meals?.disabled,
+    queryKey: QueryKeys.API.MEALS(isoDate),
     refetchOnMount: params?.meals?.refetchOnMount,
     retry: 1,
     staleTime: Infinity,
     queryFn: async () => {
       const { data } = await httpMealService.getMeals(isoDate);
       return data.meals;
-    },
+    }
   });
 
   const createMealMutation = useMutation({
@@ -40,16 +38,16 @@ export function useMeal(params?: UseMealParams) {
       invalidateCalorieStatistics(createdMeal.date);
       const isoDate = createdMeal.date.split("T")[0];
       queryClient.invalidateQueries({
-        queryKey: QueryKeys.DATABASE.MEALS(isoDate),
+        queryKey: QueryKeys.API.MEALS(isoDate)
       });
-    },
+    }
   });
 
   const updateMealMutaiton = useMutation({
     mutationFn: async (params: UpdateMealParams) => {
       const { data: updatedMeal } = await httpMealService.updateMeal({
         id: params.mealId,
-        foods: params.foods,
+        foods: params.foods
       });
       return updatedMeal;
     },
@@ -57,9 +55,9 @@ export function useMeal(params?: UseMealParams) {
       invalidateCalorieStatistics(updatedMeal.date);
       const isoDate = updatedMeal.date.split("T")[0];
       queryClient.invalidateQueries({
-        queryKey: QueryKeys.DATABASE.MEALS(isoDate),
+        queryKey: QueryKeys.API.MEALS(isoDate)
       });
-    },
+    }
   });
 
   const createMeal = useCallback(
@@ -85,7 +83,7 @@ export function useMeal(params?: UseMealParams) {
       almoco: 0,
       jantar: 0,
       outro: 0,
-      total: 0,
+      total: 0
     };
 
     for (const meal of mealsQuery.data || []) {
@@ -107,6 +105,6 @@ export function useMeal(params?: UseMealParams) {
     error: mealsQuery.error,
     dailyConsumption: calculateDailyConsumption(),
     createMeal,
-    updateMeal,
+    updateMeal
   };
 }

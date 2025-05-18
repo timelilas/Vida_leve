@@ -19,7 +19,7 @@ interface UseFoodsParams {
 
 export function useFoods(params: UseFoodsParams) {
   const foodSlug = transformFoodNameIntoSlug(params.foodName);
-  const queryKey = QueryKeys.DATABASE.FOODS(foodSlug);
+  const queryKey = QueryKeys.API.FOODS(foodSlug);
 
   const {
     data: queryData,
@@ -27,13 +27,9 @@ export function useFoods(params: UseFoodsParams) {
     error
   } = useQuery<FoodDataState>({
     queryKey: queryKey,
-    refetchIntervalInBackground: false,
-    enabled: params.enabled,
-    staleTime: Infinity,
     refetchOnMount: false,
-    refetchOnWindowFocus: false,
-    refetchInterval: false,
-    refetchOnReconnect: false,
+    staleTime: Infinity,
+    enabled: params.enabled,
     retry: 1,
     queryFn: async () => {
       const { data } = await httpFoodService.searchFoods({

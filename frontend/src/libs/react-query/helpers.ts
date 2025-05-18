@@ -15,7 +15,7 @@ export const invalidateCalorieStatistics = (mealDateISO?: string) => {
 
   queryClient.invalidateQueries({
     predicate: (query) => {
-      const baseKey = QueryKeys.DATABASE.CALORIE_STATISTICS("", "")[0];
+      const baseKey = QueryKeys.API.CALORIE_STATISTICS("", "")[0];
 
       if (!Array.isArray(query.queryKey)) return false;
       if (query.queryKey[0] !== baseKey) return false;
@@ -25,6 +25,6 @@ export const invalidateCalorieStatistics = (mealDateISO?: string) => {
       const mealDate = new Date(mealDateString);
 
       return mealDate <= to && mealDate >= from;
-    },
+    }
   });
 };

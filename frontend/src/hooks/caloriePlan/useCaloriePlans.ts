@@ -6,25 +6,24 @@ import { CaloriePlanProps } from "../../@core/entities/caloriePlan/type";
 import { useCallback } from "react";
 
 interface UseCaloriePlansParams {
-  queryEnabled?: boolean;
+  enabled?: boolean;
   refetchOnMount?: boolean;
 }
 
 export function useCaloriePlans(params?: UseCaloriePlansParams) {
   const { data, isLoading, error, refetch } = useQuery({
-    queryKey: QueryKeys.DATABASE.CALORIE_PLANS,
-    enabled: params?.queryEnabled ?? true,
+    queryKey: QueryKeys.API.CALORIE_PLANS,
+    enabled: params?.enabled,
     refetchOnMount: params?.refetchOnMount,
     queryFn: async () => {
       const caloriePlans = await httpCaloriePlanService.getPlans();
       return caloriePlans.data;
-    },
+    }
   });
 
   const updateLocalPlans = useCallback((plans: CaloriePlanProps[]) => {
-    queryClient.setQueryData<CaloriePlanProps[]>(
-      QueryKeys.DATABASE.CALORIE_PLANS,
-      () => plans.map((plan) => ({ ...plan }))
+    queryClient.setQueryData<CaloriePlanProps[]>(QueryKeys.API.CALORIE_PLANS, () =>
+      plans.map((plan) => ({ ...plan }))
     );
   }, []);
 
@@ -38,6 +37,6 @@ export function useCaloriePlans(params?: UseCaloriePlansParams) {
     updateLocalPlans,
     plans: data || [],
     isLoading,
-    error,
+    error
   };
 }

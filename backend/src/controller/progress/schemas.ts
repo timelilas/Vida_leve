@@ -10,7 +10,8 @@ export const upsertProgressSchema = progressZodSchema._def.schema
       currentCaloriePlan:
         progressZodSchema._def.schema.shape.currentCaloriePlan.optional(),
     })
-  ).strict()
+  )
+  .strict();
 
 export const setCurrentCaloriePlanSchema = z
   .object({

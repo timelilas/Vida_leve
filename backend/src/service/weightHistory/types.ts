@@ -1,3 +1,5 @@
+import { Transaction } from "sequelize";
+
 export interface AddWeightDTO {
   userId: number;
   weight: number;
@@ -24,4 +26,9 @@ export interface GetWeightsByDateDTO {
 export interface DeleteWeightDTO {
   userId: number;
   id: number;
+}
+
+export interface DeleteAllWeightsDTO {
+  userId: number;
+  transaction?: Transaction;
 }

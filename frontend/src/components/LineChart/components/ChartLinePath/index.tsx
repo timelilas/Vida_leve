@@ -6,17 +6,13 @@ interface LinePathProps {
   fill?: Color;
   data: { value: number; label: string }[];
   strokeWidth: number;
-  canvasWidth: number;
-  canvasHeight: number;
+  measures: ReturnType<typeof useChartMeasures>;
   xAxis: d3.ScalePoint<string>;
   yAxis: d3.ScaleLinear<number, number, never>;
 }
 
 export const ChartLinePath = (props: LinePathProps) => {
-  const { canvas, chart } = useChartMeasures({
-    canvasWidth: props.canvasWidth,
-    canvasHeight: props.canvasHeight
-  });
+  const { canvas, chart } = props.measures;
 
   function createLinePath() {
     const linePath = Skia.Path.Make();

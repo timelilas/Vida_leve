@@ -11,7 +11,6 @@ import { ScreenTitle } from "../../../components/ScreenTitle";
 import { Paragraph } from "../../../components/Paragraph/Paragraph";
 import { styles } from "./styles";
 import Select, { SelectEvent } from "../../../components/Select";
-import { useDebounce } from "../../../hooks/common/useDebounce";
 import { useCallback, useContext, useEffect, useMemo } from "react";
 import { DateIntervalType } from "../../../@types";
 import { QueryKeys } from "../../../constants/reactQueryKeys";
@@ -25,7 +24,7 @@ import { HttpError } from "../../../@core/errors/httpError";
 import { NETWORK_ERROR_MESSAGE } from "../../../constants/errorMessages";
 import { EmptyDataPlaceholder } from "../../../components/EmptyDataPlaceholder";
 import { LineChartIcon } from "../../../components/Icons/LineChartIcon";
-import { LineChartSkeleton } from "./components/LineChartSkeleton/inde";
+import { LineChartSkeleton } from "../../../components/LineChartSkeleton/inde";
 import { NavigationProp, useNavigation } from "@react-navigation/native";
 import {
   ReportRoutesConstants,
@@ -38,31 +37,34 @@ const ReportScreen = () => {
   const navigation = useNavigation<NavigationProp<ReportRoutesParamsList>>();
   const localDate = useMemo(() => getLocalDateOnly(), []);
   const { Snackbar, showSnackbar } = useSnackbar();
-  const { isDebouncing, startDebounce } = useDebounce(300);
 
-  const { dateData, intervalType, updateDateDate, updateIntervalType } =
+  const { dateData, intervalType, isDebouncing, updateDateDate, updateIntervalType } =
     useContext(DateFilterContext);
 
   const dateRange = generateLocalDateRange(intervalType, dateData);
   const { statistics, isLoading, isFetching, error } = useCalorieStatistics({
     from: dateRange.from,
     to: dateRange.to > localDate ? localDate : dateRange.to,
-    disabled: isDebouncing
+    enabled: !isDebouncing
   });
 
   const chartDataAndLabels = statistics.reduce(
     (acc, { consumption, target, date }, i) => {
-      if (i === 0) acc = { dailyConsumption: [], dailyTarget: [], labels: [] };
       acc.labels.push(`${new Date(date).getUTCDate()}`);
       acc.dailyConsumption.push(consumption);
       acc.dailyTarget.push(target);
       return acc;
     },
-    {} as {
+    { dailyConsumption: [], dailyTarget: [], labels: [] } as {
       labels: string[];
       dailyConsumption: number[];
       dailyTarget: number[];
     }
+  );
+
+  const isDailyTargetUnchanged = chartDataAndLabels.dailyTarget.reduce(
+    (acc, value, _, data) => (value !== data[0] ? false : acc),
+    true
   );
 
   function goBack() {
@@ -77,25 +79,17 @@ const ReportScreen = () => {
     updateIntervalType(e.value as DateIntervalType);
   }
 
-  function isTooltipEnabledHadler(value: number, index: number) {
-    const previousValue = chartDataAndLabels.dailyTarget[index - 1];
-    const nextValue = chartDataAndLabels.dailyTarget[index + 1];
-    return previousValue !== value || nextValue !== value;
-  }
-
   const handleTimeRangeChange = useCallback(
     (date: Date) => {
       const { from, to } = generateLocalDateRange(intervalType, date);
-      const queryKey = QueryKeys.DATABASE.CALORIE_STATISTICS(
+      const queryKey = QueryKeys.API.CALORIE_STATISTICS(
         from.toISOString().split("T")[0],
         (to > localDate ? localDate : to).toISOString().split("T")[0]
       );
-      if (queryClient.getQueryData(queryKey) === undefined) {
-        startDebounce();
-      }
-      updateDateDate(date);
+      const withDebounce = queryClient.getQueryData(queryKey) === undefined;
+      updateDateDate(date, withDebounce);
     },
-    [updateDateDate, startDebounce, intervalType, localDate]
+    [updateDateDate, intervalType, localDate]
   );
 
   const handleQueryError = useCallback(
@@ -112,11 +106,33 @@ const ReportScreen = () => {
     [showSnackbar]
   );
 
-  function renderLineChart() {
+  function checkDailyTargetPointsVisiblity(value: number, index: number) {
+    const data = chartDataAndLabels.dailyTarget;
+
+    if (!isDailyTargetUnchanged) {
+      const previousValue = data[index - 1];
+      const nextValue = data[index + 1];
+      return previousValue !== value || nextValue !== value;
+    }
+
+    const isLastItem = index === data.length - 1;
+    const isFirstItem = index === 0;
+    const isMiddleItem = data.length % 2 !== 0 && index === Math.floor(data.length / 2);
+
+    return isFirstItem || isLastItem || isMiddleItem;
+  }
+
+  function renderCalorieConsumptionChart() {
+    const data = chartDataAndLabels.dailyConsumption;
+    const maxCalorieConsumption = data?.length ? Math.max(...data) : 0;
     return statistics.length > 0 ? (
       <LineChart
+        xAxisName="Dia do mês"
+        yAxisName="kcal"
         key={dateData.day}
         lineStrokeWidth={3}
+        yTickMultiple={100}
+        style={{ paddingLeft: maxCalorieConsumption > 10000 ? 52 : 44 }}
         labels={chartDataAndLabels.labels}
         data={[
           {
@@ -129,8 +145,8 @@ const ReportScreen = () => {
           {
             color: colors.secondary,
             values: chartDataAndLabels.dailyTarget,
-            withDots: isTooltipEnabledHadler,
-            tooltip: { color: colors.secondary, enabled: isTooltipEnabledHadler }
+            withDots: checkDailyTargetPointsVisiblity,
+            tooltip: { color: colors.secondary, enabled: checkDailyTargetPointsVisiblity }
           }
         ]}
       />
@@ -191,7 +207,7 @@ const ReportScreen = () => {
             <ChartLabel color={colors.secondary} label="Plano de execução" />
             <ChartLabel color={colors.primary} label="Calorias consumidas" />
           </View>
-          {error ? null : renderLineChart()}
+          {error ? null : renderCalorieConsumptionChart()}
         </LineChartSkeleton>
       </View>
       <LinkButton

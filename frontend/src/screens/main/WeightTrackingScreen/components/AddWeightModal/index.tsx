@@ -10,9 +10,10 @@ import { onlyNumbers } from "../../../../../utils/masks";
 import { colors } from "../../../../../styles/colors";
 import { AlertIcon } from "../../../../../components/Icons/AlertIcon";
 import { useWeightHistory } from "../../../../../hooks/weight/useWeightHistory";
-import { delay } from "../../../../../utils/helpers";
+import { convertDateToLocalDateData, delay } from "../../../../../utils/helpers";
 import { NETWORK_ERROR_MESSAGE } from "../../../../../constants/errorMessages";
 import { HttpError } from "../../../../../@core/errors/httpError";
+import { useProgress } from "../../../../../hooks/progress/useProgress";
 
 interface AddWeightModalProps {
   currentDate: Date;
@@ -25,6 +26,7 @@ interface AddWeightModalProps {
 export function AddWeightModal(props: AddWeightModalProps) {
   const { isVisible, currentDate, onSuccess, onError, onCancel } = props;
   const { data, addWeight } = useWeightHistory({ enabled: false });
+  const { progress } = useProgress({ refetchOnMount: false });
 
   const {
     control,
@@ -67,16 +69,31 @@ export function AddWeightModal(props: AddWeightModalProps) {
 
     for (const weight of data.weights) {
       const weightDate = new Date(weight.date);
+
       if (weightDate >= weekStartDate && weightDate <= weekEndDate) {
         return setError("weight", {
           message:
             "Opa! Só é permitido um registro por semana. Volte na próxima semana para atualizar."
         });
       }
+
+      if (progress?.lastWeightUpdateAt) {
+        const { year, month, day } = convertDateToLocalDateData(
+          new Date(progress.lastWeightUpdateAt)
+        );
+        const lastWeightUpdateDate = new Date(year, month, day);
+        if (lastWeightUpdateDate >= weekStartDate && lastWeightUpdateDate <= weekEndDate) {
+          return setError("weight", {
+            message:
+              "Opa! Só é permitido um registro por semana. Volte na próxima semana para atualizar."
+          });
+        }
+      }
     }
 
     try {
       await addWeight({ date: currentDate, weight: parseInt(params.weight) });
+      reset({ weight: "" });
       onSuccess();
     } catch (error: any) {
       handleWeightAdditionError(error);
