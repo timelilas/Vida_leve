@@ -38,7 +38,7 @@ const CreateMealScreen = (props: CreateMealScreenProps) => {
 
   const { setMeal } = useMealStore((state) => state.actions);
   const { Snackbar, showSnackbar } = useSnackbar();
-  const { user } = useUser({ queryEnabled: false });
+  const { user } = useUser({ refetchOnMount: false });
 
   const [mealDetails, setMealDetails] = useState<{
     selectedDate: DateData;

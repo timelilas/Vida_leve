@@ -5,7 +5,7 @@ const initialState: MealStoreState = {
   date: new Date().toISOString(),
   foodIds: [],
   type: null,
-  foodMap: {},
+  foodMap: {}
 };
 
 export const useMealStore = create<MealStore>((set, get) => {
@@ -28,7 +28,6 @@ export const useMealStore = create<MealStore>((set, get) => {
       addFood: (food) => {
         const prevState = get();
         const existingFood = prevState.foodMap[`${food.id}`];
-
         const newFoodMap: MealStoreState["foodMap"] = {};
 
         for (const foodId of prevState.foodIds) {
@@ -39,10 +38,7 @@ export const useMealStore = create<MealStore>((set, get) => {
             : prevFoodState;
         }
 
-        const newFoodIds = [
-          food.id,
-          ...prevState.foodIds.filter((id) => id !== food.id),
-        ];
+        const newFoodIds = [food.id, ...prevState.foodIds.filter((id) => id !== food.id)];
 
         if (!existingFood) {
           newFoodMap[`${food.id}`] = { ...food, quantity: 1, isExpanded: true };
@@ -53,20 +49,21 @@ export const useMealStore = create<MealStore>((set, get) => {
         newFoodMap[`${food.id}`] = {
           ...existingFood,
           quantity: finalQuantity >= 99 ? 99 : finalQuantity,
-          isExpanded: true,
+          isExpanded: true
         };
         return set(() => ({ foodMap: newFoodMap, foodIds: newFoodIds }));
       },
       collapseAllItems: () => {
         set((prevState) => {
           return {
-            foodMap: prevState.foodIds.reduce((acc, id) => {
-              acc[`${id}`] = {
-                ...prevState.foodMap[`${id}`],
-                isExpanded: false,
-              };
-              return acc;
-            }, {} as MealStoreState["foodMap"]),
+            foodMap: prevState.foodIds.reduce(
+              (acc, id) => {
+                const prevItem = prevState.foodMap[`${id}`];
+                acc[`${id}`] = { ...prevItem, isExpanded: false };
+                return acc;
+              },
+              {} as MealStoreState["foodMap"]
+            )
           };
         });
       },
@@ -82,7 +79,7 @@ export const useMealStore = create<MealStore>((set, get) => {
         set(() => {
           return {
             foodIds: prevState.foodIds.filter((id) => id !== foodId),
-            foodMap: newFoodMap,
+            foodMap: newFoodMap
           };
         });
       },
@@ -92,37 +89,33 @@ export const useMealStore = create<MealStore>((set, get) => {
 
         if (!existingFood) return;
 
-        const finalQuantity = existingFood.quantity + 1;
+        const newQuantity = existingFood.quantity + 1;
+        const finalQuantity = newQuantity >= 99 ? 99 : newQuantity;
 
         return set(() => ({
           foodMap: {
             ...prevState.foodMap,
-            [`${foodId}`]: {
-              ...existingFood,
-              quantity: finalQuantity >= 99 ? 99 : finalQuantity,
-            },
-          },
+            [`${foodId}`]: { ...existingFood, quantity: finalQuantity }
+          }
         }));
       },
       decrementFoodQuantity(foodId) {
         const prevState = get();
         const existingFood = prevState.foodMap[`${foodId}`];
 
-        if (existingFood) {
-          const finalQuantity = existingFood.quantity - 1;
+        if (!existingFood) return;
 
-          set(() => {
-            return {
-              foodMap: {
-                ...prevState.foodMap,
-                [`${foodId}`]: {
-                  ...existingFood,
-                  quantity: finalQuantity <= 0 ? 1 : finalQuantity,
-                },
-              },
-            };
-          });
-        }
+        const newQuantity = existingFood.quantity - 1;
+        const finalQuantity = newQuantity <= 0 ? 1 : newQuantity;
+
+        set(() => {
+          return {
+            foodMap: {
+              ...prevState.foodMap,
+              [`${foodId}`]: { ...existingFood, quantity: finalQuantity }
+            }
+          };
+        });
       },
       toggleItemExpansion(foodId) {
         const prevState = get();
@@ -136,19 +129,16 @@ export const useMealStore = create<MealStore>((set, get) => {
           let currentFood = prevState.foodMap[`${id}`];
 
           if (foodId === id) {
-            currentFood = {
-              ...currentFood,
-              isExpanded: !currentFood.isExpanded,
-            };
-          } else if (foodId !== id && currentFood.isExpanded) {
+            currentFood = { ...currentFood, isExpanded: !currentFood.isExpanded };
+          }
+          if (foodId !== id && currentFood.isExpanded) {
             currentFood = { ...currentFood, isExpanded: false };
           }
-
           newFoodMap[`${id}`] = currentFood;
         }
 
         return set(() => ({ foodMap: newFoodMap }));
-      },
-    },
+      }
+    }
   };
 });

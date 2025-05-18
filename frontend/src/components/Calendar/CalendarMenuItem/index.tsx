@@ -1,4 +1,4 @@
-import { Pressable, StyleSheet, Text, View } from "react-native";
+import { Pressable, Text, View } from "react-native";
 import { CheckIcon } from "../../Icons/CheckIcon";
 import { GenericItem } from "../types";
 import { styles } from "./styles";
@@ -15,11 +15,8 @@ export const CalendarMenuItem = memo(
     return (
       <Pressable
         onPress={props.onTouch}
-        style={[styles.item, props.selected && styles.itemSelected]}
-      >
-        <View style={styles.itemIcon}>
-          {props.selected ? <CheckIcon /> : null}
-        </View>
+        style={[styles.item, props.selected && styles.itemSelected]}>
+        <View style={styles.itemIcon}>{props.selected ? <CheckIcon /> : null}</View>
         <Text style={styles.itemText}>{props.item.value || props.item.id}</Text>
       </Pressable>
     );

@@ -32,6 +32,11 @@ module.exports = {
         type: Sequelize.ENUM("gradual", "moderado", "acelerado"),
         allowNull: true,
       },
+      lastWeightUpdateAt: {
+        type: Sequelize.DATE(),
+        defaultValue: Sequelize.fn("CURRENT_TIMESTAMP", 3),
+        allowNull: false,
+      },
       createdAt: {
         type: Sequelize.DATE(),
         defaultValue: Sequelize.fn("CURRENT_TIMESTAMP", 3),

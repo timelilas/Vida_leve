@@ -5,12 +5,12 @@ import {
   INTERNAL_SERVER_ERROR,
   NETWORK_ERROR_MESSAGE,
   UNAUTHORIZED_ERROR_MESSAGE,
-  UNEXPECTED_ERROR_MESSAGE,
+  UNEXPECTED_ERROR_MESSAGE
 } from "../../constants/errorMessages";
 
 const api = axios.create({
-  baseURL: process.env.EXPO_PUBLIC_API_URL,
-  timeout: 5000,
+  baseURL: (process.env as any).EXPO_PUBLIC_API_URL,
+  timeout: 5000
 });
 
 export const request = async <T>(
@@ -26,8 +26,8 @@ export const request = async <T>(
       data,
       headers: {
         "Content-Type": "application/json",
-        ...headers,
-      },
+        ...headers
+      }
     });
 
     return { ...response, data: response.data.data };
@@ -50,7 +50,7 @@ export const request = async <T>(
           path: errorParams.path,
           timestamp: new Date(errorParams.timestamp),
           message: errorMessage,
-          status: error.response.status,
+          status: error.response.status
         });
       }
 

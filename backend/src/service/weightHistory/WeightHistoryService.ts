@@ -6,6 +6,7 @@ import {
   GetWeightsByDateDTO,
   GetWeightByIdDTO,
   DeleteWeightDTO,
+  DeleteAllWeightsDTO,
 } from "./types";
 import { DatabaseException } from "../../@core/exception/infrastructure/DatabaseException";
 
@@ -108,6 +109,22 @@ export default class WeightHistoryService {
     } catch (error: any) {
       throw new DatabaseException(
         `Erro na tentativa de deletar o registro de peso com id: '${id}' do usuário com id: '${userId}'`,
+        WeightHistoryService.name,
+        error.message
+      );
+    }
+  };
+
+  public deleteAll = async (params: DeleteAllWeightsDTO) => {
+    const { userId, transaction } = params;
+    try {
+      await WeightHistory.destroy({
+        where: { userId },
+        transaction: transaction,
+      });
+    } catch (error: any) {
+      throw new DatabaseException(
+        `Erro ao tentar deletar todos os registros de peso do usuário com id: '${userId}'`,
         WeightHistoryService.name,
         error.message
       );

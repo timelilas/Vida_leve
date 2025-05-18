@@ -4,7 +4,8 @@ import { DateIntervalType, PlainDate } from "../../@types";
 interface DateFilterContextType {
   intervalType: DateIntervalType;
   dateData: PlainDate;
-  updateDateDate: (date: Date) => void;
+  isDebouncing: boolean;
+  updateDateDate: (date: Date, withDebounce?: boolean) => void;
   updateIntervalType: (type: DateIntervalType) => void;
 }
 

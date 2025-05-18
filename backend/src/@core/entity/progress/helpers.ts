@@ -4,12 +4,12 @@ import { PlanType } from "../@shared";
 import { CaloriePlanEntity } from "../caloriePlan/entity";
 import { ProgressEntity } from "./entity";
 
-interface CaloriePlanParams extends Omit<ProgressEntity, "currentCaloriePlan"> {
+interface CaloriePlanParams extends Omit<ProgressEntity, "currentCaloriePlan" | "lastWeightUpdateAt"> {
   type: PlanType;
   gender: Gender;
   age: number;
 }
-
+  
 export class ProgressHelper {
   public static calculateHealthyWeightRange(age: number, height: number) {
     const imcRange = ProgressHelper.getIMCRangeByAge(age);

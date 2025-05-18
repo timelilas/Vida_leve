@@ -25,7 +25,6 @@ import { WeightTable } from "./components/WeightTable";
 import { SubmitButton } from "../../../components/SubmitButton";
 import { CommonActions } from "@react-navigation/native";
 import { RouteConstants } from "../../../routes/types";
-import { DeleteWeightModal } from "./components/DeleteWeightModal";
 import { useCallback, useEffect, useLayoutEffect, useState } from "react";
 import { WeightProps } from "../../../@core/entities/weight/type";
 import { useWeightHistory } from "../../../hooks/weight/useWeightHistory";
@@ -38,6 +37,7 @@ import {
   WEIGHT_TABLE_ITEM_MARGIN_BOTTOM
 } from "./components/WeightItem/constants";
 import { colors } from "../../../styles/colors";
+import { AlertModal } from "../../../components/AlertModal";
 
 interface SelectedWeight extends WeightProps {
   isDeleted: boolean;
@@ -58,19 +58,11 @@ const WeightHistoryScreen = () => {
   const [bodyHeight, setBodyHeight] = useState<number | null>(null);
   const [queryLimit, setQueryLimit] = useState<number>(0);
 
-  const {
-    data,
-    isLoading,
-    isFetching,
-    isDeleting,
-    error,
-    deleteWeight,
-    fetchWeights,
-    fetchMoreWeights
-  } = useWeightHistory({
-    limit: queryLimit,
-    enabled: !!queryLimit
-  });
+  const { data, isFetching, isDeleting, error, deleteWeight, fetchWeights, fetchMoreWeights } =
+    useWeightHistory({
+      limit: queryLimit,
+      enabled: !!queryLimit
+    });
 
   const orderedWeights = data.weights.sort((a, b) => {
     return new Date(b.date).getTime() - new Date(a.date).getTime();
@@ -126,7 +118,7 @@ const WeightHistoryScreen = () => {
       setSelectedWeight((prevState) =>
         prevState ? { ...prevState, isDeleted: true } : prevState
       );
-      delay(750).then(() =>
+      delay(700).then(() =>
         showSnackbar({
           duration: 3000,
           message: "Registro de peso excluído com sucesso!",
@@ -222,7 +214,7 @@ const WeightHistoryScreen = () => {
         <View style={styles.separatorLine} />
       </View>
       <View style={styles.weightTableContainer}>
-        <WeightHistoryTableSkeleton show={isLoading || isRefreshing}>
+        <WeightHistoryTableSkeleton show={isFetching || isRefreshing || !queryLimit}>
           {error ? null : (
             <>
               <WeightTable
@@ -251,11 +243,14 @@ const WeightHistoryScreen = () => {
         onPress={resetNavigationToHome}
       />
       {selectedWeightFormattedDate ? (
-        <DeleteWeightModal
+        <AlertModal
+          title="Confirmar exclusão do registo de peso"
+          message={`Tem certeza de que deseja excluir o registro de ${selectedWeightFormattedDate}? Essa ação não pode ser desfeita.`}
+          onConfirmText="Sim, excluir"
+          onCancelText="Cancelar"
           isVisible={isModalVisible}
           onCancel={onCancelDeleteWeightModal}
           onConfirm={onConfirmDeleteWeightModal}
-          message={`Tem certeza de que deseja excluir o registro de ${selectedWeightFormattedDate}? Essa ação não pode ser desfeita.`}
         />
       ) : null}
     </ScreenWrapper>

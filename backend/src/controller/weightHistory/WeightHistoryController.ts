@@ -4,9 +4,12 @@ import WeightHistoryService from "../../service/weightHistory/WeightHistoryServi
 import { DEFAULT_WEIGHT_SEARCH_LIMIT } from "./constants";
 import { NotFoundException } from "../../@core/exception/http/NotFoundException";
 import { ConflictException } from "../../@core/exception/http/ConflictException";
+import ProgressService from "../../service/progress/ProgressService";
+import { getDateOnlyFromDate } from "../../utils/common/helpers";
 
 export default class WeightHistoryController {
-  private _weightHistoryService = new WeightHistoryService();
+  private _WeightHistoryService = new WeightHistoryService();
+  private _ProgressService = new ProgressService();
 
   async get(req: Request, res: Response): Promise<Response> {
     const userId = req.user.id;
@@ -16,7 +19,7 @@ export default class WeightHistoryController {
     };
 
     try {
-      const weightHistory = await this._weightHistoryService.get({
+      const weightHistory = await this._WeightHistoryService.get({
         limit: query.limit || DEFAULT_WEIGHT_SEARCH_LIMIT,
         offset: query.offset || 0,
         userId,
@@ -51,11 +54,29 @@ export default class WeightHistoryController {
         date.getUTCDate() + 6 - date.getUTCDay()
       );
 
-      const existingWeights = await this._weightHistoryService.getByDate({
+      const userProgress = await this._ProgressService.get({ userId });
+
+      const existingWeights = await this._WeightHistoryService.getByDate({
         userId,
         from: weekStartDate,
         to: weekEndDate,
       });
+
+      if (userProgress) {
+        const lastWeightDateOnly = getDateOnlyFromDate(
+          userProgress.lastWeightUpdateAt
+        );
+        if (
+          lastWeightDateOnly >= weekStartDate &&
+          lastWeightDateOnly <= weekEndDate
+        ) {
+          throw new ConflictException(
+            "Não é permitido registrar mais de um peso por semana.",
+            WeightHistoryController.name,
+            "date"
+          );
+        }
+      }
 
       if (existingWeights.length) {
         throw new ConflictException(
@@ -65,7 +86,7 @@ export default class WeightHistoryController {
         );
       }
 
-      const plan = await this._weightHistoryService.addWeight({
+      const plan = await this._WeightHistoryService.addWeight({
         userId,
         weight,
         date: new Date(date),
@@ -94,7 +115,7 @@ export default class WeightHistoryController {
         );
       }
 
-      const foundWeight = await this._weightHistoryService.getById({
+      const foundWeight = await this._WeightHistoryService.getById({
         userId,
         id,
       });
@@ -107,7 +128,7 @@ export default class WeightHistoryController {
         );
       }
 
-      await this._weightHistoryService.delete({ id, userId });
+      await this._WeightHistoryService.delete({ id, userId });
       return res.status(204).send();
     } catch (error: any) {
       return exceptionResponseAdapter({

@@ -3,7 +3,7 @@ import MealService from "../../service/meal/MealService";
 import { exceptionResponseAdapter } from "../../utils/express/helpers";
 import { ConflictException } from "../../@core/exception/http/ConflictException";
 import { NotFoundException } from "../../@core/exception/http/NotFoundException";
-import { DEFAULT_MEAL_LIMIT } from "./constants";
+import { DEFAULT_MEAL_SEARCH_LIMIT } from "./constants";
 import UserService from "../../service/user/UserService";
 import { BadRequestException } from "../../@core/exception/http/BadRequestException";
 
@@ -114,7 +114,7 @@ export default class MealController {
       const { meals, hasMore } = await this._mealService.getMeals({
         userId: userId,
         date: query.date ? new Date(query.date) : undefined,
-        limit: query.limit || DEFAULT_MEAL_LIMIT,
+        limit: query.limit || DEFAULT_MEAL_SEARCH_LIMIT,
         offset: query.offset,
       });
 

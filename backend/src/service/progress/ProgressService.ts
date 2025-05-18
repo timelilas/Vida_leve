@@ -1,14 +1,21 @@
 import { DatabaseException } from "../../@core/exception/infrastructure/DatabaseException";
 import { Progress } from "../../database/associations";
-import { SetCaloriePlanDTO, UpsertProgressDTO } from "./types";
+import { GetProgressDTO, SetCaloriePlanDTO, UpsertProgressDTO } from "./types";
 
 export default class ProgressService {
   public upsert = async (params: UpsertProgressDTO) => {
     const { data, transaction } = params;
+    const lastWeightUpdateDate = data.lastWeightUpdateAt
+      ? new Date(data.lastWeightUpdateAt)
+      : undefined;
 
     try {
       const [updatedProgress] = await Progress.upsert(
-        { ...data, updatedAt: new Date() },
+        {
+          ...data,
+          updatedAt: new Date(),
+          lastWeightUpdateAt: lastWeightUpdateDate,
+        },
         { transaction: transaction, returning: true }
       );
 
@@ -22,11 +29,14 @@ export default class ProgressService {
     }
   };
 
-  public get = async (userId: number) => {
+  public get = async (params: GetProgressDTO) => {
+    const { userId, transaction } = params;
     try {
       const userProgress = await Progress.findOne({
         where: { userId },
         attributes: { exclude: ["createdAt", "updatedAt"] },
+        lock: transaction?.LOCK.UPDATE,
+        transaction,
       });
 
       if (!userProgress) {

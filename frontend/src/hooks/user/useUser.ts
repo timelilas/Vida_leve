@@ -6,7 +6,7 @@ import { queryClient } from "../../libs/react-query/queryClient";
 import { useCallback } from "react";
 
 interface UseUserParams {
-  queryEnabled?: boolean;
+  enabled?: boolean;
   refetchOnMount?: boolean;
 }
 
@@ -22,8 +22,8 @@ const initialData: UserQueryState = {
 
 export function useUser(params?: UseUserParams) {
   const { data, isLoading, error, refetch } = useQuery<UserQueryState>({
-    queryKey: QueryKeys.DATABASE.USER,
-    enabled: params?.queryEnabled ?? true,
+    queryKey: QueryKeys.API.USER,
+    enabled: params?.enabled,
     refetchOnMount: params?.refetchOnMount,
     queryFn: async () => {
       const { data } = await httpUserService.getProfile();
@@ -43,7 +43,7 @@ export function useUser(params?: UseUserParams) {
       return updatedUser;
     },
     onSuccess: (updatedUser) => {
-      queryClient.setQueryData<UserQueryState>(QueryKeys.DATABASE.USER, (old) => {
+      queryClient.setQueryData<UserQueryState>(QueryKeys.API.USER, (old) => {
         return old ? { ...old, ...updatedUser } : updatedUser;
       });
     }

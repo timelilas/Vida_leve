@@ -2,12 +2,13 @@ import {
   DateData,
   Calendar as ReactNativeCalendar,
   LocaleConfig,
-  CalendarProps,
+  CalendarProps
 } from "react-native-calendars";
 import { ptBR } from "./localeConfig";
-import { StyleSheet, View } from "react-native";
+import { View } from "react-native";
 import { colors } from "../../styles/colors";
 import { fonts } from "../../styles/fonts";
+import { baseStyles, markedStyles } from "./styles";
 
 interface CustomCalendarBodyProps {
   onDayPress?: (date: DateData) => void;
@@ -20,47 +21,27 @@ LocaleConfig.defaultLocale = "pt-br";
 
 export function CustomCalendarBody(props: CustomCalendarBodyProps) {
   const today = new Date().toLocaleDateString("pt-br").split("/");
+  const headerTitlte = <View style={{ display: "none" }} />;
 
   return (
     <ReactNativeCalendar
-      current={props.current}
       hideArrows
-      style={baseStyles.container}
+      onDayPress={props.onDayPress}
       date={props.current}
-      customHeaderTitle={<View style={{ display: "none" }} />}
-      markingType="custom"
+      current={props.current}
       maxDate={`${today[2]}-${today[1]}-${today[0]}`}
+      theme={theme}
+      markingType="custom"
+      style={baseStyles.container}
+      customHeaderTitle={headerTitlte}
       markedDates={
         props.targetDate && {
-          [props.targetDate.dateString]: { customStyles: markedStyles },
+          [props.targetDate.dateString]: { customStyles: markedStyles }
         }
       }
-      onDayPress={props.onDayPress}
-      theme={theme}
     />
   );
 }
-
-const baseStyles = StyleSheet.create({
-  container: {
-    padding: 0,
-  },
-  textDay: {
-    fontFamily: fonts.robotoRegular,
-    fontSize: 16,
-    color: "#1D1B20",
-  },
-});
-
-const markedStyles = StyleSheet.create({
-  text: {
-    color: colors.common.white,
-  },
-  container: {
-    backgroundColor: colors.primary,
-    borderRadius: 20,
-  },
-});
 
 const theme: CalendarProps["theme"] = {
   todayTextColor: "#e45f5f",
@@ -69,5 +50,5 @@ const theme: CalendarProps["theme"] = {
   textDayHeaderFontSize: 16,
   textDayHeaderFontFamily: fonts.robotoRegular,
   textSectionTitleColor: "#1D1B20",
-  textDayStyle: baseStyles.textDay,
+  textDayStyle: baseStyles.textDay
 };

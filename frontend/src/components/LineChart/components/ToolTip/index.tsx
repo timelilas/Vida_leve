@@ -45,7 +45,7 @@ export function ToolTip(props: { value: string; posX: number; posY: number; colo
         backgroundColor: props.color
       }}>
       <Text numberOfLines={1} style={styles.text}>
-        {props.value} kcal
+        {props.value}
       </Text>
       <SolidArrowIcon width={8} height={8} fill={props.color} style={styles.arrowIcon} />
     </Animated.View>

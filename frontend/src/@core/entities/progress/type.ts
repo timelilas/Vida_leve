@@ -5,6 +5,7 @@ export interface ProgressProps {
   height: number; // altura em metros
   weight: number; // peso em quilogramas
   goalWeight: number; // meta de peso em quilogramas
-  activityFrequency: ActitivyFrequency;
-  currentCaloriePlan: PlanType | null;
+  activityFrequency: ActitivyFrequency; // nível de atividade física diário
+  currentCaloriePlan: PlanType | null; // atual plano de calorias
+  lastWeightUpdateAt: Date; // data de última atualização do peso
 }
