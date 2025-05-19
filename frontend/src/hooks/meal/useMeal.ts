@@ -95,16 +95,22 @@ export function useMeal(params?: UseMealParams) {
     return dailyConsumption;
   };
 
+  const fetchMeals = async () => {
+    await mealsQuery.refetch();
+  };
+
   return {
     meals: mealsQuery.data || [],
+    dailyConsumption: calculateDailyConsumption(),
     isLoading: mealsQuery.isLoading,
+    isFetching: mealsQuery.isFetching,
     isCreatingMeal: createMealMutation.isPending,
     isUpdatingMeal: updateMealMutaiton.isPending,
     isMealCreated: createMealMutation.isSuccess,
     isMealUpdated: updateMealMutaiton.isSuccess,
     error: mealsQuery.error,
-    dailyConsumption: calculateDailyConsumption(),
     createMeal,
-    updateMeal
+    updateMeal,
+    fetchMeals
   };
 }

@@ -13,6 +13,7 @@ import { AlertModal } from "../../../components/AlertModal";
 import { useRef, useState } from "react";
 import { CaloriePlanProps } from "../../../@core/entities/caloriePlan/type";
 import { ProgressProps } from "../../../@core/entities/progress/type";
+import { useWeightHistory } from "../../../hooks/weight/useWeightHistory";
 
 type UpdateProgressScreenRouteProp = RouteProp<RouteParamsList, RouteConstants.UpdateProgress>;
 
@@ -24,6 +25,7 @@ const UpdateProgressScreen = ({ route }: UpdateProgressScreenProps) => {
   const navigation = useAppNavigation();
   const { profileData } = route.params;
   const { progress } = useProgress({ refetchOnMount: false });
+  const { data: weightHistory } = useWeightHistory({ enabled: false });
   const [isModalVisible, setIsModalVisible] = useState(false);
 
   const caloriePlansRef = useRef<CaloriePlanProps[] | null>(null);
@@ -66,7 +68,7 @@ const UpdateProgressScreen = ({ route }: UpdateProgressScreenProps) => {
   async function onSubmit(data: OnProgressSubmitData) {
     const newWeight = data.formData.weight;
     const currentWeight = progress?.weight;
-    if (newWeight !== currentWeight) {
+    if (newWeight !== currentWeight && weightHistory.weights.length) {
       caloriePlansRef.current = data.newCaloriePlans;
       formDataAfterSubmit.current = data.formData;
       setIsModalVisible(true);

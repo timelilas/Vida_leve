@@ -49,7 +49,6 @@ class App {
     this.app.use("/plans", caloriePlanRouter);
     this.app.use("/foods", foodRouter);
     this.app.use("/meals", mealRouter);
-    this.app.use("/history", planHistoryRouter);
     this.app.use("/Weight-History", weightHistoryRouter);
   }
 
