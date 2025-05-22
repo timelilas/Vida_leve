@@ -83,15 +83,17 @@ const WeightTrackingScreen = () => {
   }
 
   function getMostRecentWeight(weightHsitory: WeightHistoryQueryState["weights"]) {
-    return weightHsitory.reduce(
-      (max, record) => {
-        if (max.date === null || new Date(record.date) > max.date) {
-          max = { date: new Date(record.date), weight: record.weight };
-        }
-        return max;
-      },
-      { date: null, weight: null } as { date: Date | null; weight: number | null }
-    ).weight;
+    return (
+      weightHsitory.reduce(
+        (max, record) => {
+          if (max.date === null || new Date(record.date) > max.date) {
+            max = { date: new Date(record.date), weight: record.weight };
+          }
+          return max;
+        },
+        { date: null, weight: null } as { date: Date | null; weight: number | null }
+      ).weight || progress?.weight
+    );
   }
 
   function resetNavigationToHome() {

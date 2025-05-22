@@ -97,7 +97,7 @@ const LoginScreen = () => {
 
   async function handleNavigationAfterLogin() {
     try {
-      const { user, progress, plans } = await setOnboardingData();
+      const { user, progress, plans } = await getOnboardingData();
 
       if (!user?.birthDate || !user?.gender || !user?.phone || !user?.name) {
         return navigateToProfileForm();
@@ -115,7 +115,7 @@ const LoginScreen = () => {
     }
   }
 
-  async function setOnboardingData() {
+  async function getOnboardingData() {
     const [user, progress, plans] = await Promise.all([
       getUserProfile(),
       getProgress(),
