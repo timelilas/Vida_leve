@@ -14,12 +14,14 @@ import { useRef, useState } from "react";
 import { CaloriePlanProps } from "../../../@core/entities/caloriePlan/type";
 import { ProgressProps } from "../../../@core/entities/progress/type";
 import { AlertModal } from "../../../components/AlertModal";
+import { useWeightHistory } from "../../../hooks/weight/useWeightHistory";
 
 const UpdateWeightScreen = () => {
   const navigation = useAppNavigation();
   const { Snackbar, showSnackbar } = useSnackbar();
   const { progress } = useProgress({ refetchOnMount: false });
   const { user } = useUser({ refetchOnMount: false });
+  const { data: weightHistory } = useWeightHistory({ enabled: false });
   const [isModalVisible, setIsModalVisible] = useState(false);
 
   const caloriePlansRef = useRef<CaloriePlanProps[] | null>(null);
@@ -73,7 +75,7 @@ const UpdateWeightScreen = () => {
     const newWeight = formData.weight;
     const currentWeight = progress?.weight;
 
-    if (newWeight !== currentWeight) {
+    if (newWeight !== currentWeight && weightHistory.weights.length) {
       caloriePlansRef.current = newCaloriePlans;
       formDataAfterSubmit.current = formData;
       setIsModalVisible(true);
