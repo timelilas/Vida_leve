@@ -28,7 +28,7 @@ const AppRouter = () => {
       <Stack.Navigator
         initialRouteName={RouteConstants.Welcome}
         screenOptions={{
-          orientation: "all",
+          orientation: "portrait",
           statusBarStyle: "dark",
           statusBarColor: colors.background.primary
         }}>
