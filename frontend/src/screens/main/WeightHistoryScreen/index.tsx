@@ -31,7 +31,7 @@ interface SelectedWeight extends WeightProps {
 }
 
 const WeightHistoryScreen = () => {
-  const { Snackbar, showSnackbar } = useSnackbar();
+  const { Snackbar, showSnackbar, closeAllSnackbars } = useSnackbar();
   const navigation = useAppNavigation();
 
   const dateData = convertDateToLocalDateData(new Date());
@@ -105,7 +105,9 @@ const WeightHistoryScreen = () => {
   async function onConfirmDeleteWeightModal() {
     if (isDeleting) return;
     if (!selectedWeight) return;
+
     setIsModalVisible(false);
+    closeAllSnackbars();
 
     try {
       await deleteWeight(selectedWeight.id);

@@ -79,6 +79,11 @@ const WeightTrackingScreen = () => {
       }
     }
 
+    if (chartDataAndLabels.goalWeights.length === 1 && progress?.goalWeight) {
+      chartDataAndLabels.goalWeights.push(progress.goalWeight);
+      chartDataAndLabels.labels.push("");
+    }
+
     return chartDataAndLabels;
   }
 
