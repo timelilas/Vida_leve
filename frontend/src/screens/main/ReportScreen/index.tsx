@@ -48,24 +48,35 @@ const ReportScreen = () => {
     enabled: !isDebouncing
   });
 
-  const chartDataAndLabels = statistics.reduce(
-    (acc, { consumption, target, date }, i) => {
-      acc.labels.push(`${new Date(date).getUTCDate()}`);
-      acc.dailyConsumption.push(consumption);
-      acc.dailyTarget.push(target);
-      return acc;
-    },
-    { dailyConsumption: [], dailyTarget: [], labels: [] } as {
-      labels: string[];
-      dailyConsumption: number[];
-      dailyTarget: number[];
-    }
-  );
+  const chartDataAndLabels = generateChartDataAndLabels();
 
   const isDailyTargetUnchanged = chartDataAndLabels.dailyTarget.reduce(
     (acc, value, _, data) => (value !== data[0] ? false : acc),
     true
   );
+
+  function generateChartDataAndLabels() {
+    const chartDataAndLabels = statistics.reduce(
+      (acc, { consumption, target, date }) => {
+        acc.labels.push(`${new Date(date).getUTCDate()}`);
+        acc.dailyConsumption.push(consumption);
+        acc.dailyTarget.push(target);
+        return acc;
+      },
+      { dailyConsumption: [], dailyTarget: [], labels: [] } as {
+        labels: string[];
+        dailyConsumption: number[];
+        dailyTarget: number[];
+      }
+    );
+
+    if (statistics.length === 1) {
+      chartDataAndLabels.labels.push("");
+      chartDataAndLabels.dailyTarget.push(statistics[0].target);
+    }
+
+    return chartDataAndLabels;
+  }
 
   function goBack() {
     navigation.goBack();
