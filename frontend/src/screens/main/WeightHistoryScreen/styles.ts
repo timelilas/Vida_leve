@@ -3,6 +3,15 @@ import { colors } from "../../../styles/colors";
 import { fonts } from "../../../styles/fonts";
 
 export const styles = StyleSheet.create({
+  container: {
+    padding: 0,
+    flexGrow: 1
+  },
+  body: {
+    paddingTop: 24,
+    paddingHorizontal: 16,
+    marginBottom: "auto"
+  },
   title: {
     fontSize: 20,
     lineHeight: 20,
@@ -33,13 +42,20 @@ export const styles = StyleSheet.create({
   },
   weightTableContainer: {
     position: "relative",
-    marginBottom: 40,
-    paddingHorizontal: 16
+    marginBottom: 40
   },
-  submitButton: {
-    marginTop: "auto"
+  weightTableInnerContainer: {
+    paddingHorizontal: 16
   },
   activityIndicatorContainer: {
     justifyContent: "center"
+  },
+  bottom: {
+    paddingHorizontal: 40,
+    paddingVertical: 24,
+    borderColor: colors.gray.medium,
+    borderWidth: 2,
+    borderTopRightRadius: 24,
+    borderTopLeftRadius: 24
   }
 });
