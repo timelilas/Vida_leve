@@ -7,7 +7,6 @@ import caloriePlanRouter from "./routes/CaloriePlanRouter";
 import helmet from "helmet";
 import foodRouter from "./routes/FoodRouter";
 import mealRouter from "./routes/MealRouter";
-import planHistoryRouter from "./routes/PlanHistoryRouter";
 import weightHistoryRouter from "./routes/WeightHistoryRouter";
 
 // Swagger

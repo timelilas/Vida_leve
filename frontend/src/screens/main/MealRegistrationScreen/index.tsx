@@ -112,31 +112,34 @@ const MealRegistrationScreen = () => {
   return (
     <ScreenWrapper contentContainerStyle={styles.container} snackbar={<Snackbar />}>
       <View style={styles.body}>
-        <NavigationHeader
-          variant="titled"
-          title={getTitleFromMealType(mealType)}
-          subtitle={shortDateLabel}
-          onBack={goBack}
-        />
-        <View style={styles.textWrapper}>
-          <ScreenTitle title="Aqui está sua refeição até agora" style={styles.title} />
-          <Paragraph style={styles.text}>
-            Confira os alimentos que você adicionou. Precisa incluir mais? Toque em “Adicionar
-            Alimento”. Se já tiver tudo certo, finalize registrando sua refeição e acompanhe
-            seu progresso diário.
-          </Paragraph>
+        <View style={styles.textContainer}>
+          <NavigationHeader
+            variant="titled"
+            title={getTitleFromMealType(mealType)}
+            subtitle={shortDateLabel}
+            onBack={goBack}
+          />
+          <View style={styles.textWrapper}>
+            <ScreenTitle title="Aqui está sua refeição até agora" style={styles.title} />
+            <Paragraph style={styles.text}>
+              Confira os alimentos que você adicionou. Precisa incluir mais? Toque em
+              “Adicionar Alimento”. Se já tiver tudo certo, finalize registrando sua refeição e
+              acompanhe seu progresso diário.
+            </Paragraph>
+          </View>
+        </View>
+        <View style={styles.foodItems}>
+          {foodIds.map((id) => (
+            <MealItem
+              key={`${id}`}
+              foodId={`${id}`}
+              disabled={isCreatingMeal || isUpdatingMeal}
+            />
+          ))}
         </View>
       </View>
-      <View>
-        {foodIds.map((id) => (
-          <MealItem
-            key={`${id}`}
-            foodId={`${id}`}
-            disabled={isCreatingMeal || isUpdatingMeal}
-          />
-        ))}
-      </View>
       <MealSummary
+        style={styles.summaryContainer}
         isSubmitted={isMealCreated || isMealUpdated}
         isSubmitting={isCreatingMeal || isUpdatingMeal}
         onSubmit={handleSubmit}

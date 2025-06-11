@@ -22,6 +22,7 @@ interface ProgressFormProps {
   submitButtonText: string;
   onSubmit: (formData: OnProgressSubmitData) => Promise<void>;
   onError?: (error: Error) => void;
+  disabled?: boolean;
 }
 
 export function ProgressForm(props: ProgressFormProps) {
@@ -184,7 +185,7 @@ export function ProgressForm(props: ProgressFormProps) {
         />
       </View>
       <SubmitButton
-        disabled={isSubmitting}
+        disabled={isSubmitting || props.disabled}
         onPress={handleSubmit(onSubmit)}
         style={styles.submitButton}
         type="primary"
