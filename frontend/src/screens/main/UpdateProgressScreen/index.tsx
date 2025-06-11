@@ -25,7 +25,9 @@ const UpdateProgressScreen = ({ route }: UpdateProgressScreenProps) => {
   const navigation = useAppNavigation();
   const { profileData } = route.params;
   const { progress } = useProgress({ refetchOnMount: false });
-  const { data: weightHistory } = useWeightHistory({ enabled: false });
+  const { data: weightHistory, error: weightHistoryError } = useWeightHistory({
+    enabled: false
+  });
   const [isModalVisible, setIsModalVisible] = useState(false);
 
   const caloriePlansRef = useRef<CaloriePlanProps[] | null>(null);
@@ -68,6 +70,9 @@ const UpdateProgressScreen = ({ route }: UpdateProgressScreenProps) => {
   async function onSubmit(data: OnProgressSubmitData) {
     const newWeight = data.formData.weight;
     const currentWeight = progress?.weight;
+
+    if (!currentWeight || weightHistoryError) return;
+
     if (newWeight !== currentWeight && weightHistory.weights.length) {
       caloriePlansRef.current = data.newCaloriePlans;
       formDataAfterSubmit.current = data.formData;
@@ -99,6 +104,7 @@ const UpdateProgressScreen = ({ route }: UpdateProgressScreenProps) => {
         onSubmit={onSubmit}
         initialData={formInitialData}
         submitButtonText="Continuar"
+        disabled={!!(!progress?.weight || weightHistoryError)}
       />
       <AlertModal
         title="Atualizar peso atual"
