@@ -20,7 +20,7 @@ export const styles = StyleSheet.create({
   dayPickerContainer: {
     marginTop: 12
   },
-  textWrapper: {
+  podiumSection: {
     marginTop: 16,
     gap: 16,
     paddingInline: 16
@@ -33,17 +33,10 @@ export const styles = StyleSheet.create({
     fontFamily: fonts.robotoMedium,
     color: colors.text.secondary
   },
-  podiumContainer: {
-    gap: 8,
-    marginTop: 8,
-    paddingInline: 16
-  },
   podium: {
+    justifyContent: "flex-end",
     height: 165,
-    width: "100%",
-    borderRadius: 4,
-    borderWidth: 1,
-    borderColor: colors.primary
+    width: "100%"
   },
   linkButton: {
     marginLeft: "auto",
@@ -56,7 +49,7 @@ export const styles = StyleSheet.create({
     width: "100%",
     backgroundColor: colors.gray.medium
   },
-  chartContainer: {
+  chartSection: {
     marginBottom: 40
   },
   chartBox: {

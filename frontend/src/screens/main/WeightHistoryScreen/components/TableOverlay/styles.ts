@@ -7,7 +7,8 @@ export const styles = StyleSheet.create({
     height: "100%",
     position: "absolute",
     top: 0,
-    left: 16,
+    left: "50%",
+    transform: [{ translateX: "-50%" }],
     alignItems: "center",
     justifyContent: "center"
   },

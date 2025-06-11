@@ -4,12 +4,14 @@ import { fonts } from "../../../styles/fonts";
 
 export const styles = StyleSheet.create({
   container: {
-    padding: 0,
-    paddingTop: 24,
-    gap: 24,
     flexGrow: 1
   },
   body: {
+    padding: 0,
+    paddingTop: 24,
+    gap: 24
+  },
+  textContainer: {
     paddingHorizontal: 16
   },
   textWrapper: {
@@ -26,15 +28,11 @@ export const styles = StyleSheet.create({
     fontFamily: fonts.robotoLight,
     color: colors.text.secondary
   },
+  foodItems: {
+    marginBottom: 24
+  },
   summaryContainer: {
-    paddingHorizontal: 40,
-    paddingVertical: 24,
-    borderColor: colors.gray.medium,
-    borderWidth: 2,
-    borderTopRightRadius: 24,
-    borderTopLeftRadius: 24,
-    marginTop: "auto",
-    gap: 14
+    marginTop: "auto"
   },
   addFoodButtonContainer: {
     flexDirection: "row",

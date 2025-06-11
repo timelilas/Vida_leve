@@ -55,27 +55,30 @@ export function useWeightHistory(params: UseWeightHistoryParams) {
     }
   });
 
-  const fetchMoreWeights = useCallback(async () => {
-    const currentState = queryClient.getQueryData<WeightHistoryQueryState>(queryKey);
+  const fetchMoreWeights = useCallback(
+    async (params?: { limit: number }) => {
+      const currentState = queryClient.getQueryData<WeightHistoryQueryState>(queryKey);
 
-    if (currentState?.hasMore === false) return;
+      if (currentState?.hasMore === false) return;
 
-    await queryClient.fetchQuery<WeightHistoryQueryState>({
-      queryKey,
-      retry: 1,
-      queryFn: async () => {
-        const { data: newData } = await httpWeightHistoryService.getWeightHistory({
-          limit: 10,
-          offset: currentState?.weights.length || 0
-        });
-        if (!currentState) return newData;
-        return {
-          hasMore: newData.hasMore,
-          weights: [...currentState.weights, ...newData.weights]
-        };
-      }
-    });
-  }, [queryKey]);
+      await queryClient.fetchQuery<WeightHistoryQueryState>({
+        queryKey,
+        retry: 1,
+        queryFn: async () => {
+          const { data: newData } = await httpWeightHistoryService.getWeightHistory({
+            limit: params?.limit || 10,
+            offset: currentState?.weights.length || 0
+          });
+          if (!currentState) return newData;
+          return {
+            hasMore: newData.hasMore,
+            weights: [...currentState.weights, ...newData.weights]
+          };
+        }
+      });
+    },
+    [queryKey]
+  );
 
   const fetchWeights = useCallback(async () => {
     await refetch();

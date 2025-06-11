@@ -1,8 +1,6 @@
 import { CalorieStatisticProps } from "./type";
 
-export function calculateAvgCarlorieConsumption(
-  data: Omit<CalorieStatisticProps, "date">[]
-) {
+export function calculateAvgCarlorieConsumption(data: Omit<CalorieStatisticProps, "date">[]) {
   const { activeDaysCount, caloriesConsumed } = data.reduce(
     (acc, { consumption }) => {
       acc.caloriesConsumed += consumption;
@@ -15,9 +13,7 @@ export function calculateAvgCarlorieConsumption(
   return activeDaysCount <= 0 ? 0 : caloriesConsumed / activeDaysCount;
 }
 
-export function getCalorieStatisticsSummary(
-  data: Omit<CalorieStatisticProps, "date">[]
-) {
+export function getCalorieStatisticsSummary(data: Omit<CalorieStatisticProps, "date">[]) {
   const summary = data.reduce(
     (acc, { consumption, strategy, target }) => {
       if (strategy === "deficit" && consumption > 0) {

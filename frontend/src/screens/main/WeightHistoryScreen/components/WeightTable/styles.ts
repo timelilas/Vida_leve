@@ -1,6 +1,10 @@
 import { StyleSheet } from "react-native";
 import { colors } from "../../../../../styles/colors";
 import { fonts } from "../../../../../styles/fonts";
+import {
+  WEIGHT_TABLE_ITEM_MARGIN_BOTTOM,
+  WEIGHT_TABLE_ITEM_HEIGHT
+} from "../WeightItem/constants";
 
 export const styles = StyleSheet.create({
   container: {
@@ -28,6 +32,9 @@ export const styles = StyleSheet.create({
   },
   tableBody: {
     overflow: "hidden"
+  },
+  list: {
+    maxHeight: (WEIGHT_TABLE_ITEM_MARGIN_BOTTOM + WEIGHT_TABLE_ITEM_HEIGHT) * 6
   },
   weightItem: {
     flexDirection: "row",

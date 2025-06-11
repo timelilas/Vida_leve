@@ -110,8 +110,13 @@ const LoginScreen = () => {
       }
 
       return naivgateToHome();
-    } catch (error) {
-      console.log(error);
+    } catch {
+      showSnackbar({
+        duration: 5000,
+        variant: "error",
+        message:
+          "Desculpe, não foi possível carregar algumas iformações do seu perfil. Por favor tente novamente mais tarde."
+      });
     }
   }
 

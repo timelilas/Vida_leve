@@ -27,6 +27,10 @@ export function useSnackbar() {
     setSnackbarState({ id: Date.now(), ...options, isVisible: true });
   }, []);
 
+  const closeAllSnackbars = useCallback(() => {
+    setSnackbarState((prevState) => ({ ...prevState, isVisible: false }));
+  }, []);
+
   const renderSnackbar = useCallback(() => {
     return (
       <Snackbar
@@ -47,6 +51,7 @@ export function useSnackbar() {
 
   return {
     showSnackbar,
+    closeAllSnackbars,
     Snackbar: renderSnackbar
   };
 }

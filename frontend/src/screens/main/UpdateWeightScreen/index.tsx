@@ -21,7 +21,9 @@ const UpdateWeightScreen = () => {
   const { Snackbar, showSnackbar } = useSnackbar();
   const { progress } = useProgress({ refetchOnMount: false });
   const { user } = useUser({ refetchOnMount: false });
-  const { data: weightHistory } = useWeightHistory({ enabled: false });
+  const { data: weightHistory, error: weightHistoryError } = useWeightHistory({
+    enabled: false
+  });
   const [isModalVisible, setIsModalVisible] = useState(false);
 
   const caloriePlansRef = useRef<CaloriePlanProps[] | null>(null);
@@ -75,6 +77,8 @@ const UpdateWeightScreen = () => {
     const newWeight = formData.weight;
     const currentWeight = progress?.weight;
 
+    if (!currentWeight || weightHistoryError) return;
+
     if (newWeight !== currentWeight && weightHistory.weights.length) {
       caloriePlansRef.current = newCaloriePlans;
       formDataAfterSubmit.current = formData;
@@ -106,6 +110,7 @@ const UpdateWeightScreen = () => {
         initialData={initialFormData}
         onError={onError}
         onSubmit={onSubmit}
+        disabled={!!(!progress?.weight || weightHistoryError)}
       />
       <AlertModal
         title="Atualizar peso atual"

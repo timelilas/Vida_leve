@@ -1,4 +1,4 @@
-import { Text, View } from "react-native";
+import { StyleProp, Text, View, ViewStyle } from "react-native";
 import { SubmitButton } from "../../../../../components/SubmitButton";
 import { styles } from "./styles";
 import { PlusIcon } from "../../../../../components/Icons/PlusIcon";
@@ -20,6 +20,7 @@ interface MealSummaryProps {
   isSubmitted: boolean;
   onError: (error: Error) => void;
   onSubmit: (data: MealRegistrationData) => Promise<void>;
+  style?: StyleProp<ViewStyle>;
 }
 
 export function MealSummary(props: MealSummaryProps) {
@@ -60,7 +61,7 @@ export function MealSummary(props: MealSummaryProps) {
   }
 
   return (
-    <View style={styles.container}>
+    <View style={[styles.container, props.style]}>
       <SubmitButton
         type="highlighted"
         disabled={props.isSubmitting || props.isSubmitted}

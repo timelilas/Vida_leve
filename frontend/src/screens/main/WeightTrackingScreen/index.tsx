@@ -29,6 +29,8 @@ import { colors } from "../../../styles/colors";
 import { LineChart } from "../../../components/LineChart";
 import { HttpError } from "../../../@core/errors/httpError";
 import { NETWORK_ERROR_MESSAGE } from "../../../constants/errorMessages";
+import { Podium } from "./components/Podium";
+import { PodiumSkeleton } from "./components/PodiumSkeleton";
 
 const WeightTrackingScreen = () => {
   const navigation = useAppNavigation();
@@ -79,20 +81,28 @@ const WeightTrackingScreen = () => {
       }
     }
 
+    if (chartDataAndLabels.goalWeights.length === 1 && progress?.goalWeight) {
+      chartDataAndLabels.goalWeights.push(progress.goalWeight);
+      chartDataAndLabels.labels.push("");
+    }
+
     return chartDataAndLabels;
   }
 
   function getMostRecentWeight(weightHsitory: WeightHistoryQueryState["weights"]) {
-    return (
-      weightHsitory.reduce(
-        (max, record) => {
-          if (max.date === null || new Date(record.date) > max.date) {
-            max = { date: new Date(record.date), weight: record.weight };
-          }
-          return max;
-        },
-        { date: null, weight: null } as { date: Date | null; weight: number | null }
-      ).weight || progress?.weight
+    if (!progress) return null;
+
+    if (error) return null;
+
+    return weightHsitory.reduce(
+      (max, record) => {
+        if (record && new Date(record.date) >= new Date(max.date)) {
+          max.value = record.weight;
+          max.date = record.date;
+        }
+        return max;
+      },
+      { date: progress.lastWeightUpdateAt, value: progress.weight }
     );
   }
 
@@ -179,7 +189,7 @@ const WeightTrackingScreen = () => {
   const handleQueryError = useCallback(
     (error: Error) => {
       const weightHistoryError =
-        "Desculpe, não foi possível obter o seu histórico de pesos. Tente novamente mais tarde";
+        "Desculpe, não foi possível obter o seu histórico de pesos. Tente novamente mais tarde.";
       const errorMessage =
         error instanceof HttpError ? weightHistoryError : NETWORK_ERROR_MESSAGE;
 
@@ -205,31 +215,57 @@ const WeightTrackingScreen = () => {
         subtitle={shortDateLabel}
       />
       <ScreenTitle title={"Hoje"} style={[styles.title, styles.dayTitle]} />
+
       <View style={styles.dayPickerContainer}>
         <DayPicker currentDate={dateData} onSelectDate={() => {}} startDate={localDate} />
       </View>
-      <View style={styles.textWrapper}>
+
+      <View style={styles.podiumSection}>
         <ScreenTitle title="Acompanhe o seu peso" style={styles.title} />
-        <View>
-          <Paragraph style={styles.paragraph}>
-            Você iniciou com o peso de{" "}
-            <Paragraph style={styles.paragraphBold}>{progress?.weight} kg</Paragraph>, mas
-            deseja alcançar{" "}
-            <Paragraph style={styles.paragraphBold}>{progress?.goalWeight} kg</Paragraph> e
-            atualmente você está com o peso de{" "}
-            <Paragraph style={styles.paragraphBold}>{mostRecentWeight} kg</Paragraph>.
-          </Paragraph>
-        </View>
+        {progress && mostRecentWeight ? (
+          <PodiumSkeleton show={isFetching}>
+            <>
+              <View>
+                <Paragraph style={styles.paragraph}>
+                  Você iniciou com o peso de{" "}
+                  <Paragraph style={styles.paragraphBold}>{progress.weight} kg</Paragraph>, mas
+                  deseja alcançar{" "}
+                  <Paragraph style={styles.paragraphBold}>{progress.goalWeight} kg</Paragraph>{" "}
+                  e atualmente você está com o peso de{" "}
+                  <Paragraph style={styles.paragraphBold}>
+                    {mostRecentWeight.value} kg
+                  </Paragraph>
+                  .
+                </Paragraph>
+              </View>
+              <View style={styles.podium}>
+                <Podium
+                  startWeight={{
+                    date: new Date(progress.lastWeightUpdateAt),
+                    value: progress.weight
+                  }}
+                  currentWeight={{
+                    date: new Date(mostRecentWeight.date),
+                    value: mostRecentWeight.value
+                  }}
+                  targetWeight={{
+                    date: new Date(progress.lastWeightUpdateAt),
+                    value: progress.goalWeight
+                  }}
+                />
+              </View>
+              <Paragraph style={styles.paragraph}>
+                Para manter o acompanhamento em dia, é necessário a passagem semanalmente.
+              </Paragraph>
+            </>
+          </PodiumSkeleton>
+        ) : null}
       </View>
-      <View style={styles.podiumContainer}>
-        <View style={styles.podium} />
-        <Paragraph style={styles.paragraph}>
-          Para manter o acompanhamento em dia, é necessário a passagem semanalmente.
-        </Paragraph>
-      </View>
+
       <LinkButton title="Registrar peso" onPress={onAddWeight} style={styles.linkButton} />
       <View style={styles.separatorLine} />
-      <View style={styles.chartContainer}>
+
+      <View style={styles.chartSection}>
         <Text style={styles.subtitle}>Acompanhamento do peso</Text>
         <LineChartSkeleton show={isFetching} style={styles.chartSkeleton}>
           <View style={styles.chartBox}>
@@ -246,12 +282,14 @@ const WeightTrackingScreen = () => {
           style={styles.linkButton}
         />
       </View>
+
       <SubmitButton
         type="primary"
         title="Voltar para home"
         style={styles.submitButton}
         onPress={resetNavigationToHome}
       />
+
       <AddWeightModal
         currentDate={localDate}
         isVisible={isModalVisible}
