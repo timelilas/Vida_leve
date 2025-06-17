@@ -22,5 +22,9 @@ export const styles = StyleSheet.create({
     left: "50%",
     bottom: "0%",
     transform: [{ translateX: Platform.OS === "web" ? "-50%" : "25%" }, { translateY: "100%" }]
+  },
+  arrowIconRight: {
+    left: "auto",
+    right: 2
   }
 });
