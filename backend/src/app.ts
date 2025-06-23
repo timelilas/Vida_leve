@@ -8,6 +8,7 @@ import helmet from "helmet";
 import foodRouter from "./routes/FoodRouter";
 import mealRouter from "./routes/MealRouter";
 import weightHistoryRouter from "./routes/WeightHistoryRouter";
+import userPhotoRouter from "./routes/UserPhotoRouter";
 
 // Swagger
 import swaggerUi from "swagger-ui-express";
@@ -49,6 +50,7 @@ class App {
     this.app.use("/foods", foodRouter);
     this.app.use("/meals", mealRouter);
     this.app.use("/Weight-History", weightHistoryRouter);
+    this.app.use("/users", userPhotoRouter);
   }
 
   public start(PORT: string | number): void {
