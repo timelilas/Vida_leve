@@ -2,9 +2,15 @@ import { Request, Response } from "express";
 import UserService from "../../service/user/UserService";
 import { NotFoundException } from "../../@core/exception/http/NotFoundException";
 import { exceptionResponseAdapter } from "../../utils/express/helpers";
+import { SupabaseStorageService } from "../../service/storage/SupabaseStorageService";
+import { v4 as uuidv4 } from "uuid";
+import { BadRequestException } from "../../@core/exception/http/BadRequestException";
 
 export default class UserController {
   private _userService = new UserService();
+  private _storageService = new SupabaseStorageService();
+  private _profileImageStorageName = process.env
+    .SUPABASE_PROFILE_IMAGE_BUCKET_NAME as string;
 
   async getAll(req: Request, res: Response): Promise<Response> {
     try {
@@ -72,6 +78,42 @@ export default class UserController {
         res,
         exception: error,
         alternativeMsg: "Erro ao obter o perfil do usuário.",
+      });
+    }
+  }
+
+  async setProfileImage(req: Request, res: Response): Promise<Response> {
+    try {
+      const userId = req.user.id;
+      const file = req.file;
+
+      if (!file) {
+        throw new BadRequestException(
+          "Nenhum arquivo enviado.",
+          UserController.name,
+          "file"
+        );
+      }
+
+      const imageTimestamp = Date.now();
+      const imageUrl = await this._storageService.uploadAsset({
+        bucketName: this._profileImageStorageName,
+        fileBuffer: file.buffer,
+        mimetype: file.mimetype,
+        path: `${userId}/${uuidv4()}-${imageTimestamp}`,
+        metadata: {
+          user_id: userId,
+          timestamp: imageTimestamp,
+        },
+      });
+
+      return res.status(201).json({ imageUrl });
+    } catch (error: any) {
+      return exceptionResponseAdapter({
+        req,
+        res,
+        exception: error,
+        alternativeMsg: "Erro ao tentar atualizar a imagem de perfil.",
       });
     }
   }

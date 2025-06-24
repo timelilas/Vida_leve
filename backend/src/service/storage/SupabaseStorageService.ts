@@ -26,7 +26,7 @@ export class SupabaseStorageService {
     try {
       const {
         data: { publicUrl },
-      } = supabase.storage.from(bucketName).getPublicUrl(data.fullPath);
+      } = supabase.storage.from(bucketName).getPublicUrl(data.path);
       return publicUrl;
     } catch (error: any) {
       throw new ExternalServiceException(
