@@ -1,5 +1,5 @@
 import { useEffect, useRef, useState } from "react";
-import { Animated, Text } from "react-native";
+import { Animated, Platform, Text } from "react-native";
 import { styles } from "./styles";
 import Svg, { Path, SvgProps } from "react-native-svg";
 
@@ -59,7 +59,14 @@ export function ToolTip(props: TooltipProps) {
         width={8}
         height={8}
         fill={props.color}
-        style={[styles.arrowIcon, props.rightAligned ? styles.arrowIconRight : null]}
+        style={[
+          styles.arrowIcon,
+          props.rightAligned
+            ? Platform.OS === "web"
+              ? styles.arrowIconRightWeb
+              : styles.arrowIconRightMobile
+            : null
+        ]}
       />
     </Animated.View>
   );

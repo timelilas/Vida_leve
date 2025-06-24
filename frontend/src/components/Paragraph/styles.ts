@@ -7,5 +7,6 @@ export const styles = StyleSheet.create({
     fontSize: 16,
     fontFamily: fonts.robotoRegular,
     color: colors.text.primary
+    // backgroundColor: "red"
   }
 });

@@ -8,9 +8,7 @@ export interface ToggleButtonProps extends PropsWithChildren {
   backgroundColor?: ColorValue;
 }
 
-export function ToggleButton(
-  props: ToggleButtonProps & Omit<PressableProps, "style">
-) {
+export function ToggleButton(props: ToggleButtonProps & Omit<PressableProps, "style">) {
   const { selected, rounded, backgroundColor, children, ...propsRest } = props;
 
   return (
@@ -19,17 +17,15 @@ export function ToggleButton(
         styles.button,
         backgroundColor && { backgroundColor },
         selected && styles.buttonSelected,
-        rounded && styles.buttonRounded,
+        rounded && styles.buttonRounded
       ]}
-      {...propsRest}
-    >
+      {...propsRest}>
       <View
         style={[
           styles.container,
           rounded && styles.containerRounded,
-          backgroundColor && { backgroundColor },
-        ]}
-      >
+          backgroundColor && { backgroundColor }
+        ]}>
         {children}
       </View>
     </Pressable>

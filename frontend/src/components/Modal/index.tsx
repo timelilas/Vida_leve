@@ -4,6 +4,7 @@ import { colors } from "../../styles/colors";
 import { styles } from "./styles";
 import { ReactNode } from "react";
 import { StyleProp } from "react-native";
+import { ANIMATION_IN_DURATION, ANIMATION_OUT_DURATION } from "./constants";
 
 interface ModalProps {
   isVisible: boolean;
@@ -16,8 +17,8 @@ export function Modal(props: ModalProps) {
   return (
     <View>
       <ReactNativeModal
-        animationInTiming={350}
-        animationOutTiming={600}
+        animationInTiming={ANIMATION_IN_DURATION}
+        animationOutTiming={ANIMATION_OUT_DURATION}
         animationIn="zoomIn"
         animationOut="fadeOutUpBig"
         backdropColor={colors.common.black}

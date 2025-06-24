@@ -16,6 +16,7 @@ import { NETWORK_ERROR_MESSAGE } from "../../../constants/errorMessages";
 import { SectionContainer } from "./components/SectionContainer";
 import { StatisticsOverview } from "./components/StatisticsOverview";
 import { useWeightHistory } from "../../../hooks/weight/useWeightHistory";
+import { ImageManagerModal } from "../../../components/ImageManagerModal";
 
 const HomeScreen = () => {
   const { year, month, day } = convertDateToLocalDateData(new Date());
@@ -34,6 +35,7 @@ const HomeScreen = () => {
   } = useMeal({ date: new Date(year, month, day) });
 
   const [isRefreshing, setIsRefreshing] = useState(false);
+  const [isImageModalVisible, seIsImageModalVisible] = useState(false);
   const { Snackbar, showSnackbar } = useSnackbar();
 
   const currentPlan = plans.find(({ type }) => type === progress?.currentCaloriePlan);
@@ -67,6 +69,14 @@ const HomeScreen = () => {
     [showSnackbar]
   );
 
+  const openImageModal = () => {
+    seIsImageModalVisible(true);
+  };
+
+  const closeImageModal = () => {
+    seIsImageModalVisible(false);
+  };
+
   useEffect(() => {
     if (mealsError && !isFetchingMeals) {
       return handleQueryError(mealsError, "meals");
@@ -88,7 +98,7 @@ const HomeScreen = () => {
       refreshControl={<RefreshControl refreshing={isRefreshing} onRefresh={refreshData} />}>
       <NavigationHeader variant="branded" />
       <View style={styles.body}>
-        <ProileHeader />
+        <ProileHeader openImageModal={openImageModal} />
         <View style={styles.separatorLine} />
         <View style={styles.sectionWrapper}>
           <SectionContainer>
@@ -106,6 +116,7 @@ const HomeScreen = () => {
           </SectionContainer>
         </View>
       </View>
+      <ImageManagerModal isVisible={isImageModalVisible} closeModal={closeImageModal} />
     </ScreenWrapper>
   );
 };

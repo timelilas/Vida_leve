@@ -47,8 +47,6 @@ export function LineChart(props: LineChartProps) {
   const XAXIS_FONT_SIZE = 14;
   const YAXIS_FONT_SIZE = 14;
 
-  console.log(tooltip);
-
   const measures = useChartMeasures({
     canvasPaddingLeft: props.style?.paddingLeft
   });
