@@ -71,7 +71,7 @@ export default class UserService {
   };
 
   public update = async (params: UpdateUserDTO) => {
-    const { id, name, phone, birthDate, gender } = params;
+    const { id, name, phone, birthDate, gender, imageUrl } = params;
     const birthDateISOString = birthDate?.toISOString().split("T")[0];
 
     try {
@@ -81,6 +81,7 @@ export default class UserService {
           phone,
           gender,
           birthDate: birthDateISOString,
+          imageUrl,
           updatedAt: new Date(),
         },
         { where: { id }, returning: true }

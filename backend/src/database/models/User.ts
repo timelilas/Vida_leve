@@ -21,6 +21,7 @@ class User
   declare phone: string | null;
   declare birthDate: string | null;
   declare gender: Gender | null;
+  declare imageUrl: string | null;
   declare createdAt: CreationOptional<Date>;
   declare updatedAt: CreationOptional<Date>;
 
@@ -32,6 +33,7 @@ class User
       email: props.email,
       phone: props.phone,
       gender: props.gender,
+      imageUrl: props.imageUrl,
       birthDate: props.birthDate ? new Date(props.birthDate) : null,
       registrationDate: new Date(props.createdAt),
     };
@@ -46,6 +48,7 @@ class User
       password: props.password,
       phone: props.phone,
       gender: props.gender,
+      imageUrl: props.imageUrl,
       birthDate: props.birthDate ? new Date(props.birthDate) : null,
       registrationDate: new Date(props.createdAt),
     };
@@ -87,6 +90,10 @@ User.init(
         const birthDate = this.getDataValue("birthDate");
         return birthDate ? new Date(birthDate) : null;
       },
+    },
+    imageUrl: {
+      type: Sequelize.TEXT,
+      allowNull: true,
     },
     createdAt: {
       type: Sequelize.DATE(),

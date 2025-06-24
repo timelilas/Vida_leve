@@ -33,6 +33,10 @@ export class ZodHelper {
       });
   }
 
+  public static url(field: string, min: number) {
+    return this.baseString(field, min).url(`${field} deve ser uma url válida.`);
+  }
+
   public static email(field: string, max?: number) {
     const baseEmail = z
       .string({

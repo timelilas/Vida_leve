@@ -10,6 +10,7 @@ export const userZodSchema = z
     password: ZodHelper.password("Senha", 8, 100),
     name: ZodHelper.baseString("Nome completo", 1, 100).nullable(),
     phone: ZodHelper.phone("Telefone", 11).nullable(),
+    imageUrl: ZodHelper.url("Imagem de perfil", 1).nullable(),
     birthDate: ZodHelper.date("Data de nascimento")
       .nullable()
       .refine(

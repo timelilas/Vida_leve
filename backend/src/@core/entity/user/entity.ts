@@ -8,5 +8,6 @@ export interface UserEntity {
   phone: string | null;
   birthDate: Date | null;
   gender: Gender | null;
+  imageUrl: string | null;
   registrationDate: Date;
 }

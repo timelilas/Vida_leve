@@ -17,6 +17,7 @@ const initialData: UserQueryState = {
   phone: "",
   birthDate: "",
   gender: null,
+  imageUrl: null,
   registrationDate: ""
 };
 
