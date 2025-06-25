@@ -13,3 +13,9 @@ export interface UpdateUserProfileParams {
   gender: GenderType;
   birthDate: Date;
 }
+
+export interface SetProfileImageParams {
+  name: string;
+  uri: string;
+  type: string;
+}

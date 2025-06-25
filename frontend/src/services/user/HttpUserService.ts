@@ -1,5 +1,7 @@
 import {
   HttpGetUserProfileOutputDTO,
+  HttpSetProfileImageInputDTO,
+  HttpSetProfileImageOutputDTO,
   HttpUpdateUserProfileInputDTO,
   HttpUpdateUserProfileOutputDTO
 } from "./types";
@@ -30,6 +32,36 @@ export class HttpUserService extends HttpService {
       headers: {
         Authorization: `Bearer ${accessToken}`
       }
+    });
+  }
+
+  public async deleteProfileImage() {
+    const accessToken = await SecureStorage.getItem(STORAGE_ACCESS_TOKEN);
+
+    return await this.submit<HttpGetUserProfileOutputDTO>({
+      method: "DELETE",
+      path: "/users/profile/image",
+      headers: {
+        Authorization: `Bearer ${accessToken}`
+      }
+    });
+  }
+
+  public async setProfileImage(params: HttpSetProfileImageInputDTO) {
+    const { name, uri, type } = params;
+    const accessToken = await SecureStorage.getItem(STORAGE_ACCESS_TOKEN);
+
+    const formData = new FormData();
+    formData.append("file", { uri, name, type } as any);
+
+    return await this.submit<HttpSetProfileImageOutputDTO>({
+      method: "POST",
+      path: "/users/profile/image",
+      headers: {
+        Authorization: `Bearer ${accessToken}`,
+        "Content-Type": "multipart/form-data"
+      },
+      body: formData
     });
   }
 }

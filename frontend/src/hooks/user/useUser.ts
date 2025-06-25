@@ -1,7 +1,7 @@
 import { useMutation, useQuery } from "@tanstack/react-query";
 import { QueryKeys } from "../../constants/reactQueryKeys";
 import { httpUserService } from "../../services/user";
-import { UpdateUserProfileParams, UserQueryState } from "./types";
+import { UpdateUserProfileParams, SetProfileImageParams, UserQueryState } from "./types";
 import { queryClient } from "../../libs/react-query/queryClient";
 import { useCallback } from "react";
 
@@ -50,6 +50,30 @@ export function useUser(params?: UseUserParams) {
     }
   });
 
+  const setProfileImageMutation = useMutation({
+    mutationFn: async (params: SetProfileImageParams) => {
+      const { name, uri, type } = params;
+      const { data } = await httpUserService.setProfileImage({ name, uri, type });
+      return data.imageUrl;
+    },
+    onSuccess: (imageUrl) => {
+      queryClient.setQueryData<UserQueryState>(QueryKeys.API.USER, (old) => {
+        return old ? { ...old, imageUrl } : old;
+      });
+    }
+  });
+
+  const deleteProfileImageMutation = useMutation({
+    mutationFn: async () => {
+      await httpUserService.deleteProfileImage();
+    },
+    onSuccess: () => {
+      queryClient.setQueryData<UserQueryState>(QueryKeys.API.USER, (old) => {
+        return old ? { ...old, imageUrl: null } : old;
+      });
+    }
+  });
+
   const updateUserProfile = useCallback(
     async (params: UpdateUserProfileParams) => {
       const updatedProfile = await updateUserProfileMutation.mutateAsync(params);
@@ -58,6 +82,17 @@ export function useUser(params?: UseUserParams) {
     [updateUserProfileMutation]
   );
 
+  const setProfileImage = useCallback(
+    async (params: SetProfileImageParams) => {
+      await setProfileImageMutation.mutateAsync(params);
+    },
+    [setProfileImageMutation]
+  );
+
+  const deleteProfileImage = useCallback(async () => {
+    await deleteProfileImageMutation.mutateAsync();
+  }, [deleteProfileImageMutation]);
+
   const getUserProfile = useCallback(async () => {
     const user = await refetch({ throwOnError: true });
     return user.data;
@@ -65,10 +100,14 @@ export function useUser(params?: UseUserParams) {
 
   return {
     getUserProfile,
+    setProfileImage,
     updateUserProfile,
+    deleteProfileImage,
     user: data || initialData,
     isLoading,
     error,
-    isUpdatingProfile: updateUserProfileMutation.isPending
+    isUpdatingProfile: updateUserProfileMutation.isPending,
+    isDeletingProfileImage: deleteProfileImageMutation.isPending,
+    isSettingProfileImage: setProfileImageMutation.isPending
   };
 }

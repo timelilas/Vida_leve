@@ -28,3 +28,13 @@ export interface HttpUpdateUserProfileInputDTO {
   gender: GenderType;
   birthDate: Date;
 }
+
+export interface HttpSetProfileImageInputDTO {
+  uri: string;
+  name: string;
+  type: string;
+}
+
+export interface HttpSetProfileImageOutputDTO {
+  imageUrl: string;
+}
