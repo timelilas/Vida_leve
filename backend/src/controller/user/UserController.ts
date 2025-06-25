@@ -9,7 +9,7 @@ import { BadRequestException } from "../../@core/exception/http/BadRequestExcept
 export default class UserController {
   private _userService = new UserService();
   private _storageService = new SupabaseStorageService();
-  private _profileImageStorageName = process.env
+  private _profileImageBucketName = process.env
     .SUPABASE_PROFILE_IMAGE_BUCKET_NAME as string;
 
   async getAll(req: Request, res: Response): Promise<Response> {
@@ -95,19 +95,39 @@ export default class UserController {
         );
       }
 
+      const previousImages = await this._storageService.listFiles({
+        bucketName: this._profileImageBucketName,
+        folderPath: `${userId}`,
+      });
+
       const imageTimestamp = Date.now();
-      const imageUrl = await this._storageService.uploadAsset({
-        bucketName: this._profileImageStorageName,
+      const imagePath = `${userId}/${uuidv4()}-${imageTimestamp}`;
+      const uploadedImage = await this._storageService.uploadAsset({
+        bucketName: this._profileImageBucketName,
         fileBuffer: file.buffer,
         mimetype: file.mimetype,
-        path: `${userId}/${uuidv4()}-${imageTimestamp}`,
+        path: imagePath,
         metadata: {
           user_id: userId,
           timestamp: imageTimestamp,
         },
       });
 
-      return res.status(201).json({ imageUrl });
+      await this._userService.update({
+        id: userId,
+        imageUrl: uploadedImage.url,
+      });
+
+      const previousImagePaths = previousImages.map(
+        ({ name }) => `${userId}/${name}`
+      );
+
+      this._storageService.deleteFiles({
+        bucketName: this._profileImageBucketName,
+        pathList: previousImagePaths,
+      });
+
+      return res.status(201).json({ imageUrl: uploadedImage.url });
     } catch (error: any) {
       return exceptionResponseAdapter({
         req,

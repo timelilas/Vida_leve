@@ -10,3 +10,13 @@ export interface DeleteFolderDTO {
   bucketName: string;
   folderPath: string;
 }
+
+export interface GetFilesDTO {
+  bucketName: string;
+  folderPath: string;
+}
+
+export interface DeleteFilesDTO {
+  bucketName: string;
+  pathList: string[];
+}

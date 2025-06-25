@@ -1,4 +1,4 @@
-import { supabase } from "../../config/supabaseClient";
+import { supabase } from "../storage/config";
 import { UserPhoto } from "../../database/models/UserPhoto";
 
 export class UserPhotoService {
