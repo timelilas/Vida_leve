@@ -4,6 +4,8 @@ import { fonts } from "../../styles/fonts";
 
 export const styles = StyleSheet.create({
   container: {
+    position: "relative",
+    overflow: "hidden",
     padding: 24,
     paddingTop: 32,
     marginInline: 24,
@@ -17,6 +19,7 @@ export const styles = StyleSheet.create({
   closeButton: {
     position: "absolute",
     top: 8,
-    right: 8
+    right: 8,
+    zIndex: 10
   }
 });

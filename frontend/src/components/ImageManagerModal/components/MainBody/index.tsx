@@ -9,16 +9,20 @@ import { ColoredTrashIcon } from "../../../Icons/ColoredTrashIcon";
 import { ModalAction } from "../../types";
 import { Paragraph } from "../../../Paragraph/Paragraph";
 import { useState } from "react";
+import { useUser } from "../../../../hooks/user/useUser";
+import { LoadingOverlay } from "../../../LoadingOverlay";
 
 interface MainBodyProps {
+  isUpdatingProfileImage?: boolean;
   selectedAction: ModalAction | null;
   onHandleAction: (action: ModalAction) => void;
   onClose: () => void;
 }
 
 export function MainBody(props: MainBodyProps) {
-  const { onClose, onHandleAction, selectedAction } = props;
+  const { onClose, onHandleAction, selectedAction, isUpdatingProfileImage } = props;
   const [currentPressingOption, setCurrentPressingOption] = useState<string | null>(null);
+  const { user } = useUser({ refetchOnMount: false });
 
   const buttons = [
     {
@@ -26,23 +30,31 @@ export function MainBody(props: MainBodyProps) {
       Icon: ColoredCameraIcon,
       title: "Acessar câmera",
       text: "Tire uma nova foto agora.",
-      action: "ACCESS_CAMERA"
+      action: "ACCESS_CAMERA",
+      disabled: false
     },
     {
       id: "2",
       Icon: PickImageIcon,
       title: "Importar da galeria",
       text: "Escolha uma imagem do seu dispositivo.",
-      action: "PICK_IMAGE"
+      action: "PICK_IMAGE",
+      disabled: false
     },
     {
       id: "3",
       Icon: ColoredTrashIcon,
       title: "Excluir foto atual",
       text: "Remova a foto e volte ao padrão.",
-      action: "DELETE_IMAGE"
+      action: "DELETE_IMAGE",
+      disabled: user.imageUrl ? false : true
     }
   ] as const;
+
+  function handleAction(action: ModalAction) {
+    if (action === "DELETE_IMAGE" && !user.imageUrl) return;
+    onHandleAction(action);
+  }
 
   return (
     <View style={commonStyles.container}>
@@ -57,7 +69,8 @@ export function MainBody(props: MainBodyProps) {
               key={button.id}
               onPressIn={() => setCurrentPressingOption(button.id)}
               onPressOut={() => setCurrentPressingOption(null)}
-              onPress={() => onHandleAction(button.action)}
+              onPress={() => handleAction(button.action)}
+              disabled={button.disabled}
               selected={
                 button.action === selectedAction || button.id === currentPressingOption
               }>
@@ -75,6 +88,7 @@ export function MainBody(props: MainBodyProps) {
       <TouchableOpacity style={commonStyles.closeButton} onPress={onClose}>
         <CloseIcon />
       </TouchableOpacity>
+      {isUpdatingProfileImage ? <LoadingOverlay /> : null}
     </View>
   );
 }

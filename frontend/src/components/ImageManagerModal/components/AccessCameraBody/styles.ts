@@ -3,7 +3,7 @@ import { colors } from "../../../../styles/colors";
 import { fonts } from "../../../../styles/fonts";
 
 export const styles = StyleSheet.create({
-  cameraView: {
+  cameraViewContainer: {
     marginTop: 16,
     marginHorizontal: "auto",
     position: "relative",
@@ -12,6 +12,16 @@ export const styles = StyleSheet.create({
     borderRadius: "50%",
     overflow: "hidden",
     backgroundColor: colors.background.primary
+  },
+  cameraView: {
+    width: "100%",
+    height: "100%"
+  },
+  cameraLoadingContainer: {
+    width: "100%",
+    height: "100%",
+    justifyContent: "center",
+    alignItems: "center"
   },
   verticalLine: {
     position: "absolute",
@@ -39,6 +49,9 @@ export const styles = StyleSheet.create({
   },
   button: {
     flex: 1
+  },
+  buttonDisabled: {
+    opacity: 0.5
   },
   actionButton: {
     height: 34,

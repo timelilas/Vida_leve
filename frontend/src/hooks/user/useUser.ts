@@ -52,8 +52,7 @@ export function useUser(params?: UseUserParams) {
 
   const setProfileImageMutation = useMutation({
     mutationFn: async (params: SetProfileImageParams) => {
-      const { name, uri, type } = params;
-      const { data } = await httpUserService.setProfileImage({ name, uri, type });
+      const { data } = await httpUserService.setProfileImage({ data: params.data });
       return data.imageUrl;
     },
     onSuccess: (imageUrl) => {

@@ -28,6 +28,11 @@ export const errorStyles = StyleSheet.create({
   message: { color: colors.common.white }
 });
 
+export const warningStyles = StyleSheet.create({
+  container: { backgroundColor: colors.warning },
+  message: { color: colors.common.white }
+});
+
 export const successStyles = StyleSheet.create({
   container: { backgroundColor: colors.success },
   message: { color: colors.common.white }

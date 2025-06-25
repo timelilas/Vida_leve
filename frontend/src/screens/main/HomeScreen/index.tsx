@@ -17,11 +17,16 @@ import { SectionContainer } from "./components/SectionContainer";
 import { StatisticsOverview } from "./components/StatisticsOverview";
 import { useWeightHistory } from "../../../hooks/weight/useWeightHistory";
 import { ImageManagerModal } from "../../../components/ImageManagerModal";
+import { MediaErrorCode, ModalAction } from "../../../components/ImageManagerModal/types";
+import { useUser } from "../../../hooks/user/useUser";
+import { SnackbarVariant } from "../../../components/Snackbar/types";
+import { MAX_PROFILE_IMAGE_SIZE } from "../../../constants/fileConstants";
 
 const HomeScreen = () => {
   const { year, month, day } = convertDateToLocalDateData(new Date());
   const { progress } = useProgress({ refetchOnMount: false });
   const { plans } = useCaloriePlans({ refetchOnMount: false });
+  const { getUserProfile } = useUser({ refetchOnMount: false });
   const {
     error: weightHistoryError,
     isFetching: isFetchingWeightHistory,
@@ -39,12 +44,6 @@ const HomeScreen = () => {
   const { Snackbar, showSnackbar } = useSnackbar();
 
   const currentPlan = plans.find(({ type }) => type === progress?.currentCaloriePlan);
-
-  async function refreshData() {
-    setIsRefreshing(true);
-    await Promise.all([fetchMeals(), fetchWeights()]);
-    setIsRefreshing(false);
-  }
 
   const handleQueryError = useCallback(
     (error: Error, target: "meals" | "weightHistory") => {
@@ -69,13 +68,82 @@ const HomeScreen = () => {
     [showSnackbar]
   );
 
-  const openImageModal = () => {
-    seIsImageModalVisible(true);
-  };
+  async function refreshData() {
+    setIsRefreshing(true);
+    await Promise.all([fetchMeals(), fetchWeights(), getUserProfile()]);
+    setIsRefreshing(false);
+  }
 
-  const closeImageModal = () => {
+  function openImageModal() {
+    seIsImageModalVisible(true);
+  }
+
+  function closeImageModal() {
     seIsImageModalVisible(false);
-  };
+  }
+
+  function mapMediaErrorCodeToMessage(code: MediaErrorCode) {
+    const maxImageSizeMB = Math.ceil(MAX_PROFILE_IMAGE_SIZE / 1000000);
+
+    const messageMap: Record<
+      MediaErrorCode,
+      { text: string; variant: SnackbarVariant } | null
+    > = {
+      CAMERA_PERMISSION_DENIED: {
+        variant: "warning",
+        text: "É necessário permitir o acesso à câmera para tirar a sua foto de perfil."
+      },
+      FILE_TOO_LARGE: {
+        variant: "error",
+        text: `O tamanho da imagem deve ser inferior a ${maxImageSizeMB}MB.`
+      },
+      UNKNOWN_TYPE: {
+        variant: "error",
+        text: "A imagem não possui um formato válido ou é desconhecido."
+      },
+      MEDIA_UPLOAD_FAILED: {
+        variant: "error",
+        text: "Desculpe, não foi possível atualizar a sua foto de perfil no momento. Por favor, tente novamente mais tarde."
+      },
+      MEDIA_DELETE_FAILED: {
+        variant: "error",
+        text: "Desculpe, não foi possível remover a sua foto de perfil no momento. Por favor, tente novamente mais tarde."
+      },
+      MEDIA_SELECTION_CANCELED: null
+    };
+
+    return messageMap[code] || null;
+  }
+
+  function handleImageManagerFailure(code: MediaErrorCode) {
+    const message = mapMediaErrorCodeToMessage(code);
+
+    if (message) {
+      showSnackbar({
+        variant: message.variant,
+        duration: 5000,
+        message: message.text
+      });
+    }
+  }
+
+  function handleImageManagerSuccess(action: ModalAction) {
+    const successMessageMap: Record<ModalAction, string | undefined> = {
+      PICK_IMAGE: "Image de perfil atualizada com sucesso.",
+      ACCESS_CAMERA: "Image de perfil atualizada com sucesso.",
+      DELETE_IMAGE: "Imagem de perfil removida com sucesso."
+    };
+
+    const message = successMessageMap[action];
+
+    if (message) {
+      showSnackbar({
+        duration: 5000,
+        variant: "success",
+        message: message
+      });
+    }
+  }
 
   useEffect(() => {
     if (mealsError && !isFetchingMeals) {
@@ -98,7 +166,7 @@ const HomeScreen = () => {
       refreshControl={<RefreshControl refreshing={isRefreshing} onRefresh={refreshData} />}>
       <NavigationHeader variant="branded" />
       <View style={styles.body}>
-        <ProileHeader openImageModal={openImageModal} />
+        <ProileHeader onSelectImage={openImageModal} />
         <View style={styles.separatorLine} />
         <View style={styles.sectionWrapper}>
           <SectionContainer>
@@ -116,7 +184,12 @@ const HomeScreen = () => {
           </SectionContainer>
         </View>
       </View>
-      <ImageManagerModal isVisible={isImageModalVisible} closeModal={closeImageModal} />
+      <ImageManagerModal
+        isVisible={isImageModalVisible}
+        onCloseModel={closeImageModal}
+        onFailed={handleImageManagerFailure}
+        onSuccess={handleImageManagerSuccess}
+      />
     </ScreenWrapper>
   );
 };

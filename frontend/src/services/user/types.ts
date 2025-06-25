@@ -30,9 +30,7 @@ export interface HttpUpdateUserProfileInputDTO {
 }
 
 export interface HttpSetProfileImageInputDTO {
-  uri: string;
-  name: string;
-  type: string;
+  data: { name: string; uri: string; type: string } | File;
 }
 
 export interface HttpSetProfileImageOutputDTO {

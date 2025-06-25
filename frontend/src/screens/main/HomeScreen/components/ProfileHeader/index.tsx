@@ -10,15 +10,15 @@ import { useAppNavigation } from "../../../../../hooks/common/useAppNavigation";
 import { RouteConstants } from "../../../../../routes/types";
 
 interface ProileHeaderProps {
-  openImageModal: () => void;
+  onSelectImage: () => void;
 }
 
 export function ProileHeader(props: ProileHeaderProps) {
-  const { openImageModal } = props;
+  const { onSelectImage } = props;
   const navigation = useAppNavigation();
   const { user } = useUser({ refetchOnMount: false });
   const firstName = user.name?.split(" ")[0];
-  const profileImage = null;
+  const profileImage = user.imageUrl;
 
   function navigateToUpdateProfile() {
     navigation.navigate(RouteConstants.UpdateProfile);
@@ -28,9 +28,13 @@ export function ProileHeader(props: ProileHeaderProps) {
     <View style={styles.container}>
       <View style={styles.avatar}>
         <View style={styles.profilImageContainer}>
-          {profileImage ? <Image /> : <ProfileIcon />}
+          {profileImage ? (
+            <Image style={styles.profileImage} source={{ uri: profileImage }} />
+          ) : (
+            <ProfileIcon />
+          )}
         </View>
-        <TouchableOpacity style={styles.updateImageButton} onPress={openImageModal}>
+        <TouchableOpacity style={styles.updateImageButton} onPress={onSelectImage}>
           <CameraIcon />
         </TouchableOpacity>
       </View>

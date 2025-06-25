@@ -5,15 +5,27 @@ import { WarningIcon } from "../../../Icons/WarningIcon";
 import { Paragraph } from "../../../Paragraph/Paragraph";
 import { CloseIcon } from "../../../Icons/CloseIcon";
 import { ModalContainer } from "../ModalContainer";
+import { LoadingOverlay } from "../../../LoadingOverlay";
 
 interface DeleteImageBodyProps {
-  onConfirm: () => void;
+  onDeleteImage: () => void;
   onBack: () => void;
   onClose: () => void;
+  isDeleting: boolean;
 }
 
 export function DeleteImageBody(props: DeleteImageBodyProps) {
-  const { onConfirm, onBack, onClose } = props;
+  const { isDeleting, onBack, onClose, onDeleteImage } = props;
+
+  function goBack() {
+    if (isDeleting) return;
+    onBack();
+  }
+
+  function close() {
+    if (isDeleting) return;
+    onClose();
+  }
 
   return (
     <ModalContainer style={commonStyles.container}>
@@ -26,20 +38,21 @@ export function DeleteImageBody(props: DeleteImageBodyProps) {
         padrão.
       </Paragraph>
       <View style={styles.actionsWrapper}>
-        <TouchableOpacity activeOpacity={0.5} style={styles.button} onPress={onBack}>
+        <TouchableOpacity activeOpacity={0.5} style={styles.button} onPress={goBack}>
           <View style={styles.actionButton}>
             <Text style={styles.actionButtonText}>Voltar</Text>
           </View>
         </TouchableOpacity>
-        <TouchableOpacity activeOpacity={0.5} style={styles.button} onPress={onConfirm}>
+        <TouchableOpacity activeOpacity={0.5} style={styles.button} onPress={onDeleteImage}>
           <View style={[styles.actionButton, styles.actionButtonFilled]}>
             <Text style={styles.actionButtonText}>Sim, remover</Text>
           </View>
         </TouchableOpacity>
       </View>
-      <TouchableOpacity style={commonStyles.closeButton} onPress={onClose}>
+      <TouchableOpacity style={commonStyles.closeButton} onPress={close}>
         <CloseIcon />
       </TouchableOpacity>
+      {isDeleting ? <LoadingOverlay /> : null}
     </ModalContainer>
   );
 }

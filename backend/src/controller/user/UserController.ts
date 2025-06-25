@@ -83,10 +83,10 @@ export default class UserController {
   }
 
   async setProfileImage(req: Request, res: Response): Promise<Response> {
-    try {
-      const userId = req.user.id;
-      const file = req.file;
+    const userId = req.user.id;
+    const file = req.file;
 
+    try {
       if (!file) {
         throw new BadRequestException(
           "Nenhum arquivo enviado.",
@@ -133,7 +133,7 @@ export default class UserController {
         console.log(error);
       }
 
-      return res.status(201).json({ imageUrl: uploadedImage.url });
+      return res.status(201).json({ data: { imageUrl: uploadedImage.url } });
     } catch (error: any) {
       return exceptionResponseAdapter({
         req,
@@ -145,8 +145,9 @@ export default class UserController {
   }
 
   async deleteProfileImage(req: Request, res: Response): Promise<Response> {
+    const userId = req.user.id;
+
     try {
-      const userId = req.user.id;
       const foundUser = await this._userService.get(userId);
 
       if (!foundUser) {

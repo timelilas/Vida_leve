@@ -48,11 +48,11 @@ export class HttpUserService extends HttpService {
   }
 
   public async setProfileImage(params: HttpSetProfileImageInputDTO) {
-    const { name, uri, type } = params;
+    const { data } = params;
     const accessToken = await SecureStorage.getItem(STORAGE_ACCESS_TOKEN);
 
     const formData = new FormData();
-    formData.append("file", { uri, name, type } as any);
+    formData.append("file", data as any);
 
     return await this.submit<HttpSetProfileImageOutputDTO>({
       method: "POST",
