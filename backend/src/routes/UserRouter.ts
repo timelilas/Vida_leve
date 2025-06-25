@@ -28,6 +28,12 @@ userRouter.post(
   (req, res) => userController.setProfileImage(req, res)
 );
 
+userRouter.delete(
+  "/profile/image",
+  (req, res, next) => authorizationMiddleware.execute(req, res, next),
+  (req, res) => userController.deleteProfileImage(req, res)
+);
+
 //Rotas utilizada em desenvolvimento apenas. Não requerem autorização
 userRouter.get("/profile/all", (req, res) => userController.getAll(req, res));
 

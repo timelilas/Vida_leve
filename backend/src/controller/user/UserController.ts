@@ -108,7 +108,7 @@ export default class UserController {
         mimetype: file.mimetype,
         path: imagePath,
         metadata: {
-          user_id: userId,
+          user_id: `${userId}`,
           timestamp: imageTimestamp,
         },
       });
@@ -118,16 +118,59 @@ export default class UserController {
         imageUrl: uploadedImage.url,
       });
 
-      const previousImagePaths = previousImages.map(
-        ({ name }) => `${userId}/${name}`
-      );
+      try {
+        if (previousImages.length) {
+          const previousImagePaths = previousImages.map(
+            ({ name }) => `${userId}/${name}`
+          );
 
-      this._storageService.deleteFiles({
-        bucketName: this._profileImageBucketName,
-        pathList: previousImagePaths,
-      });
+          this._storageService.deleteFiles({
+            bucketName: this._profileImageBucketName,
+            pathList: previousImagePaths,
+          });
+        }
+      } catch (error: any) {
+        console.log(error);
+      }
 
       return res.status(201).json({ imageUrl: uploadedImage.url });
+    } catch (error: any) {
+      return exceptionResponseAdapter({
+        req,
+        res,
+        exception: error,
+        alternativeMsg: "Erro ao tentar atualizar a imagem de perfil.",
+      });
+    }
+  }
+
+  async deleteProfileImage(req: Request, res: Response): Promise<Response> {
+    try {
+      const userId = req.user.id;
+      const foundUser = await this._userService.get(userId);
+
+      if (!foundUser) {
+        throw new NotFoundException(
+          `Usuário com id '${userId}' não encontrado.`,
+          UserController.name
+        );
+      }
+
+      if (!foundUser.imageUrl) {
+        throw new NotFoundException(
+          `Imagem de perfil do usuário '${userId} não encontrada'`,
+          UserController.name
+        );
+      }
+
+      await this._userService.update({ id: userId, imageUrl: null });
+
+      await this._storageService.deleteFolder({
+        bucketName: this._profileImageBucketName,
+        folderPath: `${userId}`,
+      });
+
+      return res.status(204).send();
     } catch (error: any) {
       return exceptionResponseAdapter({
         req,

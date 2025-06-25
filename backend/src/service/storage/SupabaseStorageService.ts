@@ -48,15 +48,28 @@ export class SupabaseStorageService {
 
   async deleteFolder(params: DeleteFolderDTO): Promise<void> {
     const { bucketName, folderPath } = params;
-    const { error } = await supabase.storage
+    const { data, error: listError } = await supabase.storage
       .from(bucketName)
-      .remove([folderPath]);
+      .list(folderPath);
 
-    if (error) {
+    if (listError) {
       throw new ExternalServiceException(
         `Erro durante a remoção da pasta: '${folderPath}'`,
         SupabaseStorageService.name,
-        error.message
+        listError.message
+      );
+    }
+
+    const filePaths = data.map(({ name }) => `${folderPath}/${name}`);
+    const { error: deleteError } = await supabase.storage
+      .from(bucketName)
+      .remove(filePaths);
+
+    if (deleteError) {
+      throw new ExternalServiceException(
+        `Erro durante a remoção da pasta: '${folderPath}'`,
+        SupabaseStorageService.name,
+        deleteError.message
       );
     }
   }
