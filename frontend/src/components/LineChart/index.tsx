@@ -17,6 +17,7 @@ interface TooltipState {
   posY: number;
   color: string;
   visible: boolean;
+  isLast: boolean;
 }
 
 interface LineChartProps {
@@ -141,6 +142,7 @@ export function LineChart(props: LineChartProps) {
   function handleTooltipPosition(e: GestureResponderEvent | PointerEvent) {
     let posX = 0;
     let posY = 0;
+    const lastPosition = allowedTooltipPositions.slice(-1)[0];
 
     const tooltipPlataformPosition =
       Platform.OS === "web"
@@ -154,8 +156,8 @@ export function LineChart(props: LineChartProps) {
       const diffX = Math.abs(position.x - posX);
       const diffY = Math.abs(position.y - posY);
 
-      if (diffX <= 5 && diffY <= 6) {
-        setTooltip((prev) => {
+      if (diffX <= 6 && diffY <= 6) {
+        return setTooltip((prev) => {
           const nextPosX = canvas.paddingLeft + position.x;
           const nextPosY = canvas.height - canvas.paddingBottom - position.y;
           const samePosition = prev?.posX === nextPosX && prev.posY === nextPosY;
@@ -164,7 +166,8 @@ export function LineChart(props: LineChartProps) {
             posY: nextPosY,
             value: position.value,
             visible: samePosition ? !prev.visible : true,
-            color: position.tooltipColor
+            color: position.tooltipColor,
+            isLast: position.x === lastPosition.x
           };
         });
       }
@@ -187,6 +190,7 @@ export function LineChart(props: LineChartProps) {
           posX={tooltip.posX}
           posY={tooltip.posY}
           value={`${tooltip.value} ${props.yAxisName}`}
+          rightAligned={tooltip.isLast}
           color={tooltip.color}
         />
       )}

@@ -6,10 +6,10 @@ export const styles = StyleSheet.create({
   container: {
     flexDirection: "row",
     alignItems: "center",
-    gap: 8,
+    gap: 8
   },
   avatar: {
-    padding: 8,
+    padding: 8
   },
   profilImageContainer: {
     width: 88,
@@ -18,6 +18,12 @@ export const styles = StyleSheet.create({
     alignItems: "center",
     justifyContent: "center",
     borderRadius: 44,
+    overflow: "hidden"
+  },
+  profileImage: {
+    width: "100%",
+    height: "100%",
+    objectFit: "cover"
   },
   updateImageButton: {
     position: "absolute",
@@ -28,19 +34,19 @@ export const styles = StyleSheet.create({
     borderRadius: 16,
     justifyContent: "center",
     alignItems: "center",
-    backgroundColor: colors.gray.medium,
+    backgroundColor: colors.gray.medium
   },
   updateProfileButton: {
-    marginLeft: "auto",
+    marginLeft: "auto"
   },
   userInformation: {
     gap: 4,
-    flexShrink: 1,
+    flexShrink: 1
   },
   userName: {
     fontSize: 24,
     lineHeight: 28.8,
     fontFamily: fonts.robotoBold,
-    color: colors.text.primary,
-  },
+    color: colors.text.primary
+  }
 });

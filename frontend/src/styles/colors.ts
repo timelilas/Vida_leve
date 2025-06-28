@@ -22,5 +22,6 @@ export const colors = {
   },
   blue: "#0000FF",
   error: "#F95D4D",
+  warning: "#F0B100",
   success: "#14AE5C"
 };

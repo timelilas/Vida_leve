@@ -10,7 +10,7 @@ import {
 
 const api = axios.create({
   baseURL: process.env.EXPO_PUBLIC_API_URL,
-  timeout: 5000
+  timeout: 7000
 });
 
 export const request = async <T>(

@@ -1,7 +1,15 @@
 import { useEffect, useRef, useState } from "react";
-import { Animated, Text } from "react-native";
+import { Animated, Platform, Text } from "react-native";
 import { styles } from "./styles";
 import Svg, { Path, SvgProps } from "react-native-svg";
+
+interface TooltipProps {
+  value: string;
+  posX: number;
+  posY: number;
+  rightAligned: boolean;
+  color: string;
+}
 
 function SolidArrowIcon(props: SvgProps) {
   return (
@@ -12,7 +20,7 @@ function SolidArrowIcon(props: SvgProps) {
   );
 }
 
-export function ToolTip(props: { value: string; posX: number; posY: number; color: string }) {
+export function ToolTip(props: TooltipProps) {
   const [isFirstRender, setIsFirstRender] = useState(true);
   const animatedPosition = useRef(new Animated.ValueXY({ x: 0, y: 0 }));
   const animatedOpacity = useRef(new Animated.Value(0));
@@ -27,12 +35,12 @@ export function ToolTip(props: { value: string; posX: number; posY: number; colo
       Animated.timing(animatedPosition.current, {
         useNativeDriver: false,
         duration: isFirstRender ? 0 : 180,
-        toValue: { x: props.posX, y: props.posY }
+        toValue: { x: props.posX + (props.rightAligned ? 10 : 0), y: props.posY }
       })
     ]).start();
 
     setIsFirstRender(false);
-  }, [props.posX, props.posY, isFirstRender]);
+  }, [props.posX, props.posY, isFirstRender, props.rightAligned]);
 
   return (
     <Animated.View
@@ -41,13 +49,25 @@ export function ToolTip(props: { value: string; posX: number; posY: number; colo
         opacity: animatedOpacity.current,
         top: animatedPosition.current.y,
         left: animatedPosition.current.x,
-        transform: [{ translateX: "-50%" }, { translateY: -36 }],
-        backgroundColor: props.color
+        backgroundColor: props.color,
+        transform: [{ translateX: props.rightAligned ? "-100%" : "-50%" }, { translateY: -36 }]
       }}>
       <Text numberOfLines={1} style={styles.text}>
         {props.value}
       </Text>
-      <SolidArrowIcon width={8} height={8} fill={props.color} style={styles.arrowIcon} />
+      <SolidArrowIcon
+        width={8}
+        height={8}
+        fill={props.color}
+        style={[
+          styles.arrowIcon,
+          props.rightAligned
+            ? Platform.OS === "web"
+              ? styles.arrowIconRightWeb
+              : styles.arrowIconRightMobile
+            : null
+        ]}
+      />
     </Animated.View>
   );
 }

@@ -11,7 +11,7 @@ export function LinePoint(props: LinePointProps) {
   return (
     <Circle
       style="stroke"
-      strokeWidth={2.5}
+      strokeWidth={3.5}
       color={props.color}
       r={props.size}
       cx={props.x}

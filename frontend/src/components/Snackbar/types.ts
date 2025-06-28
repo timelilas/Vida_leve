@@ -1,4 +1,4 @@
-export type SnackbarVariant = "success" | "error" | "neutral";
+export type SnackbarVariant = "success" | "error" | "warning" | "neutral";
 
 export interface SnackbarProps {
   message: string;

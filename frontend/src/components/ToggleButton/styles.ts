@@ -7,10 +7,13 @@ export const styles = StyleSheet.create({
     borderRadius: 8,
     borderWidth: 1,
     borderColor: colors.text.primary,
-    backgroundColor: colors.background.secondary,
+    backgroundColor: colors.background.secondary
+  },
+  buttonDisabled: {
+    opacity: 0.7
   },
   buttonRounded: {
-    borderRadius: 18,
+    borderRadius: 18
   },
   buttonSelected: {
     backgroundColor: colors.secondary,
@@ -19,19 +22,19 @@ export const styles = StyleSheet.create({
     shadowColor: colors.common.black,
     ...(Platform.OS === "android"
       ? {
-          elevation: 4,
+          elevation: 4
         }
       : {
           shadowOffset: { width: 0, height: 4 },
           shadowRadius: 4,
-          shadowOpacity: 0.25,
-        }),
+          shadowOpacity: 0.25
+        })
   },
   container: {
     backgroundColor: colors.background.secondary,
-    borderRadius: 8,
+    borderRadius: 8
   },
   containerRounded: {
-    borderRadius: 16,
-  },
+    borderRadius: 16
+  }
 });

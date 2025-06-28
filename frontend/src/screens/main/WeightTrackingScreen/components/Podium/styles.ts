@@ -25,7 +25,7 @@ export const styles = StyleSheet.create({
   firstPlace: {
     height: 100
   },
-  date: {
+  label: {
     fontFamily: fonts.robotoRegular,
     color: colors.common.white,
     fontSize: 14,

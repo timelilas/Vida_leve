@@ -6,5 +6,6 @@ export enum TableNames {
   Meal = "meal",
   ConsumedFood = "consumedFood",
   PlanHistory = "planHistory",
-  WeightHistory = "weightHistory"
+  WeightHistory = "weightHistory",
+  UserPhoto = "userPhoto",
 }

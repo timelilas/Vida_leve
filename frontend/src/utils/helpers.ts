@@ -1,6 +1,7 @@
 import { MealType } from "../@core/entities/@shared/mealType/type";
 import { DateIntervalType, PlainDate } from "../@types";
 import { DateData } from "../components/DayPicker/types";
+import mime from "mime";
 
 export function toCapitalized(input: string): string {
   const words = input.split("-");
@@ -163,4 +164,16 @@ export function generateLocalDateRange(
 export function getLocalDateOnly(date?: Date) {
   const currentDate = date || new Date();
   return new Date(currentDate.getFullYear(), currentDate.getMonth(), currentDate.getDate());
+}
+
+export function parseBase64String(base64: string) {
+  const [mimeInfo, data] = base64.split(",");
+  const mimeType = mimeInfo.split(";")[0].split(":")[1];
+  const extension = mime.getExtension(mimeType);
+
+  return {
+    data,
+    mimeType,
+    extension
+  };
 }

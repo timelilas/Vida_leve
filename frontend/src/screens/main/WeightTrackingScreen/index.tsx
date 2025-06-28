@@ -240,18 +240,9 @@ const WeightTrackingScreen = () => {
               </View>
               <View style={styles.podium}>
                 <Podium
-                  startWeight={{
-                    date: new Date(progress.lastWeightUpdateAt),
-                    value: progress.weight
-                  }}
-                  currentWeight={{
-                    date: new Date(mostRecentWeight.date),
-                    value: mostRecentWeight.value
-                  }}
-                  targetWeight={{
-                    date: new Date(progress.lastWeightUpdateAt),
-                    value: progress.goalWeight
-                  }}
+                  startWeight={progress.weight}
+                  currentWeight={mostRecentWeight.value}
+                  targetWeight={progress.goalWeight}
                 />
               </View>
               <Paragraph style={styles.paragraph}>
