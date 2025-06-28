@@ -89,19 +89,22 @@ export function ImageManagerModal(props: ImageManagerModalProps) {
           platform: "web",
           data: await imageDataToFile({ fileName: sanitizedFileName, mimeType, uri })
         });
+      } else {
+        const imageFile = base64ImageToFile({
+          base64: image.uri,
+          fileName: sanitizedFileName
+        });
+
+        if (imageFile.size > MAX_PROFILE_IMAGE_SIZE) {
+          onFailed("FILE_TOO_LARGE");
+          return false;
+        }
+
+        await setProfileImage({
+          platform: "web",
+          data: imageFile
+        });
       }
-
-      const imageFile = base64ImageToFile({ base64: image.uri, fileName: sanitizedFileName });
-
-      if (imageFile.size > MAX_PROFILE_IMAGE_SIZE) {
-        onFailed("FILE_TOO_LARGE");
-        return false;
-      }
-
-      await setProfileImage({
-        platform: "web",
-        data: imageFile
-      });
     }
 
     return true;
