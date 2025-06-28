@@ -24,7 +24,7 @@ export function useSnackbar() {
   });
 
   const showSnackbar = useCallback((options: SnackbarOptions) => {
-    setSnackbarState({ id: Date.now(), ...options, isVisible: true });
+    setSnackbarState({ id: `${Date.now()}`, ...options, isVisible: true });
   }, []);
 
   const closeAllSnackbars = useCallback(() => {

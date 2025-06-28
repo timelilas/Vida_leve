@@ -9,11 +9,16 @@ import { useUser } from "../../../../../hooks/user/useUser";
 import { useAppNavigation } from "../../../../../hooks/common/useAppNavigation";
 import { RouteConstants } from "../../../../../routes/types";
 
-export function ProileHeader() {
+interface ProileHeaderProps {
+  onSelectImage: () => void;
+}
+
+export function ProileHeader(props: ProileHeaderProps) {
+  const { onSelectImage } = props;
   const navigation = useAppNavigation();
   const { user } = useUser({ refetchOnMount: false });
   const firstName = user.name?.split(" ")[0];
-  const profileImage = null;
+  const profileImage = user.imageUrl;
 
   function navigateToUpdateProfile() {
     navigation.navigate(RouteConstants.UpdateProfile);
@@ -23,9 +28,13 @@ export function ProileHeader() {
     <View style={styles.container}>
       <View style={styles.avatar}>
         <View style={styles.profilImageContainer}>
-          {profileImage ? <Image /> : <ProfileIcon />}
+          {profileImage ? (
+            <Image style={styles.profileImage} source={{ uri: profileImage }} />
+          ) : (
+            <ProfileIcon />
+          )}
         </View>
-        <TouchableOpacity style={styles.updateImageButton}>
+        <TouchableOpacity style={styles.updateImageButton} onPress={onSelectImage}>
           <CameraIcon />
         </TouchableOpacity>
       </View>
@@ -33,10 +42,7 @@ export function ProileHeader() {
         <ScreenTitle title={firstName || ""} />
         <Paragraph>{user.email}</Paragraph>
       </View>
-      <TouchableOpacity
-        onPress={navigateToUpdateProfile}
-        style={styles.updateProfileButton}
-      >
+      <TouchableOpacity onPress={navigateToUpdateProfile} style={styles.updateProfileButton}>
         <PencilIcon />
       </TouchableOpacity>
     </View>

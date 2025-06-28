@@ -29,6 +29,18 @@
         }
       ],
       [
+        "expo-image-picker",
+        {
+          "photosPermission": "O aplicativo precisa de acesso à galeria de fotos para que você possa selecionar uma foto de perfil."
+        }
+      ],
+      [
+        "expo-camera",
+        {
+          "cameraPermission": "Permitir que o aplicativo acesse a sua camera."
+        }
+      ],
+      [
         "expo-splash-screen",
         {
           "image": "./src/assets/images/splash.png",

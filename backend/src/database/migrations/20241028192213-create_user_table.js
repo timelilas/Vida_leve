@@ -34,6 +34,10 @@ module.exports = {
         type: Sequelize.ENUM("masculino", "feminino"),
         allowNull: true,
       },
+      imageUrl: {
+        type: Sequelize.TEXT,
+        allowNull: true,
+      },
       createdAt: {
         type: Sequelize.DATE(),
         defaultValue: Sequelize.fn("CURRENT_TIMESTAMP", 3),
