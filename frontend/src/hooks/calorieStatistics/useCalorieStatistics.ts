@@ -20,7 +20,7 @@ export function useCalorieStatistics(params: UseCalorieStatisticsParams) {
     staleTime: Infinity,
     retry: 1,
     refetchIntervalInBackground: false,
-    refetchOnMount: false,
+    refetchOnMount: true,
     refetchOnWindowFocus: false,
     refetchInterval: false,
     refetchOnReconnect: false,
