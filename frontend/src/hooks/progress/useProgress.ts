@@ -17,6 +17,7 @@ export function useProgress(params?: UseProgressParams) {
     queryKey: QueryKeys.API.PROGRESS,
     enabled: params?.enabled,
     refetchOnMount: params?.refetchOnMount,
+    refetchOnWindowFocus: false,
     queryFn: async () => {
       const { data: progressData } = await httpProgressService.getProgress();
       return progressData;
