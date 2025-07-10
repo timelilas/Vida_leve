@@ -3,23 +3,6 @@ import { User } from "../../database/associations";
 import { CreateUserDTO, UpdateUserDTO } from "./types";
 
 export default class UserService {
-  public getAll = async () => {
-    try {
-      const users = await User.findAll({
-        attributes: { exclude: ["password"] },
-      });
-      const profiles = users.map((user) => user.getProfile());
-
-      return profiles;
-    } catch (error: any) {
-      throw new DatabaseException(
-        `Erro na busca do perfil de todos os usuários.`,
-        UserService.name,
-        error.message
-      );
-    }
-  };
-
   public create = async (params: CreateUserDTO) => {
     const { email, password } = params;
 

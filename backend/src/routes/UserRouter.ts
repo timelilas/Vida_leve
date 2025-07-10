@@ -34,7 +34,4 @@ userRouter.delete(
   (req, res) => userController.deleteProfileImage(req, res)
 );
 
-//Rotas utilizada em desenvolvimento apenas. Não requerem autorização
-userRouter.get("/profile/all", (req, res) => userController.getAll(req, res));
-
 export default userRouter;
