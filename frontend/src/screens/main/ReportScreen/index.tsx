@@ -1,7 +1,7 @@
-import { View } from "moti";
 import { NavigationHeader } from "../../../components/NavigationHeader";
 import { ScreenWrapper } from "../../../components/ScreenWrapper";
 import { useSnackbar } from "../../../hooks/common/useSnackbar";
+import { RefreshControl, View } from "react-native";
 import {
   formatDateToLabel,
   generateLocalDateRange,
@@ -11,7 +11,7 @@ import { ScreenTitle } from "../../../components/ScreenTitle";
 import { Paragraph } from "../../../components/Paragraph/Paragraph";
 import { styles } from "./styles";
 import Select, { SelectEvent } from "../../../components/Select";
-import { useCallback, useContext, useEffect, useMemo } from "react";
+import { useCallback, useContext, useEffect, useMemo, useState } from "react";
 import { DateIntervalType } from "../../../@types";
 import { QueryKeys } from "../../../constants/reactQueryKeys";
 import { queryClient } from "../../../libs/react-query/queryClient";
@@ -38,11 +38,13 @@ const ReportScreen = () => {
   const localDate = useMemo(() => getLocalDateOnly(), []);
   const { Snackbar, showSnackbar } = useSnackbar();
 
+  const [isRefreshing, setIsRefreshing] = useState(false);
+
   const { dateData, intervalType, isDebouncing, updateDateDate, updateIntervalType } =
     useContext(DateFilterContext);
 
   const dateRange = generateLocalDateRange(intervalType, dateData);
-  const { statistics, isLoading, isFetching, error } = useCalorieStatistics({
+  const { statistics, isFetching, error, fetchCurrentStatistics } = useCalorieStatistics({
     from: dateRange.from,
     to: dateRange.to > localDate ? localDate : dateRange.to,
     enabled: !isDebouncing
@@ -54,6 +56,20 @@ const ReportScreen = () => {
     (acc, value, _, data) => (value !== data[0] ? false : acc),
     true
   );
+
+  function goBack() {
+    navigation.goBack();
+  }
+
+  function navigateToReportDetailsScreen() {
+    navigation.navigate(ReportRoutesConstants.ReportDetails);
+  }
+
+  const refreshCalorieStatistics = async () => {
+    setIsRefreshing(true);
+    await fetchCurrentStatistics();
+    setIsRefreshing(false);
+  };
 
   function generateChartDataAndLabels() {
     const chartDataAndLabels = statistics.reduce(
@@ -76,14 +92,6 @@ const ReportScreen = () => {
     }
 
     return chartDataAndLabels;
-  }
-
-  function goBack() {
-    navigation.goBack();
-  }
-
-  function navigateToReportDetailsScreen() {
-    navigation.navigate(ReportRoutesConstants.ReportDetails);
   }
 
   function handleIntervalTypeSelect(e: SelectEvent) {
@@ -177,11 +185,15 @@ const ReportScreen = () => {
   }
 
   useEffect(() => {
-    if (error && !isLoading) handleQueryError(error);
-  }, [error, isLoading, handleQueryError]);
+    if (error && !isFetching) handleQueryError(error);
+  }, [error, isFetching, handleQueryError]);
 
   return (
-    <ScreenWrapper snackbar={<Snackbar />}>
+    <ScreenWrapper
+      snackbar={<Snackbar />}
+      refreshControl={
+        <RefreshControl refreshing={isRefreshing} onRefresh={refreshCalorieStatistics} />
+      }>
       <NavigationHeader
         variant="titled"
         title="Relatório"
@@ -212,7 +224,7 @@ const ReportScreen = () => {
         />
       </View>
       <View style={styles.chartContainer}>
-        <LineChartSkeleton show={isLoading || isDebouncing || isFetching}>
+        <LineChartSkeleton show={isRefreshing || isDebouncing || isFetching}>
           <View style={styles.labelsWrapper}>
             <ChartLabel color={colors.secondary} label="Plano de execução" />
             <ChartLabel color={colors.primary} label="Calorias consumidas" />

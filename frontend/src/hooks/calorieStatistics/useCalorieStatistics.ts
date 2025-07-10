@@ -1,6 +1,7 @@
 import { useQuery } from "@tanstack/react-query";
 import { QueryKeys } from "../../constants/reactQueryKeys";
 import { httpMealService } from "../../services/meal";
+import { useCallback } from "react";
 
 interface UseCalorieStatisticsParams {
   enabled?: boolean;
@@ -33,7 +34,14 @@ export function useCalorieStatistics(params: UseCalorieStatisticsParams) {
     }
   });
 
+  const refetch = calorieStatisticsQuery.refetch;
+
+  const fetchCurrentStatistics = useCallback(async () => {
+    await refetch();
+  }, [refetch]);
+
   return {
+    fetchCurrentStatistics,
     statistics: calorieStatisticsQuery.data || [],
     isLoading: calorieStatisticsQuery.isLoading,
     isFetching: calorieStatisticsQuery.isFetching,

@@ -11,7 +11,7 @@ import {
   toCapitalized
 } from "../../../utils/helpers";
 import { DayPicker } from "../../../components/DayPicker";
-import { Text, View } from "react-native";
+import { RefreshControl, Text, View } from "react-native";
 import { Paragraph } from "../../../components/Paragraph/Paragraph";
 import { LinkButton } from "../../../components/LinkButton";
 import { RouteConstants } from "../../../routes/types";
@@ -36,7 +36,12 @@ const WeightTrackingScreen = () => {
   const navigation = useAppNavigation();
 
   const { Snackbar, showSnackbar } = useSnackbar();
-  const { data: weightHistory, error, isFetching } = useWeightHistory({ limit: 20 });
+  const {
+    data: weightHistory,
+    error,
+    isFetching,
+    fetchWeights
+  } = useWeightHistory({ limit: 20 });
   const { progress } = useProgress({ refetchOnMount: false });
   const [isModalVisible, setIsModalVisible] = useState(false);
 
@@ -46,6 +51,14 @@ const WeightTrackingScreen = () => {
 
   const chartDataAndLabels = generateChartDataAndLabels();
   const mostRecentWeight = getMostRecentWeight(weightHistory.weights);
+
+  const [isRefreshing, setIsRefreshing] = useState(false);
+
+  async function refreshWeightHistory() {
+    setIsRefreshing(true);
+    await fetchWeights();
+    setIsRefreshing(false);
+  }
 
   function generateChartDataAndLabels() {
     const chartDataAndLabels: { labels: string[]; weights: number[]; goalWeights: number[] } =
@@ -206,7 +219,11 @@ const WeightTrackingScreen = () => {
   }, [error, isFetching, handleQueryError]);
 
   return (
-    <ScreenWrapper snackbar={<Snackbar />}>
+    <ScreenWrapper
+      snackbar={<Snackbar />}
+      refreshControl={
+        <RefreshControl refreshing={isRefreshing} onRefresh={refreshWeightHistory} />
+      }>
       <NavigationHeader
         onBack={goBack}
         variant="titled"

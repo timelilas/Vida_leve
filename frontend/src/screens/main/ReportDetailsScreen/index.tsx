@@ -1,4 +1,4 @@
-import { Text, View } from "react-native";
+import { RefreshControl, Text, View } from "react-native";
 import { styles } from "./styles";
 import { NavigationHeader } from "../../../components/NavigationHeader";
 import { ScreenWrapper } from "../../../components/ScreenWrapper";
@@ -13,7 +13,7 @@ import { ScreenTitle } from "../../../components/ScreenTitle";
 import { Paragraph } from "../../../components/Paragraph/Paragraph";
 import Select, { SelectEvent } from "../../../components/Select";
 import { TimeRangeNavigator } from "../../../components/TimeRangeNavigator";
-import { ReactNode, useCallback, useContext, useEffect, useMemo } from "react";
+import { ReactNode, useCallback, useContext, useEffect, useMemo, useState } from "react";
 import { colors } from "../../../styles/colors";
 import { SubmitButton } from "../../../components/SubmitButton";
 import { CommonActions } from "@react-navigation/native";
@@ -43,15 +43,18 @@ const ReportDetailsScreen = () => {
   const localDate = useMemo(() => getLocalDateOnly(), []);
   const { Snackbar, showSnackbar } = useSnackbar();
 
+  const [isRefreshing, setIsRefreshing] = useState(false);
+
   const { dateData, intervalType, isDebouncing, updateDateDate, updateIntervalType } =
     useContext(DateFilterContext);
 
   const dateRange = generateLocalDateRange(intervalType, dateData);
-  const { statistics, isLoading, isFetching, error } = useCalorieStatistics({
-    from: dateRange.from,
-    to: dateRange.to > localDate ? localDate : dateRange.to,
-    enabled: !isDebouncing
-  });
+  const { statistics, isLoading, isFetching, error, fetchCurrentStatistics } =
+    useCalorieStatistics({
+      from: dateRange.from,
+      to: dateRange.to > localDate ? localDate : dateRange.to,
+      enabled: !isDebouncing
+    });
 
   const { daysOffTarget, daysWithinTarget } = getCalorieStatisticsSummary(statistics);
 
@@ -67,6 +70,12 @@ const ReportDetailsScreen = () => {
       CommonActions.reset({ index: 0, routes: [{ name: RouteConstants.Home }] })
     );
   }
+
+  const refreshCalorieStatistics = async () => {
+    setIsRefreshing(true);
+    await fetchCurrentStatistics();
+    setIsRefreshing(false);
+  };
 
   function handleIntervalTypeSelect(e: SelectEvent) {
     updateIntervalType(e.value as DateIntervalType);
@@ -219,7 +228,11 @@ const ReportDetailsScreen = () => {
   }, [error, isLoading, handleQueryError]);
 
   return (
-    <ScreenWrapper snackbar={<Snackbar />}>
+    <ScreenWrapper
+      snackbar={<Snackbar />}
+      refreshControl={
+        <RefreshControl refreshing={isRefreshing} onRefresh={refreshCalorieStatistics} />
+      }>
       <NavigationHeader
         variant="titled"
         subtitle={formatDateToLabel(localDate, "short")}

@@ -42,16 +42,8 @@ const WeightHistoryScreen = () => {
   const [isModalVisible, setIsModalVisible] = useState(false);
   const [selectedWeight, setSelectedWeight] = useState<SelectedWeight | null>(null);
 
-  const {
-    data,
-    isFetching,
-    isLoading,
-    isDeleting,
-    error,
-    deleteWeight,
-    fetchWeights,
-    fetchMoreWeights
-  } = useWeightHistory({ enabled: false });
+  const { data, isFetching, isDeleting, error, deleteWeight, fetchWeights, fetchMoreWeights } =
+    useWeightHistory({ enabled: false });
 
   const orderedWeights = data.weights.sort((a, b) => {
     return new Date(b.date).getTime() - new Date(a.date).getTime();
@@ -200,7 +192,7 @@ const WeightHistoryScreen = () => {
         </View>
         <View style={styles.weightTableContainer}>
           <View style={styles.weightTableInnerContainer}>
-            <WeightHistoryTableSkeleton show={isLoading || isRefreshing}>
+            <WeightHistoryTableSkeleton show={isFetching || isRefreshing}>
               {error ? null : (
                 <>
                   <WeightTable
