@@ -21,9 +21,17 @@ import { MediaErrorCode, ModalAction } from "../../../components/ImageManagerMod
 import { useUser } from "../../../hooks/user/useUser";
 import { SnackbarVariant } from "../../../components/Snackbar/types";
 import { MAX_PROFILE_IMAGE_SIZE } from "../../../constants/fileConstants";
+import { SecureStorage } from "../../../services/secureStorage/SecureStorage";
+import { STORAGE_ACCESS_TOKEN } from "../../../constants/localStorageConstants";
+import { useAppNavigation } from "../../../hooks/common/useAppNavigation";
+import { CommonActions } from "@react-navigation/native";
+import { RouteConstants } from "../../../routes/types";
+import { QueryKeys } from "../../../constants/reactQueryKeys";
+import { queryClient } from "../../../libs/react-query/queryClient";
 
 const HomeScreen = () => {
   const { year, month, day } = convertDateToLocalDateData(new Date());
+  const navigation = useAppNavigation();
   const { progress } = useProgress({ refetchOnMount: false });
   const { plans } = useCaloriePlans({ refetchOnMount: false });
   const { getUserProfile } = useUser({ refetchOnMount: false });
@@ -67,6 +75,43 @@ const HomeScreen = () => {
     },
     [showSnackbar]
   );
+
+  const clearCachedState = () => {
+    const subscriptionQueryKeys = [
+      QueryKeys.API.USER,
+      QueryKeys.API.PROGRESS,
+      QueryKeys.API.CALORIE_PLANS,
+      QueryKeys.API.WEIGHT_HISTORY
+    ];
+
+    queryClient.removeQueries({
+      predicate: (query) => {
+        const isQueryKeyString = typeof query.queryKey[0] === "string";
+        const isMealKey = query.queryKey[0] === QueryKeys.API.MEALS("")[0];
+        const isCalorieStatisticsKey =
+          query.queryKey[0] === QueryKeys.API.CALORIE_STATISTICS("", "")[0];
+
+        const isValidKey =
+          subscriptionQueryKeys.includes(query.queryKey as any) ||
+          (isQueryKeyString && (isMealKey || isCalorieStatisticsKey));
+
+        return isValidKey;
+      }
+    });
+  };
+
+  const handleSignout = () => {
+    SecureStorage.removeItem(STORAGE_ACCESS_TOKEN);
+
+    navigation.dispatch(
+      CommonActions.reset({
+        routes: [{ name: RouteConstants.Welcome }, { name: RouteConstants.Login }],
+        index: 1
+      })
+    );
+
+    clearCachedState();
+  };
 
   async function refreshData() {
     setIsRefreshing(true);
@@ -164,7 +209,7 @@ const HomeScreen = () => {
     <ScreenWrapper
       snackbar={<Snackbar />}
       refreshControl={<RefreshControl refreshing={isRefreshing} onRefresh={refreshData} />}>
-      <NavigationHeader variant="branded" />
+      <NavigationHeader variant="branded" onSignOut={handleSignout} />
       <View style={styles.body}>
         <ProileHeader onSelectImage={openImageModal} />
         <View style={styles.separatorLine} />
