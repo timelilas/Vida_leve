@@ -155,9 +155,8 @@ const WeightTrackingScreen = () => {
 
     const isLastItem = index === data.length - 1;
     const isFirstItem = index === 0;
-    const isMiddleItem = data.length % 2 !== 0 && index === Math.floor(data.length / 2);
 
-    return isFirstItem || isLastItem || isMiddleItem;
+    return isFirstItem || isLastItem;
   }
 
   function renderWeightHistoryChart() {
