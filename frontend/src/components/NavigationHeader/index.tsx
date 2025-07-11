@@ -3,10 +3,12 @@ import { styles } from "./styles";
 import { ArrowIcon } from "../Icons/ArrowIcon";
 import { CloseIcon } from "../Icons/CloseIcon";
 import { HorizontalLogoSVG } from "../Logos/HorizontalLogoSVG";
+import { SignoutIcon } from "../Icons/SignoutIcon";
 
 interface CommonProps {
   onBack?: () => void;
   onClose?: () => void;
+  onSignOut?: () => void;
 }
 
 interface TitledVariant extends CommonProps {
@@ -26,16 +28,15 @@ interface DefaultVariant extends CommonProps {
 type NavigationHeaderProps = TitledVariant | BrandedVariant | DefaultVariant;
 
 export function NavigationHeader(props: NavigationHeaderProps) {
-  const { variant, onBack, onClose } = props;
+  const { variant, onBack, onClose, onSignOut } = props;
 
   return (
-    <View>
+    <View style={styles.container}>
       <View
         style={[
           styles.navigatinContainer,
-          variant === "titled" && styles.titleNavigationContainer,
-        ]}
-      >
+          variant === "titled" && styles.titleNavigationContainer
+        ]}>
         {onBack && (
           <TouchableOpacity onPress={onBack}>
             <ArrowIcon />
@@ -54,13 +55,16 @@ export function NavigationHeader(props: NavigationHeaderProps) {
         )}
       </View>
       {variant === "branded" && (
-        <View
-          style={[
-            styles.brand,
-            (onBack || onClose) && styles.brandNegativeMargin,
-          ]}
-        >
+        <View style={[styles.brand, (onBack || onClose) && styles.brandNegativeMargin]}>
           <HorizontalLogoSVG />
+        </View>
+      )}
+      {onSignOut && (
+        <View style={styles.signoutButtonContainer}>
+          <TouchableOpacity style={styles.signoutButton} onPress={onSignOut}>
+            <SignoutIcon />
+            <Text style={styles.signoutText}>Sair</Text>
+          </TouchableOpacity>
         </View>
       )}
     </View>

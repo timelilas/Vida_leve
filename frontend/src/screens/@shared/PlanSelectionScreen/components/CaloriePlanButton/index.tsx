@@ -11,20 +11,12 @@ interface CaloriePlanButtonProps {
   dailyCalories: number;
 }
 
-export function CaloriePlanButton(
-  props: CaloriePlanButtonProps & PressableProps
-) {
+export function CaloriePlanButton(props: CaloriePlanButtonProps & PressableProps) {
   const styles = useStyles();
 
   return (
-    <ToggleButton
-      disabled={props.disabled}
-      onPress={props.onPress}
-      selected={props.selected}
-    >
-      <View
-        style={[styles.contentContainer, props.disabled && styles.disabled]}
-      >
+    <ToggleButton disabled={props.disabled} onPress={props.onPress} selected={props.selected}>
+      <View style={[styles.contentContainer, props.disabled && styles.disabled]}>
         <View style={styles.titleContainer}>
           {props.icon}
           <View>
@@ -33,9 +25,7 @@ export function CaloriePlanButton(
         </View>
         <View>
           <View style={styles.goal}>
-            <Text style={styles.dailyCalories}>
-              {props.dailyCalories} kcal/dia
-            </Text>
+            <Text style={styles.dailyCalories}>{props.dailyCalories} kcal/dia</Text>
             <Text style={styles.duration}>por {props.duration} semanas</Text>
           </View>
         </View>

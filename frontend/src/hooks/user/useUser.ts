@@ -26,6 +26,7 @@ export function useUser(params?: UseUserParams) {
     queryKey: QueryKeys.API.USER,
     enabled: params?.enabled,
     refetchOnMount: params?.refetchOnMount,
+    refetchOnWindowFocus: false,
     queryFn: async () => {
       const { data } = await httpUserService.getProfile();
       return data;

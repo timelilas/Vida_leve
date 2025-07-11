@@ -23,6 +23,7 @@ export function useMeal(params?: UseMealParams) {
     refetchOnMount: params?.meals?.refetchOnMount,
     retry: 1,
     staleTime: Infinity,
+    refetchOnWindowFocus: false,
     queryFn: async () => {
       const { data } = await httpMealService.getMeals(isoDate);
       return data.meals;

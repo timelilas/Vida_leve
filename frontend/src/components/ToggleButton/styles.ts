@@ -3,13 +3,19 @@ import { colors } from "../../styles/colors";
 
 export const styles = StyleSheet.create({
   button: {
+    overflow: "hidden",
     padding: 2,
     borderRadius: 8,
     borderWidth: 1,
-    borderColor: colors.text.primary,
-    backgroundColor: colors.background.secondary
+    borderColor: colors.text.primary
   },
   buttonDisabled: {
+    opacity: 0.7
+  },
+  buttonSelectedDisabled: {
+    backgroundColor: colors.background.secondary,
+    padding: 0,
+    borderWidth: 3,
     opacity: 0.7
   },
   buttonRounded: {

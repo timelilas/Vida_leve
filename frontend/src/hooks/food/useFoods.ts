@@ -28,6 +28,7 @@ export function useFoods(params: UseFoodsParams) {
   } = useQuery<FoodDataState>({
     queryKey: queryKey,
     refetchOnMount: false,
+    refetchOnWindowFocus: false,
     staleTime: Infinity,
     enabled: params.enabled,
     retry: 1,

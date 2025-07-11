@@ -13,12 +13,12 @@ export function useStyles() {
       justifyContent: "space-between",
       gap: screen.width >= 390 ? 0 : 8,
       paddingVertical: 14,
-      paddingHorizontal: 6,
+      paddingHorizontal: 6
     },
     titleContainer: {
       flexDirection: screen.width >= 240 ? "row" : "column",
       alignItems: "center",
-      gap: 6,
+      gap: 6
     },
     title: {
       width: "100%",
@@ -26,26 +26,26 @@ export function useStyles() {
       lineHeight: 16,
       fontFamily: fonts.robotoRegular,
       color: colors.text.secondary,
-      textAlign: "center",
+      textAlign: "center"
     },
     goal: {
-      alignItems: screen.width >= 390 ? "flex-end" : "center",
+      alignItems: screen.width >= 390 ? "flex-end" : "center"
     },
     dailyCalories: {
       fontSize: 24,
       color: colors.text.secondary,
       fontFamily: fonts.robotoBold,
-      textAlign: "center",
+      textAlign: "center"
     },
     duration: {
       fontSize: 14,
       lineHeight: 14,
       fontFamily: fonts.robotoLight,
       color: colors.text.secondary,
-      textAlign: "center",
+      textAlign: "center"
     },
     disabled: {
-      opacity: 0.5,
-    },
+      opacity: 0.5
+    }
   });
 }

@@ -18,6 +18,7 @@ export function useWeightHistory(params: UseWeightHistoryParams) {
     staleTime: Infinity,
     enabled: params.enabled,
     refetchOnMount: false,
+    refetchOnWindowFocus: false,
     retry: 1,
     queryFn: async () => {
       const { data } = await httpWeightHistoryService.getWeightHistory({

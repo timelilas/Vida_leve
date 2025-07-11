@@ -12,20 +12,6 @@ export default class UserController {
   private _profileImageBucketName = process.env
     .SUPABASE_PROFILE_IMAGE_BUCKET_NAME as string;
 
-  async getAll(req: Request, res: Response): Promise<Response> {
-    try {
-      const profiles = await this._userService.getAll();
-      return res.status(200).json({ data: profiles });
-    } catch (error: any) {
-      return exceptionResponseAdapter({
-        req,
-        res,
-        exception: error,
-        alternativeMsg: "Erro ao obter a lista de usuários.",
-      });
-    }
-  }
-
   async update(req: Request, res: Response): Promise<Response> {
     const { name, phone, birthDate, gender } = req.body;
     const { id } = req.user;
