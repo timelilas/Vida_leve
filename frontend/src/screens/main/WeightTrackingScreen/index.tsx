@@ -179,6 +179,7 @@ const WeightTrackingScreen = () => {
         xAxisName="Dia do mês"
         lineStrokeWidth={3}
         style={{ paddingLeft: 32 }}
+        tooltipConfig={{ withLabel: true }}
         data={[
           {
             color: colors.primary,
