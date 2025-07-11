@@ -1,5 +1,4 @@
-import { View } from "moti";
-import { ActivityIndicator } from "react-native";
+import { ActivityIndicator, View } from "react-native";
 import { colors } from "../../styles/colors";
 import { styles } from "./styles";
 

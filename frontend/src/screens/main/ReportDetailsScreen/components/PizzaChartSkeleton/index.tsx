@@ -1,6 +1,5 @@
-import { View } from "moti";
 import { Skeleton } from "moti/skeleton";
-import { StyleProp, ViewProps, ViewStyle } from "react-native";
+import { StyleProp, ViewStyle, View } from "react-native";
 import { styles } from "./styles";
 import { MotiSkeletonProps } from "moti/build/skeleton/types";
 import { ReactNode } from "react";
@@ -17,7 +16,7 @@ export function PizzaChartSkeleton(props: {
   const defaultAnimationProps: Omit<MotiSkeletonProps, "Gradient"> = {
     colorMode: "light",
     transition: { type: "timing" },
-    disableExitAnimation: true,
+    disableExitAnimation: true
   };
 
   return (

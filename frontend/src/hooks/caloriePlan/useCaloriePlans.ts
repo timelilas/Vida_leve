@@ -15,6 +15,7 @@ export function useCaloriePlans(params?: UseCaloriePlansParams) {
     queryKey: QueryKeys.API.CALORIE_PLANS,
     enabled: params?.enabled,
     refetchOnMount: params?.refetchOnMount,
+    refetchOnWindowFocus: false,
     queryFn: async () => {
       const caloriePlans = await httpCaloriePlanService.getPlans();
       return caloriePlans.data;

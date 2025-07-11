@@ -1,10 +1,10 @@
-import { useEffect, useRef, useState } from "react";
+import { isValidElement, ReactNode, useEffect, useRef, useState } from "react";
 import { Animated, Platform, Text } from "react-native";
 import { styles } from "./styles";
 import Svg, { Path, SvgProps } from "react-native-svg";
 
 interface TooltipProps {
-  value: string;
+  value: ReactNode;
   posX: number;
   posY: number;
   rightAligned: boolean;
@@ -50,11 +50,19 @@ export function ToolTip(props: TooltipProps) {
         top: animatedPosition.current.y,
         left: animatedPosition.current.x,
         backgroundColor: props.color,
-        transform: [{ translateX: props.rightAligned ? "-100%" : "-50%" }, { translateY: -36 }]
+        transform: [
+          { translateX: props.rightAligned ? "-100%" : "-50%" },
+          { translateY: isValidElement(props.value) ? "-130%" : -36 }
+        ]
       }}>
-      <Text numberOfLines={1} style={styles.text}>
-        {props.value}
-      </Text>
+      {isValidElement(props.value) ? (
+        props.value
+      ) : (
+        <Text numberOfLines={1} style={styles.text}>
+          {props.value}
+        </Text>
+      )}
+
       <SolidArrowIcon
         width={8}
         height={8}

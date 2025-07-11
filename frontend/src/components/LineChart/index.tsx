@@ -1,4 +1,4 @@
-import { Dimensions, Platform, View } from "react-native";
+import { Dimensions, Platform, Text, View } from "react-native";
 import { Canvas, Color, Group } from "@shopify/react-native-skia";
 import { useEffect, useState } from "react";
 import { GestureResponderEvent } from "react-native";
@@ -10,8 +10,10 @@ import { YAxis } from "./components/YAxis";
 import { ChartLinePath } from "./components/ChartLinePath";
 import { LinePoint } from "./components/LinePoint";
 import { useChartDomain } from "./hooks/useChartDomain";
+import { styles } from "./styles";
 
 interface TooltipState {
+  label: string | null;
   value: number;
   posX: number;
   posY: number;
@@ -28,6 +30,9 @@ interface LineChartProps {
   xAxisName: string;
   style?: {
     paddingLeft?: number;
+  };
+  tooltipConfig?: {
+    withLabel?: boolean;
   };
   data: {
     values: number[];
@@ -60,6 +65,9 @@ export function LineChart(props: LineChartProps) {
   });
 
   const allowedTooltipPositions = getAllowedTooltipPositions();
+  const roundedXCoordinates = props.labels.map((label) =>
+    Math.trunc(canvas.paddingLeft + xAxis(label)!)
+  );
 
   function renderLinePaths() {
     return props.data.map(({ color, values, withDots, fillColor }, i) => {
@@ -161,10 +169,17 @@ export function LineChart(props: LineChartProps) {
           const nextPosX = canvas.paddingLeft + position.x;
           const nextPosY = canvas.height - canvas.paddingBottom - position.y;
           const samePosition = prev?.posX === nextPosX && prev.posY === nextPosY;
+
+          const xCoordinateIndex = roundedXCoordinates.findIndex(
+            (value) => value === position.x + canvas.paddingLeft
+          );
+          const label = xCoordinateIndex >= 0 ? props.labels[xCoordinateIndex] : null;
+
           return {
             posX: nextPosX,
             posY: nextPosY,
             value: position.value,
+            label: label,
             visible: samePosition ? !prev.visible : true,
             color: position.tooltipColor,
             isLast: position.x === lastPosition.x
@@ -172,6 +187,28 @@ export function LineChart(props: LineChartProps) {
         });
       }
     }
+  }
+
+  function renderTooltip() {
+    return tooltip && tooltip?.visible ? (
+      <ToolTip
+        posX={tooltip.posX}
+        posY={tooltip.posY}
+        color={tooltip.color}
+        rightAligned={tooltip.isLast}
+        value={
+          props.tooltipConfig?.withLabel && tooltip.label ? (
+            <View style={styles.tooltipContainer}>
+              <Text style={styles.labelText}>{tooltip.label}</Text>
+              <View style={styles.tooltipContainerDivision} />
+              <Text style={styles.valueText}>{`${tooltip.value} ${props.yAxisName}`}</Text>
+            </View>
+          ) : (
+            `${tooltip.value} ${props.yAxisName}`
+          )
+        }
+      />
+    ) : null;
   }
 
   useEffect(() => {
@@ -185,15 +222,7 @@ export function LineChart(props: LineChartProps) {
     <View
       onPointerUp={Platform.OS === "web" ? handleTooltipPosition : undefined}
       style={{ width: canvas.width, height: canvas.height }}>
-      {tooltip && tooltip?.visible && (
-        <ToolTip
-          posX={tooltip.posX}
-          posY={tooltip.posY}
-          value={`${tooltip.value} ${props.yAxisName}`}
-          rightAligned={tooltip.isLast}
-          color={tooltip.color}
-        />
-      )}
+      {renderTooltip()}
       <Canvas
         onTouchEnd={Platform.OS !== "web" ? handleTooltipPosition : undefined}
         style={{ width: canvas.width, height: canvas.height }}>

@@ -18,7 +18,8 @@ export function ToggleButton(props: ToggleButtonProps & Omit<PressableProps, "st
         backgroundColor && { backgroundColor },
         selected && styles.buttonSelected,
         rounded && styles.buttonRounded,
-        disabled && styles.buttonDisabled
+        disabled && styles.buttonDisabled,
+        disabled && selected && styles.buttonSelectedDisabled
       ]}
       disabled={disabled}
       {...propsRest}>
