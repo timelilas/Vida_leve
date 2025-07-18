@@ -1,4 +1,11 @@
-import { Text, View, TouchableOpacity, TextInput } from "react-native";
+import {
+  Text,
+  View,
+  TouchableOpacity,
+  TextInput,
+  useWindowDimensions,
+  Platform
+} from "react-native";
 import { styles } from "./styles";
 import { Modal } from "../../../../../components/Modal";
 import { Paragraph } from "../../../../../components/Paragraph/Paragraph";
@@ -14,6 +21,7 @@ import { convertDateToLocalDateData, delay } from "../../../../../utils/helpers"
 import { NETWORK_ERROR_MESSAGE } from "../../../../../constants/errorMessages";
 import { HttpError } from "../../../../../@core/errors/httpError";
 import { useProgress } from "../../../../../hooks/progress/useProgress";
+import { WEB_SCREEN_WIDTH_BREAKPOINT } from "../../../../../constants/webConstants";
 
 interface AddWeightModalProps {
   currentDate: Date;
@@ -27,6 +35,10 @@ export function AddWeightModal(props: AddWeightModalProps) {
   const { isVisible, currentDate, onSuccess, onError, onCancel } = props;
   const { data, addWeight } = useWeightHistory({ enabled: false });
   const { progress } = useProgress({ refetchOnMount: false });
+  const dimensions = useWindowDimensions();
+
+  const isWebDesktop =
+    Platform.OS === "web" && dimensions.width >= WEB_SCREEN_WIDTH_BREAKPOINT;
 
   const {
     control,
@@ -107,7 +119,7 @@ export function AddWeightModal(props: AddWeightModalProps) {
 
   return (
     <Modal isVisible={isVisible}>
-      <View style={styles.modal}>
+      <View style={[styles.modal, isWebDesktop && styles.modalWeb]}>
         <View style={styles.textWrapper}>
           <Text style={styles.title}>Qual é o seu peso atual?</Text>
           <Paragraph style={styles.paragraph}>

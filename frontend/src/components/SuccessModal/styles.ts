@@ -1,12 +1,13 @@
 import { StyleSheet } from "react-native";
 import { colors } from "../../styles/colors";
 import { fonts } from "../../styles/fonts";
+import { APP_FRAME_WIDTH } from "../../constants/webConstants";
 
 export const styles = StyleSheet.create({
   modal: {
     marginInline: 24,
     position: "relative",
-    maxWidth: 390,
+    maxWidth: APP_FRAME_WIDTH,
     minHeight: 170,
     backgroundColor: colors.background.primary,
     justifyContent: "center",
@@ -15,6 +16,9 @@ export const styles = StyleSheet.create({
     borderColor: colors.success,
     borderRadius: 8,
     padding: 24
+  },
+  modalWeb: {
+    maxWidth: APP_FRAME_WIDTH - 40
   },
   message: {
     color: colors.text.primary,
