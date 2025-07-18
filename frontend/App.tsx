@@ -11,6 +11,7 @@ import { LoadSkiaWeb } from "@shopify/react-native-skia/lib/module/web";
 import "@expo/metro-runtime";
 import "react-native-reanimated";
 import "react-native-gesture-handler";
+import { BrowserContainer } from "./src/components/BrowserContainer";
 
 if (Platform.OS === "web") {
   global._WORKLET = false;
@@ -37,7 +38,7 @@ const App = () => {
   useEffect(() => {
     if (Platform.OS === "web") {
       LoadSkiaWeb({
-        locateFile: () => "/canvaskit.wasm",
+        locateFile: () => "/canvaskit.wasm"
       }).then(() => setIsSkiaLoaded(true));
     } else {
       setIsSkiaLoaded(true);
@@ -51,7 +52,13 @@ const App = () => {
   return (
     <SafeAreaProvider>
       <QueryClientProvider client={queryClient}>
-        <AppRouter />
+        {Platform.OS === "web" ? (
+          <BrowserContainer>
+            <AppRouter />
+          </BrowserContainer>
+        ) : (
+          <AppRouter />
+        )}
       </QueryClientProvider>
     </SafeAreaProvider>
   );
