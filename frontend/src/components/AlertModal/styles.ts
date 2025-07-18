@@ -1,14 +1,18 @@
 import { StyleSheet } from "react-native";
 import { colors } from "../../styles/colors";
 import { fonts } from "../../styles/fonts";
+import { APP_FRAME_WIDTH } from "../../constants/webConstants";
 
 export const styles = StyleSheet.create({
   modal: {
     marginInline: 24,
-    maxWidth: 340,
+    maxWidth: APP_FRAME_WIDTH,
     backgroundColor: colors.common.white,
     borderRadius: 8,
     padding: 24
+  },
+  modalWeb: {
+    maxWidth: APP_FRAME_WIDTH - 40
   },
   titleContainer: {
     flexDirection: "row",
