@@ -1,4 +1,5 @@
-import { useWindowDimensions } from "react-native";
+import { Platform, useWindowDimensions } from "react-native";
+import { APP_FRAME_WIDTH, WEB_SCREEN_WIDTH_BREAKPOINT } from "../../../constants/webConstants";
 
 interface UseChartMeasuresParams {
   canvasHeight?: number;
@@ -9,12 +10,17 @@ interface UseChartMeasuresParams {
 export function useChartMeasures(params?: UseChartMeasuresParams) {
   const dimensions = useWindowDimensions();
 
+  const defaultCanvasWidth =
+    Platform.OS === "web" && dimensions.width >= WEB_SCREEN_WIDTH_BREAKPOINT
+      ? APP_FRAME_WIDTH - 8
+      : dimensions.width;
+
   const CHART_STROKE_WIDTH = 1;
 
   const LINE_POINT_RADIUS = 3;
 
   const CANVAS_HEIGHT = params?.canvasHeight || 260;
-  const CANVAS_WIDTH = params?.canvasWidth || dimensions.width - 32;
+  const CANVAS_WIDTH = params?.canvasWidth || defaultCanvasWidth - 32;
   const PADDING_LEFT = params?.canvasPaddingLeft ?? 40;
   const PADDING_BOTTOM = 40;
   const PADDING_TOP = 1;

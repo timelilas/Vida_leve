@@ -234,7 +234,12 @@ const WeightTrackingScreen = () => {
       <ScreenTitle title={"Hoje"} style={[styles.title, styles.dayTitle]} />
 
       <View style={styles.dayPickerContainer}>
-        <DayPicker currentDate={dateData} onSelectDate={() => {}} startDate={localDate} />
+        <DayPicker
+          disabled
+          currentDate={dateData}
+          onSelectDate={() => {}}
+          startDate={localDate}
+        />
       </View>
 
       <View style={styles.podiumSection}>

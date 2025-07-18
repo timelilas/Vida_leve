@@ -15,6 +15,9 @@ export const styles = StyleSheet.create({
   listItemSeparator: {
     width: 8
   },
+  buttonDisabled: {
+    opacity: 0.3
+  },
   rightArrowIcon: {
     transform: [{ rotate: "180deg" }]
   }
