@@ -17,6 +17,7 @@ interface DayPickerProps {
   onSelectDate: (dateData: DateData) => void;
   currentDate: DateData | null;
   startDate?: Date;
+  disabled?: boolean;
 }
 
 export function DayPicker(props: DayPickerProps) {
@@ -48,6 +49,8 @@ export function DayPicker(props: DayPickerProps) {
 
   function handleScrollTo(direction: "right" | "left") {
     return () => {
+      if (props.disabled) return;
+
       if (direction === "right") {
         indexRef.current = indexRef.current <= 0 ? 0 : indexRef.current - 1;
       }
@@ -94,7 +97,10 @@ export function DayPicker(props: DayPickerProps) {
 
   return (
     <View style={styles.container}>
-      <TouchableOpacity onPress={handleScrollTo("left")}>
+      <TouchableOpacity
+        style={props.disabled && styles.buttonDisabled}
+        disabled={props.disabled}
+        onPress={handleScrollTo("left")}>
         <ArrowIcon />
       </TouchableOpacity>
       <FlatList
@@ -121,7 +127,10 @@ export function DayPicker(props: DayPickerProps) {
         )}
         onScrollToIndexFailed={() => {}}
       />
-      <TouchableOpacity onPress={handleScrollTo("right")}>
+      <TouchableOpacity
+        style={props.disabled && styles.buttonDisabled}
+        disabled={props.disabled}
+        onPress={handleScrollTo("right")}>
         <ArrowIcon style={styles.rightArrowIcon} />
       </TouchableOpacity>
     </View>
