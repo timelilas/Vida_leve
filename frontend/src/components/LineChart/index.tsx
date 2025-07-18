@@ -199,9 +199,13 @@ export function LineChart(props: LineChartProps) {
         value={
           props.tooltipConfig?.withLabel && tooltip.label ? (
             <View style={styles.tooltipContainer}>
-              <Text style={styles.labelText}>{tooltip.label}</Text>
+              <Text numberOfLines={1} style={styles.labelText}>
+                {tooltip.label}
+              </Text>
               <View style={styles.tooltipContainerDivision} />
-              <Text style={styles.valueText}>{`${tooltip.value} ${props.yAxisName}`}</Text>
+              <Text
+                numberOfLines={1}
+                style={styles.valueText}>{`${tooltip.value} ${props.yAxisName}`}</Text>
             </View>
           ) : (
             `${tooltip.value} ${props.yAxisName}`
