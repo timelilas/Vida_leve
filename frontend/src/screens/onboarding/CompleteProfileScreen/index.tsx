@@ -5,7 +5,7 @@ import { HttpError } from "../../../@core/errors/httpError";
 import { useAppNavigation } from "../../../hooks/common/useAppNavigation";
 import { RouteConstants } from "../../../routes/types";
 import { useSnackbar } from "../../../hooks/common/useSnackbar";
-import { SecureStorage } from "../../../services/secureStorage/SecureStorage";
+import { secureStorage } from "../../../services/common/secureStorage";
 import { STORAGE_ACCESS_TOKEN } from "../../../constants/localStorageConstants";
 import { CommonActions } from "@react-navigation/native";
 import { NavigationHeader } from "../../../components/NavigationHeader";
@@ -31,7 +31,7 @@ const CompleteProfileScreen = () => {
   const navigation = useAppNavigation({ preventGoBack: isUpdatingProfile });
 
   function goBack() {
-    SecureStorage.removeItem(STORAGE_ACCESS_TOKEN);
+    secureStorage.removeItem(STORAGE_ACCESS_TOKEN);
     navigation.dispatch(
       CommonActions.reset({
         index: 1,

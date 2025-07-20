@@ -1,6 +1,6 @@
-import { STORAGE_ACCESS_TOKEN } from "../../constants/localStorageConstants";
-import { HttpService } from "../HttpService";
-import { SecureStorage } from "../secureStorage/SecureStorage";
+import { STORAGE_ACCESS_TOKEN } from "../../../constants/localStorageConstants";
+import { HttpService } from "../../HttpService";
+import { secureStorage } from "../../common/secureStorage";
 import {
   HttpAddWeightInputDTO,
   HttpAddWeightOutputDTO,
@@ -12,7 +12,7 @@ import {
 export class HttpWeightHistoryService extends HttpService {
   public async getWeightHistory(params: HttpGetWeightHistoryInputDTO) {
     const { limit, offset } = params;
-    const accessToken = await SecureStorage.getItem(STORAGE_ACCESS_TOKEN);
+    const accessToken = await secureStorage.getItem(STORAGE_ACCESS_TOKEN);
 
     return await this.submit<HttpGetWeightHistoryOutputDTO>({
       method: "GET",
@@ -25,7 +25,7 @@ export class HttpWeightHistoryService extends HttpService {
 
   public async deleteWeight(params: HttpDeleteWeightInputDTO) {
     const { id } = params;
-    const accessToken = await SecureStorage.getItem(STORAGE_ACCESS_TOKEN);
+    const accessToken = await secureStorage.getItem(STORAGE_ACCESS_TOKEN);
 
     return await this.submit<void>({
       method: "DELETE",
@@ -38,7 +38,7 @@ export class HttpWeightHistoryService extends HttpService {
 
   public async addWeight(params: HttpAddWeightInputDTO) {
     const { date, weight } = params;
-    const accessToken = await SecureStorage.getItem(STORAGE_ACCESS_TOKEN);
+    const accessToken = await secureStorage.getItem(STORAGE_ACCESS_TOKEN);
 
     return await this.submit<HttpAddWeightOutputDTO>({
       method: "POST",

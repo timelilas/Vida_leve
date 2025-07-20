@@ -2,7 +2,7 @@ import { useMutation, useQuery } from "@tanstack/react-query";
 import { QueryKeys } from "../../constants/reactQueryKeys";
 import { useCallback } from "react";
 import { queryClient } from "../../libs/react-query/queryClient";
-import { httpWeightHistoryService } from "../../services/weight";
+import { httpWeightHistoryService } from "../../services/api/weight";
 import { AddWeightParams, WeightHistoryQueryState } from "./types";
 
 interface UseWeightHistoryParams {

@@ -1,6 +1,6 @@
 import { useMutation, useQuery } from "@tanstack/react-query";
 import { CreateMealParams, UpdateMealParams } from "./types";
-import { httpMealService } from "../../services/meal";
+import { httpMealService } from "../../services/api/meal";
 import { useCallback } from "react";
 import { QueryKeys } from "../../constants/reactQueryKeys";
 import { queryClient } from "../../libs/react-query/queryClient";

@@ -21,7 +21,7 @@ import { MediaErrorCode, ModalAction } from "../../../components/ImageManagerMod
 import { useUser } from "../../../hooks/user/useUser";
 import { SnackbarVariant } from "../../../components/Snackbar/types";
 import { MAX_PROFILE_IMAGE_SIZE } from "../../../constants/fileConstants";
-import { SecureStorage } from "../../../services/secureStorage/SecureStorage";
+import { secureStorage } from "../../../services/common/secureStorage";
 import { STORAGE_ACCESS_TOKEN } from "../../../constants/localStorageConstants";
 import { useAppNavigation } from "../../../hooks/common/useAppNavigation";
 import { CommonActions } from "@react-navigation/native";
@@ -101,7 +101,7 @@ const HomeScreen = () => {
   };
 
   const handleSignout = () => {
-    SecureStorage.removeItem(STORAGE_ACCESS_TOKEN);
+    secureStorage.removeItem(STORAGE_ACCESS_TOKEN);
 
     navigation.dispatch(
       CommonActions.reset({

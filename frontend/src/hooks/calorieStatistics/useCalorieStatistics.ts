@@ -1,6 +1,6 @@
 import { useQuery } from "@tanstack/react-query";
 import { QueryKeys } from "../../constants/reactQueryKeys";
-import { httpMealService } from "../../services/meal";
+import { httpMealService } from "../../services/api/meal";
 import { useCallback } from "react";
 
 interface UseCalorieStatisticsParams {
