@@ -75,6 +75,11 @@ const MealRegistrationScreen = () => {
     );
   }
 
+  function closeModalAndResetNavigation() {
+    setIsModalVisible(false);
+    setTimeout(() => resetNavigationToHome(), 300);
+  }
+
   function handleError(error: Error) {
     let defaultMessage = NETWORK_ERROR_MESSAGE;
     if (error instanceof HttpError) {
@@ -100,11 +105,6 @@ const MealRegistrationScreen = () => {
       await createMeal({ date, mealType, foods });
     }
     setIsModalVisible(true);
-  }
-
-  function closeModalAndResetNavigation() {
-    setIsModalVisible(false);
-    setTimeout(() => resetNavigationToHome(), 300);
   }
 
   const shortDateLabel = formatDateToLabel(new Date(mealDate), "short");

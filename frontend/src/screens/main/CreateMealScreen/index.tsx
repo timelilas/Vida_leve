@@ -1,4 +1,4 @@
-import { View } from "react-native";
+import { RefreshControl, View } from "react-native";
 import { NavigationHeader } from "../../../components/NavigationHeader";
 import { ScreenWrapper } from "../../../components/ScreenWrapper";
 import { useAppNavigation } from "../../../hooks/common/useAppNavigation";
@@ -40,6 +40,7 @@ const CreateMealScreen = (props: CreateMealScreenProps) => {
   const { Snackbar, showSnackbar } = useSnackbar();
   const { user } = useUser({ refetchOnMount: false });
 
+  const [isRefreshing, setIsRefreshing] = useState(false);
   const [mealDetails, setMealDetails] = useState<{
     selectedDate: DateData;
     selectedMealType: MealType | null;
@@ -50,7 +51,7 @@ const CreateMealScreen = (props: CreateMealScreenProps) => {
 
   const { selectedDate, selectedMealType } = mealDetails;
   const localDate = new Date(selectedDate.year, selectedDate.month, selectedDate.day);
-  const { meals, dailyConsumption, error, isLoading } = useMeal({
+  const { meals, dailyConsumption, error, isFetching, fetchMeals } = useMeal({
     date: localDate,
     meals: { refetchOnMount: false }
   });
@@ -97,6 +98,12 @@ const CreateMealScreen = (props: CreateMealScreenProps) => {
     );
   }
 
+  async function refreshMeals() {
+    setIsRefreshing(true);
+    await fetchMeals();
+    setIsRefreshing(false);
+  }
+
   const handleQueryError = useCallback(
     (error: Error) => {
       const mealsError = `Desculpe, ocorreu um erro ao obter as informações do seu consumo de calorias para o dia ${dateString}.`;
@@ -128,8 +135,8 @@ const CreateMealScreen = (props: CreateMealScreenProps) => {
   }, [foundMeal, selectedDate, selectedMealType, navigation, setMeal]);
 
   useEffect(() => {
-    if (error && !isLoading) handleQueryError(error);
-  }, [error, isLoading, handleQueryError]);
+    if (error && !isFetching) handleQueryError(error);
+  }, [error, isFetching, handleQueryError]);
 
   useFocusEffect(
     useCallback(() => {
@@ -141,7 +148,9 @@ const CreateMealScreen = (props: CreateMealScreenProps) => {
   );
 
   return (
-    <ScreenWrapper snackbar={<Snackbar />}>
+    <ScreenWrapper
+      snackbar={<Snackbar />}
+      refreshControl={<RefreshControl refreshing={isRefreshing} onRefresh={refreshMeals} />}>
       <NavigationHeader
         variant="titled"
         title="Registrar Refeição"
@@ -173,7 +182,7 @@ const CreateMealScreen = (props: CreateMealScreenProps) => {
             icon={meal.icon}
             title={meal.name}
             disabled={!!error}
-            isLoading={isLoading}
+            isLoading={isFetching}
             selected={meal.type === selectedMealType}
             caloriesConsumed={dailyConsumption[`${meal.type}`]}
           />
