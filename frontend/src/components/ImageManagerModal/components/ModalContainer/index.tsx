@@ -1,5 +1,5 @@
 import { useEffect } from "react";
-import { ViewProps } from "react-native";
+import { Platform, useWindowDimensions, ViewProps } from "react-native";
 import Reanimated, {
   Easing,
   interpolate,
@@ -8,10 +8,15 @@ import Reanimated, {
   useSharedValue,
   withTiming
 } from "react-native-reanimated";
+import { WEB_SCREEN_WIDTH_BREAKPOINT } from "../../../../constants/webConstants";
+import { styles as commonStyles } from "../../styles";
 
 export function ModalContainer(props: ViewProps) {
   const { style, ...propsRest } = props;
   const sv = useSharedValue(0);
+  const dimensions = useWindowDimensions();
+  const isWebDesktop =
+    Platform.OS === "web" && dimensions.width >= WEB_SCREEN_WIDTH_BREAKPOINT;
 
   const animatedStyle = useAnimatedStyle(() => ({
     opacity: interpolate(sv.value, [0, 1], [0.3, 1])
@@ -27,5 +32,14 @@ export function ModalContainer(props: ViewProps) {
     );
   }, [sv]);
 
-  return <Reanimated.View style={[style, animatedStyle]} {...propsRest} />;
+  return (
+    <Reanimated.View
+      style={[
+        commonStyles.container,
+        isWebDesktop && commonStyles.modalWebDesktop,
+        animatedStyle
+      ]}
+      {...propsRest}
+    />
+  );
 }

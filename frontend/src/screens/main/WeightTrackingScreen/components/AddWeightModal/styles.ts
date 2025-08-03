@@ -5,13 +5,12 @@ import { APP_FRAME_WIDTH } from "../../../../../constants/webConstants";
 
 export const styles = StyleSheet.create({
   modal: {
-    marginInline: 24,
     maxWidth: APP_FRAME_WIDTH,
     backgroundColor: colors.common.white,
     borderRadius: 8,
     padding: 24
   },
-  modalWeb: {
+  modalWebDesktop: {
     maxWidth: APP_FRAME_WIDTH - 40
   },
   title: {

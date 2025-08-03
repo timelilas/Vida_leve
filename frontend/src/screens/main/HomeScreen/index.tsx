@@ -174,8 +174,8 @@ const HomeScreen = () => {
 
   function handleImageManagerSuccess(action: ModalAction) {
     const successMessageMap: Record<ModalAction, string | undefined> = {
-      PICK_IMAGE: "Image de perfil atualizada com sucesso.",
-      ACCESS_CAMERA: "Image de perfil atualizada com sucesso.",
+      PICK_IMAGE: "Imagem de perfil atualizada com sucesso.",
+      ACCESS_CAMERA: "Imagem de perfil atualizada com sucesso.",
       DELETE_IMAGE: "Imagem de perfil removida com sucesso."
     };
 

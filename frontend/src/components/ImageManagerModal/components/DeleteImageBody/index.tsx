@@ -28,7 +28,7 @@ export function DeleteImageBody(props: DeleteImageBodyProps) {
   }
 
   return (
-    <ModalContainer style={commonStyles.container}>
+    <ModalContainer>
       <View style={styles.titleContainer}>
         <WarningIcon />
         <Text style={styles.title}>Confirmar exclusão da foto de perfil</Text>
