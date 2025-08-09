@@ -160,7 +160,7 @@ const CreateMealScreen = (props: CreateMealScreenProps) => {
       <ScreenTitle
         style={[styles.title, styles.dayTitle]}
         title={
-          areDatesEqual(currentDate, localDate) ? "Hoje" : formatDateToLabel(localDate, "long")
+          areDatesEqual(new Date(), localDate) ? "Hoje" : formatDateToLabel(localDate, "long")
         }
       />
       <View style={styles.dayPicker}>
