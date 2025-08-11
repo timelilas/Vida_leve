@@ -1,12 +1,12 @@
-import { PlanType } from "../../@core/entities/@shared/planType/type";
-import { HttpService } from "../HttpService";
+import { PlanType } from "../../../@core/entities/@shared/planType/type";
+import { HttpService } from "../../HttpService";
 import { HttpProgressOutputDTO, HttpUpsertProgressInputDTO } from "./types";
-import { STORAGE_ACCESS_TOKEN } from "../../constants/localStorageConstants";
-import { SecureStorage } from "../secureStorage/SecureStorage";
+import { STORAGE_ACCESS_TOKEN } from "../../../constants/localStorageConstants";
+import { secureStorage } from "../../common/secureStorage";
 
 export class HttpProgressService extends HttpService {
   public async upsertProgress(params: HttpUpsertProgressInputDTO) {
-    const accessToken = await SecureStorage.getItem(STORAGE_ACCESS_TOKEN);
+    const accessToken = await secureStorage.getItem(STORAGE_ACCESS_TOKEN);
 
     return await this.submit<HttpProgressOutputDTO>({
       method: "POST",
@@ -20,7 +20,7 @@ export class HttpProgressService extends HttpService {
   }
 
   public async setCaloriePlan(plan: PlanType) {
-    const accessToken = await SecureStorage.getItem(STORAGE_ACCESS_TOKEN);
+    const accessToken = await secureStorage.getItem(STORAGE_ACCESS_TOKEN);
 
     return await this.submit<HttpProgressOutputDTO>({
       method: "PATCH",
@@ -34,7 +34,7 @@ export class HttpProgressService extends HttpService {
   }
 
   public async getProgress() {
-    const accessToken = await SecureStorage.getItem(STORAGE_ACCESS_TOKEN);
+    const accessToken = await secureStorage.getItem(STORAGE_ACCESS_TOKEN);
 
     return await this.submit<HttpProgressOutputDTO | null>({
       method: "GET",

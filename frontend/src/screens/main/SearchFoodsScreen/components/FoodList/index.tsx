@@ -23,11 +23,7 @@ export const FoodList = memo(({ foods }: FoodListProps) => {
   return (
     <View style={styles.foodList}>
       {foods.map((food) => (
-        <FoodItem
-          key={food.id}
-          action={() => handleFoodSelection(food)}
-          name={food.name}
-        />
+        <FoodItem key={food.id} action={() => handleFoodSelection(food)} name={food.name} />
       ))}
     </View>
   );

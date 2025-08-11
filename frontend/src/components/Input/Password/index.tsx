@@ -17,19 +17,11 @@ interface PasswordInputProps extends InputProps {
 export function PasswordInput(props: PasswordInputProps & TextInputProps) {
   const [isPasswordVisible, setIsPasswordVisible] = useState(false);
 
-  const {
-    withBoard,
-    disabled,
-    enableBoard,
-    label,
-    error,
-    errorMessage,
-    ...propsRest
-  } = props;
+  const { withBoard, disabled, enableBoard, label, error, errorMessage, ...propsRest } = props;
 
   const passwordVisibilityButtonStyles = [
     styles.visibilityButton,
-    disabled ? styles.visibilityButtonDisabled : null,
+    disabled ? styles.visibilityButtonDisabled : null
   ];
 
   function togglePasswordVisibility() {
@@ -49,19 +41,15 @@ export function PasswordInput(props: PasswordInputProps & TextInputProps) {
             disabled={disabled}
             hitSlop={8}
             onPress={togglePasswordVisibility}
-            style={passwordVisibilityButtonStyles}
-          >
-            {isPasswordVisible ? <EyeOpenIcon /> : <EyeOffIcon />}
+            style={passwordVisibilityButtonStyles}>
+            {isPasswordVisible ? <EyeOffIcon /> : <EyeOpenIcon />}
           </Pressable>
         }
         {...propsRest}
       />
       {errorMessage && <ErrorMessage message={errorMessage} />}
       {withBoard && (
-        <PasswordValidationBoard
-          enabled={!!enableBoard}
-          password={props.value || ""}
-        />
+        <PasswordValidationBoard enabled={!!enableBoard} password={props.value || ""} />
       )}
     </View>
   );

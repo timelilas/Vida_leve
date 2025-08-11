@@ -4,7 +4,7 @@ import {
   HttpSignupInputDTO,
   HttpSignupOutputDTO
 } from "./types";
-import { HttpService } from "../HttpService";
+import { HttpService } from "../../HttpService";
 
 export class HttpAuthService extends HttpService {
   public async signup(data: HttpSignupInputDTO) {

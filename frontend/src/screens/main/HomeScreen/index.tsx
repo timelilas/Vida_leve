@@ -21,7 +21,7 @@ import { MediaErrorCode, ModalAction } from "../../../components/ImageManagerMod
 import { useUser } from "../../../hooks/user/useUser";
 import { SnackbarVariant } from "../../../components/Snackbar/types";
 import { MAX_PROFILE_IMAGE_SIZE } from "../../../constants/fileConstants";
-import { SecureStorage } from "../../../services/secureStorage/SecureStorage";
+import { secureStorage } from "../../../services/common/secureStorage";
 import { STORAGE_ACCESS_TOKEN } from "../../../constants/localStorageConstants";
 import { useAppNavigation } from "../../../hooks/common/useAppNavigation";
 import { CommonActions } from "@react-navigation/native";
@@ -101,7 +101,7 @@ const HomeScreen = () => {
   };
 
   const handleSignout = () => {
-    SecureStorage.removeItem(STORAGE_ACCESS_TOKEN);
+    secureStorage.removeItem(STORAGE_ACCESS_TOKEN);
 
     navigation.dispatch(
       CommonActions.reset({
@@ -174,8 +174,8 @@ const HomeScreen = () => {
 
   function handleImageManagerSuccess(action: ModalAction) {
     const successMessageMap: Record<ModalAction, string | undefined> = {
-      PICK_IMAGE: "Image de perfil atualizada com sucesso.",
-      ACCESS_CAMERA: "Image de perfil atualizada com sucesso.",
+      PICK_IMAGE: "Imagem de perfil atualizada com sucesso.",
+      ACCESS_CAMERA: "Imagem de perfil atualizada com sucesso.",
       DELETE_IMAGE: "Imagem de perfil removida com sucesso."
     };
 

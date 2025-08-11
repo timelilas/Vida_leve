@@ -1,6 +1,6 @@
-import { HttpService } from "../HttpService";
-import { STORAGE_ACCESS_TOKEN } from "../../constants/localStorageConstants";
-import { SecureStorage } from "../secureStorage/SecureStorage";
+import { HttpService } from "../../HttpService";
+import { STORAGE_ACCESS_TOKEN } from "../../../constants/localStorageConstants";
+import { secureStorage } from "../../common/secureStorage";
 import {
   HttpGetCalorieStatisticsInputDTO,
   HttpCreateMealInputDTO,
@@ -13,7 +13,7 @@ import {
 
 export class HttpMealService extends HttpService {
   public async getMeals(date: string) {
-    const accessToken = await SecureStorage.getItem(STORAGE_ACCESS_TOKEN);
+    const accessToken = await secureStorage.getItem(STORAGE_ACCESS_TOKEN);
 
     return await this.submit<HttpGetMealsOutputDTO>({
       method: "GET",
@@ -25,7 +25,7 @@ export class HttpMealService extends HttpService {
   }
 
   public async createMeal(params: HttpCreateMealInputDTO) {
-    const accessToken = await SecureStorage.getItem(STORAGE_ACCESS_TOKEN);
+    const accessToken = await secureStorage.getItem(STORAGE_ACCESS_TOKEN);
 
     return await this.submit<HttpCreateMealOutputDTO>({
       method: "POST",
@@ -39,7 +39,7 @@ export class HttpMealService extends HttpService {
 
   public async getCalorieStatistics(params: HttpGetCalorieStatisticsInputDTO) {
     const { from, to } = params;
-    const accessToken = await SecureStorage.getItem(STORAGE_ACCESS_TOKEN);
+    const accessToken = await secureStorage.getItem(STORAGE_ACCESS_TOKEN);
 
     return await this.submit<HttpGetCalorieStatisticsOutputDTO>({
       method: "GET",
@@ -51,7 +51,7 @@ export class HttpMealService extends HttpService {
   }
 
   public async updateMeal(params: HttpUpdateMealInputDTO) {
-    const accessToken = await SecureStorage.getItem(STORAGE_ACCESS_TOKEN);
+    const accessToken = await secureStorage.getItem(STORAGE_ACCESS_TOKEN);
 
     return await this.submit<HttpUpdateMealOutputDTO>({
       method: "PUT",

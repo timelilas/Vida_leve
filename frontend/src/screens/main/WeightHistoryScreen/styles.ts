@@ -9,8 +9,9 @@ export const styles = StyleSheet.create({
   },
   body: {
     paddingTop: 24,
+    marginBottom: 24,
     paddingHorizontal: 16,
-    marginBottom: "auto"
+    gap: 24
   },
   title: {
     fontSize: 20,
@@ -34,23 +35,21 @@ export const styles = StyleSheet.create({
     color: colors.text.secondary
   },
   separatorLine: {
-    marginTop: 16,
-    marginBottom: 24,
     height: 1,
     width: "100%",
     backgroundColor: colors.gray.medium
   },
   weightTableContainer: {
-    position: "relative",
-    marginBottom: 40
+    position: "relative"
   },
   weightTableInnerContainer: {
-    paddingHorizontal: 16
+    paddingHorizontal: 8
   },
   activityIndicatorContainer: {
     justifyContent: "center"
   },
   bottom: {
+    marginTop: "auto",
     paddingHorizontal: 40,
     paddingVertical: 24,
     borderColor: colors.gray.medium,

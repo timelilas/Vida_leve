@@ -5,7 +5,6 @@ import { APP_FRAME_WIDTH } from "../../constants/webConstants";
 
 export const styles = StyleSheet.create({
   modal: {
-    marginInline: 24,
     position: "relative",
     maxWidth: APP_FRAME_WIDTH,
     minHeight: 170,
@@ -17,7 +16,7 @@ export const styles = StyleSheet.create({
     borderRadius: 8,
     padding: 24
   },
-  modalWeb: {
+  modalWebDesktop: {
     maxWidth: APP_FRAME_WIDTH - 40
   },
   message: {

@@ -1,6 +1,6 @@
 import { useQuery } from "@tanstack/react-query";
 import { QueryKeys } from "../../constants/reactQueryKeys";
-import { httpCaloriePlanService } from "../../services/caloriePlan";
+import { httpCaloriePlanService } from "../../services/api/caloriePlan";
 import { queryClient } from "../../libs/react-query/queryClient";
 import { CaloriePlanProps } from "../../@core/entities/caloriePlan/type";
 import { useCallback } from "react";

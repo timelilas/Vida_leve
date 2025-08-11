@@ -11,6 +11,7 @@ import { Paragraph } from "../../../Paragraph/Paragraph";
 import { useState } from "react";
 import { useUser } from "../../../../hooks/user/useUser";
 import { LoadingOverlay } from "../../../LoadingOverlay";
+import { ModalContainer } from "../ModalContainer";
 
 interface MainBodyProps {
   isUpdatingProfileImage?: boolean;
@@ -57,7 +58,7 @@ export function MainBody(props: MainBodyProps) {
   }
 
   return (
-    <View style={commonStyles.container}>
+    <ModalContainer>
       <Paragraph style={commonStyles.paragraph}>
         Escolha uma imagem que melhor represente você! Carregue uma nova foto ou remova a atual
         para voltar ao padrão.
@@ -89,6 +90,6 @@ export function MainBody(props: MainBodyProps) {
         <CloseIcon />
       </TouchableOpacity>
       {isUpdatingProfileImage ? <LoadingOverlay /> : null}
-    </View>
+    </ModalContainer>
   );
 }

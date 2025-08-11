@@ -82,7 +82,7 @@ export function AccessCameraBody(props: AccessCameraBodyProps) {
   }
 
   return (
-    <ModalContainer style={commonStyles.container}>
+    <ModalContainer>
       <Paragraph style={commonStyles.paragraph}>
         A câmera está pronta! Capture a melhor versão de você.
       </Paragraph>

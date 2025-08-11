@@ -34,7 +34,8 @@ export const styles = StyleSheet.create({
     overflow: "hidden"
   },
   list: {
-    maxHeight: (WEIGHT_TABLE_ITEM_MARGIN_BOTTOM + WEIGHT_TABLE_ITEM_HEIGHT) * 6
+    maxHeight: (WEIGHT_TABLE_ITEM_MARGIN_BOTTOM + WEIGHT_TABLE_ITEM_HEIGHT) * 10,
+    paddingHorizontal: 8
   },
   weightItem: {
     flexDirection: "row",
