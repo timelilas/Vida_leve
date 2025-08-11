@@ -1,3 +1,3 @@
-import { HttpProgressService } from "./httpProgressService";
+import { HttpProgressService } from "./HttpProgressService";
 
 export const httpProgressService = new HttpProgressService();

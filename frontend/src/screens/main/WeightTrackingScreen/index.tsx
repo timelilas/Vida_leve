@@ -169,7 +169,7 @@ const WeightTrackingScreen = () => {
     const isLastItem = index === data.length - 1;
     const isFirstItem = index === 0;
 
-    return isFirstItem || isLastItem;
+    return (isFirstItem || isLastItem) && !!chartDataAndLabels.weights[index];
   }
 
   function renderWeightHistoryChart() {

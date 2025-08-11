@@ -7,7 +7,7 @@ import { SubmitButton } from "../../../components/SubmitButton";
 import { ScreenTitle } from "../../../components/ScreenTitle";
 import { SignupFormData } from "./types";
 import { maskEmail } from "../../../utils/masks";
-import { httpAuthService } from "../../../services/auth";
+import { httpAuthService } from "../../../services/api/auth";
 import { StackActions } from "@react-navigation/native";
 import { ConnectionError } from "../../../@core/errors/connectionError";
 import { HttpError } from "../../../@core/errors/httpError";

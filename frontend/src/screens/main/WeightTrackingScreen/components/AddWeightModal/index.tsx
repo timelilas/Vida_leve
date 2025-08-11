@@ -119,7 +119,7 @@ export function AddWeightModal(props: AddWeightModalProps) {
 
   return (
     <Modal isVisible={isVisible}>
-      <View style={[styles.modal, isWebDesktop && styles.modalWeb]}>
+      <View style={[styles.modal, isWebDesktop && styles.modalWebDesktop]}>
         <View style={styles.textWrapper}>
           <Text style={styles.title}>Qual é o seu peso atual?</Text>
           <Paragraph style={styles.paragraph}>

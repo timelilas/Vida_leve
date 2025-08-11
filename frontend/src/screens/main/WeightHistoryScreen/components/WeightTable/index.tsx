@@ -1,4 +1,4 @@
-import { ActivityIndicator, FlatList, Text, View } from "react-native";
+import { ActivityIndicator, FlatList, Platform, Text, View } from "react-native";
 import { styles } from "./styles";
 import { WeightItem } from "../WeightItem";
 import { WeightProps } from "../../../../../@core/entities/weight/type";
@@ -31,7 +31,7 @@ export function WeightTable(props: WeightTableProps) {
           nestedScrollEnabled
           maxToRenderPerBatch={5}
           keyExtractor={(item) => `${item.id}`}
-          showsVerticalScrollIndicator={false}
+          showsVerticalScrollIndicator={Platform.OS !== "web"}
           onEndReached={props.onEndReached}
           ListFooterComponent={
             props.isLoadingMore ? (

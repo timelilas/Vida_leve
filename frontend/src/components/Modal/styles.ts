@@ -7,5 +7,12 @@ export const styles = StyleSheet.create({
     alignItems: "center",
     margin: 0,
     padding: 0
+  },
+  innerContainer: {
+    width: "100%",
+    height: "100%",
+    justifyContent: "center",
+    alignItems: "center",
+    paddingHorizontal: 24
   }
 });

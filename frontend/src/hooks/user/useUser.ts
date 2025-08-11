@@ -1,6 +1,6 @@
 import { useMutation, useQuery } from "@tanstack/react-query";
 import { QueryKeys } from "../../constants/reactQueryKeys";
-import { httpUserService } from "../../services/user";
+import { httpUserService } from "../../services/api/user";
 import { UpdateUserProfileParams, SetProfileImageParams, UserQueryState } from "./types";
 import { queryClient } from "../../libs/react-query/queryClient";
 import { useCallback } from "react";

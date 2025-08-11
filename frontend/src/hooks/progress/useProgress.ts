@@ -1,7 +1,7 @@
 import { useMutation, useQuery } from "@tanstack/react-query";
 import { ProgressQueryState, UpsertProgressParams } from "./types";
 import { QueryKeys } from "../../constants/reactQueryKeys";
-import { httpProgressService } from "../../services/progress";
+import { httpProgressService } from "../../services/api/progress";
 import { useCallback } from "react";
 import { queryClient } from "../../libs/react-query/queryClient";
 import { PlanType } from "../../@core/entities/@shared/planType/type";

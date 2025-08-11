@@ -9,6 +9,7 @@ import {
   LayoutChangeEvent,
   NativeScrollEvent,
   NativeSyntheticEvent,
+  Platform,
   useWindowDimensions,
   View
 } from "react-native";
@@ -138,6 +139,7 @@ const SearchFoodsScreen = ({ route }: SearchFoodsScreenProps) => {
 
   return (
     <ScreenWrapper
+      showsVerticalScrollIndicator={Platform.OS !== "web"}
       contentContainerStyle={styles.container}
       onScroll={handleScreenScroll}
       snackbar={<Snackbar />}>

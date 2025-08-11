@@ -5,7 +5,7 @@ import { Input } from "../../../components/Input";
 import { ScreenWrapper } from "../../../components/ScreenWrapper";
 import { SubmitButton } from "../../../components/SubmitButton";
 import { ScreenTitle } from "../../../components/ScreenTitle";
-import { httpAuthService } from "../../../services/auth";
+import { httpAuthService } from "../../../services/api/auth";
 import { ErrorMessage } from "../../../components/ErrorMessage";
 import { LoginFormData } from "./types";
 import { maskEmail } from "../../../utils/masks";
@@ -14,7 +14,7 @@ import { ConnectionError } from "../../../@core/errors/connectionError";
 import { useAppNavigation } from "../../../hooks/common/useAppNavigation";
 import { RouteConstants } from "../../../routes/types";
 import { wrongCredentialsMessage } from "./utils";
-import { SecureStorage } from "../../../services/secureStorage/SecureStorage";
+import { secureStorage } from "../../../services/common/secureStorage";
 import { useSnackbar } from "../../../hooks/common/useSnackbar";
 import { STORAGE_ACCESS_TOKEN } from "../../../constants/localStorageConstants";
 import { useNavigationAfterLogin } from "./hooks/useNavigationAfterLogin";
@@ -132,7 +132,7 @@ const LoginScreen = () => {
   async function onSubmit(params: LoginFormData) {
     try {
       const { data } = await httpAuthService.login(params);
-      await SecureStorage.setItem(STORAGE_ACCESS_TOKEN, data.token);
+      await secureStorage.setItem(STORAGE_ACCESS_TOKEN, data.token);
       await handleNavigationAfterLogin();
     } catch (error: any) {
       handleApiError(error);

@@ -1,3 +1,3 @@
-import { HttpWeightHistoryService } from "./httpWeightService";
+import { HttpWeightHistoryService } from "./HttpWeightService";
 
 export const httpWeightHistoryService = new HttpWeightHistoryService();

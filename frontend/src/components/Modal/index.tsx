@@ -25,7 +25,7 @@ export function Modal(props: ModalProps) {
         backdropOpacity={0.2}
         isVisible={isVisible}
         style={[styles.container, style]}>
-        {children}
+        <View style={styles.innerContainer}>{children}</View>
       </ReactNativeModal>
     </View>
   );

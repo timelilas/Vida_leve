@@ -193,8 +193,10 @@ const WeightHistoryScreen = () => {
               exclua um registro pela data.
             </Paragraph>
           </View>
-          <View style={styles.separatorLine} />
         </View>
+
+        <View style={styles.separatorLine} />
+
         <View style={styles.weightTableContainer}>
           <View style={styles.weightTableInnerContainer}>
             <WeightHistoryTableSkeleton show={isFetching || isRefreshing}>
@@ -223,6 +225,7 @@ const WeightHistoryScreen = () => {
           {isDeleting ? <TableOverlay /> : null}
         </View>
       </View>
+
       <View style={styles.bottom}>
         <SubmitButton
           disabled={isDeleting}

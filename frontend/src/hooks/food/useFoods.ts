@@ -4,7 +4,7 @@ import { transformFoodNameIntoSlug } from "../../utils/helpers";
 import { QueryKeys } from "../../constants/reactQueryKeys";
 import { useCallback } from "react";
 import { queryClient } from "../../libs/react-query/queryClient";
-import { httpFoodService } from "../../services/food";
+import { httpFoodService } from "../../services/api/food";
 
 interface FoodDataState {
   hasMore: boolean;

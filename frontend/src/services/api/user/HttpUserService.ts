@@ -5,13 +5,13 @@ import {
   HttpUpdateUserProfileInputDTO,
   HttpUpdateUserProfileOutputDTO
 } from "./types";
-import { HttpService } from "../HttpService";
-import { STORAGE_ACCESS_TOKEN } from "../../constants/localStorageConstants";
-import { SecureStorage } from "../secureStorage/SecureStorage";
+import { HttpService } from "../../HttpService";
+import { STORAGE_ACCESS_TOKEN } from "../../../constants/localStorageConstants";
+import { secureStorage } from "../../common/secureStorage";
 
 export class HttpUserService extends HttpService {
   public async updateProfile(params: HttpUpdateUserProfileInputDTO) {
-    const accessToken = await SecureStorage.getItem(STORAGE_ACCESS_TOKEN);
+    const accessToken = await secureStorage.getItem(STORAGE_ACCESS_TOKEN);
 
     return await this.submit<HttpUpdateUserProfileOutputDTO>({
       method: "PUT",
@@ -24,7 +24,7 @@ export class HttpUserService extends HttpService {
   }
 
   public async getProfile() {
-    const accessToken = await SecureStorage.getItem(STORAGE_ACCESS_TOKEN);
+    const accessToken = await secureStorage.getItem(STORAGE_ACCESS_TOKEN);
 
     return await this.submit<HttpGetUserProfileOutputDTO>({
       method: "GET",
@@ -36,7 +36,7 @@ export class HttpUserService extends HttpService {
   }
 
   public async deleteProfileImage() {
-    const accessToken = await SecureStorage.getItem(STORAGE_ACCESS_TOKEN);
+    const accessToken = await secureStorage.getItem(STORAGE_ACCESS_TOKEN);
 
     return await this.submit<HttpGetUserProfileOutputDTO>({
       method: "DELETE",
@@ -49,7 +49,7 @@ export class HttpUserService extends HttpService {
 
   public async setProfileImage(params: HttpSetProfileImageInputDTO) {
     const { data } = params;
-    const accessToken = await SecureStorage.getItem(STORAGE_ACCESS_TOKEN);
+    const accessToken = await secureStorage.getItem(STORAGE_ACCESS_TOKEN);
 
     const formData = new FormData();
     formData.append("file", data as any);

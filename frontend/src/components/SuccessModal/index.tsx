@@ -14,13 +14,15 @@ interface SuccessModalProps {
 
 export function SuccessModal(props: SuccessModalProps) {
   const { message, isVisible, onClose } = props;
+
   const dimensions = useWindowDimensions();
+
   const isWebDesktop =
     Platform.OS === "web" && dimensions.width >= WEB_SCREEN_WIDTH_BREAKPOINT;
 
   return (
     <Modal isVisible={isVisible}>
-      <View style={[styles.modal, isWebDesktop && styles.modalWeb]}>
+      <View style={[styles.modal, isWebDesktop && styles.modalWebDesktop]}>
         <SuccessCheckIcon style={styles.checkIcon} />
         <Text style={styles.message}>{message}</Text>
         <Pressable onPress={onClose} style={styles.closeButton}>
