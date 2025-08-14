@@ -1,5 +1,4 @@
 import express, { Application, Request, Response } from "express";
-import cors from "cors";
 import userRouter from "./routes/UserRouter";
 import progressRouter from "./routes/ProgressRouter";
 import authRouter from "./routes/AuthRouter";
@@ -8,10 +7,9 @@ import helmet from "helmet";
 import foodRouter from "./routes/FoodRouter";
 import mealRouter from "./routes/MealRouter";
 import weightHistoryRouter from "./routes/WeightHistoryRouter";
-
-// Swagger
 import swaggerUi from "swagger-ui-express";
-import swaggerSpec from "./swaggerConfig";
+import { setupCORS } from "./middleware/cors/corsMiddleware";
+import { swaggerSpec } from "./docs/swagger";
 
 class App {
   public app: Application = express();
@@ -25,19 +23,9 @@ class App {
   }
 
   private config(): void {
-    const origins = process.env.WEB_ORIGIN?.split(",");
-    const corsOptions: cors.CorsOptions = {
-      methods: ["GET", "POST", "PATCH", "DELETE", "OPTIONS", "PUT"],
-      allowedHeaders: ["Content-Type", "Authorization", "X-Timezone"],
-      credentials: false,
-      origin: origins?.length === 1 ? origins[0] : origins,
-    };
-
     this.app.use(express.json());
     this.app.use(helmet());
-    this.app.use(cors(corsOptions));
-
-    // Swagger UI
+    this.app.use(setupCORS());
     this.app.use("/docs", swaggerUi.serve, swaggerUi.setup(swaggerSpec));
   }
 
