@@ -33,15 +33,8 @@ export default class MealController {
 
       if (user?.registrationDate) {
         const mealDate = new Date(date);
-        mealDate.setUTCHours(3);
 
-        const registrationDateOnly = new Date(
-          user.registrationDate.getFullYear(),
-          user.registrationDate.getMonth(),
-          user.registrationDate.getDate()
-        );
-
-        if (mealDate.getTime() < registrationDateOnly.getTime()) {
+        if (mealDate.getTime() < user?.registrationDate.getTime()) {
           throw new BadRequestException(
             `A data da refeição deve ser maior ou igual a data de registro do usuário.`,
             MealController.name,
