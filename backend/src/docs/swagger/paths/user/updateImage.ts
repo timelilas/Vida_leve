@@ -37,7 +37,7 @@ export const updateImage = {
             },
           },
           examples: {
-            user: {
+            profileImage: {
               value: {
                 data: { imageUrl: "https://..." },
               },

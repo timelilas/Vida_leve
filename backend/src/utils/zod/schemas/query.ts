@@ -5,7 +5,7 @@ export const defaultQueryParamsZodSchema = z.object({
     .string({ invalid_type_error: "Limit deve ser um número." })
     .min(1, { message: "Limit de ter no mínimo 1 caractere" })
     .optional()
-    .refine((Limit) => (Limit ? Limit.match(/^\d+$/) : true), {
+    .refine((Limit) => (Limit ? Limit.match(/^-?\d+$/) : true), {
       message: "Limit deve ser um número inteiro.",
     })
     .refine((limit) => (limit ? parseInt(limit) > 0 : true), {
@@ -19,7 +19,7 @@ export const defaultQueryParamsZodSchema = z.object({
     .string({ invalid_type_error: "Offset deve ser um número." })
     .min(1, { message: "Offset de ter no mínimo 1 caractere" })
     .optional()
-    .refine((offset) => (offset ? offset.match(/^\d+$/) : true), {
+    .refine((offset) => (offset ? offset.match(/^-?\d+$/) : true), {
       message: "Offset deve ser um número inteiro.",
     })
     .refine((limit) => (limit ? parseInt(limit) >= 0 : true), {

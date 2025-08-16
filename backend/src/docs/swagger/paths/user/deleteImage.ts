@@ -35,7 +35,7 @@ export const deleteImage = {
         "application/json": {
           schema: { $ref: "#/components/schemas/ErrorResponse" },
           examples: {
-            badRequest: {
+            imageNotFound: {
               value: createSwaggerErrorExample({
                 path: "/users/profile/image",
                 status: 404,

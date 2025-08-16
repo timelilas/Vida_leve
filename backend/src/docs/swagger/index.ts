@@ -1,4 +1,6 @@
 import { authPaths } from "./paths/auth";
+import { foodPaths } from "./paths/food";
+import { progressPaths } from "./paths/progress";
 import { userPaths } from "./paths/user";
 import { swaggerSchemas } from "./schemas";
 
@@ -22,10 +24,20 @@ export const swaggerSpec = {
       name: "User",
       description: "Operações de perfil do usuário",
     },
+    {
+      name: "Progress",
+      description: "Operações relacionadas ao progresso do usuário",
+    },
+    {
+      name: "Food",
+      description: "Operações de consulta de alimentos",
+    },
   ],
   paths: {
     ...authPaths,
     ...userPaths,
+    ...progressPaths,
+    ...foodPaths,
     // "/surveys/{id}/results": surveyResultPaths,
   },
   components: {

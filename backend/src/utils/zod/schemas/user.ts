@@ -21,10 +21,10 @@ export const userZodSchema = z
     ),
     gender: z
       .enum(allowedGenders, {
-        required_error: "Gênero social é um campo obrigatório",
+        required_error: "Gênero social é um campo obrigatório.",
         message:
-          "Gênero social permite apenas os valores: masculino e feminino",
+          "Gênero social permite apenas os valores: masculino e feminino.",
       })
       .nullable(),
   })
-  .strict({ message: "Não é um campo válido" });
+  .strict({ message: "Não é um campo válido." });
