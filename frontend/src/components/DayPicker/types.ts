@@ -4,4 +4,5 @@ export interface DateData {
   month: number;
   year: number;
   weekDay: number;
+  isoDate: string;
 }

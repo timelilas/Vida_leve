@@ -121,10 +121,9 @@ const CreateMealScreen = (props: CreateMealScreenProps) => {
 
   useEffect(() => {
     if (selectedDate && selectedMealType) {
-      const { year, month, day } = selectedDate;
       setMeal({
         id: foundMeal?.id,
-        date: new Date(year, month, day),
+        date: new Date(selectedDate.isoDate),
         type: selectedMealType,
         foods: foundMeal?.foods ? foundMeal.foods : []
       });

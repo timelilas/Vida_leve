@@ -15,7 +15,7 @@ export class CaloriePlanController {
         req,
         res,
         exception: error,
-        alternativeMsg: "Erro ao buscar os planos de calorias do usuário.",
+        alternativeMsg: "Erro na busca dos planos de execução do usuário.",
       });
     }
   }

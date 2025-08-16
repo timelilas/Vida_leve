@@ -12,18 +12,17 @@ export function createMockedDays(limit: number, startDate?: Date) {
 
   for (let i = 0; i < limit; i++) {
     const currentDate = new Date();
-    const currentDateOnly = getLocalDateOnly(currentDate);
-    const currentDateOnlySlice = new Date(
-      currentDateOnly.getTime() - 3600 * 24 * 1000 * (-1 + i)
-    );
+    const currentDateOnlySlice = new Date(currentDate.getTime() - 3600 * 24 * 1000 * (-1 + i));
 
     if (!startDate || (startDateSlice && currentDateOnlySlice >= startDateSlice)) {
-      const day = currentDateOnlySlice.getUTCDate();
-      const weekDay = currentDateOnlySlice.getUTCDay();
-      const month = currentDateOnlySlice.getUTCMonth();
-      const year = currentDateOnlySlice.getUTCFullYear();
+      const day = currentDateOnlySlice.getDate();
+      const weekDay = currentDateOnlySlice.getDay();
+      const month = currentDateOnlySlice.getMonth();
+      const year = currentDateOnlySlice.getFullYear();
+
       const id = `${year}-${month}-${day}`;
-      const dateData = { id, day, weekDay, month, year };
+      const isoDate = currentDateOnlySlice.toISOString();
+      const dateData = { id, day, weekDay, month, year, isoDate };
 
       mockedDays.push(dateData);
     }

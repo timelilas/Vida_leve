@@ -1,4 +1,4 @@
-import { GenderType } from "../../@core/entities/@shared/gender/type";
+import { GenderType } from "../../../@core/entities/@shared/gender/type";
 
 export interface HttpGetUserProfileOutputDTO {
   id: number;

@@ -1,10 +1,11 @@
+import { z } from "zod";
 import { userZodSchema } from "../../utils/zod/schemas/user";
 
-export const updateUserSchema = userZodSchema
-  .pick({
-    name: true,
-    phone: true,
-    birthDate: true,
-    gender: true,
+export const updateUserSchema = z
+  .object({
+    name: userZodSchema.shape.name.unwrap(),
+    phone: userZodSchema.shape.phone.unwrap(),
+    gender: userZodSchema.shape.gender.unwrap(),
+    birthDate: userZodSchema.shape.birthDate,
   })
   .strict();

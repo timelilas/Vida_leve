@@ -125,7 +125,7 @@ export default class UserController {
         req,
         res,
         exception: error,
-        alternativeMsg: "Erro ao tentar atualizar a imagem de perfil.",
+        alternativeMsg: "Erro ao atualizar a imagem de perfil.",
       });
     }
   }
@@ -163,7 +163,7 @@ export default class UserController {
         req,
         res,
         exception: error,
-        alternativeMsg: "Erro ao tentar atualizar a imagem de perfil.",
+        alternativeMsg: "Erro ao tentar remover a imagem de perfil.",
       });
     }
   }
