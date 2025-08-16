@@ -26,7 +26,10 @@ class App {
     this.app.use(express.json());
     this.app.use(helmet());
     this.app.use(setupCORS());
-    this.app.use("/docs", swaggerUi.serve, swaggerUi.setup(swaggerSpec));
+
+    if (process.env.NODE_ENV === "development") {
+      this.app.use("/docs", swaggerUi.serve, swaggerUi.setup(swaggerSpec));
+    }
   }
 
   private routes(): void {
@@ -40,9 +43,9 @@ class App {
   }
 
   public start(PORT: string | number): void {
-    this.app.listen(PORT, () =>
-      console.log(`Server is running on port ${PORT}`)
-    );
+    this.app.listen(PORT, () => {
+      console.log(`Server is running on port ${PORT}`);
+    });
   }
 }
 

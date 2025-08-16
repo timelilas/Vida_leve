@@ -5,8 +5,8 @@
   "license": "Attribution-NonCommercial-NoDerivatives 4.0 International",
   "scripts": {
     "build": "rimraf ./dist && tsc --project tsconfig.json",
-    "start": "node dist/server.js",
-    "dev": "ts-node-dev src/server.ts",
+    "start": "NODE_ENV=production node dist/server.js",
+    "dev": "NODE_ENV=development ts-node-dev src/server.ts",
     "migration:run": "npx sequelize-cli db:migrate",
     "migration:revert": "npx sequelize-cli db:migrate:undo",
     "migration:seed": "npx sequelize-cli db:seed:all",
