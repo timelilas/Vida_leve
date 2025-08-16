@@ -11,7 +11,7 @@ export const userSchema = {
     "registrationDate",
   ],
   properties: {
-    id: { type: "string" },
+    id: { type: "integer", minimum: 1 },
     name: { type: "string", nullable: true },
     email: { type: "string", format: "email" },
     phone: { type: "string", nullable: true },

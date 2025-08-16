@@ -29,6 +29,11 @@ export const swaggerSpec = {
       description: "Operações relacionadas ao progresso do usuário",
     },
     {
+      name: "CaloriePlan",
+      description:
+        "Operações relacionadas a consulta dos planos de execução disponíveis",
+    },
+    {
       name: "Food",
       description: "Operações de consulta de alimentos",
     },

@@ -4,9 +4,9 @@ import { createSwaggerErrorExample } from "../../utils/helpers";
 export const setDefaultCaloriePlan = {
   tags: ["Progress"],
   operationId: "setDefualtCaloriePlanType",
-  summary: "Define o plano de calorias padrão do usuário.",
+  summary: "Define o plano de execução padrão do usuário.",
   description:
-    "Endpoint responsável por definir o plano de calorias (ou plano de execução) padrão do usuário.",
+    "Endpoint responsável por definir o plano de execução (ou plano de calorias) padrão do usuário.",
   security: [{ BearerAuth: [] }],
   requestBody: {
     required: true,
