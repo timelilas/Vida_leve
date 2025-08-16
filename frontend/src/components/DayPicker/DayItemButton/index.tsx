@@ -1,10 +1,7 @@
 import { PressableProps, Text, View } from "react-native";
 import { ToggleButton } from "../../ToggleButton";
 import { styles } from "./styles";
-import {
-  getMonthNameFromIndex,
-  getWeekdayFromIndex,
-} from "../../../utils/helpers";
+import { getMonthNameFromIndex, getWeekdayFromIndex } from "../../../utils/helpers";
 import { DateData } from "../types";
 import { memo } from "react";
 import { colors } from "../../../styles/colors";
@@ -29,11 +26,8 @@ export const DayItemButton = memo(
       <ToggleButton
         selected={selected}
         backgroundColor={colors.background.primary}
-        {...propsRest}
-      >
-        <View
-          style={[styles.container, props.disabled && styles.containerDisabled]}
-        >
+        {...propsRest}>
+        <View style={[styles.container, props.disabled && styles.containerDisabled]}>
           <Text style={[styles.text, props.disabled && styles.textDisabled]}>
             {parsedWeekday}, {parsedDay} {parsedMonthName}.
           </Text>

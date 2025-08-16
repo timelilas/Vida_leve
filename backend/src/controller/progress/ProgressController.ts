@@ -166,7 +166,7 @@ export default class ProgressController {
       if (!updatedProgress || !currentPlan) {
         await transaction.rollback();
         throw new NotFoundException(
-          "Este usuário não possui um progresso cadastrado.",
+          "Este usuário ainda não possui um progresso cadastrado.",
           ProgressController.name
         );
       }
@@ -192,7 +192,7 @@ export default class ProgressController {
         req,
         res,
         exception: error,
-        alternativeMsg: "Erro ao atualizar o plano de execução.",
+        alternativeMsg: "Erro ao definir o plano de execução padrão.",
       });
     }
   }

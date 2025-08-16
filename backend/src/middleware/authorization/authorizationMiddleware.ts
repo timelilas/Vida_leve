@@ -24,7 +24,6 @@ class AuthorizationMiddleware {
       }
 
       const userId = tokenPayload.userId;
-
       const foundUser = await this._userService.get(userId);
 
       if (!foundUser) {

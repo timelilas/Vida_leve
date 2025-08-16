@@ -1,4 +1,4 @@
-import { UserProps } from "../../@core/entities/user/type";
+import { UserProps } from "../../../@core/entities/user/type";
 
 export interface HttpSignupInputDTO {
   email: string;

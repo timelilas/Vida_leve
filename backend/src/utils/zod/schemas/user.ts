@@ -11,22 +11,20 @@ export const userZodSchema = z
     name: ZodHelper.baseString("Nome completo", 1, 100).nullable(),
     phone: ZodHelper.phone("Telefone", 11).nullable(),
     imageUrl: ZodHelper.url("Imagem de perfil", 1).nullable(),
-    birthDate: ZodHelper.date("Data de nascimento")
-      .nullable()
-      .refine(
-        (isoDate) =>
-          isoDate ? UserHelper.validateAge(new Date(isoDate)) : true,
-        {
-          message:
-            "A idade permitida é entre 18 e 90 anos. Por favor, verifique sua data de nascimento.",
-        }
-      ),
+    birthDate: ZodHelper.date("Data de nascimento").refine(
+      (isoDate) =>
+        isoDate === null || UserHelper.validateAge(new Date(isoDate)),
+      {
+        message:
+          "A idade permitida é entre 18 e 90 anos. Por favor, verifique sua data de nascimento.",
+      }
+    ),
     gender: z
       .enum(allowedGenders, {
-        required_error: "Gênero social é um campo obrigatório",
+        required_error: "Gênero social é um campo obrigatório.",
         message:
-          "Gênero social permite apenas os valores: masculino e feminino",
+          "Gênero social permite apenas os valores: masculino e feminino.",
       })
       .nullable(),
   })
-  .strict({ message: "Não é um campo válido" });
+  .strict({ message: "Não é um campo válido." });
