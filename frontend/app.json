@@ -55,8 +55,17 @@
         "foregroundImage": "./src/assets/images/adaptive-icon.png",
         "backgroundColor": "#ffffff"
       },
-      "package": "vida_leve.app"
+      "package": "vida_leve.app",
+      "permissions": [
+        "android.permission.RECORD_AUDIO",
+        "android.permission.CAMERA"
+      ]
     },
-    "web": {}
+    "web": {},
+    "extra": {
+      "eas": {
+        "projectId": "f75ceb52-e4a1-4cd5-ad7c-719eb11fcaf7"
+      }
+    }
   }
 }

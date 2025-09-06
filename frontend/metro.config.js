@@ -1,18 +1,16 @@
 const { getDefaultConfig } = require("expo/metro-config");
-const {
-  wrapWithReanimatedMetroConfig,
-} = require("react-native-reanimated/metro-config");
+const { wrapWithReanimatedMetroConfig } = require("react-native-reanimated/metro-config");
 
 const config = getDefaultConfig(__dirname, {
-  isCSSEnabled: true,
+  isCSSEnabled: true
 });
 
 config.resolver.assetExts.push("wasm");
 config.transformer.getTransformOptions = async () => ({
   transform: {
     experimentalImportSupport: false,
-    inlineRequires: true,
-  },
+    inlineRequires: true
+  }
 });
 
 module.exports = wrapWithReanimatedMetroConfig(config);
